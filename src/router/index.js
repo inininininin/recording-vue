@@ -11,11 +11,7 @@ console.dir(_import)
 
 
 const routes = [
-  {
-    path: '/login',
-    name: '/login',
-    component: _import( 'login')
-  },
+ 
   {
     path: '/',
     redirect:'/index'
@@ -25,7 +21,26 @@ const routes = [
     name: '/index',
     component: _import("index")
   },
- 
+  {
+    path: '/login',
+    name: '/login',
+    component: _import( 'login')
+  },
+  {
+    path: '/register',
+    name: '/register',
+    component: _import( 'register')
+  },
+  {
+    path: '/new-task',
+    name: '/new-task',
+    component: _import( 'new-task')
+  },
+  {
+    path: '/task',
+    name: '/task',
+    component: _import( 'task')
+  },
 ]
 
 const router = new Router({
