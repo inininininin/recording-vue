@@ -2,6 +2,7 @@
     <div  id="login">
 		<div style="height:30px;"></div>
 		<h1 style="text-align: center;font-size: 24px;margin:0;">Recording</h1>
+		<h1 style="text-align: center;font-size: 20px;margin:10px;">登录</h1>
 		
 		<div style="height:30px;"></div>
 
@@ -30,11 +31,12 @@
 
 			<div style="height:50px;"></div>
 			<div style="text-align: center;">
-				<button style="width:200px;height:30px;">登录</button>
-				<button v-if="byPasswordIs" @click="bySmsvcodeIs=1;byPasswordIs=0" style="width:200px;height:30px;">验证码登录</button>
-				<button  v-if="bySmsvcodeIs" @click="bySmsvcodeIs=0;byPasswordIs=1" style="width:200px;height:30px;">密码登录</button>
+				<button style="width:200px;height:30px;" @click="login()">登录</button>
+				<button v-if="byPasswordIs" @click="bySmsvcodeIs=1;byPasswordIs=0" style="width:200px;height:30px;margin-top:5px;">验证码登录</button>
+				<button  v-if="bySmsvcodeIs" @click="bySmsvcodeIs=0;byPasswordIs=1" style="width:200px;height:30px;margin-top:5px;">密码登录</button>
 				<div style="height:50px;"></div>
 				<button @click="$router.push({path:'/register',query:{time:new Date().getTime()}})" style="width:200px;height:30px;">去注册</button>
+				<button @click="$router.push({path:'/forget-password',query:{time:new Date().getTime()}})" style="width:200px;height:30px;margin-top:5px;">找回密码</button>
 			</div>
 		</form>
     </div>
@@ -46,7 +48,7 @@ export default {
 	data () {
 		return {
 			byPasswordIs:0,
-			bySmsvcodeIs:0,
+			bySmsvcodeIs:1,
 			phone:null,
 			password:null,
 			smsvcode:null,
@@ -56,18 +58,42 @@ export default {
        debugger
         let thisVue = this;
 		if(thisVue.query != JSON.stringify(thisVue.$route.query)){
-			Object.assign(thisVue.$data, thisVue.$options.data());
-			thisVue.query = JSON.stringify(thisVue.$route.query);
 			thisVue.reload();
 
+			thisVue.query = JSON.stringify(thisVue.$route.query);
 		}
 	},
 	methods:{
 		reload(){
 			let thisVue = this;
-			thisVue.byPasswordIs=0
-			thisVue.bySmsvcodeIs=1
-         }
+			Object.assign(thisVue.$data, thisVue.$options.data());
+         },
+		 login(){
+			debugger
+			let thisVue = this;
+
+			 if(thisVue.byPasswordIs){
+				thisVue.$axios.post('/login-by-phone-password',thisVue.$qs.stringify({phone:thisVue.phone,password:thisVue.password})).then(res => {
+					debugger
+					if(res.data.codeMsg)
+						alert(res.data.codeMsg)
+					if(res.data.code == 0){
+						thisVue.$router.push({path:'/index',query:{time:new Date().getTime()}})
+					}
+  				})
+			 }
+			 if(thisVue.bySmsvcodeIs){
+				thisVue.$axios.post('/login-by-smsvcode',thisVue.$qs.stringify({phone:thisVue.phone,smsvcode:thisVue.smsvcode})).then(res => {
+					debugger
+					if(res.data.codeMsg)
+						alert(res.data.codeMsg)
+					if(res.data.code == 0){
+						thisVue.$router.push({path:'/index',query:{time:new Date().getTime()}})
+					}
+  				})
+
+			 }
+		 }
 	}		
 }
 </script>

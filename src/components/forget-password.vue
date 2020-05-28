@@ -2,7 +2,7 @@
 	<div id="register">
 		<div style="height:30px;"></div>
 		<h1 style="text-align: center;font-size: 24px;margin:0;">Recording</h1>
-		<h1 style="text-align: center;font-size: 20px;margin:10px;">注册</h1>
+		<h1 style="text-align: center;font-size: 20px;margin:10px;">找回密码</h1>
 
 		<div style="height:30px;"></div>
 
@@ -18,11 +18,11 @@
 			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">密码</span>
-				<input v-model="password" type="password"
+				<input v-model="newPassword" type="password"
 					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
-				<span v-if="password"
+				<span v-if="newPassword"
 					style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
-					@click="password=null">x</span>
+					@click="newPassword=null">x</span>
 			</div>
 
 			<div style="height:10px;"></div>
@@ -39,7 +39,7 @@
 
 			<div style="height:50px;"></div>
 			<div style="text-align: center;">
-				<button style="width:200px;height:30px;" @click="register()">注册</button>
+				<button style="width:200px;height:30px;" @click="forgetPassword()">确认</button>
 				<div style="height:50px;"></div>
 				<button style="width:200px;height:30px;"
 					@click="$router.push({path:'/login',query:{time:new Date().getTime()}})">去登录</button>
@@ -54,7 +54,7 @@
 		data() {
 			return {
 				phone: null,
-				password: null,
+				newPassword: null,
 				smsvcode: null,
 			}
 		},
@@ -73,22 +73,16 @@
 				let thisVue = this;
 				Object.assign(thisVue.$data, thisVue.$options.data());
 			},
-			register() {
+			forgetPassword() {
 				debugger
 				let thisVue = this;
-				thisVue.$axios.post('/register',thisVue.$qs.stringify({ phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
+				thisVue.$axios.post('/alter-password-by-smsvcode',thisVue.$qs.stringify({ phone:thisVue.phone, newPassword:thisVue.newPassword, smsvcode:thisVue.smsvcode }) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
 						alert(res.data.codeMsg)
-					if (res.data.code == 0) {
-						thisVue.$axios.post('/login-by-login-id', thisVue.$qs.stringify({ loginId: res.data.data.loginId })).then(res => {
-							debugger
-							if (res.data.codeMsg)
-								alert(res.data.codeMsg)
-							if (res.data.code == 0) {
-								thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() } })
-							}
-						})
+					if(res.data.code==0){
+						if(!res.data.codeMsg)
+							alert("成功")
 					}
 				})
 			}
