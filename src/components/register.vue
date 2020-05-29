@@ -9,16 +9,24 @@
 		<form style="width:250px;margin:auto;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">手机</span>
-				<input v-model="phone" type="text"
+				<input v-model="phone" @keyup.enter="register()" type="text"
 					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
 					@click="phone=null">x</span>
 			</div>
 
+			<div style="height:30px;line-height:30px;position:relative;">
+				<span style="width:50px;display: inline-block;font-size: 14px;">昵称</span>
+				<input v-model="nickname" @keyup.enter="register()" type="text"
+					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
+				<span v-if="nickname" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
+					@click="nickname=null">x</span>
+			</div>
+
 			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">密码</span>
-				<input v-model="password" type="password"
+				<input v-model="password"  @keyup.enter="register()" type="password"
 					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="password"
 					style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
@@ -28,7 +36,7 @@
 			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block; font-size: 14px;">验证码</span>
-				<input v-model="smsvcode" type="text"
+				<input v-model="smsvcode"  @keyup.enter="register()" type="text"
 					style="width:138px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="smsvcode"
 					style="font-size: 14px;position:absolute;right:50px;cursor: pointer;color: #8f8f8f;"
@@ -54,6 +62,7 @@
 		data() {
 			return {
 				phone: null,
+				nickname:null,
 				password: null,
 				smsvcode: null,
 			}
@@ -76,7 +85,7 @@
 			register() {
 				debugger
 				let thisVue = this;
-				thisVue.$axios.post('/register',thisVue.$qs.stringify({ phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
+				thisVue.$axios.post('/register',thisVue.$qs.stringify({ nickname:thisVue.nickname,phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
 						alert(res.data.codeMsg)

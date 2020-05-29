@@ -47,9 +47,29 @@ const routes = [
     component: _import( 'task')
   },
   {
+    path: '/friend-list',
+    name: '/friend-list',
+    component: _import( 'friend-list')
+  },
+  {
     path: '/me',
     name: '/me',
     component: _import( 'me')
+  },
+  {
+    path: '/jump',
+    name: '/jump',
+    component: _import( 'jump')
+  },
+  {
+    path: '/choose-fuzeren',
+    name: '/choose-fuzeren',
+    component: _import( 'choose-fuzeren')
+  },
+  {
+    path: '/choose-faburen',
+    name: '/choose-faburen',
+    component: _import( 'choose-faburen')
   },
 ]
 
@@ -59,7 +79,9 @@ const router = new Router({
 
 router.afterEach((to,from) =>{
   debugger
-
+  if(to.path==from.path){
+    router.replace({path:'/jump',query:{fullPath:to.fullPath}})
+  }
 })
 
 

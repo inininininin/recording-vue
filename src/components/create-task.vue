@@ -1,27 +1,52 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;">
+	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;" >
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;position: relative;border-bottom:1px solid #8F8F8f">
 			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>发布任务</span>
 		</div>
 		<div style="padding:0 5px;margin-top:20px;">
-			<div style="font-size: 16px;margin-left:5px;color: #8f8f8f;">任务名</div>
+			<div style="font-size: 14px;margin-left:5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="name" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
-			<div style="font-size: 16px;margin:10px 0 0 5px;color: #8f8f8f;">类型</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">类型</div>
 			<div style="margin:5px 0 0 5px;">
-				<label for="developIs" style="font-size:14px;cursor: pointer;">开发</label>
+				<label for="developIs" style="font-size:14px;cursor: pointer;">推进</label>
 				<input id="developIs" name="type" type="radio"  style="cursor: pointer;" value="1" v-model="type"/>
 				<span style="margin:0 5px;"></span>
 				<label for="bugIs" style="font-size:14px;cursor: pointer;">缺陷</label>
 				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;"  value="2" v-model="type"/>
 			</div>
 
-			<div style="font-size: 16px;margin:10px 0 0 5px;color: #8f8f8f;">图片</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
+			<div style="position: relative;margin:5px 0 0 5px;">
+
+				 <span style="font-size:14px;">{{faBuRenUserNickname}}</span>
+
+				 <span v-show="faBuRenUserId" 
+				 @click="faBuRenUserId = faBuRenUserNickname = null;" 
+				 style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
+				 >x</span>
+
+				<button 
+				v-show="!faBuRenUserId" 
+				@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()}})" 
+				style="cursor: pointer;"
+				>选择</button>
+				
+			</div>
+
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">负责人</div>
+			<div style="position: relative;margin:5px 0 0 5px;">
+				 <span style="font-size:14px;">{{fuZeRenUserNickname}}</span>
+				 <span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+				<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()}})" style="cursor: pointer;">选择</button>
+			</div>
+
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">图片</div>
 			<div v-viewer="{navbar:true,title:false,toolbar:true}" >
 				<span v-for="(item, i) in imageList" style="position: relative;padding-right:15px;">
 				<span style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;">
@@ -35,11 +60,11 @@
 				<span v-if="imageList.length<6" @click="addImage()" style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
 			</div>
 
-			<div style="font-size: 16px;margin:10px 0 0 5px;color: #8f8f8f;">内容</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">内容</div>
 			<div><textarea v-model="content" type="text" style="width:95%;margin:5px 0 0 5px;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea></div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">序号</span>
+				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
 			</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="orderNo" type="number" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
@@ -60,30 +85,60 @@
 		data() {
 			return {
 				name:null,
-				type:null,
+				type:1,
 				content:null,
 				orderNo:'9999',
 				imageList:[],
 				query: '',
+				faBuRenUserId: null,
+				faBuRenUserNickname: null,
+				fuZeRenUserId: null,
+				fuZeRenUserNickname: null,
 			}
 		},
 		activated() {
+			debugger
 			let thisVue = this
-
+			window.thisVue=thisVue;
 			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
-				Object.assign(thisVue.$data, thisVue.$options.data());
-				thisVue.query = JSON.stringify(thisVue.$route.query);
 				thisVue.reload();
 
+				thisVue.query = JSON.stringify(thisVue.$route.query);
+
+			}else{
+				thisVue.faBuRenUserId=thisVue.$store.state.chooseFaBuRenUserId
+				thisVue.faBuRenUserNickname=thisVue.$store.state.chooseFaBuRenUserNickname
+				thisVue.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
+				thisVue.fuZeRenUserNickname=thisVue.$store.state.chooseFuZeRenUserNickname
+
+
+				thisVue.$store.state.chooseFaBuRenUserId = null
+				thisVue.$store.state.chooseFaBuRenUserNickname = null
+				thisVue.$store.state.chooseFuZeRenUserId = null
+				thisVue.$store.state.chooseFuZeRenUserNickname = null
 			}
 		},
 		methods: {
 			reload() {
+				let thisVue = this
+				Object.assign(thisVue.$data, thisVue.$options.data());
+				if(thisVue.$store.state.cloneTask){
+					thisVue.name=thisVue.$store.state.cloneTask.name
+					thisVue.type=thisVue.$store.state.cloneTask.type
+					thisVue.content=thisVue.$store.state.cloneTask.content
+					thisVue.imageList=thisVue.$store.state.cloneTask.imageList
 
+					thisVue.faBuRenUserId = thisVue.$store.state.cloneTask.faBuRenUserId
+					thisVue.faBuRenUserNickname = thisVue.$store.state.cloneTask.faBuRenUserNickname
+					thisVue.fuZeRenUserId = thisVue.$store.state.cloneTask.fuZeRenUserId
+					thisVue.fuZeRenUserNickname = thisVue.$store.state.cloneTask.fuZeRenUserNickname
+
+					thisVue.$store.state.cloneTask=null;
+				}
 			},
 			createTask() {
 				let thisVue = this
-				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({name:thisVue.name,type:thisVue.type,content:thisVue.content,
+				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({faBuRenUserId:thisVue.$store.state.chooseFaBuRenUserId,fuZeRenUserId:thisVue.$store.state.chooseFuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
 				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,
@@ -95,8 +150,11 @@
 						if(res.data.codeMsg)
 							alert(res.data.codeMsg)
 						if (res.data.code == 0) {
-							alert("成功");
-							thisVue.$router.back();
+							if(window.confirm('成功 , 是否返回 ?')){
+								thisVue.$router.back();
+							}else{
+								thisVue.$router.replace({path:'/create-task',query:{time:new Date().getTime()}})
+							}
 						}
 					})
 

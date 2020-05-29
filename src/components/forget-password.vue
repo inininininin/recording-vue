@@ -9,7 +9,7 @@
 		<form style="width:250px;margin:auto;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">手机</span>
-				<input v-model="phone" type="text"
+				<input v-model="phone"  @keyup.enter="forgetPassword()" type="text"
 					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
 					@click="phone=null">x</span>
@@ -18,7 +18,7 @@
 			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">密码</span>
-				<input v-model="newPassword" type="password"
+				<input v-model="newPassword"  @keyup.enter="forgetPassword()"  type="password"
 					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="newPassword"
 					style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
@@ -28,7 +28,7 @@
 			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block; font-size: 14px;">验证码</span>
-				<input v-model="smsvcode" type="text"
+				<input v-model="smsvcode"   @keyup.enter="forgetPassword()" type="text"
 					style="width:138px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
 				<span v-if="smsvcode"
 					style="font-size: 14px;position:absolute;right:50px;cursor: pointer;color: #8f8f8f;"

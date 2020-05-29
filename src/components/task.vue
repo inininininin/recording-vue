@@ -7,7 +7,7 @@
 		</div>
 		<div style="padding:0 5px;margin-top:20px;">
 			<div style="margin-left:5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">任务名</span>
+				<span style="font-size: 14px;color: #8f8f8f;">任务名</span>
 				<span v-if="!nameEditIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="nameEditIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
 				<span v-if="nameEditIs" @click="nameEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
@@ -17,30 +17,45 @@
 				<span v-if="taskUpdate.name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.name=null">x</span>
 			</div>
 
-			<div v-if="!nameEditIs" style="font-size:14px;line-height: 32px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
+			<div v-if="!nameEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
 				{{task.name}}
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">类型</span>
+				<span style="font-size: 14px;color: #8f8f8f;">类型</span>
 				<span v-if="!typeEditIs" @click="typeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="typeEditIs" @click="typeEditIs=0;taskUpdate.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
 				<span v-if="typeEditIs" @click="typeEditIs=0;updateTask('type');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
 			</div>
 			<div v-if="typeEditIs" style="margin:5px 0 0 5px;line-height: 25px;">
-				<label for="developIs" style="font-size:14px;cursor: pointer;">开发</label>
+				<label for="developIs" style="font-size:14px;cursor: pointer;">推进</label>
 				<input id="developIs" name="type" type="radio" value="1" v-model="taskUpdate.type" style="cursor: pointer;" />
 				<span style="margin:0 5px;"></span>
 				<label for="bugIs" style="font-size:14px;cursor: pointer;">缺陷</label>
 				<input id="bugIs" name="type" type="radio"  value="2" v-model="taskUpdate.type" style="cursor: pointer;"/>
 			</div>
-			<div v-if="!typeEditIs" style="font-size:14px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
-				{{task.type==1?'开发':task.type==2?'缺陷':''}}
+			<div v-if="!typeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
+				{{task.type==1?'推进':task.type==2?'缺陷':''}}
 			</div>
 
+			<div style="margin:10px 0 0 5px;">
+				<span style="font-size: 14px;color: #8f8f8f;">状态</span>
+			</div>
+			<div style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
+				{{(task.completeIs?'已完成':task.cancelIs?'已撤销':'') + ' '+ ((!task.cancelIs && !task.completeIs)?'进行中':'')}}
+			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">图片</span>
+				<span style="font-size: 14px;color: #8f8f8f;">责任关系</span>
+			</div>
+			<div style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
+				{{$store.state.login.userId==task.faBuRenUserId?'我':task.faBuRenUserNickname}} {{ task.taskId?'>':'' }} {{$store.state.login.userId==task.fuZeRenUserId?'我':task.fuZeRenUserNickname}}
+			</div>
+
+		
+
+			<div style="margin:10px 0 0 5px;">
+				<span style="font-size: 14px;color: #8f8f8f;">图片</span>
 				<span v-if="!imageListEditIs" @click="imageListEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="imageListEditIs" @click="imageListEditIs=0;taskUpdate.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
 				<span v-if="imageListEditIs" @click="imageListEditIs=0;updateTask('imageList');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
@@ -59,7 +74,7 @@
 			</div>	
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">内容</span>
+				<span style="font-size: 14px;color: #8f8f8f;">内容</span>
 				<span v-if="!contentEditIs" @click="contentEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="contentEditIs" @click="contentEditIs=0;taskUpdate.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
 				<span v-if="contentEditIs" @click="contentEditIs=0;updateTask('content');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
@@ -67,11 +82,11 @@
 			<div v-if="contentEditIs">
 				<textarea v-model="taskUpdate.content"  type="text" style="width:95%;margin:5px 0 0 5px;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea>
 			</div>
-			<div v-if="!contentEditIs" style="font-size:14px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.content}}</div>
+			<div v-if="!contentEditIs" style="font-size:16px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.content}}</div>
 
 			
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 16px;color: #8f8f8f;">序号</span>
+				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
 				<span v-if="!orderNoEditIs" @click="orderNoEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="orderNoEditIs" @click="orderNoEditIs=0;taskUpdate.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
 				<span v-if="orderNoEditIs" @click="orderNoEditIs=0;updateTask('orderNo');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
@@ -80,24 +95,64 @@
 				<input v-model="taskUpdate.orderNo" type="number" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.orderNo=9999">x</span>
 			</div>
-			<div v-if="!orderNoEditIs" style="font-size:14px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.orderNo}}</div>
+			<div v-if="!orderNoEditIs" style="font-size:16px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.orderNo}}</div>
+
+
+			<div style="margin:10px 0 0 5px;">
+				<span style="font-size: 14px;color: #8f8f8f;">追踪</span>
+			</div>
+			<div style="border:1px solid #8F8F8F;height:400px;margin:10px 0 0 5px;">
+				<div @scroll="taskTrackListScroll($event)" ref="taskTrackList" style="height:350px;border-bottom:1px solid #8F8F8F;overflow: auto;">
+					
+
+					<div style="margin: 5px;">
+						<span style="font-size: 14px;color: #8f8f8f;">已找到 {{taskTrack_count}} 条记录</span>
+					</div>
+					
+						<div v-for="(item, i) in taskTrack_list" style="margin:5px 5px 5px 5px;">
+							<div style="font-size: 14px;word-wrap: break-word;word-break: break-all;">{{item.content}}</div>
+							<div style="font-size: 12px;color:#8f8f8f;">{{$moment(item.createTime).format('MM-DD hh:mm, d, YYYY')}}</div>
+						</div>
+					
+					<div v-show="taskTrack_loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
+			
+					<div v-show="!taskTrack_loading && taskTrack_list.length<taskTrack_count" @click="pn++;loadTaskTrackList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+					<div v-show="!taskTrack_loading && !(taskTrack_list.length<taskTrack_count)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+				</div>
+
+				<div style="height:49px;position: relative;">
+					<span  style="height:100%;position: absolute;right:50px;left:0px;margin:0;border:none;">
+						<input v-model="trackContent" placeholder="输入追踪内容" type="text"  style="height:100%;position: absolute;width: 98%;padding:0 3px;margin:0;border:none;"/>
+					</span>
+					<button @click="createTrack()" style="font-size: 14px;height:100%;width:50px;position: absolute;right:0px;cursor: pointer;">发送</button> 
+				</div>
+			</div>
+
+
 
 			<button @click="
-			let r=window.confirm('确认删除吗');
-			if(r){
-			$axios.post('/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
-				.then(res=>{ 
-					if(res.data.codeMsg) 
-						window.alert(res.data.codeMsg)
-					if(res.data.code ==0) 
-						if(!res.data.codeMsg) 
-							window.alert('成功')
-							$router.back()
-						})
-					}
-			 " style="font-size: 14px;width:50px;height:30px;margin:20px 0 0 5px;cursor: pointer; ">删除</button>
+							$router.replace({path:'/task',query:{time:new Date().getTime(),taskId:taskId}})
 
-			 <button @click="
+			" style="font-size: 14px;width:50px;height:30px;margin:20px 5px 0 5px;cursor: pointer; ">刷新</button>
+
+			
+
+			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
+			 let r=window.confirm('确认撤销吗');
+			 if(r){
+			 $axios.post('/my-task/cancel-task',$qs.stringify({taskId:taskId}))
+				 .then(res=>{ 
+					 if(res.data.codeMsg) 
+						 window.alert(res.data.codeMsg)
+					 if(res.data.code ==0) 
+						 if(!res.data.codeMsg) 
+							 $router.replace({path:'/task',query:{time:new Date().getTime(),taskId:taskId}})
+
+						 })
+					 }
+			 " style="font-size: 14px;width:50px;height:30px;margin:20px 5px 0 5px;cursor: pointer; ">撤销</button>
+
+			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
 			 let r=window.confirm('确认完成吗');
 			 if(r){
 			 $axios.post('/my-task/complete-task',$qs.stringify({taskId:taskId}))
@@ -106,28 +161,14 @@
 						 window.alert(res.data.codeMsg)
 					 if(res.data.code ==0) 
 						 if(!res.data.codeMsg) 
-							 window.alert('成功')
-							 $router.back()
+							 $router.replace({path:'/task',query:{time:new Date().getTime(),taskId:taskId}})
+
 						 })
 					 }
-			 " style="font-size: 14px;width:50px;height:30px;margin:20px 0 0 10px;cursor: pointer; ">完成</button>
+			 " style="font-size: 14px;width:50px;height:30px;margin:20px 5px 0 5px;cursor: pointer; ">完成</button>
 
-			 <button @click="
-			 let r=window.confirm('确认关闭吗');
-			 if(r){
-			 $axios.post('/my-task/close-task',$qs.stringify({taskId:taskId}))
-				 .then(res=>{ 
-					 if(res.data.codeMsg) 
-						 window.alert(res.data.codeMsg)
-					 if(res.data.code ==0) 
-						 if(!res.data.codeMsg) 
-							 window.alert('成功')
-							 $router.back()
-						 })
-					 }
-			 " style="font-size: 14px;width:50px;height:30px;margin:20px 0 0 10px;cursor: pointer; ">关闭</button>
 
-			 <button @click="
+			 <button  v-if="task.taskId && (task.cancelIs || task.completeIs)" @click="
 			 let r=window.confirm('确认重启吗');
 			 if(r){
 			 $axios.post('/my-task/restart-task',$qs.stringify({taskId:taskId}))
@@ -136,11 +177,36 @@
 						 window.alert(res.data.codeMsg)
 					 if(res.data.code ==0) 
 						 if(!res.data.codeMsg) 
-							 window.alert('成功')
-							 $router.back()
+							$router.replace({path:'/task',query:{time:new Date().getTime(),taskId:taskId}})
 						 })
 					 }
-			 " style="font-size: 14px;width:50px;height:30px;margin:20px 0 0 10px;cursor: pointer; ">重启</button>
+			 " style="font-size: 14px;width:50px;height:30px;margin:20px 5px 0 5px;cursor: pointer; ">重启</button>
+
+			 <button  
+			 v-if="task.taskId" 
+			 @click="
+			 let r=window.confirm('确认克隆吗');
+			 if(r){
+				$store.state.cloneTask=task;
+				$router.push({path:'/create-task',query:{time:new Date().getTime()}})
+			 }
+			 " 
+			 style="font-size: 14px;width:50px;height:30px;margin:20px 5px 0 5px;cursor: pointer; "
+			 >克隆</button>
+
+			 <button v-if="task.taskId && (task.cancelIs  || task.completeIs)" @click="
+			let r=window.confirm('确认删除吗');
+			if(r){
+			$axios.post('/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
+				.then(res=>{ 
+					if(res.data.codeMsg) 
+						window.alert(res.data.codeMsg)
+					if(res.data.code ==0) 
+						if(!res.data.codeMsg) 
+							$router.back()
+						})
+					}
+			 " style="font-size: 14px;width:50px;height:30px;margin:20px 0 0 5px;cursor: pointer; ">删除</button>
 		</div>
 	</div>
 </template>
@@ -151,6 +217,8 @@
 			return {
 				taskId:null,
 				task:{
+					taskId:null,
+					fuZeRenUserId:null,
 					name:null,
 					type:null,
 					content:null,
@@ -158,6 +226,8 @@
 					imageList:[],
 				},
 				taskUpdate:{
+					taskId:null,
+					fuZeRenUserId:null,
 					name:null,
 					type:null,
 					content:null,
@@ -169,12 +239,26 @@
 				typeEditIs:0,
 				contentEditIs:0,
 				imageListEditIs:0,
+				fuZeRenEditIs:0,
 				query: '',
+				trackContent:null,
+
+				taskTrack_loading:null,
+				taskTrack_count:null,
+				taskTrack_list:[],
+				taskTrack_kw:null,
+				taskTrack_pn:1,
+				taskTrack_ps:15,
+				taskTrack_scrollTop:null,
 			}
+		},
+		beforeRouteLeave(to, from,next){
+			debugger
+			next()
 		},
 		activated() {
 			let thisVue = this
-
+			window.thisVue=thisVue;
 			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
 				thisVue.reload();
 
@@ -222,6 +306,8 @@
 							thisVue.taskUpdate.imageList.push(thisVue.task.image5)
 					}
 				})
+
+				thisVue.loadTaskTrackList()
 			},
 			updateTask(name) {
 				debugger
@@ -230,6 +316,7 @@
 					return;
 				var param={}
 				param.taskId=thisVue.taskId
+				param.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
 				param[name]=thisVue.taskUpdate[name]
 				if(name=='imageList'){
 					param.image=thisVue.taskUpdate.imageList[0]?thisVue.taskUpdate.imageList[0]:null,
@@ -244,8 +331,6 @@
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						if(!res.data.codeMsg)
-							alert('成功')
 						thisVue.task[name]=JSON.parse(JSON.stringify(thisVue.taskUpdate[name])) 
 					}
 				})
@@ -267,7 +352,54 @@
 						thisVue.taskUpdate.imageList.push(res.data.data.url)
 					})
 				}).click()
-			}
+			},
+			createTrack(){
+				debugger
+				let thisVue = this
+				thisVue.$axios.post('/my-task/create-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
+					debugger
+					if(res.data.codeMsg)
+						alert(res.data.codeMsg)
+					if (res.data.code == 0) {
+						thisVue.taskTrack_list.unshift({content:thisVue.trackContent,createTime:new Date().getTime()})
+						thisVue.taskTrack_count++;
+						thisVue.trackContent=null;
+						thisVue.$refs.taskTrackList.scrollTop=0
+					}
+					
+				})
+			},
+			taskTrackListScroll(event){
+				debugger
+				let thisVue = this
+				thisVue.taskTrack_scrollTop=event.target.scrollTop;
+				if((event.target.scrollTop+thisVue.$(event.target).height())>=event.target.scrollHeight) {
+					thisVue.taskTrack_pn++;thisVue.loadTaskTrackList()
+				}
+			},
+			loadTaskTrackList(){
+				debugger
+				let thisVue = this
+				thisVue.taskTrack_loading=1
+
+				thisVue.taskTrack_count =null;
+				thisVue.$axios.get('/my-task/task-track-list?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+					debugger
+					if (res.data.code == 0) {
+						if(res.data.data.itemList.length>0)
+							thisVue.taskTrack_list=thisVue.taskTrack_list.concat(res.data.data.itemList)
+						else
+							thisVue.taskTrack_pn--;
+					}
+					thisVue.taskTrack_loading=0
+				})
+				thisVue.$axios.get('/my-task/task-track-list-sum?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+					debugger
+					if (res.data.code == 0) {
+						thisVue.taskTrack_count=res.data.data.itemCount
+					}
+				})
+			},
 		}
 	}
 </script>

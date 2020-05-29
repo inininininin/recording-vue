@@ -3,8 +3,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state={
-	login:null
-  
+	login:null,
+	chooseFuZeRenUserId:null,
+	chooseFuZeRenUserNickname:null,
+	chooseFaBuRenUserId:null,
+	chooseFaBuRenUserNickname:null,
+	cloneTask:null,
 }
 const getters={
   
