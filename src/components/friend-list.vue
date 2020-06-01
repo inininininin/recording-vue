@@ -34,7 +34,7 @@
 			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div v-for="(item, i) in friendList" @click="$router.push({path:'/friend',query:{time:new Date().getTime(),taskId:item.userId}})" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
+		<div v-for="(item, i) in friendList" @click="lookFriend=item" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
 			<span><img :src="item.logo" /></span>
 			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.nickname}}</span>
 		</div>
@@ -51,10 +51,16 @@
 
 
 		<div style="position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;">
-			
+			<div style="border-top:1px solid #8F8F8F;"></div>
+
+			<div style="height:35px;line-height: 35px;">
+				<span @click="addFriendIs=1;addFriend.users=[];" style="font-size:14px;width:100%;display:inline-block;text-align: center;cursor:pointer;">
+					加好友 +</span>
+			</div>
+
 			<div style="border-top:1px solid #8F8F8F;"></div>
 			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">任务</span>
+				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">任务</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
@@ -66,9 +72,60 @@
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
+				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
 			</div>
 		</div>
+
+
+		<!-- 看好友 -->
+		<div v-show="lookFriend" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div style="padding:10px;background-color: #ffffff;margin-top:150px;">
+				<div style="font-size: 16px;padding-left:30px;color:#8F8F8F;">查看好友</div>
+				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>昵称 : </span><span>{{$attr(lookFriend,'nickname')}}</span></div>
+				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>别名 : </span><span>{{$attr(lookFriend,'alias')}}</span></div>
+				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>手机 : </span><span>{{$attr(lookFriend,'phone')}}</span></div>
+				<div style="margin-top:10px;padding-left:30px;">
+					<button @click="lookFriend=null;" style="cursor: pointer;width:150px;height:30px;">关闭</button>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 加好友 -->
+		<div v-show="addFriendIs" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div v-show="addFriend.addIs" style="padding:10px;background-color: #ffffff;margin-top:150px;">
+				<div style="font-size: 16px;padding-left:30px;color:#8F8F8F;">添加好友</div>
+				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>关键字 : </span><span><input v-model="addFriend.kw"  v-focus="addFriendIs" type="text"/></span></div>
+				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriend.pn=1;addFriend.users=[];findMoreFriendUserList()" style="cursor: pointer;width:150px;height:30px;">查找</button></div>
+				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriendIs=0;addFriend.kw=null;addFriend.users=[];" style="cursor: pointer;width:150px;height:30px;">关闭</button></div>
+			</div>
+
+
+			<div v-show="addFriend.users && addFriend.users.length" style="padding:10px;background-color: #ffffff;margin-top:150px;">
+				<div style="font-size: 16px;padding-left:30px;color:#8F8F8F;">找到的用户</div>
+				<div class="scrollbar" @scroll="addFriendUserListScroll($event)" style="padding-left:30px;margin-top:5px;height: 100px;overflow: auto;">
+
+				<div style="margin:5px 0 0 0;">
+					<span style="font-size: 14px;color: #8f8f8f;">已找到 {{addFriend.userCount}} 条记录</span>
+				</div>
+					<div @click="addFriendDo(item)" v-for="(item,i) in addFriend.users" style="margin-top:5px;cursor: pointer;" >
+						<span style="font-size: 16px;">{{item.nickname}}</span>
+						<span  style="font-size: 16px;margin:0 0 0 10px">{{item.phone}}</span>
+					</div>
+				
+
+				<div v-show="addFriend.loading"  style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
+
+				<div v-show="!addFriend.loading && addFriend.users.length<addFriend.userCount" @click="addFriend.pn++;findMoreFriendUserList()" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+				<div v-show="!addFriend.loading && !(addFriend.users.length<addFriend.userCount)" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+			</div>
+
+				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriend.users=[];addFriend.addIs=1" style="cursor: pointer;width:150px;height:30px;">关闭</button></div>
+			</div>
+		</div>
+
+
+
 	</div>
 </template>
 <script>
@@ -76,6 +133,16 @@
 		name: 'index',
 		data() {
 			return {
+				addFriendIs:0,
+				addFriend:{
+					kw:null,
+					users:[],
+					addIs:1,
+					userCount:null,
+					loading:null,
+					pn:1,
+				},
+				lookFriend:null,
 				kw:null,
 				type:'',
 				completeIs:'',
@@ -90,16 +157,12 @@
 				scrollTop:null,
 				sortCreateTime:1,
 				sortMap:{
-					orderNo:1,
-					nickname:1,
-					createTime:2,
+					orderNo:0,
+					nickname:0,
+					createTime:0,
 					updateTime:0,
 				},
 				sortMap1:{
-					orderNo:1,
-					nickname:1,
-					createTime:2,
-					updateTime:0,
 				}
 			}
 		},
@@ -130,12 +193,69 @@
 					}else{
 						thisVue.$axios.post('/logout').then(res => {
 							thisVue.$store.state.login=null;
-							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()}})
+							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
 					}
 				})
 
 				thisVue.loadFriendList()
+			},
+			addFriendDo(item){
+				var r=window.prompt(`确认添加 ${item.nickname} 为好友吗`,"可在此输入别名")
+				if (r!=null)
+					{
+						thisVue.$axios.post(`/my-friend/create-friend`,thisVue.$qs.stringify({userId:item.userId,alias:r})).then(res => {
+							debugger
+							if(res.data.codeMsg)
+								alert(res.data.codeMsg)
+							if (res.data.code == 0) {
+								if(!res.data.codeMsg)
+									alert('成功')
+							}
+						})
+					}
+			},
+			findMoreFriendUserList(){
+				debugger
+				let thisVue = this
+				thisVue.addFriend.loading=1
+				thisVue.addFriend.userCount=null;
+				thisVue.$axios.get(`/user/user-list?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+					debugger
+					if(res.data.codeMsg)
+						alert(res.data.codeMsg)
+					if (res.data.code == 0) {
+						if(!res.data.data.itemList || res.data.data.itemList.length==0){
+							if(thisVue.addFriend.pn==1){
+								alert('未找到用户')
+							}
+							thisVue.addFriend.pn--;
+						}
+						else{
+							if(thisVue.addFriend.pn==1){
+								thisVue.addFriend.users=[]
+							}
+							thisVue.addFriend.addIs=0
+							thisVue.addFriend.users=thisVue.addFriend.users.concat(res.data.data.itemList)
+						}
+					}
+					thisVue.addFriend.loading=0
+				})
+
+				thisVue.$axios.get(`/user/user-list-sum?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+					debugger
+					if (res.data.code == 0) {
+							thisVue.addFriend.userCount=res.data.data.itemCount
+					}
+				})
+			},
+			addFriendUserListScroll(event){
+				debugger
+				let thisVue = this
+				if((event.target.scrollTop+thisVue.$(event.target).height())>=event.target.scrollHeight) {
+					thisVue.addFriend.pn++;
+					thisVue.findMoreFriendUserList ()
+				}
 			},
 			friendListScroll(event){
 				debugger
@@ -158,6 +278,11 @@
 						orders.push(thisVue.sortMap1[c]==1?'asc':thisVue.sortMap1[c]==2?'desc':'c')
 					}
 				}
+				if(!sorts || sorts.length==0){
+					sorts=['orderNo','nickname','createTime','updateTime']
+					orders=['asc','desc','desc','desc']
+				}
+
 				thisVue.itemCount =null;
 				
 

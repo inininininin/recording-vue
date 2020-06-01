@@ -14,9 +14,22 @@ export default {
   created(){
     debugger
     let thisVue=this
-    
-  },
- 
+    window.thisVue=thisVue;
+    thisVue.$.ajax(
+      {
+        url:'/login-refresh',
+        type:'post',
+        async:false,
+        success(res){
+          debugger
+					if (res.code == 0) {
+						thisVue.$store.state.login=res.data;
+					}
+        }
+      }
+    )
+     
+  }
 }
 </script>
 

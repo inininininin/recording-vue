@@ -50,7 +50,7 @@
 				<button style="width:200px;height:30px;" @click="register()">注册</button>
 				<div style="height:50px;"></div>
 				<button style="width:200px;height:30px;"
-					@click="$router.push({path:'/login',query:{time:new Date().getTime()}})">去登录</button>
+					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
 			</div>
 		</form>
 	</div>
@@ -95,7 +95,7 @@
 							if (res.data.codeMsg)
 								alert(res.data.codeMsg)
 							if (res.data.code == 0) {
-								thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() } })
+								thisVue.$router.push({ path: '/index', query: { time: new Date().getTime()+"" } })
 							}
 						})
 					}

@@ -42,7 +42,7 @@
 				<button style="width:200px;height:30px;" @click="forgetPassword()">确认</button>
 				<div style="height:50px;"></div>
 				<button style="width:200px;height:30px;"
-					@click="$router.push({path:'/login',query:{time:new Date().getTime()}})">去登录</button>
+					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
 			</div>
 		</form>
 	</div>

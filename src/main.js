@@ -22,6 +22,36 @@ Vue.prototype.$qs = qs
 Vue.prototype.$ = jquery
 window.Vue=Vue;
 Vue.prototype.window=window
+
+
+Vue.prototype.$attr=function(obj,keyChain){
+  debugger
+    if(!obj || !keyChain)
+      return null;
+     let keys= keyChain.split('.')
+     var obj1 = obj;
+     for(var i in keys){
+          obj1=obj1[keys[i]];
+          if(obj1==null || obj1==undefined)
+              return null
+     }
+     return obj1;
+}
+
+Vue.directive('focus', {
+	// 当被绑定的元素插入到 DOM 中时……
+	inserted: function(el, attr) {
+		// 聚焦元素
+		if (attr.value)
+			el.focus()
+  },
+  update: function(el, attr) {
+		// 聚焦元素
+		if (attr.value)
+			el.focus()
+	}
+})
+
 new Vue({
   el: '#app',
   router,

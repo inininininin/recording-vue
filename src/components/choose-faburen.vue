@@ -114,7 +114,7 @@
 					}else{
 						thisVue.$axios.post('/logout').then(res => {
 							thisVue.$store.state.login=null;
-							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()}})
+							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
 					}
 				})

@@ -8,7 +8,7 @@
 		<div style="padding:0 5px;margin-top:20px;">
 			<div style="font-size: 14px;margin-left:5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<input v-model="name" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<input v-model="name" v-focus='true' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
@@ -33,7 +33,7 @@
 
 				<button 
 				v-show="!faBuRenUserId" 
-				@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()}})" 
+				@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()+''}})" 
 				style="cursor: pointer;"
 				>选择</button>
 				
@@ -43,7 +43,16 @@
 			<div style="position: relative;margin:5px 0 0 5px;">
 				 <span style="font-size:14px;">{{fuZeRenUserNickname}}</span>
 				 <span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
-				<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()}})" style="cursor: pointer;">选择</button>
+				<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
+			</div>
+
+			<div style="margin:10px 0 0 5px;">
+				<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
+			</div>
+			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
+				<input v-model="finalTimeDate" type="date" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<input v-model="finalTimeTime" type="time" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<span v-if="finalTimeDate || finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="finalTimeDate=finalTimeTime=null">x</span>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">图片</div>
@@ -67,11 +76,9 @@
 				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
 			</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<input v-model="orderNo" type="number" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<input v-model="orderNo" type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<span v-if="orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="orderNo=9999">x</span>
 			</div>
-
-
 
 			<div style="text-align: center;margin-top:30px;">
 				<button @click="createTask()" style="width:250px;height:35px;">发布</button>
@@ -88,6 +95,8 @@
 				type:1,
 				content:null,
 				orderNo:'9999',
+				finalTimeDate:null,
+				finalTimeTime:null,
 				imageList:[],
 				query: '',
 				faBuRenUserId: null,
@@ -106,10 +115,14 @@
 				thisVue.query = JSON.stringify(thisVue.$route.query);
 
 			}else{
-				thisVue.faBuRenUserId=thisVue.$store.state.chooseFaBuRenUserId
-				thisVue.faBuRenUserNickname=thisVue.$store.state.chooseFaBuRenUserNickname
-				thisVue.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
-				thisVue.fuZeRenUserNickname=thisVue.$store.state.chooseFuZeRenUserNickname
+				if(thisVue.$store.state.chooseFaBuRenUserId)
+					thisVue.faBuRenUserId=thisVue.$store.state.chooseFaBuRenUserId
+				if(thisVue.$store.state.chooseFaBuRenUserNickname)
+					thisVue.faBuRenUserNickname=thisVue.$store.state.chooseFaBuRenUserNickname
+				if(thisVue.$store.state.chooseFuZeRenUserId)
+					thisVue.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
+				if(thisVue.$store.state.chooseFuZeRenUserNickname)
+					thisVue.fuZeRenUserNickname=thisVue.$store.state.chooseFuZeRenUserNickname
 
 
 				thisVue.$store.state.chooseFaBuRenUserId = null
@@ -122,6 +135,7 @@
 			reload() {
 				let thisVue = this
 				Object.assign(thisVue.$data, thisVue.$options.data());
+				
 				if(thisVue.$store.state.cloneTask){
 					thisVue.name=thisVue.$store.state.cloneTask.name
 					thisVue.type=thisVue.$store.state.cloneTask.type
@@ -138,7 +152,13 @@
 			},
 			createTask() {
 				let thisVue = this
-				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({faBuRenUserId:thisVue.$store.state.chooseFaBuRenUserId,fuZeRenUserId:thisVue.$store.state.chooseFuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
+				if(!thisVue.finalTimeTime)
+					thisVue.finalTimeTime="00:00"
+				let finalTime = null;
+				if(thisVue.finalTimeDate && thisVue.finalTimeTime)
+					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+thisVue.finalTimeTime).toDate().getTime();
+
+				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
 				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,
@@ -153,7 +173,7 @@
 							if(window.confirm('成功 , 是否返回 ?')){
 								thisVue.$router.back();
 							}else{
-								thisVue.$router.replace({path:'/create-task',query:{time:new Date().getTime()}})
+								thisVue.$router.replace({path:'/create-task',query:{time:new Date().getTime()+""}})
 							}
 						}
 					})

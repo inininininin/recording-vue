@@ -10,6 +10,9 @@
 				<span @click="sortMap.updateTime++;sortMap.updateTime=sortMap.updateTime==3?0:sortMap.updateTime;sortMap1.updateTime=sortMap.updateTime;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.updateTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 					更新<span v-if="sortMap.updateTime==1">&nbsp;&and;</span><span v-if="sortMap.updateTime==2">&nbsp;&or;</span><span v-if="sortMap.updateTime==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
+				<span @click="sortMap.finalTime++;sortMap.finalTime=sortMap.finalTime==3?0:sortMap.finalTime;sortMap1.finalTime=sortMap.finalTime;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.finalTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
+					限期<span v-if="sortMap.finalTime==1">&nbsp;&and;</span><span v-if="sortMap.finalTime==2">&nbsp;&or;</span><span v-if="sortMap.finalTime==0" style="visibility: hidden;">&nbsp;&or;</span>
+				</span>
 				<span  @click="sortMap.orderNo++;sortMap.orderNo=sortMap.orderNo==3?0:sortMap.orderNo;sortMap1.orderNo=sortMap.orderNo;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.orderNo?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					序号<span v-if="sortMap.orderNo==1">&nbsp;&and;</span><span v-if="sortMap.orderNo==2">&nbsp;&or;</span><span v-if="sortMap.orderNo==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
@@ -56,7 +59,7 @@
 					<span @click="pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
-					<span @click="status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						重置
 					</span>
 					<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
@@ -89,7 +92,7 @@
 				
 				<span @click="
 				debugger;
-				faBuRenUserId=$store.state.login.userId;
+				faBuRenUserId=faBuRenUserId?null:$attr($store.state.login,'userId');
 				taskList=[],pn=1;
 				loadTaskList();
 				" 
@@ -100,13 +103,13 @@
 				display:inline-block;
 				border-right:1px solid #8f8f8f;
 				"
-				:style="{'background-color':(faBuRenUserId==($store.state.login?$store.state.login.userId:-1)?'#8f8f8f':'#ffffff')}" 
+				:style="{'background-color':(faBuRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#8f8f8f':'#ffffff')}" 
 				>我</span>
 				
 				<span v-for="(item,i) in faBuRenList" 
 				@click="
 				debugger;
-				faBuRenUserId=item.faBuRenUserId;
+				faBuRenUserId=faBuRenUserId?null:item.faBuRenUserId;
 				taskList=[],pn=1;
 				loadTaskList();" :style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.nickname}}</span>
 				
@@ -114,9 +117,29 @@
 
 			</div>
 			<div style="width:100%;height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;overflow: hidden;;text-overflow:ellipsis;">
-				<span  @click="fuZeRenUserId=null;taskList=[],pn=1;loadTaskList();"  style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;background-color: #d8d5d5;">负责人</span>
-				<span @click="fuZeRenUserId=$store.state.login.userId;taskList=[],pn=1;loadTaskList();" :style="{'background-color':(fuZeRenUserId==($store.state.login?$store.state.login.userId:-1)?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">我</span>
-				<span v-for="(item,i) in fuZeRenList" @click="fuZeRenUserId=item.fuZeRenUserId;taskList=[],pn=1;loadTaskList();" :style="{'background-color':(fuZeRenUserId==item.fuZeRenUserId?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.nickname}}</span>
+				<span  
+				@click="
+				fuZeRenUserId=null;
+				taskList=[],pn=1;
+				loadTaskList();
+				"  
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;background-color: #d8d5d5;">负责人</span>
+				
+				<span 
+				@click="
+				fuZeRenUserId=fuZeRenUserId?null:$attr($store.state.login,'userId');
+				taskList=[],pn=1;
+				loadTaskList();
+				" 
+				:style="{'background-color':(fuZeRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">我</span>
+				<span v-for="(item,i) in fuZeRenList" 
+				@click="
+				fuZeRenUserId=fuZeRenUserId?null:item.fuZeRenUserId;
+				taskList=[],pn=1;
+				loadTaskList();
+				" 
+				:style="{'background-color':(fuZeRenUserId==item.fuZeRenUserId?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.nickname}}</span>
+				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 			</div>
 
@@ -125,13 +148,15 @@
 			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div v-for="(item, i) in taskList" @click="$router.push({path:'/task',query:{time:new Date().getTime(),taskId:item.taskId}})" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;" 
+		<div v-for="(item, i) in taskList" @click="$router.push({path:'/task',query:{time:new Date().getTime()+'',taskId:item.taskId}})" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;" 
 		:style="{'background-color':(item.completeIs?'#219e154d':item.cancelIs?'#ffff006e':'#FFFFFF')}">
 			<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.name}}</div>
 			<div style="position:relative;margin-top:3px;">
 				<span style="font-size:12px;color:#8F8F8F;">{{$moment(item.createTime).format('MM-DD HH:mm, d, YYYY')}}</span>
-				<span style="font-size:12px;color:#8F8F8F;margin-left:50px;">{{item.faBuRenUserId==$store.state.login.userId?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$store.state.login.userId?'我':item.fuZeRenUserNickname }}</span>
+				<span style="font-size:12px;color:#8F8F8F;margin-left:50px;">{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
 				<span style="font-size:12px;color:#8F8F8F;position:absolute;right:0px;">{{item.orderNo==9999?'':item.orderNo}}</span>
+				<span style="font-size:12px;color:#8F8F8F;margin-left:50px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YYYY')):null}}</span>
+
 			</div>
 		</div>
 		
@@ -156,7 +181,7 @@
 			<div style="border-top:1px solid #8F8F8F;"></div>
 
 			<div style="height:35px;line-height: 35px;">
-				<span @click="$router.push({path:'/create-task',query:{time:new Date().getTime()}})" style="font-size:14px;width:50%;display:inline-block;text-align: center;cursor:pointer;">发任务
+				<span @click="$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:50%;display:inline-block;text-align: center;cursor:pointer;">发任务
 					+</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
@@ -165,19 +190,19 @@
 			</div>
 			<div style="border-top:1px solid #8F8F8F;"></div>
 			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #8F8F8F;">任务</span>
+				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #8F8F8F;">任务</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
-				<span @click="$router.push({path:'/friend-list',query:{time:new Date().getTime()}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">好友</span>
+				<span @click="$router.push({path:'/friend-list',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">好友</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
+				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
 			</div>
 		</div>
 	</div>
@@ -203,19 +228,16 @@
 				itemCount:null,
 				loading:null,
 				scrollTop:null,
-				sortCreateTime:1,
 				sortMap:{
-					name:0,
-					createTime:2,
-					orderNo:1,
+					orderNo:0,
+					finalTime:0,
 					updateTime:0,
+					createTime:0,
+					name:0,
 				},
 				
 				sortMap1:{
-					name:0,
-					orderNo:1,
-					createTime:2,
-					updateTime:0,
+					
 				}
 			}
 		},
@@ -237,19 +259,12 @@
 				let thisVue = this
 				Object.assign(thisVue.$data, thisVue.$options.data());
 
-				thisVue.$axios.post('/login-refresh').then(res => {
-					debugger
-					if(res.data.codeMsg)
-						alert(res.data.codeMsg)
-					if (res.data.code == 0) {
-						thisVue.$store.state.login=res.data.data;
-					}else{
-						thisVue.$axios.post('/logout').then(res => {
+				if(!thisVue.$store.state.login){
+					thisVue.$axios.post('/logout').then(res => {
 							thisVue.$store.state.login=null;
-							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()}})
+							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
-					}
-				})
+				}
 
 				thisVue.loadTaskList()
 
@@ -291,6 +306,12 @@
 						orders.push(thisVue.sortMap1[c]==1?'asc':thisVue.sortMap1[c]==2?'desc':'c')
 					}
 				}
+
+				if(!sorts || sorts.length==0){
+					sorts=['orderNo','finalTime','updateTime','createTime','name']
+					orders=['asc','desc','desc','desc','asc']
+				}
+
 				thisVue.itemCount =null;
 				if(thisVue.status==1){
 					thisVue.completeIs=thisVue.cancelIs=0

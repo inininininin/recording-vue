@@ -35,8 +35,8 @@
 				<button v-if="byPasswordIs" @click="bySmsvcodeIs=1;byPasswordIs=0" style="width:200px;height:30px;margin-top:5px;">验证码登录</button>
 				<button  v-if="bySmsvcodeIs" @click="bySmsvcodeIs=0;byPasswordIs=1" style="width:200px;height:30px;margin-top:5px;">密码登录</button>
 				<div style="height:50px;"></div>
-				<button @click="$router.push({path:'/register',query:{time:new Date().getTime()}})" style="width:200px;height:30px;">去注册</button>
-				<button @click="$router.push({path:'/forget-password',query:{time:new Date().getTime()}})" style="width:200px;height:30px;margin-top:5px;">找回密码</button>
+				<button @click="$router.push({path:'/register',query:{time:new Date().getTime()+''}})" style="width:200px;height:30px;">去注册</button>
+				<button @click="$router.push({path:'/forget-password',query:{time:new Date().getTime()+''}})" style="width:200px;height:30px;margin-top:5px;">找回密码</button>
 			</div>
 		</form>
     </div>
@@ -78,7 +78,13 @@ export default {
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if(res.data.code == 0){
-						thisVue.$router.push({path:'/index',query:{time:new Date().getTime()}})
+						thisVue.$axios.post('/login-refresh').then(res => {
+							debugger
+							if (res.data.code == 0) {
+								thisVue.$store.state.login=res.data.data;
+								thisVue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
+							}
+						})
 					}
   				})
 			 }
@@ -88,7 +94,13 @@ export default {
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if(res.data.code == 0){
-						thisVue.$router.push({path:'/index',query:{time:new Date().getTime()}})
+						thisVue.$axios.post('/login-refresh').then(res => {
+							debugger
+							if (res.data.code == 0) {
+								thisVue.$store.state.login=res.data.data;
+								thisVue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
+							}
+						})
 					}
   				})
 
