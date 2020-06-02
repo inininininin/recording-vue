@@ -1,6 +1,10 @@
 <template>
 	<div id="index" style="height:100%;position:relative;">
-			<div  style="position: relative;border-bottom:1px solid #8f8f8f;">
+			<div  class="scrollbar"
+			style="
+			position: relative;border-bottom:1px solid #8f8f8f;
+			white-space: nowrap;overflow-x: auto;
+			">
 				<span  @click="sortMap.name++;sortMap.name=sortMap.name==3?0:sortMap.name;sortMap1.name=sortMap.name;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.name?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					名称<span v-if="sortMap.name==1">&nbsp;&and;</span><span v-if="sortMap.name==2">&nbsp;&or;</span><span v-if="sortMap.name==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
@@ -27,21 +31,7 @@
 				</span>
 
 				
-				<!-- <span style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					<select v-model="completeIs" :style="{color:completeIs?'red':'#000000'}" @change="pn=1;taskList=[];loadTaskList()" style="height:30px;border:none;cursor: pointer;">
-						<option value="">全部</option>
-						<option value="0">未完成</option>
-						<option value="1">已完成</option>
-					</select>
-				</span>
-
-				<span style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					<select v-model="cancelIs" :style="{color:cancelIs?'red':'#000000'}" @change="pn=1;taskList=[];loadTaskList()" style="height:30px;border:none;cursor: pointer;">
-						<option value="">全部</option>
-						<option value="0">未撤销</option>
-						<option value="1">已撤销</option>
-					</select>
-				</span> -->
+			
 
 				<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					<select v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;taskList=[];loadTaskList()" style="height:30px;border:none;cursor: pointer;padding:0 5px;">
@@ -56,13 +46,19 @@
 						<input v-model="kw" @keyup.enter="pn=1;taskList=[];loadTaskList();" type="text" style="line-height: 30px;width:50px;padding:0 15px 0 5px;border:none;"/>
 						<span v-if="kw" style="font-size: 14px;cursor: pointer;color: #8f8f8f;position: absolute;right:6px;top:0px;" @click="kw=null;pn=1;taskList=[];loadTaskList();">x</span>
 					</span>
-					<span @click="pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="
+						debugger
+						pn=1;
+						taskList=[];
+						loadTaskList();
+						" 
+					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
 					<span @click="status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						重置
 					</span>
-					<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;">
 						···
 					</span>
 			</div>
@@ -111,7 +107,8 @@
 				debugger;
 				faBuRenUserId=faBuRenUserId?null:item.faBuRenUserId;
 				taskList=[],pn=1;
-				loadTaskList();" :style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.nickname}}</span>
+				loadTaskList();" :style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#8f8f8f':'#ffffff')}" 
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.followAlias||item.nickname}}</span>
 				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 
@@ -138,12 +135,20 @@
 				taskList=[],pn=1;
 				loadTaskList();
 				" 
-				:style="{'background-color':(fuZeRenUserId==item.fuZeRenUserId?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.nickname}}</span>
+				:style="{'background-color':(fuZeRenUserId==item.fuZeRenUserId?'#8f8f8f':'#ffffff')}" 
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.followAlias||item.nickname}}</span>
 				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 			</div>
 
-		<div class="scrollbar" @scroll="taskListScroll($event)" ref="taskList" style="overflow: auto;position: absolute;top:94px;bottom:88px;width:100%;background-color: rgb(252, 250, 250);">
+
+		<div class="scrollbar" @scroll="taskListScroll($event)" ref="taskList" 
+		style="
+		overflow: auto;width:100%;
+		background-color: rgb(252, 250, 250);position: absolute;
+		top: 95px;bottom: 88px;
+		">
+
 		<div style="margin:5px 7px 0px 7px;">
 			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
 		</div>
@@ -152,11 +157,10 @@
 		:style="{'background-color':(item.completeIs?'#219e154d':item.cancelIs?'#ffff006e':'#FFFFFF')}">
 			<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.name}}</div>
 			<div style="position:relative;margin-top:3px;">
-				<span style="font-size:12px;color:#8F8F8F;">{{$moment(item.createTime).format('MM-DD HH:mm, d, YYYY')}}</span>
-				<span style="font-size:12px;color:#8F8F8F;margin-left:50px;">{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
+				<span style="font-size:12px;color:#8F8F8F;">{{$moment(item.createTime).format('MM-DD HH:mm, d, YY')}}</span>
+				<span style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
+				<span style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YY')):null}}</span>
 				<span style="font-size:12px;color:#8F8F8F;position:absolute;right:0px;">{{item.orderNo==9999?'':item.orderNo}}</span>
-				<span style="font-size:12px;color:#8F8F8F;margin-left:50px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YYYY')):null}}</span>
-
 			</div>
 		</div>
 		
@@ -208,6 +212,8 @@
 	</div>
 </template>
 <script>
+	import Vue from 'vue'
+	import _ from 'lodash'
 	export default {
 		name: 'index',
 		data() {
@@ -294,7 +300,7 @@
 					thisVue.loadTaskList()
 				}
 			},
-			loadTaskList(){
+			loadTaskList:_.debounce(function(){
 				debugger
 				let thisVue = this
 				thisVue.loading=1
@@ -345,7 +351,7 @@
 						thisVue.itemCount=res.data.data.itemCount
 					}
 				})
-			},
+			},300),
 		}
 	}
 </script>

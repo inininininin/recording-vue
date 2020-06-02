@@ -36,7 +36,8 @@
 		
 		<div v-for="(item, i) in friendList" @click="lookFriend=item" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
 			<span><img :src="item.logo" /></span>
-			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.nickname}}</span>
+			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{$attr(item,'alias')?$attr(item,'alias'):item.nickname}}
+				{{$attr(item,'alias')?(`(${$attr(item,'nickname')})`):''}}</span>
 		</div>
 		
 		<div v-show="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
@@ -81,9 +82,9 @@
 		<div v-show="lookFriend" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px;background-color: #ffffff;margin-top:150px;">
 				<div style="font-size: 16px;padding-left:30px;color:#8F8F8F;">查看好友</div>
-				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>昵称 : </span><span>{{$attr(lookFriend,'nickname')}}</span></div>
-				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>别名 : </span><span>{{$attr(lookFriend,'alias')}}</span></div>
-				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>手机 : </span><span>{{$attr(lookFriend,'phone')}}</span></div>
+				<div style="margin-top:10px;padding-left:30px;"><span style="font-size:16px;">昵称 : </span><span style="font-size:16px;">{{$attr(lookFriend,'nickname')}}</span></div>
+				<div style="margin-top:10px;padding-left:30px;"><span style="font-size:16px;">别名 : </span><span style="font-size:16px;">{{$attr(lookFriend,'alias')}}</span></div>
+				<div style="margin-top:10px;padding-left:30px;"><span style="font-size:16px;">手机 : </span><span><a :href="'tel:'+$attr(lookFriend,'phone')" style="font-size:16px;">{{$attr(lookFriend,'phone')}}</a></span></div>
 				<div style="margin-top:10px;padding-left:30px;">
 					<button @click="lookFriend=null;" style="cursor: pointer;width:150px;height:30px;">关闭</button>
 				</div>
@@ -184,36 +185,46 @@
 				let thisVue = this
 				Object.assign(thisVue.$data, thisVue.$options.data());
 
-				thisVue.$axios.post('/login-refresh').then(res => {
-					debugger
-					if(res.data.codeMsg)
-						alert(res.data.codeMsg)
-					if (res.data.code == 0) {
-						thisVue.$store.state.login=res.data.data;
-					}else{
-						thisVue.$axios.post('/logout').then(res => {
+				if(!thisVue.$store.state.login){
+					thisVue.$axios.post('/logout').then(res => {
 							thisVue.$store.state.login=null;
 							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
-					}
-				})
+				}
+					
 
 				thisVue.loadFriendList()
 			},
 			addFriendDo(item){
-				var r=window.prompt(`确认添加 ${item.nickname} 为好友吗`,"可在此输入别名")
-				if (r!=null)
-					{
-						thisVue.$axios.post(`/my-friend/create-friend`,thisVue.$qs.stringify({userId:item.userId,alias:r})).then(res => {
-							debugger
-							if(res.data.codeMsg)
-								alert(res.data.codeMsg)
-							if (res.data.code == 0) {
-								if(!res.data.codeMsg)
-									alert('成功')
-							}
-						})
-					}
+				if(!item.followId){
+					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
+					if (r!=null)
+						{
+							thisVue.$axios.post(`/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+								debugger
+								if(res.data.codeMsg)
+									alert(res.data.codeMsg)
+								if (res.data.code == 0) {
+									if(!res.data.codeMsg)
+										alert('成功')
+								}
+							})
+						}
+				}else{
+					var r=window.prompt(`你和 ${item.nickname} 已经是好友 , 你可以修改别名`,item.followAlias||'')
+					if (r!=null)
+						{
+							thisVue.$axios.post(`/my-follow/update-follow`,thisVue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
+								debugger
+								if(res.data.codeMsg)
+									alert(res.data.codeMsg)
+								if (res.data.code == 0) {
+									if(!res.data.codeMsg)
+										alert('成功')
+								}
+							})
+						}
+				}
 			},
 			findMoreFriendUserList(){
 				debugger
@@ -280,13 +291,13 @@
 				}
 				if(!sorts || sorts.length==0){
 					sorts=['orderNo','nickname','createTime','updateTime']
-					orders=['asc','desc','desc','desc']
+					orders=['asc','asc','desc','desc']
 				}
 
 				thisVue.itemCount =null;
 				
 
-				thisVue.$axios.get('/my-friend/friend-list?'+thisVue.$qs.stringify({kw:thisVue.kw,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/my-follow/follow-list?'+thisVue.$qs.stringify({kw:thisVue.kw,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -296,7 +307,7 @@
 					}
 					thisVue.loading=0
 				})
-				thisVue.$axios.get('/my-friend/friend-list-sum?'+thisVue.$qs.stringify({kw:thisVue.kw,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/my-follow/follow-list-sum?'+thisVue.$qs.stringify({kw:thisVue.kw,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						thisVue.itemCount=res.data.data.itemCount
@@ -308,7 +319,27 @@
 </script>
 <style scoped>
 
-.scrollbar::-webkit-scrollbar {
-  display: none;
+
+
+.scrollbar::-webkit-scrollbar{
+	width:4px;
+	/* border-radius: 5px; */
 }
+.scrollbar::-webkit-scrollbar-track{
+	background-color:#2b2b2e;
+	/* border-radius: 5px; */
+}
+.scrollbar::-webkit-scrollbar-thumb{
+	background-color:#66666d;
+	/* border-radius: 5px; */
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color:#66666d;
+	/* border-radius: 5px; */
+}
+.scrollbar::-webkit-scrollbar-thumb:active {
+	background-color:#2b2b2e;
+	/* border-radius: 5px; */
+}
+
 </style>

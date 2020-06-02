@@ -1,12 +1,14 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;" >
+	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;" >
 		<div
-			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;position: relative;border-bottom:1px solid #8F8F8f">
+			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: fixed;
+			width: 100%;top:0;">
 			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>发布任务</span>
 		</div>
-		<div style="padding:0 5px;margin-top:20px;">
-			<div style="font-size: 14px;margin-left:5px;color: #8f8f8f;">任务名</div>
+		<div style="padding:0 5px;margin:40px 0 0 0;">
+			<div style="height:10px;"></div>
+			<div style="font-size: 14px;margin:0 0 0 5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="name" v-focus='true' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
@@ -24,7 +26,7 @@
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
 			<div style="position: relative;margin:5px 0 0 5px;">
 
-				 <span style="font-size:14px;">{{faBuRenUserNickname}}</span>
+				 <span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
 
 				 <span v-show="faBuRenUserId" 
 				 @click="faBuRenUserId = faBuRenUserNickname = null;" 
@@ -41,8 +43,8 @@
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">负责人</div>
 			<div style="position: relative;margin:5px 0 0 5px;">
-				 <span style="font-size:14px;">{{fuZeRenUserNickname}}</span>
-				 <span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+				<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
+				<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
 				<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
 			</div>
 

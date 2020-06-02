@@ -1,12 +1,15 @@
 <template>
-	<div id="task" class="scrollbar" style="height:100%;overflow:auto;">
-		<div
-			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;position: relative;border-bottom:1px solid #8F8F8f">
+	<div id="task" class="scrollbar" style="height:100%;overflow:auto;position: relative;">
+		<div   
+			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
+			width: 100%;">
 			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>任务详情</span>
 		</div>
-		<div style="padding:0 5px;margin-top:20px;">
-			<div style="margin-left:5px;">
+
+		<div style="padding:0 5px;margin:40px 0 0 0;">
+			<div style="height:10px"></div>
+			<div style="margin:0 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">任务名</span>
 				<span v-if="!nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
 				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
