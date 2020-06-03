@@ -26,17 +26,17 @@
 				<input v-model="smsvcode"  @keyup.enter="login()" type="text" style="width:138px;height:28px;border-width: 1px;padding:0;padding-right:15px;"/>
 				<span v-if="smsvcode"  @click="smsvcode=null" style="font-size: 14px;position:absolute;right:50px;cursor: pointer;color: #8f8f8f;">x</span>
 				<span style="width:10px;display:inline-block;"></span>
-				<button style="width:35px;height:30px;padding:0;vertical-align: top;">获取</button>
+				<button type="button" style="width:35px;height:30px;padding:0;vertical-align: top;">获取</button>
 			</div>
 
 			<div style="height:50px;"></div>
 			<div style="text-align: center;">
-				<button style="width:200px;height:30px;" @click="login()">登录</button>
-				<button v-if="byPasswordIs" @click="bySmsvcodeIs=1;byPasswordIs=0" style="width:200px;height:30px;margin-top:5px;">验证码登录</button>
-				<button  v-if="bySmsvcodeIs" @click="bySmsvcodeIs=0;byPasswordIs=1" style="width:200px;height:30px;margin-top:5px;">密码登录</button>
+				<button style="width:200px;height:30px;" @click="login()" type="button">登录</button>
+				<button v-if="byPasswordIs" @click="bySmsvcodeIs=1;byPasswordIs=0" type="button" style="width:200px;height:30px;margin-top:5px;" >验证码登录</button>
+				<button  v-if="bySmsvcodeIs" @click="bySmsvcodeIs=0;byPasswordIs=1" type="button" style="width:200px;height:30px;margin-top:5px;">密码登录</button>
 				<div style="height:50px;"></div>
-				<button @click="$router.push({path:'/register',query:{time:new Date().getTime()+''}})" style="width:200px;height:30px;">去注册</button>
-				<button @click="$router.push({path:'/forget-password',query:{time:new Date().getTime()+''}})" style="width:200px;height:30px;margin-top:5px;">找回密码</button>
+				<button @click="$router.push({path:'/register',query:{time:new Date().getTime()+''}})" type="button" style="width:200px;height:30px;">去注册</button>
+				<button @click="$router.push({path:'/forget-password',query:{time:new Date().getTime()+''}})" type="button" style="width:200px;height:30px;margin-top:5px;">找回密码</button>
 			</div>
 		</form>
     </div>

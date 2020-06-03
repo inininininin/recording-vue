@@ -1,12 +1,11 @@
 <template>
 	<div id="task" class="scrollbar" style="height:100%;overflow:auto;position: relative;">
-		<div   
+		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
-			width: 100%;">
+			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
 			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
-			<span>任务详情</span>
+			<span>发布任务</span>
 		</div>
-
 		<div style="padding:0 5px;margin:40px 0 0 0;">
 			<div style="height:10px"></div>
 			<div style="margin:0 0 0 5px;">
@@ -39,6 +38,23 @@
 			</div>
 			<div v-if="!typeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
 				{{task.type==1?'推进':task.type==2?'缺陷':''}}
+			</div>
+
+			<div style="margin:10px 0 0 5px;">
+				<span style="font-size: 14px;color: #8f8f8f;">每天自动重发</span>
+				<span v-if="!autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskUpdate.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
+				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;updateTask('autoRedoTomorrowIs');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+			</div>
+			<div v-if="autoRedoTomorrowIsEditIs" style="margin:5px 0 0 5px;line-height: 25px;">
+				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;">否</label>
+				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio" value="0" v-model="taskUpdate.autoRedoTomorrowIs" style="cursor: pointer;" />
+				<span style="margin:0 5px;"></span>
+				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;">是</label>
+				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  value="1" v-model="taskUpdate.autoRedoTomorrowIs" style="cursor: pointer;"/>
+			</div>
+			<div v-if="!autoRedoTomorrowIsEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
+				{{task.autoRedoTomorrowIs==0?'否':task.autoRedoTomorrowIs==1?'是':''}}
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
@@ -244,6 +260,7 @@
 					content:null,
 					orderNo:null,
 					imageList:[],
+					autoRedoTomorrowIs:null,
 				},
 				taskUpdate:{
 					taskId:null,
@@ -257,6 +274,7 @@
 					content:null,
 					orderNo:null,
 					imageList:[],
+					autoRedoTomorrowIs:null,
 				},
 				nameEditIs:0,
 				orderNoEditIs:0,
@@ -265,6 +283,7 @@
 				imageListEditIs:0,
 				finalTimeEditIs:0,
 				fuZeRenEditIs:0,
+				autoRedoTomorrowIsEditIs:0,
 				query: '',
 				trackContent:null,
 				taskTrack_loading:null,
@@ -345,7 +364,6 @@
 
 				var param={}
 				param.taskId=thisVue.taskId
-				param.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
 				param[name]=thisVue.taskUpdate[name]
 				if(name=='imageList'){
 					param.image=thisVue.taskUpdate.imageList[0]?thisVue.taskUpdate.imageList[0]:null,

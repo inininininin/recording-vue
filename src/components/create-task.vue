@@ -1,8 +1,8 @@
 <template>
 	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;" >
 		<div
-			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: fixed;
-			width: 100%;top:0;">
+			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
+			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
 			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>发布任务</span>
 		</div>
@@ -21,6 +21,15 @@
 				<span style="margin:0 5px;"></span>
 				<label for="bugIs" style="font-size:14px;cursor: pointer;">缺陷</label>
 				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;"  value="2" v-model="type"/>
+			</div>
+
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">每天自动重发</div>
+			<div style="margin:5px 0 0 5px;">
+				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;">否</label>
+				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;" value="0" v-model="autoRedoTomorrowIs"/>
+				<span style="margin:0 5px;"></span>
+				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;">是</label>
+				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;"  value="1" v-model="autoRedoTomorrowIs"/>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
@@ -105,6 +114,7 @@
 				faBuRenUserNickname: null,
 				fuZeRenUserId: null,
 				fuZeRenUserNickname: null,
+				autoRedoTomorrowIs:0,
 			}
 		},
 		activated() {
@@ -160,7 +170,7 @@
 				if(thisVue.finalTimeDate && thisVue.finalTimeTime)
 					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+thisVue.finalTimeTime).toDate().getTime();
 
-				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
+				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
 				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,

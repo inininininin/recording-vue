@@ -1,9 +1,9 @@
 <template>
 	<div id="index" style="height:100%;position:relative;">
-			<div  class="scrollbar"
+			<div  class="scrollbar1"
 			style="
 			position: relative;border-bottom:1px solid #8f8f8f;
-			white-space: nowrap;overflow-x: auto;
+			white-space: nowrap;overflow-x: scroll;
 			">
 				<span  @click="sortMap.name++;sortMap.name=sortMap.name==3?0:sortMap.name;sortMap1.name=sortMap.name;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.name?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					名称<span v-if="sortMap.name==1">&nbsp;&and;</span><span v-if="sortMap.name==2">&nbsp;&or;</span><span v-if="sortMap.name==0" style="visibility: hidden;">&nbsp;&or;</span>
@@ -41,6 +41,32 @@
 					</select>
 				</span>
 				
+				
+				<span style="line-height:20px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;padding: 0 5px;" >
+					<label for="autoRedoTomorrowIs" style="cursor: pointer;font-size: 14px; padding: 0 5px 0 0;" :style="{color:autoRedoTomorrowIs!=1?'red':'#000000'}">日常</label>
+					<input id="autoRedoTomorrowIs" type="checkbox" 
+					@click="
+					if(++autoRedoTomorrowIs > 3){
+						autoRedoTomorrowIs=1
+					}
+					if(autoRedoTomorrowIs == 1){
+						$event.target.checked=false
+						$event.target.indeterminate=false
+					}else if(autoRedoTomorrowIs == 2){
+						$event.target.checked=true
+						$event.target.indeterminate=false
+					}else if(autoRedoTomorrowIs == 3){
+						$event.target.checked=false
+						$event.target.indeterminate=true
+					}
+					pn=1;taskList=[];loadTaskList();
+					" 
+					:indeterminate.prop="autoRedoTomorrowIs==3?true:false"
+					:checked="autoRedoTomorrowIs==2?true:false"
+					style="height:30px;border:none;cursor: pointer;padding:0 5px;
+					margin: 0;vertical-align: bottom;" />
+				</span>
+
 					<span style="line-height: 30px;font-size: 14px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
 						<span v-show="!kw" style="font-size: 14px;color: #8f8f8f;position: absolute;left:6px;top:0px;" >Q</span>
 						<input v-model="kw" @keyup.enter="pn=1;taskList=[];loadTaskList();" type="text" style="line-height: 30px;width:50px;padding:0 15px 0 5px;border:none;"/>
@@ -55,14 +81,15 @@
 					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
-					<span @click="status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="autoRedoTomorrowIs=1,status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" 
+					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;margin-right:25px;">
 						重置
 					</span>
-					<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;">
-						···
-					</span>
+					
 			</div>
-			
+			<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;background-color: #ffffff;cursor: pointer;display:inline-block;position: absolute;right:0;top:1px;border-left:1px solid #8f8f8f;">
+				···
+			</span>
 			<div style="
 			height:30px;
 			line-height:30px;
@@ -98,6 +125,7 @@
 				cursor: pointer;
 				display:inline-block;
 				border-right:1px solid #8f8f8f;
+				min-width: 20px;text-align: center;
 				"
 				:style="{'background-color':(faBuRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#8f8f8f':'#ffffff')}" 
 				>我</span>
@@ -108,7 +136,8 @@
 				faBuRenUserId=faBuRenUserId?null:item.faBuRenUserId;
 				taskList=[],pn=1;
 				loadTaskList();" :style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#8f8f8f':'#ffffff')}" 
-				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.followAlias||item.nickname}}</span>
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
+				min-width: 20px;text-align: center;">{{item.followAlias||item.nickname}}</span>
 				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 
@@ -128,7 +157,12 @@
 				taskList=[],pn=1;
 				loadTaskList();
 				" 
-				:style="{'background-color':(fuZeRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#8f8f8f':'#ffffff')}" style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">我</span>
+				:style="{'background-color':(fuZeRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#8f8f8f':'#ffffff')}" 
+
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
+				min-width: 20px;text-align: center;"
+				>我</span>
+
 				<span v-for="(item,i) in fuZeRenList" 
 				@click="
 				fuZeRenUserId=fuZeRenUserId?null:item.fuZeRenUserId;
@@ -136,7 +170,8 @@
 				loadTaskList();
 				" 
 				:style="{'background-color':(fuZeRenUserId==item.fuZeRenUserId?'#8f8f8f':'#ffffff')}" 
-				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">{{item.followAlias||item.nickname}}</span>
+				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
+				min-width: 20px;text-align: center;">{{item.followAlias||item.nickname}}</span>
 				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 			</div>
@@ -146,21 +181,23 @@
 		style="
 		overflow: auto;width:100%;
 		background-color: rgb(252, 250, 250);position: absolute;
-		top: 95px;bottom: 88px;
+		top: 97px;bottom: 88px;
 		">
 
 		<div style="margin:5px 7px 0px 7px;">
 			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div v-for="(item, i) in taskList" @click="$router.push({path:'/task',query:{time:new Date().getTime()+'',taskId:item.taskId}})" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;" 
+		<div v-for="(item, i) in taskList" class="active visited" @click="$router.push({path:'/task',query:{time:new Date().getTime()+'',taskId:item.taskId}})" 
+		style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;" 
 		:style="{'background-color':(item.completeIs?'#219e154d':item.cancelIs?'#ffff006e':'#FFFFFF')}">
 			<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.name}}</div>
 			<div style="position:relative;margin-top:3px;">
 				<span style="font-size:12px;color:#8F8F8F;">{{$moment(item.createTime).format('MM-DD HH:mm, d, YY')}}</span>
 				<span style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
-				<span style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YY')):null}}</span>
-				<span style="font-size:12px;color:#8F8F8F;position:absolute;right:0px;">{{item.orderNo==9999?'':item.orderNo}}</span>
+				<span v-if="item.finalTime" style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YY')):''}}</span>
+				<span v-if="item.autoRedoTomorrowIs" style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.autoRedoTomorrowIs?'日常':''}}</span>
+				<span v-if="item.orderNo" style="font-size:12px;color:#8F8F8F;position:absolute;right:0px;">{{item.orderNo==9999?'':item.orderNo}}</span>
 			</div>
 		</div>
 		
@@ -194,18 +231,14 @@
 			</div>
 			<div style="border-top:1px solid #8F8F8F;"></div>
 			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #8F8F8F;">任务</span>
-				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
-						style="visibility: hidden;">1</span></span>
+				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #ff7f08;">任务</span>
+				
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
-				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
-						style="visibility: hidden;">1</span></span>
+				
 				<span @click="$router.push({path:'/friend-list',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">好友</span>
-				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
-						style="visibility: hidden;">1</span></span>
+				
 				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
-				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
-						style="visibility: hidden;">1</span></span>
+				
 				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
 			</div>
 		</div>
@@ -224,6 +257,7 @@
 				cancelIs:'',
 				status:1,
 				query: '',
+				autoRedoTomorrowIs:1,
 				fuZeRenUserId:null,
 				faBuRenUserId:null,
 				taskList:[],
@@ -332,8 +366,8 @@
 					thisVue.cancelIs=null
 				}
 
-				
-				thisVue.$axios.get('/my-task/task-list?'+thisVue.$qs.stringify({fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				let autoRedoTomorrowIs=thisVue.autoRedoTomorrowIs==1?'':thisVue.autoRedoTomorrowIs==2?1:thisVue.autoRedoTomorrowIs==3?0:'';
+				thisVue.$axios.get('/my-task/task-list?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0){
@@ -345,7 +379,7 @@
 					}
 					thisVue.loading=0
 				})
-				thisVue.$axios.get('/my-task/task-list-sum?'+thisVue.$qs.stringify({fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/my-task/task-list-sum?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						thisVue.itemCount=res.data.data.itemCount
@@ -359,5 +393,34 @@
 
 .scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+
+.scrollbar1::-webkit-scrollbar{
+	height:3px;
+	/* border-radius: 5px; */
+}
+.scrollbar1::-webkit-scrollbar-track{
+	background-color:#8F8F8F;
+	/* border-radius: 5px; */
+}
+.scrollbar1::-webkit-scrollbar-thumb{
+	background-color:#000000;
+	/* border-radius: 5px; */
+}
+.scrollbar1::-webkit-scrollbar-thumb:hover {
+	background-color:#000000;
+	/* border-radius: 5px; */
+}
+.scrollbar1::-webkit-scrollbar-thumb:active {
+	background-color:#000000;
+	/* border-radius: 5px; */
+}
+
+.active:active {
+	background-color: #cccccc!important;
+}
+.visited:visited {
+	background-color: #cccccc!important;
 }
 </style>
