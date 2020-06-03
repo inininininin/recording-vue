@@ -10,26 +10,26 @@
 			<div style="height:10px;"></div>
 			<div style="font-size: 14px;margin:0 0 0 5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<input v-model="name" v-focus='true' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<span v-if="nameIf"><input  v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">类型</div>
 			<div style="margin:5px 0 0 5px;">
-				<label for="developIs" style="font-size:14px;cursor: pointer;">推进</label>
-				<input id="developIs" name="type" type="radio"  style="cursor: pointer;" value="1" v-model="type"/>
+				<label for="developIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">推进</label>
+				<input id="developIs" name="type" type="radio"  style="cursor: pointer;margin:0;" value="1" v-model="type"/>
 				<span style="margin:0 5px;"></span>
-				<label for="bugIs" style="font-size:14px;cursor: pointer;">缺陷</label>
-				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;"  value="2" v-model="type"/>
+				<label for="bugIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">缺陷</label>
+				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;margin:0;"  value="2" v-model="type"/>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">每天自动重发</div>
 			<div style="margin:5px 0 0 5px;">
-				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;">否</label>
-				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;" value="0" v-model="autoRedoTomorrowIs"/>
+				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;padding-right: 5px;">否</label>
+				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;" value="0" v-model="autoRedoTomorrowIs"/>
 				<span style="margin:0 5px;"></span>
-				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;">是</label>
-				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;"  value="1" v-model="autoRedoTomorrowIs"/>
+				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;padding-right: 5px;">是</label>
+				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;"  value="1" v-model="autoRedoTomorrowIs"/>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
@@ -103,6 +103,7 @@
 		data() {
 			return {
 				name:null,
+				nameIf:0,
 				type:1,
 				content:null,
 				orderNo:'9999',
@@ -145,9 +146,10 @@
 		},
 		methods: {
 			reload() {
+				debugger
 				let thisVue = this
 				Object.assign(thisVue.$data, thisVue.$options.data());
-				
+				thisVue.nameIf = 1
 				if(thisVue.$store.state.cloneTask){
 					thisVue.name=thisVue.$store.state.cloneTask.name
 					thisVue.type=thisVue.$store.state.cloneTask.type

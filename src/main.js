@@ -49,15 +49,13 @@ Vue.prototype.$attr=function(obj,keyChain){
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
 	inserted: function(el, attr) {
+    debugger
 		// 聚焦元素
-		if (attr.value)
-			el.focus()
+		if (attr.value){
+      el.focus()
+    }
   },
-  update: function(el, attr) {
-		// 聚焦元素
-		if (attr.value)
-			el.focus()
-	}
+
 })
 
 new Vue({
