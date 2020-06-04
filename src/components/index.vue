@@ -5,20 +5,11 @@
 			position: relative;border-bottom:1px solid #8f8f8f;
 			white-space: nowrap;overflow-x: scroll;
 			">
-				<span  @click="sortMap.name++;sortMap.name=sortMap.name==3?0:sortMap.name;sortMap1.name=sortMap.name;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.name?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					名称<span v-if="sortMap.name==1">&nbsp;&and;</span><span v-if="sortMap.name==2">&nbsp;&or;</span><span v-if="sortMap.name==0" style="visibility: hidden;">&nbsp;&or;</span>
-				</span>
 				<span @click="sortMap.createTime++;sortMap.createTime=sortMap.createTime==3?0:sortMap.createTime;sortMap1.createTime=sortMap.createTime;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.createTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					时间<span v-if="sortMap.createTime==1">&nbsp;&and;</span><span v-if="sortMap.createTime==2">&nbsp;&or;</span><span v-if="sortMap.createTime==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
-				<span @click="sortMap.updateTime++;sortMap.updateTime=sortMap.updateTime==3?0:sortMap.updateTime;sortMap1.updateTime=sortMap.updateTime;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.updateTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
-					更新<span v-if="sortMap.updateTime==1">&nbsp;&and;</span><span v-if="sortMap.updateTime==2">&nbsp;&or;</span><span v-if="sortMap.updateTime==0" style="visibility: hidden;">&nbsp;&or;</span>
-				</span>
 				<span @click="sortMap.finalTime++;sortMap.finalTime=sortMap.finalTime==3?0:sortMap.finalTime;sortMap1.finalTime=sortMap.finalTime;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.finalTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 					限期<span v-if="sortMap.finalTime==1">&nbsp;&and;</span><span v-if="sortMap.finalTime==2">&nbsp;&or;</span><span v-if="sortMap.finalTime==0" style="visibility: hidden;">&nbsp;&or;</span>
-				</span>
-				<span  @click="sortMap.orderNo++;sortMap.orderNo=sortMap.orderNo==3?0:sortMap.orderNo;sortMap1.orderNo=sortMap.orderNo;pn=1;taskList=[];loadTaskList();" :style="{color:sortMap.orderNo?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					序号<span v-if="sortMap.orderNo==1">&nbsp;&and;</span><span v-if="sortMap.orderNo==2">&nbsp;&or;</span><span v-if="sortMap.orderNo==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
 			
 				<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
@@ -81,7 +72,7 @@
 					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
-					<span @click="autoRedoTomorrowIs=1,status='',cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" 
+					<span @click="status=1;autoRedoTomorrowIs=1,cancelIs='',completeIs='',sortMap.name=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];loadTaskList()" 
 					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;margin-right:25px;">
 						重置
 					</span>
@@ -177,34 +168,39 @@
 			</div>
 
 
+			<div style="padding:5px 0 0 12px;">
+				<span style="font-size: 14px;color: #8f8f8f;">{{$moment($store.state.now).format('MM-DD, d, HH:mm')}}</span>
+				<span style="font-size: 14px;color: #8f8f8f;margin-left:15px;">共 {{itemCount}} 条记录</span>
+			</div>
+
 		<div class="scrollbar" @scroll="taskListScroll($event)" ref="taskList" 
 		style="
-		overflow: auto;width:100%;
-		background-color: rgb(252, 250, 250);position: absolute;
-		top: 97px;bottom: 88px;
+		overflow: auto;width:100%;position: absolute;
+		top: 123px;bottom: 88px;
 		">
-
-		<div style="margin:5px 7px 0px 7px;">
-			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
-		</div>
 		
 		<div v-for="(item, i) in taskList" class="active visited" @click="$router.push({path:'/task',query:{time:new Date().getTime()+'',taskId:item.taskId}})" 
 		style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;" 
 		:style="{'background-color':(item.completeIs?'#219e154d':item.cancelIs?'#ffff006e':'#FFFFFF')}">
 			<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.name}}</div>
+			<div style="font-size:14px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+				{{$attr(item.lastTaskTrack,'content')}}
+			</div>
 			<div style="position:relative;margin-top:3px;">
-				<span style="font-size:12px;color:#8F8F8F;">{{$moment(item.createTime).format('MM-DD HH:mm, d, YY')}}</span>
-				<span style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
-				<span v-if="item.finalTime" style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.finalTime?('限: '+$moment(item.finalTime).format('MM-DD HH:mm, d, YY')):''}}</span>
+				<span style="font-size:12px;color:#8F8F8F;"
+				>{{$moment(item.createTime).format(new Date().getFullYear()==new Date(item.createTime).getFullYear()? 'MM-DD, 周d, HH:mm': 'MM-DD, 周d, HH:mm, YYYY').replace('周0','周7').replace('周','')}}</span>
+				<span v-if="!(item.fuZeRenUserId==item.faBuRenUserId && item.faBuRenUserId==$attr($store.state.login,'userId'))" style="font-size:12px;color:#8F8F8F;margin-left:15px;"
+				>{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}} > {{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname }}</span>
+				<span v-if="item.finalTime" style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.finalTime?('限: '+$moment(item.finalTime).format(new Date().getFullYear()==new Date(item.finalTime).getFullYear()? "MM-DD, 周d, HH:mm": "MM-DD, 周d, HH:mm, YYYY").replace(/周0/g,'周7').replace(/周/g,'')):''}}</span>
 				<span v-if="item.autoRedoTomorrowIs" style="font-size:12px;color:#8F8F8F;margin-left:15px;">{{item.autoRedoTomorrowIs?'日常':''}}</span>
 				<span v-if="item.orderNo" style="font-size:12px;color:#8F8F8F;position:absolute;right:0px;">{{item.orderNo==9999?'':item.orderNo}}</span>
 			</div>
 		</div>
 		
-		<div v-show="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
+		<div v-show="loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
-		<div v-show="!loading && taskList.length<itemCount" @click="pn++;loadTaskList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-		<div v-show="!loading && !(taskList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+		<div v-show="!loading && taskList.length<itemCount" @click="pn++;loadTaskList();" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+		<div v-show="!loading && !(taskList.length<itemCount)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 
 	</div>
 		
@@ -278,7 +274,7 @@
 				
 				sortMap1:{
 					
-				}
+				},
 			}
 		},
 		activated() {
@@ -324,6 +320,9 @@
 							thisVue.fuZeRenList=thisVue.fuZeRenList.concat(res.data.data.itemList)
 					}
 				})
+
+				
+
 			},
 			taskListScroll(event){
 				debugger
@@ -348,8 +347,8 @@
 				}
 
 				if(!sorts || sorts.length==0){
-					sorts=['orderNo','finalTime','updateTime','createTime','name']
-					orders=['asc','desc','desc','desc','asc']
+					sorts=['orderNo','updateTime','createTime','name']
+					orders=['asc','desc','desc','asc']
 				}
 
 				thisVue.itemCount =null;

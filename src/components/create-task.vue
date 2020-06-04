@@ -14,6 +14,45 @@
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
+			<div style="display: inline;float:left;height: 60px;">
+				<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
+				<div style="position: relative;margin:5px 0 0 5px;">
+
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
+
+					<span v-show="faBuRenUserId" 
+					@click="faBuRenUserId = faBuRenUserNickname = null;" 
+					style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
+					>x</span>
+
+					<button 
+					v-show="!faBuRenUserId" 
+					@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()+''}})" 
+					style="cursor: pointer;"
+					>选择</button>
+					
+				</div>
+			</div>
+			<div style="font-size: 14px;float:left;vertical-align: bottom;height: 60px;line-height: 94px;margin:0 25px;">></div>
+			<div style="display: inline;float:left;height: 60px;">
+				<div style="font-size: 14px;margin:10px 0 0 0;color: #8f8f8f;">负责人</div>
+				<div style="position: relative;margin:5px 0 0 0;">
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
+					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+					<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
+				</div>
+			</div>
+		
+		<div style="clear: both;"></div>
+		<div style="margin:10px 0 0 5px;">
+			<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
+		</div>
+		<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
+			<input v-model="finalTimeDate" type="date" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+			<input v-model="finalTimeTime" type="time" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+			<span v-if="finalTimeDate || finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="finalTimeDate=finalTimeTime=null">x</span>
+		</div>
+		
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">类型</div>
 			<div style="margin:5px 0 0 5px;">
 				<label for="developIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">推进</label>
@@ -23,7 +62,7 @@
 				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;margin:0;"  value="2" v-model="type"/>
 			</div>
 
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">每天自动重发</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">日常 ( 每天自动重发 )</div>
 			<div style="margin:5px 0 0 5px;">
 				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;padding-right: 5px;">否</label>
 				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;" value="0" v-model="autoRedoTomorrowIs"/>
@@ -32,39 +71,9 @@
 				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;"  value="1" v-model="autoRedoTomorrowIs"/>
 			</div>
 
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
-			<div style="position: relative;margin:5px 0 0 5px;">
-
-				 <span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
-
-				 <span v-show="faBuRenUserId" 
-				 @click="faBuRenUserId = faBuRenUserNickname = null;" 
-				 style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
-				 >x</span>
-
-				<button 
-				v-show="!faBuRenUserId" 
-				@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()+''}})" 
-				style="cursor: pointer;"
-				>选择</button>
-				
-			</div>
-
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">负责人</div>
-			<div style="position: relative;margin:5px 0 0 5px;">
-				<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
-				<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
-				<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
-			</div>
-
-			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
-			</div>
-			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<input v-model="finalTimeDate" type="date" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<input v-model="finalTimeTime" type="time" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="finalTimeDate || finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="finalTimeDate=finalTimeTime=null">x</span>
-			</div>
+			
+			
+		
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">图片</div>
 			<div v-viewer="{navbar:true,title:false,toolbar:true}" >

@@ -9,6 +9,8 @@ const state={
 	chooseFaBuRenUserId:null,
 	chooseFaBuRenUserNickname:null,
 	cloneTask:null,
+	now:new Date(),
+	nowTimer:null,
 }
 const getters={
   

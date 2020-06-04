@@ -35,7 +35,7 @@
 			
 		<div class="scrollbar" @scroll="friendListScroll($event)" ref="friendList" style="overflow: auto;position: absolute;top:31px;bottom:52px;width:100%;background-color: rgb(252, 250, 250);">
 		<div style="margin:5px 7px 0px 7px;">
-			<span style="font-size: 14px;color: #8f8f8f;">已找到 {{itemCount}} 条记录</span>
+			<span style="font-size: 14px;color: #8f8f8f;">共 {{itemCount}} 条记录</span>
 		</div>
 		
 		<div v-for="(item, i) in friendList" @click="lookFriend=item" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
@@ -107,7 +107,7 @@
 				<div class="scrollbar" @scroll="addFriendUserListScroll($event)" style="padding-left:30px;margin-top:5px;height: 100px;overflow: auto;">
 
 				<div style="margin:5px 0 0 0;">
-					<span style="font-size: 14px;color: #8f8f8f;">已找到 {{addFriend.userCount}} 条记录</span>
+					<span style="font-size: 14px;color: #8f8f8f;">共 {{addFriend.userCount}} 条记录</span>
 				</div>
 					<div @click="addFriendDo(item)" v-for="(item,i) in addFriend.users" style="margin-top:5px;cursor: pointer;" >
 						<span style="font-size: 16px;">{{item.nickname}}</span>

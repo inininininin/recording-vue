@@ -15,6 +15,15 @@ export default {
     debugger
     let thisVue=this
     window.thisVue=thisVue;
+
+
+    if(thisVue.$store.state.nowTimer)
+					clearInterval(thisVue.$store.state.nowTimer)
+				thisVue.$store.state.nowTimer = setInterval(function(){
+					thisVue.$store.state.now=new Date();
+        },2000)
+        
+
     thisVue.$.ajax(
       {
         url:'/login-refresh',
@@ -28,7 +37,8 @@ export default {
         }
       }
     )
-     
+    
+    
   }
 }
 </script>
