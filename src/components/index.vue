@@ -33,7 +33,7 @@
 				</span>
 				
 				
-				<span style="line-height:20px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;padding: 0 5px;" >
+				<span style="line-height:20px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;padding: 0 5px;display:none;" >
 					<label for="autoRedoTomorrowIs" style="cursor: pointer;font-size: 14px; padding: 0 5px 0 0;" :style="{color:autoRedoTomorrowIs!=1?'red':'#000000'}">日常</label>
 					<input id="autoRedoTomorrowIs" type="checkbox" 
 					@click="
@@ -347,7 +347,7 @@
 				}
 
 				if(!sorts || sorts.length==0){
-					sorts=['orderNo','updateTime','createTime','name']
+					sorts=['orderNo','autoRedoTomorrowIs','createTime','name']
 					orders=['asc','desc','desc','asc']
 				}
 
