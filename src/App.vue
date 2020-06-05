@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div v-if="$store.state.requestStateBar>0" style="width:100%;height:3px;position: absolute;top:0;z-index: 999999;">
+      <img src="./assets/img/doing.gif" style="height:100%;width:100%"/>
+    </div>
       <keep-alive>
           <router-view/>
       </keep-alive>
@@ -21,7 +24,7 @@ export default {
 					clearInterval(thisVue.$store.state.nowTimer)
 				thisVue.$store.state.nowTimer = setInterval(function(){
 					thisVue.$store.state.now=new Date();
-        },2000)
+        },1000)
         
 
     thisVue.$.ajax(

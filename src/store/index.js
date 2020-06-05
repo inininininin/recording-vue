@@ -11,6 +11,7 @@ const state={
 	cloneTask:null,
 	now:new Date(),
 	nowTimer:null,
+	requestStateBar:0,
 }
 const getters={
   

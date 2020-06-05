@@ -3,14 +3,14 @@
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
-			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
+			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>发布任务</span>
 		</div>
 		<div style="padding:0 5px;margin:40px 0 0 0;">
 			<div style="height:10px;"></div>
 			<div style="font-size: 14px;margin:0 0 0 5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<span v-if="nameIf"><input  v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
+				<span v-if="nameIf"><input @keyup.enter="createTask()" v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
@@ -97,7 +97,7 @@
 			</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="orderNo" type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="orderNo=9999">x</span>
+				<span v-if="orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="orderNo=null">x</span>
 			</div>
 
 			<div style="text-align: center;margin-top:30px;">
@@ -115,7 +115,7 @@
 				nameIf:0,
 				type:1,
 				content:null,
-				orderNo:'9999',
+				orderNo:null,
 				finalTimeDate:null,
 				finalTimeTime:null,
 				imageList:[],
@@ -175,12 +175,16 @@
 			},
 			createTask() {
 				let thisVue = this
-				if(!thisVue.finalTimeTime)
-					thisVue.finalTimeTime="00:00"
+				
+				if(!window.confirm('确认发布吗 ?')){
+					return ;
+				}
+				
 				let finalTime = null;
-				if(thisVue.finalTimeDate && thisVue.finalTimeTime)
-					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+thisVue.finalTimeTime).toDate().getTime();
-
+				if(thisVue.finalTimeDate){
+					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+(thisVue.finalTimeTime?(thisVue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+				}
+				
 				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,

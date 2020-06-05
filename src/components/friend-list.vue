@@ -96,7 +96,7 @@
 		<div v-show="addFriendIs" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div v-show="addFriend.addIs" style="padding:10px;background-color: #ffffff;margin-top:150px;">
 				<div style="font-size: 16px;padding-left:30px;color:#8F8F8F;">添加好友</div>
-				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>关键字 : </span><span><input v-model="addFriend.kw"  v-focus="addFriendIs" type="text"/></span></div>
+				<div style="font-size: 16px;margin-top:10px;padding-left:30px;"><span>关键字 : </span><span><input v-model="addFriend.kw"  @keyup.enter="addFriend.pn=1;addFriend.users=[];findMoreFriendUserList()" v-focus="addFriendIs" type="text"/></span></div>
 				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriend.pn=1;addFriend.users=[];findMoreFriendUserList()" style="cursor: pointer;width:150px;height:30px;">查找</button></div>
 				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriendIs=0;addFriend.kw=null;addFriend.users=[];" style="cursor: pointer;width:150px;height:30px;">关闭</button></div>
 			</div>

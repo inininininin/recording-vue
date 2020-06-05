@@ -3,7 +3,7 @@
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
-			<span @click="$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
+			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>发布任务</span>
 		</div>
 		<div style="padding:0 5px;margin:40px 0 0 0;">
@@ -11,8 +11,8 @@
 			<div style="margin:0 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">任务名</span>
 				<span v-if="!nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="nameEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.name" v-focus="nameEditIs" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
@@ -35,7 +35,7 @@
 						<span style="font-size: 14px;color: #8f8f8f;margin-left:30px;">共 {{taskTrack_count}} 条记录</span>
 					</div>
 					
-						<div v-for="(item, i) in taskTrack_list" style="margin:5px 5px 5px 5px;">
+						<div :key="item.taskTrackId" v-for="(item, i) in taskTrack_list" @click="$($event.currentTarget).css('background-color','#e6e4e4');" style="margin:5px 5px 5px 5px;cursor: pointer;">
 							<div style="font-size: 14px;word-wrap: break-word;word-break: break-all;">{{item.content}}</div>
 							<div style="font-size: 12px;color:#8f8f8f;">{{$moment(item.createTime).format(new Date().getFullYear()==new Date(item.createTime).getFullYear()? 'MM-DD, 周d, HH:mm': 'MM-DD, 周d, HH:mm, YYYY').replace('周0','周7').replace('周','')}}</div>
 						</div>
@@ -149,8 +149,8 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
 				<span v-if="!finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;taskUpdate.finalTime=task.finalTime;taskUpdate.finalTimeDate=task.finalTimeDate;taskUpdate.finalTimeTime=task.finalTimeTime;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;updateTask('finalTime');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;taskUpdate.finalTime=task.finalTime;taskUpdate.finalTimeDate=task.finalTimeDate;taskUpdate.finalTimeTime=task.finalTimeTime;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;updateTask('finalTime');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="finalTimeEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.finalTimeDate" @change="taskUpdate.finalTime++" type="date"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
@@ -164,8 +164,8 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">类型</span>
 				<span v-if="!typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;taskUpdate.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;updateTask('type');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;taskUpdate.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;updateTask('type');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="typeEditIs" style="margin:5px 0 0 5px;line-height: 25px;">
 				<label for="developIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">推进</label>
@@ -181,8 +181,8 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">日常 ( 每天自动重发 )</span>
 				<span v-if="!autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskUpdate.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;updateTask('autoRedoTomorrowIs');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskUpdate.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;updateTask('autoRedoTomorrowIs');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="autoRedoTomorrowIsEditIs" style="margin:5px 0 0 5px;line-height: 25px;">
 				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;padding-right: 5px;">否</label>
@@ -202,8 +202,8 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">图片</span>
 				<span v-if="!imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;taskUpdate.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;updateTask('imageList');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;taskUpdate.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;updateTask('imageList');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>		
 			<div v-viewer="{navbar:true,title:false,toolbar:true}" >
 				<span v-for="(item, i) in taskUpdate.imageList" style="position: relative;padding-right:15px;">
@@ -221,8 +221,8 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">内容</span>
 				<span v-if="!contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;taskUpdate.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;updateTask('content');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;taskUpdate.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;updateTask('content');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="contentEditIs">
 				<textarea v-model="taskUpdate.content"  v-focus="contentEditIs" type="text" style="width:95%;margin:5px 0 0 5px;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea>
@@ -233,12 +233,12 @@
 			<div style="margin:10px 0 0 5px;">
 				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
 				<span v-if="!orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;taskUpdate.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Cancel</span>
-				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;updateTask('orderNo');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Done</span>
+				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;taskUpdate.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;updateTask('orderNo');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="orderNoEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.orderNo" v-focus="orderNoEditIs"  type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.orderNo=9999">x</span>
+				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.orderNo=null">x</span>
 			</div>
 			<div v-if="!orderNoEditIs" style="font-size:16px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.orderNo}}</div>
 
@@ -323,11 +323,11 @@
 				Object.assign(thisVue.$data, thisVue.$options.data());
 				thisVue.taskId=thisVue.$route.query.taskId;
 
-				thisVue.$axios.get('/my-task/task?taskId='+thisVue.taskId).then(res=>{
+				thisVue.$axios.get('/my-task/task-list?taskId='+thisVue.taskId).then(res=>{
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisVue.task=res.data.data;
+						thisVue.task=res.data.data.itemList[0];
 						thisVue.task.imageList=[]
 						if(thisVue.task.image)
 							thisVue.task.imageList.push(thisVue.task.image)
@@ -371,6 +371,18 @@
 				if(JSON.stringify(thisVue.task[name])==JSON.stringify(thisVue.taskUpdate[name]))
 					return;
 
+				if(!window.confirm('确认修改吗 ?'))
+				{
+					thisVue.taskUpdate[name]=thisVue.task[name];
+					if(name=='finalTime'){
+						taskUpdate.finalTime=task.finalTime;
+						taskUpdate.finalTimeDate=task.finalTimeDate;
+						taskUpdate.finalTimeTime=task.finalTimeTime;
+					}
+					return ;
+				}
+				
+
 				var param={}
 				param.taskId=thisVue.taskId
 				param[name]=thisVue.taskUpdate[name]
@@ -383,14 +395,20 @@
 					param.image5=thisVue.taskUpdate.imageList[5]?thisVue.taskUpdate.imageList[5]:null
 				}
 				if(name=='finalTime'){
-					if(!thisVue.taskUpdate.finalTimeTime)
-						thisVue.taskUpdate.finalTimeTime="00:00"
-					if(thisVue.taskUpdate.finalTimeDate && thisVue.taskUpdate.finalTimeTime)
-						param.finalTime = thisVue.$moment(thisVue.taskUpdate.finalTimeDate+" "+thisVue.taskUpdate.finalTimeTime).toDate().getTime();
-					else if(!thisVue.taskUpdate.finalTimeDate && !thisVue.taskUpdate.finalTimeTime)
+					if(thisVue.taskUpdate.finalTimeDate){
+						param.finalTime = thisVue.$moment(thisVue.taskUpdate.finalTimeDate+" "+(thisVue.taskUpdate.finalTimeTime?(thisVue.taskUpdate.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+					}else{
 						param.finalTime = ""
-					else
-						param.finalTime = null;
+					}
+
+					// if(!thisVue.taskUpdate.finalTimeTime)
+					// 	thisVue.taskUpdate.finalTimeTime="00:00"
+					// if(thisVue.taskUpdate.finalTimeDate && thisVue.taskUpdate.finalTimeTime)
+					// 	param.finalTime = thisVue.$moment(thisVue.taskUpdate.finalTimeDate+" "+thisVue.taskUpdate.finalTimeTime).toDate().getTime();
+					// else if(!thisVue.taskUpdate.finalTimeDate && !thisVue.taskUpdate.finalTimeTime)
+					// 	param.finalTime = ""
+					// else
+					// 	param.finalTime = null;
 					thisVue.taskUpdate.finalTime=param.finalTime
 				}
 

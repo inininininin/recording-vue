@@ -32,8 +32,30 @@ window.Vue=Vue;
 Vue.prototype.window=window
 
 
+Vue.prototype.$axios.interceptors.request.use(
+  config => {
+    debugger
+    Vue.prototype.$store.state.requestStateBar++
+    return config;
+  },
+  error => {
+    Vue.prototype.$store.state.requestStateBar--
+    return Promise.reject(error.response);
+  });
+
+  Vue.prototype.$axios.interceptors.response.use(
+  response => {
+    debugger
+    Vue.prototype.$store.state.requestStateBar--
+        return response;
+  },
+  error => {
+    Vue.prototype.$store.state.requestStateBar--
+    return Promise.reject(error.response)  
+  });
+
+
 Vue.prototype.$attr=function(obj,keyChain){
-  debugger
     if(!obj || !keyChain)
       return null;
      let keys= keyChain.split('.')
@@ -46,10 +68,34 @@ Vue.prototype.$attr=function(obj,keyChain){
      return obj1;
 }
 
+Vue.prototype.$queryMark=function(text,kw){
+  debugger
+  let kwList = [];
+  let textOut = text;
+  if(kw==null||kw==''||kw==undefined)
+    return textOut
+  if(text==null||text==''||text==undefined)
+    return textOut
+ 
+   if(kw.constructor == String  ){
+    kwList=[kw]
+   }
+
+   if(kw.constructor ==Array){
+    kwList=array
+   }
+
+   for(let k in kwList){
+      if(text.indexOf(kwList[k])>=0){
+        textOut=textOut.substring(0,textOut.indexOf(kwList[k])) + `<span style="color:#c00000">${kwList[k]}</span>`+textOut.substr(textOut.indexOf(kwList[k])+kwList[k].length)
+      }
+   }
+   return textOut;
+}
+
 Vue.directive('focus', {
 	// 当被绑定的元素插入到 DOM 中时……
 	inserted: function(el, attr) {
-    debugger
 		// 聚焦元素
 		if (attr.value){
       el.focus()
