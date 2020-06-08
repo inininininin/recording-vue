@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="$store.state.requestStateBar>0" style="width:100%;height:3px;position: absolute;top:0;z-index: 999999;">
+    <div v-if="$store.state.requestingCount>0" style="width:100%;height:3px;position: absolute;top:0;z-index: 999999;">
       <img src="./assets/img/doing.gif" style="height:100%;width:100%"/>
     </div>
       <keep-alive>

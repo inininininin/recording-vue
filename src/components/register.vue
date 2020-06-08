@@ -2,9 +2,13 @@
 	<div id="register">
 		<div style="height:30px;"></div>
 		<h1 style="text-align: center;font-size: 24px;margin:0;">Recording</h1>
-		<h1 style="text-align: center;font-size: 20px;margin:10px;">注册</h1>
+		<h1 style="text-align: center;font-size: 20px;margin:10px;">手机注册</h1>
+		<h1 style="text-align: center;font-size: 20px;margin:10px;">邮箱注册</h1>
 
 		<div style="height:30px;"></div>
+
+		<input  type="text" style="display:none;width:0;height:0;" />
+		<input  type="password" style="display:none;width:0;height:0;" />
 
 		<form style="width:250px;margin:auto;">
 			<div style="height:30px;line-height:30px;position:relative;">
@@ -15,6 +19,7 @@
 					@click="phone=null">x</span>
 			</div>
 
+			<div style="height:10px;"></div>
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:50px;display: inline-block;font-size: 14px;">昵称</span>
 				<input v-model="nickname" @keyup.enter="register()" type="text"
@@ -42,14 +47,18 @@
 					style="font-size: 14px;position:absolute;right:50px;cursor: pointer;color: #8f8f8f;"
 					@click="smsvcode=null">x</span>
 				<span style="width:10px;display:inline-block;"></span>
-				<button style="width:35px;height:30px;padding:0;vertical-align: top;">获取</button>
+				<button type="button" style="cursor: pointer;width:35px;height:30px;padding:0;vertical-align: top;">获取</button>
 			</div>
 
 			<div style="height:50px;"></div>
 			<div style="text-align: center;">
-				<button style="width:200px;height:30px;" @click="register()">注册</button>
+				<button style="cursor: pointer;width:200px;height:30px;" type="button" @click="register()">确认</button>
 				<div style="height:50px;"></div>
-				<button style="width:200px;height:30px;"
+				<button style="cursor: pointer;width:200px;height:30px;" type="button" 
+					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">邮箱注册</button>
+					<button style="cursor: pointer;width:200px;height:30px;" type="button" 
+					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">手机注册</button>
+				<button style="cursor: pointer;width:200px;height:30px;margin-top:5px;" type="button" 
 					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
 			</div>
 		</form>

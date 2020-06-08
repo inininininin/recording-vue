@@ -35,22 +35,22 @@ Vue.prototype.window=window
 Vue.prototype.$axios.interceptors.request.use(
   config => {
     debugger
-    Vue.prototype.$store.state.requestStateBar++
+    Vue.prototype.$store.state.requestingCount++
     return config;
   },
   error => {
-    Vue.prototype.$store.state.requestStateBar--
+    Vue.prototype.$store.state.requestingCount--
     return Promise.reject(error.response);
   });
 
   Vue.prototype.$axios.interceptors.response.use(
   response => {
     debugger
-    Vue.prototype.$store.state.requestStateBar--
+    Vue.prototype.$store.state.requestingCount--
         return response;
   },
   error => {
-    Vue.prototype.$store.state.requestStateBar--
+    Vue.prototype.$store.state.requestingCount--
     return Promise.reject(error.response)  
   });
 

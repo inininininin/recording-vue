@@ -86,7 +86,7 @@
 				<span v-if="!(i==(imageList.length-1))" @click="[imageList[i],imageList[i+1]] = [imageList[i+1],imageList[i]];$forceUpdate()"  style="font-size: 14px;cursor:pointer;padding:3px;position: absolute;top:-25px;">~</span>
 				
 				</span>
-				<span v-if="imageList.length<6" @click="addImage()" style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
+				<span v-if="imageList.length<6" @click="addImage()" style="width:50px;height:50px;border:1px dashed #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
 			</div>
 
 			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">内容</div>

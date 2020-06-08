@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-   target: 'http://127.0.0.1:180',//设置你调用的接口域名和端口号 别忘了加http
+   target: 'http://39.99.246.175:80',//设置你调用的接口域名和端口号 别忘了加http
    changeOrigin: true,
    secure: false,
    pathRewrite: {
