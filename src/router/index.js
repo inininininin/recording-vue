@@ -37,9 +37,9 @@ const routes = [
     component: _import( 'create-task')
   },
   {
-    path: '/forget-password',
-    name: '/forget-password',
-    component: _import( 'forget-password')
+    path: '/retrieve-password',
+    name: '/retrieve-password',
+    component: _import( 'retrieve-password')
   },
   {
     path: '/task',

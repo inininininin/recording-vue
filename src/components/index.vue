@@ -1,81 +1,88 @@
 <template>
 	<div id="index" style="height:100%;position:relative;">
-			
-
-			<div  class="scrollbar1"
+		<div class="scrollbar1"
 			style="
-			position: relative;border-bottom:1px solid #8f8f8f;
-			white-space: nowrap;overflow-x: scroll;
+				position: relative;border-bottom:1px solid #8f8f8f;
+				white-space: nowrap;overflow-x: scroll;
 			">
-				<span @click="sortMap.createTime++;sortMap.createTime=sortMap.createTime==3?0:sortMap.createTime;sortMap1.createTime=sortMap.createTime;pn=1;taskList=[];queryHistoryPad=0;loadTaskList();" :style="{color:sortMap.createTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					时间<span v-if="sortMap.createTime==1">&nbsp;&and;</span><span v-if="sortMap.createTime==2">&nbsp;&or;</span><span v-if="sortMap.createTime==0" style="visibility: hidden;">&nbsp;&or;</span>
-				</span>
-				<span 
+			<span style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;"
 				@click="
-				sortMap.finalHas++;
-				sortMap.finalHas=sortMap.finalHas==3?0:sortMap.finalHas;
-				sortMap1.finalHas=sortMap.finalHas;
-				sortMap.finalTime++;
-				sortMap.finalTime=sortMap.finalTime==3?0:sortMap.finalTime;
-				sortMap1.finalTime=sortMap.finalTime;
-				pn=1;taskList=[];
-				queryHistoryPad=0;loadTaskList();" 
-				
-				:style="{color:sortMap.finalTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
-					限期<span v-if="sortMap.finalTime==1">&nbsp;&and;</span><span v-if="sortMap.finalTime==2">&nbsp;&or;</span><span v-if="sortMap.finalTime==0" style="visibility: hidden;">&nbsp;&or;</span>
-				</span>
-			
-				<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					<select v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" style="height:30px;border:none;cursor: pointer;padding: 0px 5px;">
-						<option value="">状态</option>
-						<option value="1">进行中</option>
-						<option value="2">已完成</option>
-						<option value="3">已撤销</option>
-					</select>
-				</span>
-
-				
-			
-
-				<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					<select v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" style="height:30px;border:none;cursor: pointer;padding:0 5px;">
-						<option value="">类型</option>
-						<option value="1">推进</option>
-						<option value="2">缺陷</option>
-					</select>
-				</span>
-				
-				
-				<span style="line-height:20px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;padding: 0 5px;display:none;" >
-					<label for="autoRedoTomorrowIs" style="cursor: pointer;font-size: 14px; padding: 0 5px 0 0;" :style="{color:autoRedoTomorrowIs!=1?'red':'#000000'}">日常</label>
-					<input id="autoRedoTomorrowIs" type="checkbox" 
+					sortMap.createTime++;
+					sortMap.createTime=sortMap.createTime==3?0:sortMap.createTime;
+					sortMap1.createTime=sortMap.createTime;pn=1;taskList=[];
+					queryHistoryPad=0;loadTaskList();
+				"
+				:style="{color:sortMap.createTime?'red':'#000000'}"
+				>
+				<span style="font-size: 14px;">时间</span>
+				<span style="font-size: 14px;" v-if="sortMap.createTime==1">&nbsp;&and;</span>
+				<span style="font-size: 14px;" v-if="sortMap.createTime==2">&nbsp;&or;</span>
+				<span v-if="sortMap.createTime==0" style="visibility: hidden;font-size: 14px;">&nbsp;&or;</span>
+			</span>
+			<span style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;"
+				@click="
+					sortMap.finalHas++;
+					sortMap.finalHas=sortMap.finalHas==3?0:sortMap.finalHas;
+					sortMap1.finalHas=sortMap.finalHas;
+					sortMap.finalTime++;
+					sortMap.finalTime=sortMap.finalTime==3?0:sortMap.finalTime;
+					sortMap1.finalTime=sortMap.finalTime;
+					pn=1;taskList=[];
+					queryHistoryPad=0;loadTaskList();
+				" 
+				:style="{color:sortMap.finalTime?'red':'#000000'}"  
+				>
+				<span>限期</span>
+				<span v-if="sortMap.finalTime==1">&nbsp;&and;</span>
+				<span v-if="sortMap.finalTime==2">&nbsp;&or;</span>
+				<span v-if="sortMap.finalTime==0" style="visibility: hidden;">&nbsp;&or;</span>
+			</span>
+		
+			<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				<select v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" style="height:30px;border:none;cursor: pointer;padding: 0px 5px;">
+					<option value="">状态</option>
+					<option value="1">进行中</option>
+					<option value="2">已完成</option>
+					<option value="3">已撤销</option>
+				</select>
+			</span>
+			<span style="line-height: 30px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				<select v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" style="height:30px;border:none;cursor: pointer;padding:0 5px;">
+					<option value="">类型</option>
+					<option value="1">推进</option>
+					<option value="2">缺陷</option>
+				</select>
+			</span>
+			<span style="line-height:20px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;padding: 0 5px;display:none;" >
+				<label for="autoRedoTomorrowIs" style="cursor: pointer;font-size: 14px; padding: 0 5px 0 0;" :style="{color:autoRedoTomorrowIs!=1?'red':'#000000'}">日常</label>
+				<input id="autoRedoTomorrowIs" type="checkbox" 
 					@click="
-					if(++autoRedoTomorrowIs > 3){
-						autoRedoTomorrowIs=1
-					}
-					if(autoRedoTomorrowIs == 1){
-						$event.target.checked=false
-						$event.target.indeterminate=false
-					}else if(autoRedoTomorrowIs == 2){
-						$event.target.checked=true
-						$event.target.indeterminate=false
-					}else if(autoRedoTomorrowIs == 3){
-						$event.target.checked=false
-						$event.target.indeterminate=true
-					}
-					pn=1;taskList=[];queryHistoryPad=0;loadTaskList();
+						if(++autoRedoTomorrowIs > 3){
+							autoRedoTomorrowIs=1
+						}
+						if(autoRedoTomorrowIs == 1){
+							$event.target.checked=false
+							$event.target.indeterminate=false
+						}else if(autoRedoTomorrowIs == 2){
+							$event.target.checked=true
+							$event.target.indeterminate=false
+						}else if(autoRedoTomorrowIs == 3){
+							$event.target.checked=false
+							$event.target.indeterminate=true
+						}
+						pn=1;taskList=[];queryHistoryPad=0;loadTaskList();
 					" 
 					:indeterminate.prop="autoRedoTomorrowIs==3?true:false"
 					:checked="autoRedoTomorrowIs==2?true:false"
-					style="height:30px;border:none;cursor: pointer;padding:0 5px;
-					margin: 0;vertical-align: bottom;" />
-				</span>
+					style="
+						height:30px;border:none;cursor: pointer;padding:0 5px;
+						margin: 0;vertical-align: bottom;" />
+			</span>
 
-					<span style="line-height: 30px;font-size: 14px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
-							<svg t="1591346902986" style="position: absolute;left:3px;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
-						
-						<input v-model="kw" 
-						@focus="
+			<span style="line-height: 30px;font-size: 14px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
+				<svg t="1591346902986" style="position: absolute;left:3px;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
+				<input v-model="kw" 
+					@focus="
 						queryHistoryPad=1;
 						if($store.state.login){
 							$axios.get(`/cache/get?name=${'queryHistoryKwList-'+$store.state.login.userId}`)
@@ -86,90 +93,106 @@
 								})
 							}
 						" 
-						
-						@click="
+					@click="
 						queryHistoryPad=1;
-						"
-						@keyup.enter="pn=1;taskList=[];queryHistoryPad=0;loadTaskList();" 
-						type="text" style="line-height: 30px;width:50px;padding:0 15px 0 20px;border:none;"/>
-						
-						<span v-if="kw" style="font-size: 14px;cursor: pointer;color: #8f8f8f;position: absolute;right:6px;top:0px;" 
-						@click="kw=null;pn=1;taskList=[];queryHistoryPad=0;loadTaskList();">
-						x</span>
-					</span>
+					"
+					@keyup.enter="pn=1;taskList=[];queryHistoryPad=0;loadTaskList();" 
+					type="text" style="line-height: 30px;width:50px;padding:0 15px 0 20px;border:none;"/>
+				
+				<span v-if="kw" style="font-size: 14px;cursor: pointer;color: #8f8f8f;position: absolute;right:6px;top:0px;" 
+					@click="kw=null;pn=1;taskList=[];queryHistoryPad=0;loadTaskList();">
+					x
+				</span>
+			</span>
 
-					<span @click="
-						debugger
-						pn=1;
-						taskList=[];
-						queryHistoryPad=0;loadTaskList();
-						
-						" 
-					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-						搜索
-					</span>
-					<span @click="status=1;autoRedoTomorrowIs=1,cancelIs='',completeIs='',sortMap.name=0,sortMap.finalHas=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" 
-					style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;margin-right:25px;">
-						重置
-					</span>
-					
-			</div>
+			<span
+				@click="
+					debugger
+					pn=1;
+					taskList=[];
+					queryHistoryPad=0;loadTaskList();
+				" 
+				style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				搜索
+			</span>
+			<span
+				@click="status=1;autoRedoTomorrowIs=1,cancelIs='',completeIs='',sortMap.name=0,sortMap.finalHas=0,sortMap.finalTime=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null;type='',pn=1;taskList=[];queryHistoryPad=0;loadTaskList()" 
+				style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;margin-right:25px;">
+				重置
+			</span>
+			
+		</div>
 			<span @click="" style="line-height: 30px;padding:0 5px;font-size: 14px;background-color: #ffffff;cursor: pointer;display:inline-block;position: absolute;right:0;top:1px;border-left:1px solid #8f8f8f;">
 				···
 			</span>
-			<div style="
-			height:30px;
-			line-height:30px;
-			border-bottom:1px solid #8f8f8f;
-			position: relative;">
 
+			<div	class="scrollbar1" 
+					style="
+						height:30px;
+						line-height:30px;
+						border-bottom:1px solid #8f8f8f;
+						position: relative;
+						white-space: nowrap;overflow-x: scroll;
+					">
 				<span 
-				@click="
-				debugger;
-				faBuRenUserId=null;
-				taskList=[],pn=1;
-				queryHistoryPad=0;loadTaskList();
-				" 
-				style="
-				padding:0 5px;
-				font-size: 14px;
-				cursor: pointer;
-				display:inline-block;
-				border-right:1px solid #8f8f8f;
-				background-color: #d8d5d5;
-				"
+						@click="
+							debugger;
+							faBuRenUserId=null;
+							taskList=[],pn=1;
+							queryHistoryPad=0;loadTaskList();
+						" 
+						style="
+							padding:0 5px;
+							font-size: 14px;
+							cursor: pointer;
+							display:inline-block;
+							border-right:1px solid #8f8f8f;
+							background-color: #d8d5d5;
+						"
 				>发布人</span>
 				
-				<span @click="
-				debugger;
-				faBuRenUserId=faBuRenUserId?null:$attr($store.state.login,'userId');
-				taskList=[],pn=1;
-				queryHistoryPad=0;loadTaskList();
-				" 
-				style="
-				padding:0 5px;
-				font-size: 14px;
-				cursor: pointer;
-				display:inline-block;
-				border-right:1px solid #8f8f8f;
-				min-width: 20px;text-align: center;
-				"
-				:style="{'background-color':(faBuRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#d8d5d5':'#ffffff')}" 
+				<span	@click="
+							debugger;
+							faBuRenUserId=faBuRenUserId?null:$attr($store.state.login,'userId');
+							taskList=[],pn=1;
+							queryHistoryPad=0;loadTaskList();
+						" 
+						style="
+							padding:0 5px;
+							font-size: 14px;
+							cursor: pointer;
+							display:inline-block;
+							border-right:1px solid #8f8f8f;
+							min-width: 20px;text-align: center;
+						"
+						:style="{'background-color':(faBuRenUserId==($store.state.login?$attr($store.state.login,'userId'):-1)?'#d8d5d5':'#ffffff')}" 
 				>我</span>
 				
-				<span v-for="(item,i) in faBuRenList" 
-				@click="
-				debugger;
-				faBuRenUserId=faBuRenUserId?null:item.faBuRenUserId;
-				taskList=[],pn=1;
-				queryHistoryPad=0;loadTaskList();" :style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#d8d5d5':'#ffffff')}" 
-				style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
-				min-width: 20px;text-align: center;">{{item.followAlias||item.nickname}}</span>
+				<span	v-for="(item,i) in faBuRenList" 
+						@click="
+							debugger;
+							faBuRenUserId=faBuRenUserId?null:item.faBuRenUserId;
+							taskList=[],pn=1;
+							queryHistoryPad=0;loadTaskList();
+						" 
+						:style="{'background-color':(faBuRenUserId==item.faBuRenUserId?'#d8d5d5':'#ffffff')}" 
+						style="
+							padding:0 5px;font-size: 14px;
+							cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
+							min-width: 20px;text-align: center;
+						"
+				>{{item.followAlias||item.nickname}}</span>
 				
 				<span style="padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">···</span>
 
 			</div>
-			<div style="width:100%;height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;overflow: hidden;;text-overflow:ellipsis;">
+			<div class="scrollbar1" 
+				 style="
+					width:100%;height:30px;
+					line-height:30px;border-bottom:1px solid #8f8f8f;
+					position: relative;overflow: hidden;
+					text-overflow:ellipsis;
+					white-space: nowrap;overflow-x: scroll;">
 				<span  
 				@click="
 				fuZeRenUserId=null;

@@ -1,114 +1,186 @@
 <template>
-	<div id="register">
-		<div style="height:30px;"></div>
-		<h1 style="text-align: center;font-size: 24px;margin:0;">Recording</h1>
-		<h1 style="text-align: center;font-size: 20px;margin:10px;">手机注册</h1>
-		<h1 style="text-align: center;font-size: 20px;margin:10px;">邮箱注册</h1>
+	<div id="login">
+		<div style="visibility: hidden;">1</div>
+		<h1 style="text-align: center;font-size: 24px;margin:30px 0 0 0;">Recording</h1>
+		<h1 v-if="byPhoneIs" style="text-align: center;font-size: 20px;margin:10px 0 0 0;">手机注册</h1>
+		<h1 v-if="byEmailIs" style="text-align: center;font-size: 20px;margin:10px 0 0 0;">邮箱注册</h1>
 
-		<div style="height:30px;"></div>
-
-		<input  type="text" style="display:none;width:0;height:0;" />
-		<input  type="password" style="display:none;width:0;height:0;" />
-
-		<form style="width:250px;margin:auto;">
-			<div style="height:30px;line-height:30px;position:relative;">
-				<span style="width:50px;display: inline-block;font-size: 14px;">手机</span>
+		<form style="width:250px;margin:30px auto 0 auto;">
+			<div  v-if="byPhoneIs">
+				<div style="font-size: 14px;">手机</div>
 				<input v-model="phone" @keyup.enter="register()" type="text"
-					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
-				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
-					@click="phone=null">x</span>
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
+			</div>
+			<div v-if="byEmailIs">
+				<div style="font-size: 14px;">邮箱</div>
+				<input v-model="email" @keyup.enter="register()" type="text"
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
+			</div>
+			<div>
+				<div style="font-size: 14px;margin:10px 0 0 0;">密码</div>
+				<input v-model="password" @keyup.enter="register()" type="password"
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
+			</div>
+			<div>
+				<div style="font-size: 14px;margin:10px 0 0 0;">密码确认</div>
+				<input v-model="passwordConfirm" @keyup.enter="register()" type="password"
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
 			</div>
 
-			<div style="height:10px;"></div>
-			<div style="height:30px;line-height:30px;position:relative;">
-				<span style="width:50px;display: inline-block;font-size: 14px;">昵称</span>
-				<input v-model="nickname" @keyup.enter="register()" type="text"
-					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
-				<span v-if="nickname" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
-					@click="nickname=null">x</span>
+			<div v-if="byPhoneIs">
+				<div style="font-size: 14px;margin:10px 0 0 0;">验证码</div>
+				<div style="margin:5px 0 0 0;">
+					<input v-model="phoneVcode" @keyup.enter="register()" type="text"
+						style="width:192px;height:28px;border-width: 1px;padding:0 3px;" />
+					<button type="button" @click="
+						$axios.post('/send-phone-vcode',$qs.stringify({phone:phone})).then(res => {
+							debugger
+							if (res.data.codeMsg)
+								window.alert(res.data.codeMsg)
+							if (res.data.code == 0) {
+								if (!res.data.codeMsg)
+									window.alert('已发送')
+							}
+						})
+					"
+					style="padding:1px 6px;height:30px;width:50px;vertical-align: bottom;cursor: pointer;">
+						发送</button>
+				</div>
 			</div>
 
-			<div style="height:10px;"></div>
-			<div style="height:30px;line-height:30px;position:relative;">
-				<span style="width:50px;display: inline-block;font-size: 14px;">密码</span>
-				<input v-model="password"  @keyup.enter="register()" type="password"
-					style="width:183px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
-				<span v-if="password"
-					style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;"
-					@click="password=null">x</span>
+			<div v-if="byEmailIs">
+				<div style="font-size: 14px;margin:10px 0 0 0;">验证码</div>
+				<div style="margin:5px 0 0 0;">
+					<input v-model="emailVcode" @keyup.enter="register()" type="text"
+						style="width:192px;height:28px;border-width: 1px;padding:0 3px;" />
+
+					<button type="button" 
+					@click="
+						$axios.post('/send-email-vcode',$qs.stringify({email:email})).then(res => {
+							debugger
+							if (res.data.codeMsg)
+								window.alert(res.data.codeMsg)
+							if (res.data.code == 0) {
+								if (!res.data.codeMsg)
+									window.alert('已发送')
+							}
+						})
+					" 
+					style="padding:1px 6px;height:30px;width:50px;vertical-align: bottom;cursor: pointer;">
+						发送</button>
+
+				</div>
 			</div>
 
-			<div style="height:10px;"></div>
-			<div style="height:30px;line-height:30px;position:relative;">
-				<span style="width:50px;display: inline-block; font-size: 14px;">验证码</span>
-				<input v-model="smsvcode"  @keyup.enter="register()" type="text"
-					style="width:138px;height:28px;border-width: 1px;padding:0;padding-right:15px;" />
-				<span v-if="smsvcode"
-					style="font-size: 14px;position:absolute;right:50px;cursor: pointer;color: #8f8f8f;"
-					@click="smsvcode=null">x</span>
-				<span style="width:10px;display:inline-block;"></span>
-				<button type="button" style="cursor: pointer;width:35px;height:30px;padding:0;vertical-align: top;">获取</button>
-			</div>
-
-			<div style="height:50px;"></div>
-			<div style="text-align: center;">
-				<button style="cursor: pointer;width:200px;height:30px;" type="button" @click="register()">确认</button>
-				<div style="height:50px;"></div>
-				<button style="cursor: pointer;width:200px;height:30px;" type="button" 
-					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">邮箱注册</button>
-					<button style="cursor: pointer;width:200px;height:30px;" type="button" 
-					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">手机注册</button>
-				<button style="cursor: pointer;width:200px;height:30px;margin-top:5px;" type="button" 
-					@click="$router.push({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
-			</div>
+			<button type="button" @click="register()"
+				style="display: block;margin:50px auto 40px auto;width:200px;height:35px;cursor: pointer;">确认</button>
+			<button type="button" v-if="!byPhoneIs"
+				style="display: block;margin:10px auto 0 auto;width:200px;height:35px;cursor: pointer;"
+				@click="byPhoneIs=1;byEmailIs=0;">手机注册</button>
+			<button type="button" v-if="!byEmailIs"
+				style="display: block;margin:10px auto 0 auto;width:200px;height:35px;cursor: pointer;"
+				@click="byPhoneIs=0;byEmailIs=1;">邮箱注册</button>
+			<button type="button" @click="$router.push({path:'/login',query:{time:new Date().getTime()}})"
+				style="display: block;margin:10px auto 0 auto;width:200px;height:35px;cursor: pointer;color:#0000ff;">去登录</button>
 		</form>
 	</div>
 </template>
 <script>
 
 	export default {
-		name: 'register',
+		name: 'login',
 		data() {
 			return {
+				byPhoneIs: 1,
+				byEmailIs: 0,
 				phone: null,
-				nickname:null,
+				email: null,
 				password: null,
-				smsvcode: null,
+				passwordConfirm: null,
+				phoneVcode: null,
+				emailVcode: null,
 			}
 		},
 		activated() {
 			debugger
 			let thisVue = this;
+			window.thisVue=thisVue;
 			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
 				thisVue.reload();
 
 				thisVue.query = JSON.stringify(thisVue.$route.query);
+			}else{
+				thisVue.refresh()
 			}
 		},
 		methods: {
+			refresh() {
+				let thisVue = this;
+			},
 			reload() {
-				debugger
 				let thisVue = this;
 				Object.assign(thisVue.$data, thisVue.$options.data());
 			},
 			register() {
 				debugger
 				let thisVue = this;
-				thisVue.$axios.post('/register',thisVue.$qs.stringify({ nickname:thisVue.nickname,phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
-					debugger
-					if (res.data.codeMsg)
-						alert(res.data.codeMsg)
-					if (res.data.code == 0) {
-						thisVue.$axios.post('/login-by-login-id', thisVue.$qs.stringify({ loginId: res.data.data.loginId })).then(res => {
-							debugger
-							if (res.data.codeMsg)
-								alert(res.data.codeMsg)
-							if (res.data.code == 0) {
-								thisVue.$router.push({ path: '/index', query: { time: new Date().getTime()+"" } })
-							}
-						})
-					}
-				})
+
+				if(thisVue.password != thisVue.passwordConfirm)
+				{
+					alert('两次密码不一致')
+					return;
+				}
+
+				if (thisVue.byPhoneIs) {
+					thisVue.$axios.post('/register-by-phone', thisVue.$qs.stringify({nickname: thisVue.nickname,phone: thisVue.phone,vcode: thisVue.phoneVcode, password: thisVue.password })).then(res => {
+						debugger
+						if (res.data.codeMsg)
+							alert(res.data.codeMsg)
+						if (res.data.code == 0) {
+							thisVue.$axios.post('/login-by-login-id',thisVue.$qs.stringify({loginId:res.data.data.loginId})).then(res => {
+								debugger
+								if (res.data.codeMsg)
+									alert(res.data.codeMsg)
+								if (res.data.code == 0) {
+										thisVue.$axios.post('/login-refresh').then(res => {
+										debugger
+										if (res.data.codeMsg)
+											alert(res.data.codeMsg)
+										if (res.data.code == 0) {
+											thisVue.$store.state.login = res.data.data;
+											thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() + "" } })
+										}
+									})
+								}
+							})
+						}
+					})
+				}
+				if (thisVue.byEmailIs) {
+					thisVue.$axios.post('/register-by-email', thisVue.$qs.stringify({nickname: thisVue.nickname,email: thisVue.email,vcode: thisVue.emailVcode, password: thisVue.password })).then(res => {
+						debugger
+						if (res.data.codeMsg)
+							alert(res.data.codeMsg)
+						if (res.data.code == 0) {
+							thisVue.$axios.post('/login-by-login-id',thisVue.$qs.stringify({loginId:res.data.data.loginId})).then(res => {
+								debugger
+								if (res.data.codeMsg)
+									alert(res.data.codeMsg)
+								if (res.data.code == 0) {
+										thisVue.$axios.post('/login-refresh').then(res => {
+										debugger
+										if (res.data.codeMsg)
+											alert(res.data.codeMsg)
+										if (res.data.code == 0) {
+											thisVue.$store.state.login = res.data.data;
+											thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() + "" } })
+										}
+									})
+								}
+							})
+						}
+					})
+				}
 			}
 		}
 	}
