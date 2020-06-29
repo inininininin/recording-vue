@@ -148,7 +148,7 @@
 											alert(res.data.codeMsg)
 										if (res.data.code == 0) {
 											thisVue.$store.state.login = res.data.data;
-											thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() + "" } })
+											thisVue.$router.replace({ path: '/index', query: { time: new Date().getTime() + "" } })
 										}
 									})
 								}
@@ -173,7 +173,7 @@
 											alert(res.data.codeMsg)
 										if (res.data.code == 0) {
 											thisVue.$store.state.login = res.data.data;
-											thisVue.$router.push({ path: '/index', query: { time: new Date().getTime() + "" } })
+											thisVue.$router.replace({ path: '/index', query: { time: new Date().getTime() + "" } })
 										}
 									})
 								}
