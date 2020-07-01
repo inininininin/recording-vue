@@ -263,7 +263,7 @@
 			<div style="border-top:1px solid #8F8F8F;"></div>
 
 			<div style="height:35px;line-height: 35px;">
-				<span @click="$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})" style="font-weight: 900;font-size:14px;width:50%;display:inline-block;text-align: center;cursor:pointer;">发任务
+				<span @click="$router.push({path:'/insert-task',query:{time:new Date().getTime()+''}})" style="font-weight: 900;font-size:14px;width:50%;display:inline-block;text-align: center;cursor:pointer;">发任务
 					+</span>
 				<span style="border-left:1px solid #8F8F8F;position: absolute;display:inline-block;"><span
 						style="visibility: hidden;">1</span></span>

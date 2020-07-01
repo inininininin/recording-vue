@@ -68,7 +68,7 @@ Vue.prototype.$attr=function(obj,keyChain){
      return obj1;
 }
 
-Vue.prototype.$queryMark=function(text,kw){
+Vue.prototype.$kwMark=function(text,kw){
   debugger
   let kwList = [];
   let textOut = text;

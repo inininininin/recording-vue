@@ -2,21 +2,52 @@
 	<div id="me" style="height:100%;position:relative;">
 		<div @click="logout()" style="font-size:14px;cursor: pointer;">退出登录</div>
 
-		<div style="position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;">
-
-		<div style="border-top:1px solid #8F8F8F;"></div>
-			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">任务</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
-				
-				<span @click="$router.push({path:'/friend-list',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">好友</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
-				
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #ff7f08;color: #ffffff;">我</span>
+		<div 
+			style="position: absolute;bottom: 0;left: 0px;right: 0px;
+			background-color: rgb(255, 255, 255);box-shadow: rgb(136, 136, 136) 0px 0px 1px 0px;border-top: 1px solid #afaeae;">
+			<div style="height: 50px;line-height: 50px;position: relative;">
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;"
+					@click="$router.replace({path:'/index',query:{time:new Date().getTime()+''}})">
+					任务
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;">
+					记录
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;"
+					@click="$router.replace({path:'/friend-list',query:{time:new Date().getTime()+''}})">
+					好友
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;">
+					消息
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;background-color: rgb(255, 127, 8);"
+					@click="$router.replace({path:'/me',query:{time:new Date().getTime()+''}})">
+					我
+				</span>
 			</div>
-			</div>
+		</div>
 	</div>
 </template>
 <script>

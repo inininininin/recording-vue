@@ -8,8 +8,8 @@
 				<span  @click="sortMap.nickname++;sortMap.nickname=sortMap.nickname==3?0:sortMap.nickname;sortMap1.nickname=sortMap.nickname;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.nickname?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					名称<span v-if="sortMap.nickname==1">&nbsp;&and;</span><span v-if="sortMap.nickname==2">&nbsp;&or;</span><span v-if="sortMap.nickname==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
-				<span @click="sortMap.createTime++;sortMap.createTime=sortMap.createTime==3?0:sortMap.createTime;sortMap1.createTime=sortMap.createTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.createTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					时间<span v-if="sortMap.createTime==1">&nbsp;&and;</span><span v-if="sortMap.createTime==2">&nbsp;&or;</span><span v-if="sortMap.createTime==0" style="visibility: hidden;">&nbsp;&or;</span>
+				<span @click="sortMap.insertTime++;sortMap.insertTime=sortMap.insertTime==3?0:sortMap.insertTime;sortMap1.insertTime=sortMap.insertTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.insertTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					时间<span v-if="sortMap.insertTime==1">&nbsp;&and;</span><span v-if="sortMap.insertTime==2">&nbsp;&or;</span><span v-if="sortMap.insertTime==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
 				<span @click="sortMap.updateTime++;sortMap.updateTime=sortMap.updateTime==3?0:sortMap.updateTime;sortMap1.updateTime=sortMap.updateTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.updateTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 					更新<span v-if="sortMap.updateTime==1">&nbsp;&and;</span><span v-if="sortMap.updateTime==2">&nbsp;&or;</span><span v-if="sortMap.updateTime==0" style="visibility: hidden;">&nbsp;&or;</span>
@@ -26,7 +26,7 @@
 					<span @click="pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
-					<span @click="sortMap.nickname=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null,pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="sortMap.nickname=0,sortMap.orderNo=0,sortMap.insertTime=0,sortMap.updateTime=0,sortMap1={},kw=null,pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						重置
 					</span>
 				
@@ -55,28 +55,58 @@
 
 
 
-		<div style="position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;">
-			<div style="border-top:1px solid #8F8F8F;"></div>
 
-			<div style="height:35px;line-height: 35px;">
+		<div 
+			style="position: absolute;bottom: 0;left: 0px;right: 0px;
+			background-color: rgb(255, 255, 255);box-shadow: rgb(136, 136, 136) 0px 0px 1px 0px;border-top: 1px solid #afaeae;">
+			<div style="height:35px;line-height: 35px;border-bottom:1px solid #8F8F8F;">
 				<span @click="addFriendIs=1;addFriend.users=[];" style="font-size:14px;width:100%;display:inline-block;text-align: center;cursor:pointer;">
-					加好友 +</span>
+					加好友 +
+				</span>
 			</div>
-
-			<div style="border-top:1px solid #8F8F8F;"></div>
-			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">任务</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #ff7f08;color: #ffffff;">好友</span>
-			
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
-				
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">我</span>
+			<div style="height: 50px;line-height: 50px;position: relative;">
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;"
+					@click="$router.replace({path:'/index',query:{time:new Date().getTime()+''}})">
+					任务
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;">
+					记录
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;background-color: rgb(255, 127, 8);"
+					@click="$router.replace({path:'/friend-list',query:{time:new Date().getTime()+''}})">
+					好友
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;">
+					消息
+				</span>
+				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">
+					&#8207;
+				</span>
+				<span 
+					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
+					cursor: pointer;"
+					@click="$router.replace({path:'/me',query:{time:new Date().getTime()+''}})">
+					我
+				</span>
 			</div>
 		</div>
-
 
 		<!-- 看好友 -->
 		<div v-show="lookFriend" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
@@ -156,11 +186,11 @@
 				itemCount:null,
 				loading:null,
 				scrollTop:null,
-				sortCreateTime:1,
+				sortInsertTime:1,
 				sortMap:{
 					orderNo:0,
 					nickname:0,
-					createTime:0,
+					insertTime:0,
 					updateTime:0,
 				},
 				sortMap1:{
@@ -200,7 +230,7 @@
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							thisVue.$axios.post(`/my-follow/insert-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -290,7 +320,7 @@
 					}
 				}
 				if(!sorts || sorts.length==0){
-					sorts=['orderNo','nickname','createTime','updateTime']
+					sorts=['orderNo','nickname','insertTime','updateTime']
 					orders=['asc','asc','desc','desc']
 				}
 

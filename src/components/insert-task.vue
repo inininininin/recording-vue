@@ -1,5 +1,5 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;" >
+	<div id="insert-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;" >
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
@@ -10,7 +10,7 @@
 			<div style="height:10px;"></div>
 			<div style="font-size: 14px;margin:0 0 0 5px;color: #8f8f8f;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
-				<span v-if="nameIf"><input @keyup.enter="createTask()" v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
+				<span v-if="nameIf"><input @keyup.enter="insertTask()" v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
 				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
 			</div>
 
@@ -101,14 +101,14 @@
 			</div>
 
 			<div style="text-align: center;margin-top:30px;">
-				<button @click="createTask()" style="width:250px;height:35px;">发布</button>
+				<button @click="insertTask()" style="width:250px;height:35px;">发布</button>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 	export default {
-		name: 'create-task',
+		name: 'insert-task',
 		data() {
 			return {
 				name:null,
@@ -173,7 +173,7 @@
 					thisVue.$store.state.cloneTask=null;
 				}
 			},
-			createTask() {
+			insertTask() {
 				let thisVue = this
 				
 				if(!window.confirm('确认发布吗 ?')){
@@ -185,7 +185,7 @@
 					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+(thisVue.finalTimeTime?(thisVue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
+				thisVue.$axios.post('/my-task/insert-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
 				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,
@@ -200,7 +200,7 @@
 							if(window.confirm('成功 , 是否返回 ?')){
 								thisVue.$router.back();
 							}else{
-								thisVue.$router.replace({path:'/create-task',query:{time:new Date().getTime()+""}})
+								thisVue.$router.replace({path:'/insert-task',query:{time:new Date().getTime()+""}})
 							}
 						}
 					})

@@ -32,9 +32,9 @@ const routes = [
     component: _import( 'register')
   },
   {
-    path: '/create-task',
-    name: '/create-task',
-    component: _import( 'create-task')
+    path: '/insert-task',
+    name: '/insert-task',
+    component: _import( 'insert-task')
   },
   {
     path: '/retrieve-password',

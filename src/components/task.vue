@@ -1,10 +1,11 @@
 <template>
 	<div id="task" class="scrollbar" style="height:100%;overflow:auto;position: relative;">
 		<div
-			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
-			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
-			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
-			<span>发布任务</span>
+			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
+			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">
+				&lt;
+			</span>
+			<span>任务详情</span>
 		</div>
 		<div style="padding:0 5px;margin:40px 0 0 0;">
 			<div style="height:10px"></div>
@@ -31,7 +32,7 @@
 					
 
 					<div style="margin: 5px;">
-						<span style="font-size: 14px;color: #8f8f8f;">{{$moment(new Date()).format('MM-DD, d, HH:mm')}}</span>
+						<span style="font-size: 14px;color: #8f8f8f;">{{$moment(new Date()).format('d, MM-DD, HH:mm')}}</span>
 						<span style="font-size: 14px;color: #8f8f8f;margin-left:30px;">共 {{taskTrack_count}} 条记录</span>
 					</div>
 					
@@ -112,7 +113,7 @@
 			 let r=window.confirm('确认克隆吗');
 			 if(r){
 				$store.state.cloneTask=task;
-				$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})
+				$router.push({path:'/insert-task',query:{time:new Date().getTime()+''}})
 			 }
 			 " 
 			 style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 5px;cursor: pointer; "
@@ -158,7 +159,7 @@
 				<span v-if="taskUpdate.finalTimeDate || taskUpdate.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.finalTime=taskUpdate.finalTimeDate=taskUpdate.finalTimeTime=null">x</span>
 			</div>
 			<div v-if="!finalTimeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
-				{{task.finalTime?$moment(task.finalTime).format('MM-DD, d, HH:mm'):''}}
+				{{task.finalTime?$moment(task.finalTime).format('d, MM-DD, HH:mm'):''}}
 			</div>
 			
 			<div style="margin:10px 0 0 5px;">
@@ -447,7 +448,7 @@
 			createTrack(){
 				debugger
 				let thisVue = this
-				thisVue.$axios.post('/my-task/create-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
+				thisVue.$axios.post('/my-task/insert-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)

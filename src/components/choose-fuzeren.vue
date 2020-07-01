@@ -2,7 +2,9 @@
 	<div id="choose-fuzeren" style="height:100%;position:relative;">
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;position: relative;border-bottom:1px solid #8F8F8f">
-			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
+			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">
+				&lt;
+			</span>
 			<span>选择负责人</span>
 		</div>
 
@@ -184,7 +186,7 @@
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							thisVue.$axios.post(`/my-follow/insert-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
