@@ -12,8 +12,8 @@
 				<span  @click="sortMap.nickname++;sortMap.nickname=sortMap.nickname==3?0:sortMap.nickname;sortMap1.nickname=sortMap.nickname;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.nickname?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					名称<span v-if="sortMap.nickname==1">&nbsp;&and;</span><span v-if="sortMap.nickname==2">&nbsp;&or;</span><span v-if="sortMap.nickname==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
-				<span @click="sortMap.createTime++;sortMap.createTime=sortMap.createTime==3?0:sortMap.createTime;sortMap1.createTime=sortMap.createTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.createTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-					时间<span v-if="sortMap.createTime==1">&nbsp;&and;</span><span v-if="sortMap.createTime==2">&nbsp;&or;</span><span v-if="sortMap.createTime==0" style="visibility: hidden;">&nbsp;&or;</span>
+				<span @click="sortMap.insertTime++;sortMap.insertTime=sortMap.insertTime==3?0:sortMap.insertTime;sortMap1.insertTime=sortMap.insertTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.insertTime?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					时间<span v-if="sortMap.insertTime==1">&nbsp;&and;</span><span v-if="sortMap.insertTime==2">&nbsp;&or;</span><span v-if="sortMap.insertTime==0" style="visibility: hidden;">&nbsp;&or;</span>
 				</span>
 				<span @click="sortMap.updateTime++;sortMap.updateTime=sortMap.updateTime==3?0:sortMap.updateTime;sortMap1.updateTime=sortMap.updateTime;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.updateTime?'red':'#000000'}"  style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 					更新<span v-if="sortMap.updateTime==1">&nbsp;&and;</span><span v-if="sortMap.updateTime==2">&nbsp;&or;</span><span v-if="sortMap.updateTime==0" style="visibility: hidden;">&nbsp;&or;</span>
@@ -30,7 +30,7 @@
 					<span @click="pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						搜索
 					</span>
-					<span @click="sortMap.nickname=0,sortMap.orderNo=0,sortMap.createTime=0,sortMap.updateTime=0,sortMap1={},kw=null,pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					<span @click="sortMap.nickname=0,sortMap.orderNo=0,sortMap.insertTime=0,sortMap.updateTime=0,sortMap1={},kw=null,pn=1;friendList=[];loadFriendList()" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 						重置
 					</span>
 				
@@ -146,7 +146,7 @@
 				sortMap:{
 					orderNo:0,
 					nickname:0,
-					createTime:0,
+					insertTime:0,
 					updateTime:0,
 				},
 				sortMap1:{
@@ -276,7 +276,7 @@
 					}
 				}
 				if(!sorts || sorts.length==0){
-					sorts=['orderNo','nickname','createTime','updateTime']
+					sorts=['orderNo','nickname','insertTime','updateTime']
 					orders=['asc','asc','desc','desc']
 				}
 

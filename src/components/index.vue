@@ -3,6 +3,7 @@
 		<div class="scrollbar" style="height:38px;line-height: 35px;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;">
 			<span style="cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
+					defaultSort=0;
 					if(!sort.insertTime )
 						sort.insertTime='desc'
 					else if(sort.insertTime=='desc')
@@ -12,15 +13,16 @@
 					pn=1;loadTaskList()
 					">
 				<span style="font-size:14px;">时间</span>
-				<span v-if="sort.insertTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
-				<span v-if="sort.insertTime=='desc'" style="font-size:14px;color:#ff0000;">&nbsp;&or;</span>
-				<span v-if="!sort.insertTime" style="font-size:14px;color:#ff0000;visibility: hidden;">&nbsp;&or;</span>
+				<span v-if="!defaultSort && sort.insertTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
+				<span v-if="!defaultSort && sort.insertTime=='desc'" style="font-size:14px;color:#ff0000;">&nbsp;&or;</span>
+				<span v-if="defaultSort || !sort.insertTime" style="font-size:14px;color:#ff0000;visibility: hidden;">&nbsp;&or;</span>
 			</span>
 			<span style="font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
 				&#8207;
 			</span>
 			<span style="cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
+					defaultSort=0;
 					if(!sort.finalTime )
 						sort.finalTime='asc'
 					else if(sort.finalTime=='asc')
@@ -30,9 +32,9 @@
 					pn=1;loadTaskList()
 					">
 				<span style="font-size:14px;">期限</span>
-				<span v-if="sort.finalTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
-				<span v-if="sort.finalTime=='desc'" style="font-size:14px;color:#ff0000;">&nbsp;&or;</span>
-				<span v-if="!sort.finalTime" style="font-size:14px;color:#ff0000;visibility: hidden;">&nbsp;&or;</span>
+				<span v-if="!defaultSort && sort.finalTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
+				<span v-if="!defaultSort && sort.finalTime=='desc'" style="font-size:14px;color:#ff0000;">&nbsp;&or;</span>
+				<span v-if="defaultSort || !sort.finalTime" style="font-size:14px;color:#ff0000;visibility: hidden;">&nbsp;&or;</span>
 			</span>
 			<span style="font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
 				&#8207;
@@ -97,6 +99,7 @@
 			<span style="font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">&#8207;</span>
 			<span style="font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
+					defaultSort=1;
 					kw=null;status='';type='';sort={};
 					pn=1;loadTaskList()
 					">
@@ -379,7 +382,13 @@
 				faBuRenUserId:null,
 				type:"",
 				status:1,
-				sort:{},
+				sort:{
+					orderNo:'asc',
+					autoRedoTomorrowIs:'desc',
+					finalTime:'asc',
+					insertTime:'desc',
+				},
+				defaultSort:1,
 				maxPn:null,
 				pn:1,
 				ps:15,
