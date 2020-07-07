@@ -16,17 +16,6 @@
 				<input v-model="email" @keyup.enter="register()" type="text"
 					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
 			</div>
-			<div>
-				<div style="font-size: 14px;margin:10px 0 0 0;">密码</div>
-				<input v-model="password" @keyup.enter="register()" type="password"
-					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
-			</div>
-			<div>
-				<div style="font-size: 14px;margin:10px 0 0 0;">密码确认</div>
-				<input v-model="passwordConfirm" @keyup.enter="register()" type="password"
-					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
-			</div>
-
 			<div v-if="byPhoneIs">
 				<div style="font-size: 14px;margin:10px 0 0 0;">验证码</div>
 				<div style="margin:5px 0 0 0;">
@@ -71,6 +60,18 @@
 
 				</div>
 			</div>
+			<div>
+				<div style="font-size: 14px;margin:10px 0 0 0;">密码</div>
+				<input v-model="password" @keyup.enter="register()" type="password"
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
+			</div>
+			<div>
+				<div style="font-size: 14px;margin:10px 0 0 0;">密码确认</div>
+				<input v-model="passwordConfirm" @keyup.enter="register()" type="password"
+					style="width:242px;height:28px;border-width: 1px;padding:0 3px;margin:5px 0 0 0;" />
+			</div>
+
+		
 
 			<button type="button" @click="register()"
 				style="display: block;margin:50px auto 40px auto;width:200px;height:35px;cursor: pointer;">确认</button>
