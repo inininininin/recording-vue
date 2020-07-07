@@ -12,12 +12,12 @@
 			<div style="margin:0 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">任务名</span>
 				<span v-if="!nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskEdit.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="nameEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 0;">
-				<input v-model="taskUpdate.name" v-focus="nameEditIs" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.name=null">x</span>
+				<input v-model="taskEdit.name" v-focus="nameEditIs" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<span v-if="taskEdit.name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskEdit.name=null">x</span>
 			</div>
 
 			<div v-if="!nameEditIs"  style="font-size:16px;line-height: 25px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;">
@@ -150,17 +150,17 @@
 			<div style="margin:10px 0 0 0;">
 				<div style="display: inline;float:left;height: 60px;">
 					<div style="font-size: 14px;color: #8f8f8f;">发布人</div>
-					<div v-if="!zeRenEditIs" style="position: relative;margin:5px 0 0 0;font-size: 14px;">{{$attr($store.state.login,"userId")==task.faBuRenUserId?'我':task.faBuRenUserNickname}}</div>
+					<div v-if="!zeRenEditIs" style="position: relative;margin:5px 0 0 0;font-size: 14px;">{{$attr($store.state.login,"userId")==task.faBuRenUserId?'我':(task.faBuRenUserAlias||task.faBuRenUserNickname)}}</div>
 					<div v-if="zeRenEditIs" style="position: relative;margin:5px 0 0 0;">
-						<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
+						<span style="font-size:14px;">{{$attr($store.state.login,'userId')==taskEdit.faBuRenUserId?'我':(taskEdit.faBuRenUserAlias||taskEdit.faBuRenUserNickname)}}</span>
 
-						<span v-show="faBuRenUserId" 
-						@click="faBuRenUserId = faBuRenUserNickname = null;" 
+						<span v-show="taskEdit.faBuRenUserId" 
+						@click="taskEdit.faBuRenUserId = taskEdit.faBuRenUserNickname =taskEdit.faBuRenUserAlias = null;" 
 						style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
 						>x</span>
 
 						<button 
-						v-show="!faBuRenUserId" 
+						v-show="!taskEdit.faBuRenUserId" 
 						@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()+''}})" 
 						style="cursor: pointer;"
 						>选择</button>
@@ -170,45 +170,60 @@
 				<div style="font-size: 14px;float:left;vertical-align: bottom;height: 60px;line-height: 60px;margin:0 25px;">></div>
 				<div style="display: inline;float:left;height: 60px;">
 					<div style="font-size: 14px;color: #8f8f8f;">负责人</div>
-					<div v-if="!zeRenEditIs" style="position: relative;margin:5px 0 0 0;font-size: 14px;">{{$attr($store.state.login,"userId")==task.fuZeRenUserId?'我':task.fuZeRenUserNickname}}</div>
+					<div v-if="!zeRenEditIs" style="position: relative;margin:5px 0 0 0;font-size: 14px;">{{$attr($store.state.login,"userId")==task.fuZeRenUserId?'我':(task.fuZeRenUserAlias||task.fuZeRenUserNickname)}}</div>
 					<div v-if="zeRenEditIs" style="position: relative;margin:5px 0 0 0;">
-						<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
-						<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
-						<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
+						<span style="font-size:14px;">{{$attr($store.state.login,'userId')==taskEdit.fuZeRenUserId?'我':(taskEdit.fuZeRenUserAlias||taskEdit.fuZeRenUserNickname)}}</span>
+						<span v-show="taskEdit.fuZeRenUserId" @click="taskEdit.fuZeRenUserId=taskEdit.fuZeRenUserNickname=taskEdit.fuZeRenUserAlias=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+						<button v-show="!taskEdit.fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
 					</div>
 				</div>
 				<span v-if="!zeRenEditIs && !task.completeIs && !task.cancelIs" @click="zeRenEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="zeRenEditIs && !task.completeIs && !task.cancelIs" @click="zeRenEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
-				<span v-if="zeRenEditIs && !task.completeIs && !task.cancelIs" @click="zeRenEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
+				<span v-if="zeRenEditIs && !task.completeIs && !task.cancelIs" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;"
+					@click="
+						zeRenEditIs=0;
+						taskEdit.faBuRenUserId=task.faBuRenUserId;
+						taskEdit.faBuRenUserNickname=task.faBuRenUserNickname;
+						taskEdit.faBuRenUserAlias=task.faBuRenUserAlias;
+						taskEdit.fuZeRenUserId=task.fuZeRenUserId;
+						taskEdit.fuZeRenUserNickname=task.fuZeRenUserNickname;
+						taskEdit.fuZeRenUserAlias=task.fuZeRenUserAlias;">
+					Cancel
+				</span>
+				<span v-if="zeRenEditIs && !task.completeIs && !task.cancelIs" 
+					@click="
+						zeRenEditIs=0;
+						taskUpdate.faBuRenUserId=taskEdit.faBuRenUserId
+						taskUpdate.fuZeRenUserId=taskEdit.fuZeRenUserId
+						updateTask();" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div style="clear: both;"></div>
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
 				<span v-if="!finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;taskUpdate.finalTime=task.finalTime;taskUpdate.finalTimeDate=task.finalTimeDate;taskUpdate.finalTimeTime=task.finalTimeTime;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;taskEdit.finalTime=task.finalTime;taskEdit.finalTimeDate=task.finalTimeDate;taskEdit.finalTimeTime=task.finalTimeTime;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;updateTask('finalTime');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="finalTimeEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 0;">
-				<input v-model="taskUpdate.finalTimeDate" @change="taskUpdate.finalTime++" type="date"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<input v-model="taskUpdate.finalTimeTime" @change="taskUpdate.finalTime++" type="time"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.finalTimeDate || taskUpdate.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.finalTime=taskUpdate.finalTimeDate=taskUpdate.finalTimeTime=null">x</span>
+				<input v-model="taskEdit.finalTimeDate" @change="taskEdit.finalTime++" type="date"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<input v-model="taskEdit.finalTimeTime" @change="taskEdit.finalTime++" type="time"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<span v-if="taskEdit.finalTimeDate || taskEdit.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskEdit.finalTime=taskEdit.finalTimeDate=taskEdit.finalTimeTime=null">x</span>
 			</div>
 			<div v-if="!finalTimeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;">
-				{{task.finalTime?$moment(task.finalTime).format('d, MM-DD, HH:mm'):''}}
+				{{$moment(task.finalTime).format(new Date().getFullYear()==new Date(task.finalTime).getFullYear()? '周d, MM-DD, HH:mm': '周d, MM-DD, HH:mm, YYYY').replace('周0','周7').replace('周','')}}
 			</div>
 			
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">类型</span>
 				<span v-if="!typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;taskUpdate.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;taskEdit.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;updateTask('type');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="typeEditIs" style="margin:5px 0 0 0;line-height: 25px;">
 				<label for="developIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">推进</label>
-				<input id="developIs" name="type" type="radio" value="1" v-model="taskUpdate.type" style="cursor: pointer;" />
+				<input id="developIs" name="type" type="radio" value="1" v-model="taskEdit.type" style="cursor: pointer;" />
 				<span style="margin:0 5px;"></span>
 				<label for="bugIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">缺陷</label>
-				<input id="bugIs" name="type" type="radio"  value="2" v-model="taskUpdate.type" style="cursor: pointer;"/>
+				<input id="bugIs" name="type" type="radio"  value="2" v-model="taskEdit.type" style="cursor: pointer;"/>
 			</div>
 			<div v-if="!typeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;">
 				{{task.type==1?'推进':task.type==2?'缺陷':''}}
@@ -217,15 +232,15 @@
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">日常 ( 每天自动重发 )</span>
 				<span v-if="!autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskUpdate.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskEdit.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;updateTask('autoRedoTomorrowIs');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="autoRedoTomorrowIsEditIs" style="margin:5px 0 0 0;line-height: 25px;">
 				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;padding-right: 5px;">否</label>
-				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio" value="0" v-model="taskUpdate.autoRedoTomorrowIs" style="cursor: pointer;margin:0;" />
+				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio" value="0" v-model="taskEdit.autoRedoTomorrowIs" style="cursor: pointer;margin:0;" />
 				<span style="margin:0 5px;"></span>
 				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;padding-right: 5px;">是</label>
-				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  value="1" v-model="taskUpdate.autoRedoTomorrowIs" style="cursor: pointer;margin:0;"/>
+				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  value="1" v-model="taskEdit.autoRedoTomorrowIs" style="cursor: pointer;margin:0;"/>
 			</div>
 			<div v-if="!autoRedoTomorrowIsEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;">
 				{{task.autoRedoTomorrowIs==0?'否':task.autoRedoTomorrowIs==1?'是':''}}
@@ -238,30 +253,30 @@
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">图片</span>
 				<span v-if="!imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;taskUpdate.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;taskEdit.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;updateTask('imageList');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>		
 			<div v-viewer="{navbar:true,title:false,toolbar:true}" >
-				<span v-for="(item, i) in taskUpdate.imageList" style="position: relative;padding-right:15px;">
+				<span v-for="(item, i) in taskEdit.imageList" style="position: relative;padding-right:15px;">
 				<span style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 0;font-size: 14px;vertical-align: bottom;">
 					<img :src="item" style="cursor: pointer;width:100%;height:100%;object-fit: cover;" />
 				</span>
 				
-				<span v-if="imageListEditIs" @click="taskUpdate.imageList.splice(i,1)" style="font-size: 14px;cursor:pointer;padding:3px;position: absolute;top:-50px;">x</span>
-				<span v-if="imageListEditIs && !(i==(taskUpdate.imageList.length-1))" @click="[taskUpdate.imageList[i],taskUpdate.imageList[i+1]] = [taskUpdate.imageList[i+1],taskUpdate.imageList[i]];$forceUpdate()"  style="font-size: 14px;cursor:pointer;padding:3px;position: absolute;top:-25px;">~</span>
+				<span v-if="imageListEditIs" @click="taskEdit.imageList.splice(i,1)" style="font-size: 14px;cursor:pointer;padding:3px;position: absolute;top:-50px;">x</span>
+				<span v-if="imageListEditIs && !(i==(taskEdit.imageList.length-1))" @click="[taskEdit.imageList[i],taskEdit.imageList[i+1]] = [taskEdit.imageList[i+1],taskEdit.imageList[i]];$forceUpdate()"  style="font-size: 14px;cursor:pointer;padding:3px;position: absolute;top:-25px;">~</span>
 				
 				</span>
-				<span v-if="imageListEditIs && taskUpdate.imageList.length<6"  @click="addImage()" style="width:50px;height:50px;border:1px dashed #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
+				<span v-if="imageListEditIs && taskEdit.imageList.length<6"  @click="addImage()" style="width:50px;height:50px;border:1px dashed #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
 			</div>	
 
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">内容</span>
 				<span v-if="!contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;taskUpdate.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;taskEdit.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;updateTask('content');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="contentEditIs">
-				<textarea v-model="taskUpdate.content"  v-focus="contentEditIs" type="text" style="width:95%;margin:5px 0 0 0;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea>
+				<textarea v-model="taskEdit.content"  v-focus="contentEditIs" type="text" style="width:95%;margin:5px 0 0 0;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea>
 			</div>
 			<div v-if="!contentEditIs" style="font-size:16px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.content}}</div>
 
@@ -269,12 +284,12 @@
 			<div style="margin:10px 0 0 0;">
 				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
 				<span v-if="!orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
-				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;taskUpdate.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
+				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;taskEdit.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;updateTask('orderNo');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="orderNoEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 0;">
-				<input v-model="taskUpdate.orderNo" v-focus="orderNoEditIs"  type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.orderNo=null">x</span>
+				<input v-model="taskEdit.orderNo" v-focus="orderNoEditIs"  type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
+				<span v-if="taskEdit.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskEdit.orderNo=null">x</span>
 			</div>
 			<div v-if="!orderNoEditIs" style="font-size:16px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.orderNo}}</div>
 
@@ -307,7 +322,7 @@
 					imageList:[],
 					autoRedoTomorrowIs:null,
 				},
-				taskUpdate:{
+				taskEdit:{
 					taskId:null,
 					fuZeRenUserId:null,
 					faBuRenUserId:null,
@@ -321,6 +336,7 @@
 					imageList:[],
 					autoRedoTomorrowIs:null,
 				},
+				taskUpdate:{},
 				zeRenEditIs:0,
 				nameEditIs:0,
 				orderNoEditIs:0,
@@ -346,185 +362,195 @@
 			next()
 		},
 		activated() {
-			let thisVue = this
-			window.thisVue=thisVue;
-			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
-				thisVue.reload();
+			debugger
+			let thisV = this
+			window.thisV=thisV;
+			if (thisV.query != JSON.stringify(thisV.$route.query)) {
+				thisV.reload();
 
-				thisVue.query = JSON.stringify(thisVue.$route.query);
+				thisV.query = JSON.stringify(thisV.$route.query);
+			}else{
+				if(thisV.$store.state.chooseFaBuRenUserId)
+					thisV.taskEdit.faBuRenUserId = thisV.$store.state.chooseFaBuRenUserId
+				if(thisV.$store.state.chooseFaBuRenUserNickname)
+					thisV.taskEdit.faBuRenUserNickname = thisV.$store.state.chooseFaBuRenUserNickname
+				if(thisV.$store.state.chooseFaBuRenUserAlias)
+					thisV.taskEdit.faBuRenUserAlias = thisV.$store.state.chooseFaBuRenUserAlias
+				if(thisV.$store.state.chooseFuZeRenUserId)
+					thisV.taskEdit.fuZeRenUserId = thisV.$store.state.chooseFuZeRenUserId
+				if(thisV.$store.state.chooseFuZeRenUserNickname)
+					thisV.taskEdit.fuZeRenUserNickname = thisV.$store.state.chooseFuZeRenUserNickname
+				if(thisV.$store.state.chooseFuZeRenUserAlias)
+					thisV.taskEdit.fuZeRenUserAlias = thisV.$store.state.chooseFuZeRenUserAlias
+				thisV.$store.state.chooseFaBuRenUserId = null;
+				thisV.$store.state.chooseFaBuRenUserNickname = null;
+				thisV.$store.state.chooseFaBuRenUserAlias = null;
+				thisV.$store.state.chooseFuZeRenUserId = null;
+				thisV.$store.state.chooseFuZeRenUserNickname = null;
+				thisV.$store.state.chooseFuZeRenUserAlias = null;
 			}
 		},
 		methods: {
 			reload() {
-				let thisVue = this
-				Object.assign(thisVue.$data, thisVue.$options.data());
-				thisVue.taskId=thisVue.$route.query.taskId;
+				let thisV = this
+				Object.assign(thisV.$data, thisV.$options.data());
+				thisV.taskId=thisV.$route.query.taskId;
 
-				thisVue.$axios.get('/my-task/task-list?taskId='+thisVue.taskId).then(res=>{
+				thisV.$axios.get('/my-task/task?taskId='+thisV.taskId).then(res=>{
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisVue.task=res.data.data.itemList[0];
-						thisVue.task.imageList=[]
-						if(thisVue.task.image)
-							thisVue.task.imageList.push(thisVue.task.image)
-						if(thisVue.task.image1)
-							thisVue.task.imageList.push(thisVue.task.image1)
-						if(thisVue.task.image2)
-							thisVue.task.imageList.push(thisVue.task.image2)
-						if(thisVue.task.image3)
-							thisVue.task.imageList.push(thisVue.task.image3)
-						if(thisVue.task.image4)
-							thisVue.task.imageList.push(thisVue.task.image4)
-						if(thisVue.task.image5)
-							thisVue.task.imageList.push(thisVue.task.image5)
+						thisV.task=res.data.data;
+						thisV.task.imageList=[]
+						if(thisV.task.image)
+							thisV.task.imageList.push(thisV.task.image)
+						if(thisV.task.image1)
+							thisV.task.imageList.push(thisV.task.image1)
+						if(thisV.task.image2)
+							thisV.task.imageList.push(thisV.task.image2)
+						if(thisV.task.image3)
+							thisV.task.imageList.push(thisV.task.image3)
+						if(thisV.task.image4)
+							thisV.task.imageList.push(thisV.task.image4)
+						if(thisV.task.image5)
+							thisV.task.imageList.push(thisV.task.image5)
 						
-						let finalTimeM = thisVue.task.finalTime?thisVue.$moment(thisVue.task.finalTime):null;
-						thisVue.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
-						thisVue.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
+						let finalTimeM = thisV.task.finalTime?thisV.$moment(thisV.task.finalTime):null;
+						thisV.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
+						thisV.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
 
-						Object.assign(thisVue.taskUpdate,thisVue.task)
-						thisVue.taskUpdate.imageList=[]
-						if(thisVue.task.image)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image)
-						if(thisVue.task.image1)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image1)
-						if(thisVue.task.image2)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image2)
-						if(thisVue.task.image3)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image3)
-						if(thisVue.task.image4)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image4)
-						if(thisVue.task.image5)
-							thisVue.taskUpdate.imageList.push(thisVue.task.image5)
+						Object.assign(thisV.taskEdit,thisV.task)
+						thisV.taskEdit.imageList=[]
+						if(thisV.task.image)
+							thisV.taskEdit.imageList.push(thisV.task.image)
+						if(thisV.task.image1)
+							thisV.taskEdit.imageList.push(thisV.task.image1)
+						if(thisV.task.image2)
+							thisV.taskEdit.imageList.push(thisV.task.image2)
+						if(thisV.task.image3)
+							thisV.taskEdit.imageList.push(thisV.task.image3)
+						if(thisV.task.image4)
+							thisV.taskEdit.imageList.push(thisV.task.image4)
+						if(thisV.task.image5)
+							thisV.taskEdit.imageList.push(thisV.task.image5)
 					}
 				})
 
-				thisVue.loadTaskTrackList()
+				thisV.loadTaskTrackList()
 			},
 			updateTask(name) {
 				debugger
-				let thisVue = this
-				if(JSON.stringify(thisVue.task[name])==JSON.stringify(thisVue.taskUpdate[name]))
+				let thisV = this
+				if(name != null && JSON.stringify(thisV.task[name])==JSON.stringify(thisV.taskEdit[name]))
 					return;
 
 				if(!window.confirm('确认修改吗 ?'))
 				{
-					thisVue.taskUpdate[name]=thisVue.task[name];
+					thisV.taskEdit[name]=thisV.task[name];
 					if(name=='finalTime'){
-						taskUpdate.finalTime=task.finalTime;
-						taskUpdate.finalTimeDate=task.finalTimeDate;
-						taskUpdate.finalTimeTime=task.finalTimeTime;
+						taskEdit.finalTime=task.finalTime;
+						taskEdit.finalTimeDate=task.finalTimeDate;
+						taskEdit.finalTimeTime=task.finalTimeTime;
 					}
 					return ;
 				}
 				
 
-				var param={}
-				param.taskId=thisVue.taskId
-				param[name]=thisVue.taskUpdate[name]
+				thisV.taskUpdate.taskId=thisV.taskId
+				thisV.taskUpdate[name]=thisV.taskEdit[name]
 				if(name=='imageList'){
-					param.image=thisVue.taskUpdate.imageList[0]?thisVue.taskUpdate.imageList[0]:null,
-					param.image1=thisVue.taskUpdate.imageList[1]?thisVue.taskUpdate.imageList[1]:null,
-					param.image2=thisVue.taskUpdate.imageList[2]?thisVue.taskUpdate.imageList[2]:null,
-					param.image3=thisVue.taskUpdate.imageList[3]?thisVue.taskUpdate.imageList[3]:null,
-					param.image4=thisVue.taskUpdate.imageList[4]?thisVue.taskUpdate.imageList[4]:null,
-					param.image5=thisVue.taskUpdate.imageList[5]?thisVue.taskUpdate.imageList[5]:null
+					thisV.taskUpdate.image=thisV.taskEdit.imageList[0]?thisV.taskEdit.imageList[0]:null,
+					thisV.taskUpdate.image1=thisV.taskEdit.imageList[1]?thisV.taskEdit.imageList[1]:null,
+					thisV.taskUpdate.image2=thisV.taskEdit.imageList[2]?thisV.taskEdit.imageList[2]:null,
+					thisV.taskUpdate.image3=thisV.taskEdit.imageList[3]?thisV.taskEdit.imageList[3]:null,
+					thisV.taskUpdate.image4=thisV.taskEdit.imageList[4]?thisV.taskEdit.imageList[4]:null,
+					thisV.taskUpdate.image5=thisV.taskEdit.imageList[5]?thisV.taskEdit.imageList[5]:null
 				}
 				if(name=='finalTime'){
-					if(thisVue.taskUpdate.finalTimeDate){
-						param.finalTime = thisVue.$moment(thisVue.taskUpdate.finalTimeDate+" "+(thisVue.taskUpdate.finalTimeTime?(thisVue.taskUpdate.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+					if(thisV.taskEdit.finalTimeDate){
+						thisV.taskUpdate.finalTime = thisV.$moment(thisV.taskEdit.finalTimeDate+" "+(thisV.taskEdit.finalTimeTime?(thisV.taskEdit.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 					}else{
-						param.finalTime = ""
+						thisV.taskUpdate.finalTime = ""
 					}
-
-					// if(!thisVue.taskUpdate.finalTimeTime)
-					// 	thisVue.taskUpdate.finalTimeTime="00:00"
-					// if(thisVue.taskUpdate.finalTimeDate && thisVue.taskUpdate.finalTimeTime)
-					// 	param.finalTime = thisVue.$moment(thisVue.taskUpdate.finalTimeDate+" "+thisVue.taskUpdate.finalTimeTime).toDate().getTime();
-					// else if(!thisVue.taskUpdate.finalTimeDate && !thisVue.taskUpdate.finalTimeTime)
-					// 	param.finalTime = ""
-					// else
-					// 	param.finalTime = null;
-					thisVue.taskUpdate.finalTime=param.finalTime
+					thisV.taskEdit.finalTime=thisV.taskUpdate.finalTime
 				}
 
-				thisVue.$axios.post('/my-task/update-task',thisVue.$qs.stringify(param)).then(res=>{
+				thisV.$axios.post('/my-task/update-task',thisV.$qs.stringify(thisV.taskUpdate)).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisVue.task[name]=JSON.parse(JSON.stringify(thisVue.taskUpdate[name])) 
+						thisV.task[name]=JSON.parse(JSON.stringify(thisV.taskEdit[name])) 
 						if(name=='finalTime'){
-							let finalTimeM = thisVue.task.finalTime?thisVue.$moment(thisVue.task.finalTime):null;
-							thisVue.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
-							thisVue.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
+							let finalTimeM = thisV.task.finalTime?thisV.$moment(thisV.task.finalTime):null;
+							thisV.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
+							thisV.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
 						}
 					}
 				})
 			},
 			addImage(){
 				debugger
-				let thisVue = this
-				if(!(thisVue.taskUpdate.imageList.length<6)){
+				let thisV = this
+				if(!(thisV.taskEdit.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
-				thisVue.$(`<input type="file" />`).change(function(){
+				thisV.$(`<input type="file" />`).change(function(){
 					debugger
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisVue.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					thisV.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
-						thisVue.taskUpdate.imageList.push(res.data.data.url)
+						thisV.taskEdit.imageList.push(res.data.data.url)
 					})
 				}).click()
 			},
 			createTrack(){
 				debugger
-				let thisVue = this
-				thisVue.$axios.post('/my-task/insert-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
+				let thisV = this
+				thisV.$axios.post('/my-task/insert-task-track',thisV.$qs.stringify({taskId:thisV.taskId,content:thisV.trackContent})).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisVue.taskTrack_list.unshift({content:thisVue.trackContent,createTime:new Date().getTime()})
-						thisVue.taskTrack_count++;
-						thisVue.trackContent=null;
-						thisVue.$refs.taskTrackList.scrollTop=0
+						thisV.taskTrack_list.unshift({content:thisV.trackContent,createTime:new Date().getTime()})
+						thisV.taskTrack_count++;
+						thisV.trackContent=null;
+						thisV.$refs.taskTrackList.scrollTop=0
 					}
 					
 				})
 			},
 			taskTrackListScroll(event){
 				debugger
-				let thisVue = this
-				thisVue.taskTrack_scrollTop=event.target.scrollTop;
-				if((event.target.scrollTop+thisVue.$(event.target).height())>=event.target.scrollHeight) {
-					thisVue.taskTrack_pn++;thisVue.loadTaskTrackList()
+				let thisV = this
+				thisV.taskTrack_scrollTop=event.target.scrollTop;
+				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
+					thisV.taskTrack_pn++;thisV.loadTaskTrackList()
 				}
 			},
 			loadTaskTrackList(){
 				debugger
-				let thisVue = this
-				thisVue.taskTrack_loading=1
+				let thisV = this
+				thisV.taskTrack_loading=1
 
-				thisVue.taskTrack_count =null;
-				thisVue.$axios.get('/my-task/task-track-list?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+				thisV.taskTrack_count =null;
+				thisV.$axios.get('/my-task/task-track-list?'+thisV.$qs.stringify({taskId:thisV.taskId,kw:thisV.taskTrack_kw,pn:thisV.taskTrack_pn,ps:thisV.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
-							thisVue.taskTrack_list=thisVue.taskTrack_list.concat(res.data.data.itemList)
+							thisV.taskTrack_list=thisV.taskTrack_list.concat(res.data.data.itemList)
 						else
-							thisVue.taskTrack_pn--;
+							thisV.taskTrack_pn--;
 					}
-					thisVue.taskTrack_loading=0
+					thisV.taskTrack_loading=0
 				})
-				thisVue.$axios.get('/my-task/task-track-list-sum?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+				thisV.$axios.get('/my-task/task-track-list-sum?'+thisV.$qs.stringify({taskId:thisV.taskId,kw:thisV.taskTrack_kw,pn:thisV.taskTrack_pn,ps:thisV.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
-						thisVue.taskTrack_count=res.data.data.itemCount
+						thisV.taskTrack_count=res.data.data.itemCount
 					}
 				})
 			},

@@ -3,14 +3,17 @@
 		<div class="scrollbar" style="height:38px;line-height: 35px;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;">
 			<span style="cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
-					defaultSort=0;
+					if(defaultSort){
+						sort = {}
+					}
 					if(!sort.insertTime )
 						sort.insertTime='desc'
 					else if(sort.insertTime=='desc')
 						sort.insertTime='asc'
 					else if(sort.insertTime=='asc')
 						sort.insertTime=null
-					pn=1;loadTaskList()
+					pn=1;loadTaskList();
+					defaultSort=0;
 					">
 				<span style="font-size:14px;">时间</span>
 				<span v-if="!defaultSort && sort.insertTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
@@ -22,14 +25,17 @@
 			</span>
 			<span style="cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
-					defaultSort=0;
-					if(!sort.finalTime )
+					if(defaultSort){
+						sort = {}
+					}
+					if(!sort.finalTime)
 						sort.finalTime='asc'
 					else if(sort.finalTime=='asc')
 						sort.finalTime='desc'
 					else if(sort.finalTime=='desc')
 						sort.finalTime=null
 					pn=1;loadTaskList()
+					defaultSort=0;
 					">
 				<span style="font-size:14px;">期限</span>
 				<span v-if="!defaultSort && sort.finalTime=='asc'" style="font-size:14px;color:#ff0000;">&nbsp;&and;</span>
@@ -100,7 +106,13 @@
 			<span style="font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
 				@click="
 					defaultSort=1;
-					kw=null;status='';type='';sort={};
+					kw=null;status='1';type='';
+					sort={
+						orderNo:'asc',
+						autoRedoTomorrowIs:'desc',
+						finalTime:'asc',
+						insertTime:'desc',
+					};
 					pn=1;loadTaskList()
 					">
 				重置
@@ -240,23 +252,25 @@
 					" >
 				<div style="font-size: 16px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" v-html="$kwMark(item.name,kw)"></div>
 				<div v-if="item.lastTaskTrackContent" style="margin-top:3px;color:#8f8f8f;font-size: 14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.lastTaskTrackContent}}</div>
-				<div style="margin-top:3px;color:#8f8f8f;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+				<div style="position: relative;margin-top:3px;color:#8f8f8f;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 					<span style="font-size: 14px;">
 						{{$moment(item.insertTime).format(new Date().getFullYear()==new Date(item.insertTime).getFullYear()? '周d, MM-DD, HH:mm': '周d, MM-DD, HH:mm, YYYY').replace('周0','周7').replace('周','')}}
 					</span>
 					<span v-if="!(item.fuZeRenUserId==item.faBuRenUserId && item.faBuRenUserId==$attr($store.state.login,'userId'))" style="margin-left:15px;">
 						<span style="font-size: 14px;display:inline-block;max-width:50px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">
-							{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':item.faBuRenUserNickname}}
+							{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':(item.faBuRenUserAlias||item.faBuRenUserNickname)}}
 						</span>
 						<span style="font-size: 14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">&nbsp;>&nbsp;</span>
 						<span style="font-size: 14px;display:inline-block;max-width:50px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">
-							{{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':item.fuZeRenUserNickname}}
+							{{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':(item.fuZeRenUserAlias||item.fuZeRenUserNickname)}}
 						</span>
 					</span>
 					<span v-if="item.autoRedoTomorrowIs" style="margin-left:15px;font-size: 14px;">日常</span>
-					<span v-if="item.finalTime" style="margin-left:15px;font-size: 14px;">
+					<span v-if="item.finalTime" style="margin-left:15px;font-size: 14px;"
+					 :style="{color:new Date(item.finalTime).getTime()>=new Date().getTime()?'#ff6700':'#ff0000'}">
 						{{item.finalTime?('限: '+$moment(item.finalTime).format(new Date().getFullYear()==new Date(item.finalTime).getFullYear()? "周d, MM-DD, HH:mm": "周d, MM-DD, HH:mm, YYYY").replace(/周0/g,'周7').replace(/周/g,'')):''}}
 					</span>
+					<span style="right:0;position: absolute;;font-size: 14px;">{{item.orderNo}}</span>
 				</div>
 			</div>
 

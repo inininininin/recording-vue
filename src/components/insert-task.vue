@@ -18,10 +18,10 @@
 				<div style="font-size: 14px;margin:10px 0 0 0;color: #8f8f8f;">发布人</div>
 				<div style="position: relative;margin:5px 0 0 0;">
 
-					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':(faBuRenUserAlias||faBuRenUserNickname)}}</span>
 
 					<span v-show="faBuRenUserId" 
-					@click="faBuRenUserId = faBuRenUserNickname = null;" 
+					@click="faBuRenUserId = faBuRenUserNickname = faBuRenUserAlias=null;" 
 					style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
 					>x</span>
 
@@ -37,8 +37,8 @@
 			<div style="display: inline;float:left;height: 60px;">
 				<div style="font-size: 14px;margin:10px 0 0 0;color: #8f8f8f;">负责人</div>
 				<div style="position: relative;margin:5px 0 0 0;">
-					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
-					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':(fuZeRenUserAlias||fuZeRenUserNickname)}}</span>
+					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=fuZeRenUserAlias=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
 					<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
 				</div>
 			</div>
@@ -126,85 +126,91 @@
 				query: '',
 				faBuRenUserId: null,
 				faBuRenUserNickname: null,
+				faBuRenUserAlias: null,
 				fuZeRenUserId: null,
 				fuZeRenUserNickname: null,
+				fuZeRenUserAlias: null,
 				autoRedoTomorrowIs:0,
 			}
 		},
 		activated() {
 			debugger
-			let thisVue = this
-			window.thisVue=thisVue;
-			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
-				thisVue.reload();
+			let thisV = this
+			window.thisV=thisV;
+			if (thisV.query != JSON.stringify(thisV.$route.query)) {
+				thisV.reload();
 
-				thisVue.query = JSON.stringify(thisVue.$route.query);
+				thisV.query = JSON.stringify(thisV.$route.query);
 
 			}else{
-				if(thisVue.$store.state.chooseFaBuRenUserId)
-					thisVue.faBuRenUserId=thisVue.$store.state.chooseFaBuRenUserId
-				if(thisVue.$store.state.chooseFaBuRenUserNickname)
-					thisVue.faBuRenUserNickname=thisVue.$store.state.chooseFaBuRenUserNickname
-				if(thisVue.$store.state.chooseFuZeRenUserId)
-					thisVue.fuZeRenUserId=thisVue.$store.state.chooseFuZeRenUserId
-				if(thisVue.$store.state.chooseFuZeRenUserNickname)
-					thisVue.fuZeRenUserNickname=thisVue.$store.state.chooseFuZeRenUserNickname
-
-
-				thisVue.$store.state.chooseFaBuRenUserId = null
-				thisVue.$store.state.chooseFaBuRenUserNickname = null
-				thisVue.$store.state.chooseFuZeRenUserId = null
-				thisVue.$store.state.chooseFuZeRenUserNickname = null
+				if(thisV.$store.state.chooseFaBuRenUserId)
+					thisV.faBuRenUserId = thisV.$store.state.chooseFaBuRenUserId
+				if(thisV.$store.state.chooseFaBuRenUserNickname)
+					thisV.faBuRenUserNickname = thisV.$store.state.chooseFaBuRenUserNickname
+				if(thisV.$store.state.chooseFaBuRenUserAlias)
+					thisV.faBuRenUserAlias = thisV.$store.state.chooseFaBuRenUserAlias
+				if(thisV.$store.state.chooseFuZeRenUserId)
+					thisV.fuZeRenUserId = thisV.$store.state.chooseFuZeRenUserId
+				if(thisV.$store.state.chooseFuZeRenUserNickname)
+					thisV.fuZeRenUserNickname = thisV.$store.state.chooseFuZeRenUserNickname
+				if(thisV.$store.state.chooseFuZeRenUserAlias)
+					thisV.fuZeRenUserAlias = thisV.$store.state.chooseFuZeRenUserAlias
+				thisV.$store.state.chooseFaBuRenUserId = null;
+				thisV.$store.state.chooseFaBuRenUserNickname = null;
+				thisV.$store.state.chooseFaBuRenUserAlias = null;
+				thisV.$store.state.chooseFuZeRenUserId = null;
+				thisV.$store.state.chooseFuZeRenUserNickname = null;
+				thisV.$store.state.chooseFuZeRenUserAlias = null;
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisVue = this
-				Object.assign(thisVue.$data, thisVue.$options.data());
-				thisVue.nameIf = 1
-				if(thisVue.$store.state.cloneTask){
-					thisVue.name=thisVue.$store.state.cloneTask.name
-					thisVue.type=thisVue.$store.state.cloneTask.type
-					thisVue.content=thisVue.$store.state.cloneTask.content
-					thisVue.imageList=thisVue.$store.state.cloneTask.imageList
+				let thisV = this
+				Object.assign(thisV.$data, thisV.$options.data());
+				thisV.nameIf = 1
+				if(thisV.$store.state.cloneTask){
+					thisV.name=thisV.$store.state.cloneTask.name
+					thisV.type=thisV.$store.state.cloneTask.type
+					thisV.content=thisV.$store.state.cloneTask.content
+					thisV.imageList=thisV.$store.state.cloneTask.imageList
 
-					thisVue.faBuRenUserId = thisVue.$store.state.cloneTask.faBuRenUserId
-					thisVue.faBuRenUserNickname = thisVue.$store.state.cloneTask.faBuRenUserNickname
-					thisVue.fuZeRenUserId = thisVue.$store.state.cloneTask.fuZeRenUserId
-					thisVue.fuZeRenUserNickname = thisVue.$store.state.cloneTask.fuZeRenUserNickname
+					thisV.faBuRenUserId = thisV.$store.state.cloneTask.faBuRenUserId
+					thisV.faBuRenUserNickname = thisV.$store.state.cloneTask.faBuRenUserNickname
+					thisV.fuZeRenUserId = thisV.$store.state.cloneTask.fuZeRenUserId
+					thisV.fuZeRenUserNickname = thisV.$store.state.cloneTask.fuZeRenUserNickname
 
-					thisVue.$store.state.cloneTask=null;
+					thisV.$store.state.cloneTask=null;
 				}
 			},
 			insertTask() {
-				let thisVue = this
+				let thisV = this
 				
 				if(!window.confirm('确认发布吗 ?')){
 					return ;
 				}
 				
 				let finalTime = null;
-				if(thisVue.finalTimeDate){
-					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+(thisVue.finalTimeTime?(thisVue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+				if(thisV.finalTimeDate){
+					finalTime = thisV.$moment(thisV.finalTimeDate+" "+(thisV.finalTimeTime?(thisV.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				thisVue.$axios.post('/my-task/insert-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
-				orderNo:thisVue.orderNo,
-				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
-				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,
-				image2:thisVue.imageList[2]?thisVue.imageList[2]:null,
-				image3:thisVue.imageList[3]?thisVue.imageList[3]:null,
-				image4:thisVue.imageList[4]?thisVue.imageList[4]:null,
-				image5:thisVue.imageList[5]?thisVue.imageList[5]:null,})).then(res=>{
+				thisV.$axios.post('/my-task/insert-task',thisV.$qs.stringify({autoRedoTomorrowIs:thisV.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisV.faBuRenUserId,fuZeRenUserId:thisV.fuZeRenUserId,name:thisV.name,type:thisV.type,content:thisV.content,
+				orderNo:thisV.orderNo,
+				image:thisV.imageList[0]?thisV.imageList[0]:null,
+				image1:thisV.imageList[1]?thisV.imageList[1]:null,
+				image2:thisV.imageList[2]?thisV.imageList[2]:null,
+				image3:thisV.imageList[3]?thisV.imageList[3]:null,
+				image4:thisV.imageList[4]?thisV.imageList[4]:null,
+				image5:thisV.imageList[5]?thisV.imageList[5]:null,})).then(res=>{
 						debugger
 						if(res.data.codeMsg)
 							alert(res.data.codeMsg)
 						if (res.data.code == 0) {
 							if(window.confirm('成功 , 是否返回 ?')){
-								thisVue.$router.back();
+								thisV.$router.back();
 							}else{
-								thisVue.$router.replace({path:'/insert-task',query:{time:new Date().getTime()+""}})
+								thisV.$router.replace({path:'/insert-task',query:{time:new Date().getTime()+""}})
 							}
 						}
 					})
@@ -212,19 +218,19 @@
 			},
 			addImage(){
 				debugger
-				let thisVue = this
-				if(!(thisVue.imageList.length<6)){
+				let thisV = this
+				if(!(thisV.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
-				thisVue.$(`<input type="file" />`).change(function(){
+				thisV.$(`<input type="file" />`).change(function(){
 					debugger
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisVue.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					thisV.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
-						thisVue.imageList.push(res.data.data.url)
+						thisV.imageList.push(res.data.data.url)
 					})
 				}).click()
 			}

@@ -1,17 +1,15 @@
 <template>
 	<div id="choose-faburen" style="height:100%;position:relative;">
 		<div
-			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;position: relative;border-bottom:1px solid #8F8F8f">
-			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">
-				&lt;
-			</span>
+			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
+			width: 100%;top:0;background-color: #FFFFFF;z-index: 9999;">
+			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
 			<span>选择发布人</span>
 		</div>
-
 		<div  class="scrollbar"
 			style="
-			position: relative;border-bottom:1px solid #8f8f8f;
-			white-space: nowrap;overflow-x: auto;margin:40px 0 0 0;
+			position: absolute;border-bottom:1px solid #8f8f8f;
+			white-space: nowrap;overflow-x: auto;top:40px;left:0;right:0;
 			">
 				<span  @click="sortMap.nickname++;sortMap.nickname=sortMap.nickname==3?0:sortMap.nickname;sortMap1.nickname=sortMap.nickname;pn=1;friendList=[];loadFriendList();" :style="{color:sortMap.nickname?'red':'#000000'}" style="line-height: 30px;padding:0 5px;font-size: 14px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					名称<span v-if="sortMap.nickname==1">&nbsp;&and;</span><span v-if="sortMap.nickname==2">&nbsp;&or;</span><span v-if="sortMap.nickname==0" style="visibility: hidden;">&nbsp;&or;</span>
@@ -41,12 +39,17 @@
 			</div>
 			
 			
-		<div class="scrollbar" @scroll="friendListScroll($event)" ref="friendList" style="overflow: auto;position: absolute;top: 32px;bottom:37px;width:100%;background-color: rgb(252, 250, 250);">
+		<div class="scrollbar" @scroll="friendListScroll($event)" ref="friendList" style="overflow: auto;position: absolute;top: 71px;bottom:37px;width:100%;background-color: rgb(252, 250, 250);">
 		<div style="margin:5px 7px 0px 7px;">
 			<span style="font-size: 14px;color: #8f8f8f;">共 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div v-for="(item, i) in friendList" @click="$store.state.chooseFaBuRenUserId=item.userId;$store.state.chooseFaBuRenUserNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
+		<div v-for="(item, i) in friendList" 
+			@click="
+				$store.state.chooseFaBuRenUserId=item.userId;
+				$store.state.chooseFaBuRenUserNickname=item.nickname;
+				$store.state.chooseFaBuRenUserAlias=item.alias;
+				$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
 			<span><img :src="item.logo" /></span>
 			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{$attr(item,'alias')?$attr(item,'alias'):item.nickname}}
 				{{$attr(item,'alias')?(`(${$attr(item,'nickname')})`):''}}</span>
