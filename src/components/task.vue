@@ -107,7 +107,7 @@
 					 }
 			 " style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 0;cursor: pointer; ">重启</button>
 
-			 <button  
+			 <!-- <button  
 			 v-if="task.taskId" 
 			 @click="
 			 let r=window.confirm('确认克隆吗');
@@ -117,7 +117,7 @@
 			 }
 			 " 
 			 style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 0;cursor: pointer; "
-			 >克隆</button>
+			 >克隆</button> -->
 
 			 <button v-if="task.taskId && (task.cancelIs  || task.completeIs)" @click="
 			let r=window.confirm('确认删除吗');
