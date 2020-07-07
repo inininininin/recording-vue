@@ -253,24 +253,24 @@
 				<div style="font-size: 16px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" v-html="$kwMark(item.name,kw)"></div>
 				<div v-if="item.lastTaskTrackContent" style="margin-top:3px;color:#8f8f8f;font-size: 14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.lastTaskTrackContent}}</div>
 				<div style="position: relative;margin-top:3px;color:#8f8f8f;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-					<span style="user-select: none;font-size: 14px;">
+					<span style="font-size: 14px;">
 						{{$moment(item.insertTime).format(new Date().getFullYear()==new Date(item.insertTime).getFullYear()? '周d, MM-DD, HH:mm': '周d, MM-DD, HH:mm, YYYY').replace('周0','周7').replace('周','')}}
 					</span>
 					<span v-if="!(item.fuZeRenUserId==item.faBuRenUserId && item.faBuRenUserId==$attr($store.state.login,'userId'))" style="margin-left:15px;">
 						<span style="font-size: 14px;display:inline-block;max-width:50px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{item.faBuRenUserId==$attr($store.state.login,"userId")?'我':(item.faBuRenUserAlias||item.faBuRenUserNickname)}}
 						</span>
-						<span style="user-select: none;font-size: 14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">&nbsp;>&nbsp;</span>
+						<span style="font-size: 14px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">&nbsp;>&nbsp;</span>
 						<span style="font-size: 14px;display:inline-block;max-width:50px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{item.fuZeRenUserId==$attr($store.state.login,"userId")?'我':(item.fuZeRenUserAlias||item.fuZeRenUserNickname)}}
 						</span>
 					</span>
-					<span v-if="item.autoRedoTomorrowIs" style="margin-left:15px;user-select: none;font-size: 14px;">日常</span>
-					<span v-if="item.finalTime" style="margin-left:15px;user-select: none;font-size: 14px;"
+					<span v-if="item.autoRedoTomorrowIs" style="margin-left:15px;font-size: 14px;">日常</span>
+					<span v-if="item.finalTime" style="margin-left:15px;font-size: 14px;"
 					 :style="{color:new Date(item.finalTime).getTime()>=new Date().getTime()?'#ff6700':'#ff0000'}">
 						{{item.finalTime?('剩: '+ $tttt(new Date(item.finalTime)-new Date().getTime())):''}}
 					</span>
-					<span style="right:0;position: absolute;;user-select: none;font-size: 14px;">{{item.orderNo}}</span>
+					<span style="right:0;position: absolute;font-size: 14px;">{{item.orderNo}}</span>
 				</div>
 			</div>
 
