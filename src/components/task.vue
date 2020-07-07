@@ -209,7 +209,7 @@
 				<span v-if="taskEdit.finalTimeDate || taskEdit.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskEdit.finalTime=taskEdit.finalTimeDate=taskEdit.finalTimeTime=null">x</span>
 			</div>
 			<div v-if="!finalTimeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 0;word-wrap: break-word;word-break: break-all;">
-				{{task.finalTime?$moment(task.finalTime).format(new Date().getFullYear()==new Date(task.finalTime).getFullYear()? '周d, MM-DD, HH:mm': '周d, MM-DD, HH:mm, YYYY').replace('周0','周7').replace('周',''):''}}
+				{{task.finalTime?($moment(task.finalTime).format(new Date().getFullYear()==new Date(task.finalTime).getFullYear()? '周d, MM-DD, HH:mm': '周d, MM-DD, HH:mm, YYYY').replace('周0','周7').replace('周','')):''}}
 			</div>
 			
 			<div style="margin:10px 0 0 0;">

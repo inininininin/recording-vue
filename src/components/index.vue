@@ -268,7 +268,7 @@
 					<span v-if="item.autoRedoTomorrowIs" style="margin-left:15px;font-size: 14px;">日常</span>
 					<span v-if="item.finalTime" style="margin-left:15px;font-size: 14px;"
 					 :style="{color:new Date(item.finalTime).getTime()>=new Date().getTime()?'#ff6700':'#ff0000'}">
-						{{item.finalTime?('限: '+$moment(item.finalTime).format(new Date().getFullYear()==new Date(item.finalTime).getFullYear()? "周d, MM-DD, HH:mm": "周d, MM-DD, HH:mm, YYYY").replace(/周0/g,'周7').replace(/周/g,'')):''}}
+						{{item.finalTime?('限: '+ (new Date(item.finalTime)-new Date().getTime())    ):''}}
 					</span>
 					<span style="right:0;position: absolute;;font-size: 14px;">{{item.orderNo}}</span>
 				</div>

@@ -67,7 +67,26 @@ Vue.prototype.$attr=function(obj,keyChain){
      }
      return obj1;
 }
-
+Vue.prototype.$tttt=function(millisecond){
+  let prefix = ''
+  if(millisecond < 0){
+    prefix='-'
+    millisecond = Math.abs(millisecond)
+  }
+  if(millisecond == 0)
+    return millisecond;
+  if(!millisecond)
+    return ''
+  let s=millisecond/1000
+  let m=s%60==0?s/60:(parseInt(s/60)+1)
+  let h=m%60==0?m/60:(parseInt(m/60)+1)
+  let d=h%24==0?h/24:(parseInt(h/24)+1)
+  if(d>1)
+    return prefix+d+'天'
+  if(h>1)
+    return prefix+h+'小时'
+  return prefix+m+'分钟'
+}
 Vue.prototype.$kwMark=function(text,kw){
   debugger
   let kwList = [];
