@@ -236,7 +236,7 @@
 			</span>
 		</div>
 
-		<div class="scrollbar" style="padding:3px 0px 3px 5px;box-shadow: 0px 1px 1px 0px #888888;white-space: nowrap;overflow: auto;">
+		<div class="scrollbar" style="padding:3px 0px 3px 10px;box-shadow: 0px 1px 1px 0px #888888;white-space: nowrap;overflow: auto;">
 			<span style="user-select: none;font-size: 14px;color: #008000;font-weight: 600;">{{$moment($store.state.now).format('周d, MM-DD, HH:mm:ss').replace('周0','周7').replace('周','')}}</span>
 			<span style="user-select: none;font-size: 14px;color: #8f8f8f;margin-left:15px;" >共 {{$attr(taskListSum,'itemCount')}} 条记录</span>
 		</div>
