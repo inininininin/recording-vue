@@ -280,7 +280,8 @@
 				@click="pn++;loadTaskList();">
 					点击加载更多
 				</div>
-			<div v-if="!loading && maxPn && pn==maxPn" style="font-size:12px;text-align: center;color:#6d6a6a;">全部加载完成</div>
+				<div v-if="!loading && maxPn && pn==maxPn" style="font-size:12px;text-align: center;color:#6d6a6a;">全部加载完成</div>
+				<div v-if="!loading && pn==1 && (!taskList || taskList.length==0)" style="font-size:12px;text-align: center;color:#6d6a6a;">暂无数据</div>
 			</div>
 		</div>
 
