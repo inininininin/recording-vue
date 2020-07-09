@@ -16,8 +16,8 @@
 					&#8207;
 				</span>
 				<span 
-					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
-					cursor: pointer;">
+					style="display: inline-block;user-select: none;font-size: 14px;width: 20%;text-align: center;cursor: pointer;"
+					@click="$router.replace({path:'/record-list',query:{time:new Date().getTime()+''}})">
 					记录
 				</span>
 				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">

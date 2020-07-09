@@ -60,7 +60,7 @@
 			style="position: absolute;bottom: 0;left: 0px;right: 0px;
 			background-color: rgb(255, 255, 255);box-shadow: rgb(136, 136, 136) 0px 0px 1px 0px;border-top: 1px solid #afaeae;">
 			<div style="height:35px;line-height: 35px;border-bottom:1px solid #8F8F8F;">
-				<span @click="addFriendIs=1;addFriend.users=[];" style="font-size:14px;width:100%;display:inline-block;text-align: center;cursor:pointer;">
+				<span @click="addFriendIs=1;addFriend.users=[];" style="font-size:14px;width:100%;font-weight: 900;display:inline-block;text-align: center;cursor:pointer;">
 					加好友 +
 				</span>
 			</div>
@@ -75,8 +75,8 @@
 					&#8207;
 				</span>
 				<span 
-					style="display: inline-block;font-size: 14px;width: 20%;text-align: center;
-					cursor: pointer;">
+					style="display: inline-block;user-select: none;font-size: 14px;width: 20%;text-align: center;cursor: pointer;"
+					@click="$router.replace({path:'/record-list',query:{time:new Date().getTime()+''}})">
 					记录
 				</span>
 				<span style="position: absolute;font-size:14px;height: 50px;line-height: 50px;display: inline-block;border-left:1px solid #8F8F8F;">

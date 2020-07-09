@@ -23,57 +23,6 @@
 			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
 				&#8207;
 			</span>
-			<span style="cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;"
-				@click="
-					if(defaultSort){
-						sort = {}
-					}
-					if(!sort.finalTime)
-						sort.finalTime='asc'
-					else if(sort.finalTime=='asc')
-						sort.finalTime='desc'
-					else if(sort.finalTime=='desc')
-						sort.finalTime=null
-					pn=1;loadTaskList()
-					defaultSort=0;
-					">
-				<span style="user-select: none;font-size:14px;">期限</span>
-				<span v-if="!defaultSort && sort.finalTime=='asc'" style="user-select: none;font-size:14px;color:#ff0000;">&nbsp;&and;</span>
-				<span v-if="!defaultSort && sort.finalTime=='desc'" style="user-select: none;font-size:14px;color:#ff0000;">&nbsp;&or;</span>
-				<span v-if="defaultSort || !sort.finalTime" style="user-select: none;font-size:14px;color:#ff0000;visibility: hidden;">&nbsp;&or;</span>
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-				&#8207;
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;cursor: pointer;vertical-align: top;">
-				<select v-model="status" style="border:none;height: 35px;cursor: pointer;padding:0 5px;"
-					:style="{'color':status==''?'#000000':'#ff0000'}"
-					@change="
-						pn=1;loadTaskList();
-						">
-					<option value="">状态</option>
-					<option value="1">进行中</option>
-					<option value="2">已完成</option>
-					<option value="3">已撤销</option>
-				</select>
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-				&#8207;
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;cursor: pointer;vertical-align: top;">
-				<select v-model="type" style="border:none;height: 35px;cursor: pointer;padding:0 5px;"
-					:style="{'color':type==''?'#000000':'#ff0000'}"
-					@change="
-						pn=1;loadTaskList();
-						">
-					<option value="">类型</option>
-					<option value="1">推进</option>
-					<option value="2">缺陷</option>
-				</select>
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-				&#8207;
-			</span>
 			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;position: relative;">
 				<svg t="1591346902986" style="position: absolute;left:3px;top:10px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="16" height="16"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
 				<input v-model="kw" type="text" style="line-height: 35px;border:none;padding:0 14px 0 18px;width:80px;"
@@ -133,29 +82,6 @@
 		</div>
 
 		<div class="scrollbar" style="height:38px;line-height: 35px;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;">
-			<span style="user-select: none;font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;background-color: #d8d5d5;"
-				@click="faBuRenUserId=null;pn=1;loadTaskList();">
-				发布人
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-				&#8207;
-			</span>
-			<span>
-				<span style="user-select: none;font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;min-width:25px;text-align: center;"
-					:style="{'background-color':faBuRenUserId==$store.state.login.userId?'#d8d5d5':'#ffffff'}"
-					@click="
-						if(faBuRenUserId==$store.state.login.userId)
-							faBuRenUserId=null;
-						else
-							faBuRenUserId=$store.state.login.userId;
-						pn=1;loadTaskList();
-						">
-					我
-				</span>
-				<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-					&#8207;
-				</span>
-			</span>
 			<span v-for="(item,i) in faBuRenList" >
 				<span style="font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;min-width:25px;max-width:100px;text-align: center;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;    vertical-align: top;"
 					:style="{'background-color':faBuRenUserId==item.faBuRenUserId?'#d8d5d5':'#ffffff'}"
@@ -183,66 +109,14 @@
 			</span>
 		</div>
 
-		<div class="scrollbar" style="height:38px;line-height: 35px;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;">
-			<span style="user-select: none;font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;background-color: #d8d5d5;"
-				@click="fuZeRenUserId=null;pn=1;loadTaskList();">
-				负责人
-			</span>
-			<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-				&#8207;
-			</span>
-			<span>
-				<span style="user-select: none;font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;min-width:25px;text-align: center;"
-					:style="{'background-color':fuZeRenUserId==$store.state.login.userId?'#d8d5d5':'#ffffff'}"
-					@click="
-						if(fuZeRenUserId==$store.state.login.userId)
-							fuZeRenUserId=null;
-						else
-							fuZeRenUserId=$store.state.login.userId;
-						pn=1;loadTaskList();
-						">
-					我
-				</span>
-				<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-					&#8207;
-				</span>
-			</span>
-
-			<span v-for="(item,i) in fuZeRenList" >
-				<span style="font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;min-width:25px;max-width:100px;text-align: center;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;    vertical-align: top;"
-					:style="{'background-color':fuZeRenUserId==item.fuZeRenUserId?'#d8d5d5':'#ffffff'}"
-					@click="
-						if(fuZeRenUserId==item.fuZeRenUserId)
-							fuZeRenUserId=null;
-						else
-							fuZeRenUserId=item.fuZeRenUserId;
-						pn=1;loadTaskList();
-						">
-					{{item.followAlias||item.nickname}}
-				</span>
-				<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-					&#8207;
-				</span>
-			</span>
-
-			<span style="margin-right:50px;user-select: none;font-size:14px;"></span>
-			<span style="position: absolute;right:0px;height: 35px;background-color: #ffffff;">
-				<span style="user-select: none;font-size:14px;height: 35px;line-height: 35px;display: inline-block;border-left:1px solid #8F8F8F;">
-					&#8207;
-				</span>
-				<span style="text-align: center;font-weight: 900;user-select: none;font-size:14px;cursor: pointer;height: 35px;line-height: 35px;display: inline-block;padding:0 5px;">
-					· · ·
-				</span>
-			</span>
-		</div>
-
+	
 		<div class="scrollbar" style="padding:3px 0px 3px 10px;box-shadow: 0px 1px 1px 0px #888888;white-space: nowrap;overflow: auto;">
-			<span style="user-select: none;font-size: 14px;color: #008000;font-weight: 600;">{{$moment($store.state.now).format('周d, MM-DD, HH:mm:ss').replace('周0','周7').replace('周','')}}</span>
-			<span style="user-select: none;font-size: 14px;color: #8f8f8f;margin-left:15px;" >共 {{$attr(taskListSum,'itemCount')}} 条记录</span>
+			<span style="user-select: none;font-size: 14px;color: #8f8f8f;" >共 {{$attr(taskListSum,'itemCount')}} 条记录</span>
 		</div>
 		<div class="scrollbarNone" ref="taskListTag" @scroll="taskListTagScroll($event)"
 			style="overflow: auto;width:100%;position: absolute;
-			top: 144px;bottom: 89px;">
+					top: 104px;bottom: 89px;"
+			:style="{'bottom':(89+oneToMoreLineHeightGo)+'px'}">
 			<div v-for="(item,i) in taskList" style="border:1px solid #8f8f8f;margin:5px;padding:5px;cursor: pointer;" class="active"
 				@click="
 					debugger;
@@ -288,16 +162,23 @@
 		<div 
 			style="position: absolute;bottom: 0;left: 0px;right: 0px;
 			background-color: rgb(255, 255, 255);box-shadow: rgb(136, 136, 136) 0px 0px 1px 0px;border-top: 1px solid #afaeae;">
-			<div style="height:35px;line-height:35px;border-bottom:1px solid #8F8F8F;">
-				<span style="line-height:35px;height:35px;text-align: center;cursor: pointer;font-weight: 900;user-select: none;font-size: 14px;width:100%;display: inline-block;"
-					@click="$router.push({path:'/insert-task',query:{time:new Date().getTime()+''}})">
-					发任务 +
-				</span>
+			<div style="border-bottom:1px solid #8F8F8F;position: relative;"
+				:style="{'height':(35+oneToMoreLineHeightGo)+'px'}">
+				<textarea v-model="recordContent" type='text' style="line-height:35px;padding:0 2px;border: none;vertical-align: top;resize: none;width:70%;" 
+					:style="{'height':(35+oneToMoreLineHeightGo)+'px','line-height':(oneToMoreLineHeightGo>0?null:'35px')}"
+					@keyup="
+						if(recordContent.split(/\r?\n|\r/).length>1)
+							oneToMoreLineHeightGo=40;
+						else
+							oneToMoreLineHeightGo=0;">
+				</textarea>
+				<button style="padding: 0px 10px;cursor: pointer;position: relative;top: -1px;"
+					:style="{'height':(37+oneToMoreLineHeightGo)+'px'}">确定</button>
 			</div>
 			<div style="height: 50px;line-height: 50px;position: relative;">
 				<span 
 					style="display: inline-block;user-select: none;font-size: 14px;width: 20%;text-align: center;
-					cursor: pointer;background-color: rgb(255, 127, 8);"
+					cursor: pointer;"
 					@click="$router.replace({path:'/index',query:{time:new Date().getTime()+''}})">
 					任务
 				</span>
@@ -305,7 +186,7 @@
 					&#8207;
 				</span>
 				<span 
-					style="display: inline-block;user-select: none;font-size: 14px;width: 20%;text-align: center;cursor: pointer;"
+					style="display: inline-block;user-select: none;font-size: 14px;background-color: rgb(255, 127, 8);width: 20%;text-align: center;cursor: pointer;"
 					@click="$router.replace({path:'/record-list',query:{time:new Date().getTime()+''}})">
 					记录
 				</span>
@@ -410,6 +291,8 @@
 				historyKwList:[],
 				historyKwListTagShow:0,
 				taskListTagScrollTop:null,
+				recordContent:'',
+				oneToMoreLineHeightGo:0,
 			}
 		},//data
 		activated() {

@@ -52,6 +52,11 @@ const routes = [
     component: _import( 'friend-list')
   },
   {
+    path: '/record-list',
+    name: '/record-list',
+    component: _import( 'record-list')
+  },
+  {
     path: '/me',
     name: '/me',
     component: _import( 'me')
