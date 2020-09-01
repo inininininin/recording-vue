@@ -185,7 +185,7 @@
 					finalTime = thisVue.$moment(thisVue.finalTimeDate+" "+(thisVue.finalTimeTime?(thisVue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				thisVue.$axios.post('/my-task/create-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
+				thisVue.$axios.post('/recording/my-task/create-task',thisVue.$qs.stringify({autoRedoTomorrowIs:thisVue.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisVue.faBuRenUserId,fuZeRenUserId:thisVue.fuZeRenUserId,name:thisVue.name,type:thisVue.type,content:thisVue.content,
 				orderNo:thisVue.orderNo,
 				image:thisVue.imageList[0]?thisVue.imageList[0]:null,
 				image1:thisVue.imageList[1]?thisVue.imageList[1]:null,
@@ -218,7 +218,7 @@
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisVue.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					thisVue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
 						thisVue.imageList.push(res.data.data.url)
 					})

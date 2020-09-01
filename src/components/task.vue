@@ -64,7 +64,7 @@
 			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
 			 let r=window.confirm('确认撤销吗');
 			 if(r){
-			 $axios.post('/my-task/cancel-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -79,7 +79,7 @@
 			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
 			 let r=window.confirm('确认完成吗');
 			 if(r){
-			 $axios.post('/my-task/complete-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -95,7 +95,7 @@
 			 <button  v-if="task.taskId && (task.cancelIs || task.completeIs)" @click="
 			 let r=window.confirm('确认重启吗');
 			 if(r){
-			 $axios.post('/my-task/restart-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/recording/my-task/restart-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -121,7 +121,7 @@
 			 <button v-if="task.taskId && (task.cancelIs  || task.completeIs)" @click="
 			let r=window.confirm('确认删除吗');
 			if(r){
-			$axios.post('/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
+			$axios.post('/recording/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
 				.then(res=>{ 
 					if(res.data.codeMsg) 
 						window.alert(res.data.codeMsg)
@@ -323,7 +323,7 @@
 				Object.assign(thisVue.$data, thisVue.$options.data());
 				thisVue.taskId=thisVue.$route.query.taskId;
 
-				thisVue.$axios.get('/my-task/task-list?taskId='+thisVue.taskId).then(res=>{
+				thisVue.$axios.get('/recording/my-task/task-list?taskId='+thisVue.taskId).then(res=>{
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
@@ -412,7 +412,7 @@
 					thisVue.taskUpdate.finalTime=param.finalTime
 				}
 
-				thisVue.$axios.post('/my-task/update-task',thisVue.$qs.stringify(param)).then(res=>{
+				thisVue.$axios.post('/recording/my-task/update-task',thisVue.$qs.stringify(param)).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -438,7 +438,7 @@
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisVue.$axios.post('/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					thisVue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
 						thisVue.taskUpdate.imageList.push(res.data.data.url)
 					})
@@ -447,7 +447,7 @@
 			createTrack(){
 				debugger
 				let thisVue = this
-				thisVue.$axios.post('/my-task/create-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
+				thisVue.$axios.post('/recording/my-task/create-task-track',thisVue.$qs.stringify({taskId:thisVue.taskId,content:thisVue.trackContent})).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -474,7 +474,7 @@
 				thisVue.taskTrack_loading=1
 
 				thisVue.taskTrack_count =null;
-				thisVue.$axios.get('/my-task/task-track-list?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+				thisVue.$axios.get('/recording/my-task/task-track-list?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -484,7 +484,7 @@
 					}
 					thisVue.taskTrack_loading=0
 				})
-				thisVue.$axios.get('/my-task/task-track-list-sum?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
+				thisVue.$axios.get('/recording/my-task/task-track-list-sum?'+thisVue.$qs.stringify({taskId:thisVue.taskId,kw:thisVue.taskTrack_kw,pn:thisVue.taskTrack_pn,ps:thisVue.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						thisVue.taskTrack_count=res.data.data.itemCount

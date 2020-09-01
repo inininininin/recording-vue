@@ -76,7 +76,7 @@
 			forgetPassword() {
 				debugger
 				let thisVue = this;
-				thisVue.$axios.post('/alter-password-by-smsvcode',thisVue.$qs.stringify({ phone:thisVue.phone, newPassword:thisVue.newPassword, smsvcode:thisVue.smsvcode }) ).then(res => {
+				thisVue.$axios.post('/recording/alter-password-by-smsvcode',thisVue.$qs.stringify({ phone:thisVue.phone, newPassword:thisVue.newPassword, smsvcode:thisVue.smsvcode }) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
 						alert(res.data.codeMsg)

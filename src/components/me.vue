@@ -45,7 +45,7 @@
 			logout(){
 				debugger
 			let thisVue = this;
-				thisVue.$axios.post('/logout').then(res => {
+				thisVue.$axios.post('/recording/logout').then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)

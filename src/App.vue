@@ -29,7 +29,7 @@ export default {
 
     thisVue.$.ajax(
       {
-        url:'/login-refresh',
+        url:'/recording/login-refresh',
         type:'post',
         async:false,
         success(res){

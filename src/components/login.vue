@@ -73,12 +73,12 @@ export default {
 			let thisVue = this;
 
 			 if(thisVue.byPasswordIs){
-				thisVue.$axios.post('/login-by-phone-password',thisVue.$qs.stringify({phone:thisVue.phone,password:thisVue.password})).then(res => {
+				thisVue.$axios.post('/recording/login-by-phone-password',thisVue.$qs.stringify({phone:thisVue.phone,password:thisVue.password})).then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if(res.data.code == 0){
-						thisVue.$axios.post('/login-refresh').then(res => {
+						thisVue.$axios.post('/recording/login-refresh').then(res => {
 							debugger
 							if (res.data.code == 0) {
 								thisVue.$store.state.login=res.data.data;
@@ -89,12 +89,12 @@ export default {
   				})
 			 }
 			 if(thisVue.bySmsvcodeIs){
-				thisVue.$axios.post('/login-by-smsvcode',thisVue.$qs.stringify({phone:thisVue.phone,smsvcode:thisVue.smsvcode})).then(res => {
+				thisVue.$axios.post('/recording/login-by-smsvcode',thisVue.$qs.stringify({phone:thisVue.phone,smsvcode:thisVue.smsvcode})).then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if(res.data.code == 0){
-						thisVue.$axios.post('/login-refresh').then(res => {
+						thisVue.$axios.post('/recording/login-refresh').then(res => {
 							debugger
 							if (res.data.code == 0) {
 								thisVue.$store.state.login=res.data.data;

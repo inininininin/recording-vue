@@ -78,7 +78,7 @@
 						@focus="
 						queryHistoryPad=1;
 						if($store.state.login){
-							$axios.get(`/cache/get?name=${'queryHistoryKwList-'+$store.state.login.userId}`)
+							$axios.get(`/recording/cache/get?name=${'queryHistoryKwList-'+$store.state.login.userId}`)
 								.then(res=>{
 									if(res.data.code==0)
 										if(res.data.data.value)
@@ -313,7 +313,7 @@
 					@click="
 					queryHistoryKwList.splice(queryHistoryKwList.indexOf(item),1)
 					if($store.state.login){
-						$axios.post('/cache/set',$qs.stringify({name:'queryHistoryKwList-'+$store.state.login.userId,value:queryHistoryKwList.join()}))
+						$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistoryKwList-'+$store.state.login.userId,value:queryHistoryKwList.join()}))
 					}
 					"
 					style="
@@ -327,7 +327,7 @@
 					@click="
 					queryHistoryKwList=[];
 					if($store.state.login){
-						$axios.post('/cache/set',$qs.stringify({name:'queryHistoryKwList-'+$store.state.login.userId,value:queryHistoryKwList.join()}))
+						$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistoryKwList-'+$store.state.login.userId,value:queryHistoryKwList.join()}))
 					}
 					"
 				style="font-size: 14px;cursor: pointer;text-align: center;margin-top:10px;color:#8F8F8F;border:1px dashed #8f8f8f;">清空历史记录</div>
@@ -390,7 +390,7 @@
 				thisVue.$refs.taskList.scrollTop=thisVue.scrollTop
 
 				if(thisVue.chooseTask){
-					thisVue.$axios.get(`/my-task/task-list?taskId=${thisVue.chooseTask.taskId}`).then(res => {
+					thisVue.$axios.get(`/recording/my-task/task-list?taskId=${thisVue.chooseTask.taskId}`).then(res => {
 							if(res.data.code==0){
 								let o =res.data.data.itemList[0];
 								thisVue.chooseTask.name=o.name;
@@ -421,7 +421,7 @@
 				Object.assign(thisVue.$data, thisVue.$options.data());
 
 				if(!thisVue.$store.state.login){
-					thisVue.$axios.post('/logout').then(res => {
+					thisVue.$axios.post('/recording/logout').then(res => {
 							thisVue.$store.state.login=null;
 							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
@@ -430,7 +430,7 @@
 				thisVue.queryHistoryPad=0;thisVue.loadTaskList()
 
 
-				thisVue.$axios.get('/my-task/my-faburen-list?'+thisVue.$qs.stringify({})).then(res => {
+				thisVue.$axios.get('/recording/my-task/my-faburen-list?'+thisVue.$qs.stringify({})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -438,7 +438,7 @@
 					}
 				})
 
-				thisVue.$axios.get('/my-task/my-fuzeren-list?'+thisVue.$qs.stringify({})).then(res => {
+				thisVue.$axios.get('/recording/my-task/my-fuzeren-list?'+thisVue.$qs.stringify({})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -495,11 +495,11 @@
 				if(thisVue.kw && thisVue.queryHistoryKwList.indexOf(thisVue.kw)==-1){
 					thisVue.queryHistoryKwList.splice(0,0,thisVue.kw)
 					if(thisVue.$store.state.login){
-						thisVue.$axios.post('/cache/set',thisVue.$qs.stringify({name:'queryHistoryKwList-'+thisVue.$store.state.login.userId,value:thisVue.queryHistoryKwList.join()}))
+						thisVue.$axios.post('/recording/cache/set',thisVue.$qs.stringify({name:'queryHistoryKwList-'+thisVue.$store.state.login.userId,value:thisVue.queryHistoryKwList.join()}))
 					}
 				}
 
-				thisVue.$axios.get('/my-task/task-list?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/recording/my-task/task-list?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0){
@@ -511,7 +511,7 @@
 					}
 					thisVue.loading=0
 				})
-				thisVue.$axios.get('/my-task/task-list-sum?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/recording/my-task/task-list-sum?'+thisVue.$qs.stringify({autoRedoTomorrowIs:autoRedoTomorrowIs,fuZeRenUserId:thisVue.fuZeRenUserId,faBuRenUserId:thisVue.faBuRenUserId,kw:thisVue.kw,cancelIs:thisVue.cancelIs,completeIs:thisVue.completeIs,type:thisVue.type,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						thisVue.itemCount=res.data.data.itemCount

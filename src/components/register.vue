@@ -85,12 +85,12 @@
 			register() {
 				debugger
 				let thisVue = this;
-				thisVue.$axios.post('/register',thisVue.$qs.stringify({ nickname:thisVue.nickname,phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
+				thisVue.$axios.post('/recording/register',thisVue.$qs.stringify({ nickname:thisVue.nickname,phone:thisVue.phone, password:thisVue.password, smsvcode:thisVue.smsvcode }) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisVue.$axios.post('/login-by-login-id', thisVue.$qs.stringify({ loginId: res.data.data.loginId })).then(res => {
+						thisVue.$axios.post('/recording/login-by-login-id', thisVue.$qs.stringify({ loginId: res.data.data.loginId })).then(res => {
 							debugger
 							if (res.data.codeMsg)
 								alert(res.data.codeMsg)

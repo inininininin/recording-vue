@@ -170,7 +170,7 @@
 				Object.assign(thisVue.$data, thisVue.$options.data());
 
 				if(!thisVue.$store.state.login){
-					thisVue.$axios.post('/logout').then(res => {
+					thisVue.$axios.post('/recording/logout').then(res => {
 							thisVue.$store.state.login=null;
 							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
@@ -184,7 +184,7 @@
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							thisVue.$axios.post(`/recording/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -198,7 +198,7 @@
 					var r=window.prompt(`你和 ${item.nickname} 已经是好友 , 你可以修改别名`,item.followAlias||'')
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/my-follow/update-follow`,thisVue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
+							thisVue.$axios.post(`/recording/my-follow/update-follow`,thisVue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -215,7 +215,7 @@
 				let thisVue = this
 				thisVue.addFriend.loading=1
 				thisVue.addFriend.userCount=null;
-				thisVue.$axios.get(`/user/user-list?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+				thisVue.$axios.get(`/recording/user/user-list?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -237,7 +237,7 @@
 					thisVue.addFriend.loading=0
 				})
 
-				thisVue.$axios.get(`/user/user-list-sum?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+				thisVue.$axios.get(`/recording/user/user-list-sum?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
 					debugger
 					if (res.data.code == 0) {
 							thisVue.addFriend.userCount=res.data.data.itemCount
@@ -281,7 +281,7 @@
 				thisVue.itemCount =null;
 				
 
-				thisVue.$axios.get('/my-follow/follow-list?'+thisVue.$qs.stringify({kw:thisVue.kw,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/recording/my-follow/follow-list?'+thisVue.$qs.stringify({kw:thisVue.kw,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -291,7 +291,7 @@
 					}
 					thisVue.loading=0
 				})
-				thisVue.$axios.get('/my-follow/follow-list-sum?'+thisVue.$qs.stringify({kw:thisVue.kw,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisVue.$axios.get('/recording/my-follow/follow-list-sum?'+thisVue.$qs.stringify({kw:thisVue.kw,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						thisVue.itemCount=res.data.data.itemCount
