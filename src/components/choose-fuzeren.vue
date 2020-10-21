@@ -40,7 +40,7 @@
 			<span style="font-size: 14px;color: #8f8f8f;">共 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div v-for="(item, i) in friendList" @click="$store.state.chooseFuZeRenUserId=item.userId;$store.state.chooseFuZeRenUserNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
+		<div v-for="item in friendList" :key="item.userId" @click="$store.state.chooseFuZeRenUserId=item.userId;$store.state.chooseFuZeRenUserNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
 			<span><img :src="item.logo" /></span>
 			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{$attr(item,'alias')?$attr(item,'alias'):item.nickname}}
 				{{$attr(item,'alias')?(`(${$attr(item,'nickname')})`):''}}</span>
@@ -48,8 +48,8 @@
 		
 		<div v-show="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
-		<div v-show="!loading && friendList.length<itemCount" @click="pn++;loadFriendList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-		<div v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+		<div class="activeText unselectable" v-show="!loading && friendList.length<itemCount" @click="pn++;loadFriendList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+		<div class="unselectable" v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 
 	</div>
 		
@@ -93,7 +93,7 @@
 				<div style="margin:5px 0 0 0;">
 					<span style="font-size: 14px;color: #8f8f8f;">共 {{addFriend.userCount}} 条记录</span>
 				</div>
-					<div @click="addFriendDo(item)" v-for="(item,i) in addFriend.users" style="margin-top:5px;cursor: pointer;" >
+					<div @click="addFriendDo(item)" v-for="item in addFriend.users" :key="item.userId" style="margin-top:5px;cursor: pointer;" >
 						<span style="font-size: 16px;">{{item.nickname}}</span>
 						<span  style="font-size: 16px;margin:0 0 0 10px">{{item.phone}}</span>
 					</div>
@@ -101,8 +101,8 @@
 
 				<div v-show="addFriend.loading"  style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
-				<div v-show="!addFriend.loading && addFriend.users.length<addFriend.userCount" @click="addFriend.pn++;findMoreFriendUserList()" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-				<div v-show="!addFriend.loading && !(addFriend.users.length<addFriend.userCount)" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+				<div class="activeText unselectable" v-show="!addFriend.loading && addFriend.users.length<addFriend.userCount" @click="addFriend.pn++;findMoreFriendUserList()" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+				<div class="unselectable" v-show="!addFriend.loading && !(addFriend.users.length<addFriend.userCount)" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 			</div>
 
 				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriend.users=[];addFriend.addIs=1" style="cursor: pointer;width:150px;height:30px;">关闭</button></div>
@@ -153,38 +153,38 @@
 		},
 		activated() {
 			debugger
-			let thisVue = this
-			window.thisVue=thisVue;
-			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
-				thisVue.reload();
+			let thisV = this
+			window.thisV=thisV;
+			if (thisV.query != JSON.stringify(thisV.$route.query)) {
+				thisV.reload();
 
-				thisVue.query = JSON.stringify(thisVue.$route.query);
+				thisV.query = JSON.stringify(thisV.$route.query);
 			}else{
-				thisVue.$refs.friendList.scrollTop=thisVue.scrollTop
+				thisV.$refs.friendList.scrollTop=thisV.scrollTop
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisVue = this
-				Object.assign(thisVue.$data, thisVue.$options.data());
+				let thisV = this
+				Object.assign(thisV.$data, thisV.$options.data());
 
-				if(!thisVue.$store.state.login){
-					thisVue.$axios.post('/recording/logout').then(res => {
-							thisVue.$store.state.login=null;
-							thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
+				if(!thisV.$store.state.login){
+					thisV.$axios.post('/recording/logout').then(res => {
+							thisV.$store.state.login=null;
+							thisV.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
 						})
 				}
 					
 
-				thisVue.loadFriendList()
+				thisV.loadFriendList()
 			},
 			addFriendDo(item){
 				if(!item.followId){
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/recording/my-follow/create-follow`,thisVue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							thisV.$axios.post(`/recording/my-follow/create-follow`,thisV.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -198,7 +198,7 @@
 					var r=window.prompt(`你和 ${item.nickname} 已经是好友 , 你可以修改别名`,item.followAlias||'')
 					if (r!=null)
 						{
-							thisVue.$axios.post(`/recording/my-follow/update-follow`,thisVue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
+							thisV.$axios.post(`/recording/my-follow/update-follow`,thisV.$qs.stringify({followId:item.followId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -212,65 +212,65 @@
 			},
 			findMoreFriendUserList(){
 				debugger
-				let thisVue = this
-				thisVue.addFriend.loading=1
-				thisVue.addFriend.userCount=null;
-				thisVue.$axios.get(`/recording/user/user-list?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+				let thisV = this
+				thisV.addFriend.loading=1
+				thisV.addFriend.userCount=null;
+				thisV.$axios.get(`/recording/user/user-list?kw=${thisV.addFriend.kw||''}&pn=${thisV.addFriend.pn}`).then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
 						if(!res.data.data.itemList || res.data.data.itemList.length==0){
-							if(thisVue.addFriend.pn==1){
+							if(thisV.addFriend.pn==1){
 								alert('未找到用户')
 							}
-							thisVue.addFriend.pn--;
+							thisV.addFriend.pn--;
 						}
 						else{
-							if(thisVue.addFriend.pn==1){
-								thisVue.addFriend.users=[]
+							if(thisV.addFriend.pn==1){
+								thisV.addFriend.users=[]
 							}
-							thisVue.addFriend.addIs=0
-							thisVue.addFriend.users=thisVue.addFriend.users.concat(res.data.data.itemList)
+							thisV.addFriend.addIs=0
+							thisV.addFriend.users=thisV.addFriend.users.concat(res.data.data.itemList)
 						}
 					}
-					thisVue.addFriend.loading=0
+					thisV.addFriend.loading=0
 				})
 
-				thisVue.$axios.get(`/recording/user/user-list-sum?kw=${thisVue.addFriend.kw||''}&pn=${thisVue.addFriend.pn}`).then(res => {
+				thisV.$axios.get(`/recording/user/user-list-sum?kw=${thisV.addFriend.kw||''}&pn=${thisV.addFriend.pn}`).then(res => {
 					debugger
 					if (res.data.code == 0) {
-							thisVue.addFriend.userCount=res.data.data.itemCount
+							thisV.addFriend.userCount=res.data.data.itemCount
 					}
 				})
 			},
 			addFriendUserListScroll(event){
 				debugger
-				let thisVue = this
-				if((event.target.scrollTop+thisVue.$(event.target).height())>=event.target.scrollHeight) {
-					thisVue.addFriend.pn++;
-					thisVue.findMoreFriendUserList ()
+				let thisV = this
+				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
+					thisV.addFriend.pn++;
+					thisV.findMoreFriendUserList ()
 				}
 			},
 			friendListScroll(event){
 				debugger
-				let thisVue = this
-				thisVue.scrollTop=event.target.scrollTop;
-				if((event.target.scrollTop+thisVue.$(event.target).height())>=event.target.scrollHeight) {
-					thisVue.pn++;
-					thisVue.loadFriendList ()
+				let thisV = this
+				thisV.scrollTop=event.target.scrollTop;
+				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
+					thisV.pn++;
+					thisV.loadFriendList ()
 				}
 			},
 			loadFriendList (){
 				debugger
-				let thisVue = this
-				thisVue.loading=1
+				let thisV = this
+				thisV.loading=1
 				let sorts=[]
 				let orders=[]
-				for(var c in thisVue.sortMap1) {
-					if(thisVue.sortMap1[c]){
+				for(var c in thisV.sortMap1) {
+					if(thisV.sortMap1[c]){
 						sorts.push(c)
-						orders.push(thisVue.sortMap1[c]==1?'asc':thisVue.sortMap1[c]==2?'desc':'c')
+						orders.push(thisV.sortMap1[c]==1?'asc':thisV.sortMap1[c]==2?'desc':'c')
 					}
 				}
 				if(!sorts || sorts.length==0){
@@ -278,23 +278,23 @@
 					orders=['asc','asc','desc','desc']
 				}
 
-				thisVue.itemCount =null;
+				thisV.itemCount =null;
 				
 
-				thisVue.$axios.get('/recording/my-follow/follow-list?'+thisVue.$qs.stringify({kw:thisVue.kw,sort:sorts.join(),order:orders.join(),pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisV.$axios.get('/recording/my-follow/follow-list?'+thisV.$qs.stringify({kw:thisV.kw,sort:sorts.join(),order:orders.join(),pn:thisV.pn,ps:thisV.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
-							thisVue.friendList=thisVue.friendList.concat(res.data.data.itemList)
+							thisV.friendList=thisV.friendList.concat(res.data.data.itemList)
 						else
-						thisVue.pn--;
+						thisV.pn--;
 					}
-					thisVue.loading=0
+					thisV.loading=0
 				})
-				thisVue.$axios.get('/recording/my-follow/follow-list-sum?'+thisVue.$qs.stringify({kw:thisVue.kw,pn:thisVue.pn,ps:thisVue.ps})).then(res => {
+				thisV.$axios.get('/recording/my-follow/follow-list-sum?'+thisV.$qs.stringify({kw:thisV.kw,pn:thisV.pn,ps:thisV.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
-						thisVue.itemCount=res.data.data.itemCount
+						thisV.itemCount=res.data.data.itemCount
 					}
 				})
 			},

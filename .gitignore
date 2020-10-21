@@ -1,3 +1,4 @@
+
 .DS_Store
 node_modules/
 /dist/
@@ -14,8 +15,7 @@ yarn-error.log*
 *.sln
 
 *.zip
-*.rar
-*.war
+
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -28,7 +28,14 @@ yarn-error.log*
 hs_err_pid*
 
 bin/
+build/
 target/
 
+.classpath
+.project
+.settings/
 .svn/
 
+.idea/
+
+node_modules/

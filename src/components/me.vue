@@ -1,22 +1,46 @@
 <template>
-	<div id="me" style="height:100%;position:relative;">
-		<div @click="logout()" style="font-size:14px;cursor: pointer;">退出登录</div>
+	<div id="me" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
+		<div style="height:150px;border-bottom: 1px solid #888888;">
+			<img style="width:80px;height:80px;border: 1px solid #888888;display: inline-block;margin:30px 0 0 20px;"/>
+			<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;vertical-align: baseline;">{{$attr($store.state.login,'nickname')}}</span>
+			
+		</div>
+		<div @click="logout()" style="height:45px;line-height:45px;font-size:16px;cursor: pointer;padding:0 20px;border-bottom: 1px solid #888888;">退出登录</div>
 
-		<div style="position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;">
-
-		<div style="border-top:1px solid #8F8F8F;"></div>
-			<div style="height:50px;line-height: 50px;position: relative;">
-				<span  @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">任务</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">记录</span>
-				
-				<span @click="$router.push({path:'/friend-list',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">好友</span>
-				
-				<span style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;">消息</span>
-				
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})" style="font-size:14px;width:20%;display:inline-block;text-align: center;cursor:pointer;background-color: #ff7f08;color: #ffffff;">我</span>
+		<div style="height:51px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
+			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;">
+				<span @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})"
+					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					生 活
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					工 作
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					日 常
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					记 录
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span @click="$router.push({path:'/friend',query:{time:new Date().getTime()+''}})"
+					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					好 友
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					消 息
+				</span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})"
+					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;background-color: #ff7f08;color:#ffffff;">
+					我
+				</span>
 			</div>
-			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -29,12 +53,11 @@
 			}
 		},
 		activated() {
-			let thisVue = this
-
-			if (thisVue.query != JSON.stringify(thisVue.$route.query)) {
-				Object.assign(thisVue.$data, thisVue.$options.data());
-				thisVue.query = JSON.stringify(thisVue.$route.query);
-				thisVue.reload();
+			let thisV = this
+			if (thisV.query != JSON.stringify(thisV.$route.query)) {
+				Object.assign(thisV.$data, thisV.$options.data());
+				thisV.query = JSON.stringify(thisV.$route.query);
+				thisV.reload();
 
 			}
 		},
@@ -44,18 +67,23 @@
 			},
 			logout(){
 				debugger
-			let thisVue = this;
-				thisVue.$axios.post('/recording/logout').then(res => {
+				let thisV = this;
+				thisV.$dialog.confirm({
+					message: '确定退出吗?'
+				}).then(()=> {
 					debugger
-					if(res.data.codeMsg)
-						alert(res.data.codeMsg)
-					if(res.data.code == 0){
-						thisVue.$store.state.login=null;
-						if(!res.data.codeMsg)
-							alert("成功")
-						thisVue.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
-					}
-  				})
+					thisV.$axios.post('/recording/logout').then(res => {
+						debugger
+						if(res.data.codeMsg)
+							alert(res.data.codeMsg)
+						if(res.data.code == 0){
+							thisV.$store.state.login=null;
+							thisV.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
+						}
+					})
+				}).catch(() => {
+					console.log("点击了取消按钮噢")
+				});
 			}
 		}
 	}
