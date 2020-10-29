@@ -236,7 +236,7 @@
 							{{ item.nickname }}
 						</span>
 						<span v-if="item.phone" style="margin-left:10px;width:100px;display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
-							{{ item.phone.replace(/(?<=^.{3}).{4}/,'****') }}
+							{{ item.phone.replace(new RegExp('(?<=^.{3}).{4}'),'****') }}
 						</span>
 						<span style="margin-left:10px;display:inline-block;width: 21px;font-size:16px;color:#ff0000;">
 							{{ item.friendId?'友':'' }}

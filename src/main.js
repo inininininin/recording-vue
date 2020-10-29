@@ -11,7 +11,8 @@ import jquery from 'jquery';
 import _ from 'lodash';
 import Viewer from 'v-viewer';
 import 'viewerjs/dist/viewer.css';
-import './mock.js';
+//if (process.env.NODE_ENV == 'development') require('./mock')
+import (process.env.NODE_ENV == 'development')?'./mock.js':null;
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
