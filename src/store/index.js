@@ -5,13 +5,16 @@ Vue.use(Vuex);
 const state = {
 	login: null,
 	chooseFuZeRenUserId: null,
-	chooseFuZeRenUserNickname: null,
-	chooseFaBuRenUserId: null,
-	chooseFaBuRenUserNickname: null,
+	chooseFuZeRenNickname: null,
+	chooseFaQiRenUserId: null,
+	chooseFaQiRenNickname: null,
 	cloneTask: null,
 	now: new Date(),
 	nowTimer: null,
-	requesting: 0
+	requestingCount: 0,
+	chosenTask: null,
+	chosenTaskDel:null,
+	createdTask: null,
 };
 const getters = {
 };

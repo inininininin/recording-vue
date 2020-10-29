@@ -89,7 +89,7 @@
 			<br/>
 			<button v-if="byEmailPad" @click="bySmsPad=1;byEmailPad=0;" type="button" style="width:270px;height:35px;margin-top:5px;font-size: 16px;" >通过手机找回</button>
 			<br/>
-			<button style="width:270px;height:35px;margin-top:5px;font-size:16px;" @click="$router.replace({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
+			<button style="width:270px;height:35px;margin-top:5px;font-size:16px;" @click="$router.replace({path:'/login'})">去登录</button>
 		</div>
 	</div>
 </template>

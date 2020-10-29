@@ -1,10 +1,10 @@
 <template>
-	<div id="choose-faburen" style="height:100%;position:relative;">
+	<div id="choose-fa-qi-ren" style="height:100%;position:relative;">
 		<div
 			style="font-size: 16px;text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 			width: 100%;top:0;background-color: #FFFFFF;">
 			<span @click="window.history.length<=1?$router.push({path:'/index',query:{time:new Date().getTime+''}}):$router.back()" style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">&lt;</span>
-			<span>选择发布人</span>
+			<span>选择发起人</span>
 		</div>
 
 		<div  class="scrollbar"
@@ -45,7 +45,7 @@
 			<span style="font-size: 14px;color: #8f8f8f;">共 {{itemCount}} 条记录</span>
 		</div>
 		
-		<div :key="item.userId" v-for="item in friendList" @click="$store.state.chooseFaBuRenUserId=item.userId;$store.state.chooseFaBuRenUserNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
+		<div :key="item.userId" v-for="item in friendList" @click="$store.state.chooseFaQiRenUserId=item.userId;$store.state.chooseFaQiRenNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
 			<span><img :src="item.logo" /></span>
 			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{$attr(item,'alias')?$attr(item,'alias'):item.nickname}}
 				{{$attr(item,'alias')?(`(${$attr(item,'nickname')})`):''}}</span>
@@ -53,10 +53,10 @@
 		
 		<div v-show="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
-		<div class="activeText unselectable" v-show="!loading && friendList.length<itemCount" @click="pn++;loadFriendList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">
+		<div class="active-text unselectable" v-show="!loading && friendList.length<itemCount" @click="pn++;loadFriendList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">
 			点击加载更多
 		</div>
-		<div class="unselectable" v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+		<div  v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 
 	</div>
 		
@@ -108,8 +108,8 @@
 
 				<div v-show="addFriend.loading"  style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
-				<div class="activeText unselectable" v-show="!addFriend.loading && addFriend.users.length<addFriend.userCount" @click="addFriend.pn++;findMoreFriendUserList()" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-				<div class="unselectable" v-show="!addFriend.loading && !(addFriend.users.length<addFriend.userCount)" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+				<div class="active-text unselectable" v-show="!addFriend.loading && addFriend.users.length<addFriend.userCount" @click="addFriend.pn++;findMoreFriendUserList()" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+				<div  v-show="!addFriend.loading && !(addFriend.users.length<addFriend.userCount)" style="font-size:14px;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 			</div>
 
 				<div style="margin-top:10px;padding-left:30px;"><button @click="addFriend.users=[];addFriend.addIs=1" style="cursor: pointer;width:150px;height:30px;">关闭</button></div>
@@ -122,7 +122,7 @@
 </template>
 <script>
 	export default {
-		name: 'choose-faburen',
+		name: 'choose-fa-qi-ren',
 		data() {
 			return {
 				addFriendIs:0,
@@ -179,7 +179,7 @@
 				if(!thisV.$store.state.login){
 					thisV.$axios.post('/recording/logout').then(res => {
 							thisV.$store.state.login=null;
-							thisV.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
+							thisV.$router.push({path:'/login'})
 						})
 				}
 					

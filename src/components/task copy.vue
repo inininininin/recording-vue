@@ -43,7 +43,7 @@
 					<div v-show="taskTrack_loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 			
 					<div v-show="!taskTrack_loading && taskTrack_list.length<taskTrack_count" @click="pn++;loadTaskTrackList();" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-					<div class="unselectable" v-show="!taskTrack_loading && !(taskTrack_list.length<taskTrack_count)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+					<div  v-show="!taskTrack_loading && !(taskTrack_list.length<taskTrack_count)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 				</div>
 
 				<div style="height:39px;position: relative;">
@@ -55,7 +55,7 @@
 			</div>
 
 			<button @click="
-							$router.replace({path:'/task',query:{time:new Date().getTime()+'',taskId:taskId}})
+							$router.replace({path:'/task',query:{taskId:taskId}})
 
 			" style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 5px;cursor: pointer; ">刷新</button>
 
@@ -70,7 +70,7 @@
 						 window.alert(res.data.codeMsg)
 					 if(res.data.code ==0) 
 						 if(!res.data.codeMsg) 
-							 $router.replace({path:'/task',query:{time:new Date().getTime()+'',taskId:taskId}})
+							 $router.replace({path:'/task',query:{taskId:taskId}})
 
 						 })
 					 }
@@ -85,7 +85,7 @@
 						 window.alert(res.data.codeMsg)
 					 if(res.data.code ==0) 
 						 if(!res.data.codeMsg) 
-							 $router.replace({path:'/task',query:{time:new Date().getTime()+'',taskId:taskId}})
+							 $router.replace({path:'/task',query:{taskId:taskId}})
 
 						 })
 					 }
@@ -101,7 +101,7 @@
 						 window.alert(res.data.codeMsg)
 					 if(res.data.code ==0) 
 						 if(!res.data.codeMsg) 
-							$router.replace({path:'/task',query:{time:new Date().getTime()+'',taskId:taskId}})
+							$router.replace({path:'/task',query:{taskId:taskId}})
 						 })
 					 }
 			 " style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 5px;cursor: pointer; ">重启</button>
@@ -112,7 +112,7 @@
 			 let r=window.confirm('确认克隆吗');
 			 if(r){
 				$store.state.cloneTask=task;
-				$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})
+				$router.push({path:'/create-task'})
 			 }
 			 " 
 			 style="font-size: 14px;width:50px;height:30px;margin:10px 5px 0 5px;cursor: pointer; "
@@ -143,7 +143,7 @@
 				<span style="font-size: 14px;color: #8f8f8f;">责任关系</span>
 			</div>
 			<div style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
-				{{$attr($store.state.login,"userId")==task.faBuRenUserId?'我':task.faBuRenUserNickname}} {{ task.taskId?'>':'' }} {{$attr($store.state.login,"userId")==task.fuZeRenUserId?'我':task.fuZeRenUserNickname}}
+				{{$attr($store.state.login,"userId")==task.faQiRenUserId?'我':task.faQiRenNickname}} {{ task.taskId?'>':'' }} {{$attr($store.state.login,"userId")==task.fuZeRenUserId?'我':task.fuZeRenNickname}}
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
@@ -260,7 +260,7 @@
 				task:{
 					taskId:null,
 					fuZeRenUserId:null,
-					faBuRenUserId:null,
+					faQiRenUserId:null,
 					finalTime:null,
 					finalTimeDate:null,
 					finalTimeTime:null,
@@ -274,7 +274,7 @@
 				taskUpdate:{
 					taskId:null,
 					fuZeRenUserId:null,
-					faBuRenUserId:null,
+					faQiRenUserId:null,
 					finalTime:null,
 					finalTimeDate:null,
 					finalTimeTime:null,

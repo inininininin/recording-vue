@@ -60,14 +60,14 @@ const routes = [
     component: _import('redirect')
   },
   {
-    path: '/choose-fuzeren',
-    name: '/choose-fuzeren',
-    component: _import('choose-fuzeren')
+    path: '/choose-fu-ze-ren',
+    name: '/choose-fu-ze-ren',
+    component: _import('choose-fu-ze-ren')
   },
   {
-    path: '/choose-faburen',
-    name: '/choose-faburen',
-    component: _import('choose-faburen')
+    path: '/choose-fa-qi-ren',
+    name: '/choose-fa-qi-ren',
+    component: _import('choose-fa-qi-ren')
   }
 ];
 

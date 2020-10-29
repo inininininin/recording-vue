@@ -1,13 +1,11 @@
 <template>
-  <div id="app">
-    <div v-show="$store.state.requestStateBar>0" style="width:100%;height:3px;position: absolute;top:0;z-index: 999999;">
-      <img src="./assets/img/doing.gif" style="height:100%;width:100%;vertical-align: top;"/>
+  <div id="app" class="unselectable">
+    <div v-show="$store.state.requestingCount>0" style="width:100%;height:6px;position: absolute;top:0;z-index: 999999;overflow: hidden;">
+      <img src="./assets/img/loading.gif" style="height:100%;width:110%;vertical-align: top;margin-left: -20px;"/>
     </div>
-      <keep-alive>
-          <router-view/>
-      </keep-alive>
-
-
+    <keep-alive>
+        <router-view/>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -16,17 +14,17 @@ export default {
   name: 'App',
   created(){
     debugger
-    let thisV=this
-    window.thisV=thisV;
+    let vue=this
+    window.vue=vue;
 
-    if(thisV.$store.state.nowTimer)
-					clearInterval(thisV.$store.state.nowTimer)
-				thisV.$store.state.nowTimer = setInterval(function(){
-					thisV.$store.state.now=new Date();
+    if(vue.$store.state.nowTimer)
+        clearInterval(vue.$store.state.nowTimer)
+				vue.$store.state.nowTimer = setInterval(function(){
+					vue.$store.state.now=new Date();
         },1000)
         
 
-    thisV.$.ajax(
+    vue.$.ajax(
       {
         url:'/recording/login-refresh',
         type:'post',
@@ -35,7 +33,7 @@ export default {
         success(data){
           debugger
 					if (data.code == 0) {
-						thisV.$store.state.login=data.data;
+						vue.$store.state.login=data.data;
 					}
         }
       }
@@ -50,6 +48,7 @@ export default {
     height: 100%;
     margin:auto;
     position:relative;
+    
   }
 
   @media screen and (max-width:768px){
@@ -82,7 +81,7 @@ export default {
     white-space: nowrap;
   }
 
-  .n2-line{
+  .n2-lines{
     word-break: break-all;
     overflow: hidden;
     display: -webkit-box;
@@ -90,7 +89,7 @@ export default {
     -webkit-box-orient: vertical;
   }
 
-  .n5-line{
+  .n5-lines{
     word-break: break-all;
     overflow: hidden;
     display: -webkit-box;
@@ -98,7 +97,7 @@ export default {
     -webkit-box-orient: vertical;
   }
 
-  button {
+  button,a {
     cursor: pointer;
   }
 
@@ -131,19 +130,25 @@ export default {
   .active:active {
     background-color: #cccccc!important;
   }
-  .activeText:active {
+  .active-text:active {
     color: #cccccc!important;
   }
-  .visited:visited {
-    background-color: #cccccc!important;
-  }
-
+ 
 
   .unselectable {
     -webkit-user-select:none;
     -moz-user-select:none;
     -ms-user-select:none;
+    -khtml-user-select: none; 
     user-select:none;
+  }
+
+  .selectable {
+    -webkit-user-select:text;
+    -moz-user-select:text;
+    -ms-user-select:text;
+    -khtml-user-select: text; 
+    user-select:text;
   }
 </style>
 

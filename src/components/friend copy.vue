@@ -47,7 +47,7 @@
 		<div v-show="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
 
 		<div v-show="!loading && friendList.length<itemCount" @click="pn++;loadFriendList();" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-		<div class="unselectable" v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+		<div  v-show="!loading && !(friendList.length<itemCount)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 
 	</div>
 		
@@ -73,11 +73,11 @@
 
 		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
 			<div style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
-				@click="$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})">
+				@click="$router.push({path:'/create-task'})">
 				发任务 +
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;">
-				<span @click="$router.push({path:'/index',query:{time:new Date().getTime()+''}})"
+				<span @click="$router.push({path:'/index'})"
 					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
 					生 活
 				</span>
@@ -94,7 +94,7 @@
 					记 录
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span @click="$router.push({path:'/friend',query:{time:new Date().getTime()+''}})"
+				<span @click="$router.push({path:'/friend'})"
 					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;background-color: #ff7f08;color:#ffffff;">
 					好 友
 				</span>
@@ -103,7 +103,7 @@
 					消 息
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span @click="$router.push({path:'/me',query:{time:new Date().getTime()+''}})"
+				<span @click="$router.push({path:'/me'})"
 					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
 					我
 				</span>
@@ -170,7 +170,7 @@
 				if(!thisV.$store.state.login){
 					thisV.$axios.post('/recording/logout').then(res => {
 							thisV.$store.state.login=null;
-							thisV.$router.push({path:'/login',query:{time:new Date().getTime()+""}})
+							thisV.$router.push({path:'/login'})
 						})
 				}
 					

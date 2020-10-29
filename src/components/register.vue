@@ -14,15 +14,6 @@
 			</div>
 
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
-				<span style="width:70px;display: inline-block;font-size: 16px;">昵称</span>
-				<input v-model="nickname" @keyup.enter="register()" type="text"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
-				<span v-if="nickname" style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="nickname=null">
-					x
-				</span>
-			</div>
-
-			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">密码</span>
 				<input v-model="password"  @keyup.enter="register()" type="password"
 					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
@@ -55,15 +46,6 @@
 				</span>
 			</div>
 
-			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
-				<span style="width:70px;display: inline-block;font-size: 16px;">昵称</span>
-				<input v-model="nickname" @keyup.enter="register()" type="text"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
-				<span v-if="nickname" style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="nickname=null">
-					x
-				</span>
-			</div>
-
 			<div  style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span class="n1-line" style="width:70px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
 				<input v-model="smsVcode"  @keyup.enter="loginBySms()" type="text" style="width:125px;height:28px;padding-right:15px;font-size: 16px;"/>
@@ -81,7 +63,7 @@
 			<br/>
 			<button v-if="byAccountPad" @click="byAccountPad=0;bySmsPad=1;" type="button" style="width:270px;height:35px;margin-top:5px;font-size: 16px;" >手机注册</button>
 			<br/>
-			<button style="width:270px;height:35px;margin-top:5px;font-size:16px;" @click="$router.replace({path:'/login',query:{time:new Date().getTime()+''}})">去登录</button>
+			<button style="width:270px;height:35px;margin-top:5px;font-size:16px;" @click="$router.replace({path:'/login'})">去登录</button>
 		</div>
 	</div>
 </template>

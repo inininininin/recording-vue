@@ -1,13 +1,15 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;" >
-		<div style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
+	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;font-size:0;" >
+		<div  style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 				width: 100%;top:0;background-color: #FFFFFF;">
-			<span class="active unselectable"
+			<span class="active"
 				@click="window.history.length<=1 ? $router.push({path:'/index',query:{time:new Date().getTime+''}}) : $router.back();"
-				style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;">
+				style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;font-size:16px;">
 				<
 			</span>
-			<span style="font-weight: 900;">创建任务</span>
+			<span style="font-weight: 900;font-size:16px;">
+				创建任务
+			</span>
 		</div>
 		<div class="scrollbar" style="top:41px;bottom:51px;position: absolute;overflow:auto;width:100%;">
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
@@ -19,37 +21,45 @@
 					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
 				</span>
 				
-				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
-					<span v-if="!chosenFaBuRen" class="active unselectable" 
+				<span style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span v-if="!chosenFaQiRen" class="active" 
 						style="text-align: center;cursor: pointer;font-size: 14px;display:inline-block;width:100%"
 						@click="
-							chooseFaBuRen.todo=1;
-							chooseFaBuRen.pn=1;
-							chooseFaBuRen_loadItems();
+							chooseFaQiRen.run=1;
+							if(chooseFaQiRen.currItems == null){
+								chooseFaQiRen.pn=1;
+								chooseFaQiRen_loadItems();
+							}
 						">
 						点击选择
 					</span>
-					<span v-if="chosenFaBuRen" class="unselectable" 
+					<span v-if="chosenFaQiRen"  
 						style="display:inline-block;position: absolute; left:5px; right:5px;line-height:40px;height:40px;">
-						<span class="unselectable" 
-							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;">
-							{{ chosenFaBuRen.alias || chosenFaBuRen.nickname }}
+						<span  
+							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+							{{ chosenFaQiRen.alias || chosenFaQiRen.nickname }}
 						</span>
-						<span class="active unselectable" 
-							style="margin-left:5px;line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
-							@click="chooseFaBuRen.todo=1;chooseFaBuRen.pn=1;chooseFaBuRen_loadItems();">
-							O
+						<span class="active" 
+							style="margin-left:5px;width:20x;line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
+							@click="
+								chooseFaQiRen.run=1;
+								if(chooseFaQiRen.currItems == null){
+									chooseFaQiRen.pn=1;
+									chooseFaQiRen_loadItems();
+								}
+							">
+							<img draggable="false" src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
 						</span>
-						<span class="active unselectable" 
-							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
-							@click="chosenFaBuRen=null">
+						<span class="active" 
+							style="line-height:40px;width:20x;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
+							@click="chosenFaQiRen=null">
 							X
 						</span>
 					</span>
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
-				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+				<span  style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					负责人
 				</span>
@@ -58,27 +68,35 @@
 				</span>
 				
 				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
-					<span v-if="!chosenFuZeRen" class="active unselectable" 
+					<span v-if="!chosenFuZeRen" class="active" 
 						style="text-align: center;cursor: pointer;font-size: 14px;display:inline-block;width:100%"
 						@click="
-							chooseFuZeRen.todo=1;
-							chooseFuZeRen.pn=1;
-							chooseFuZeRen_loadItems();
+							chooseFuZeRen.run=1;
+							if(chooseFuZeRen.currItems == null){
+								chooseFuZeRen.pn=1;
+								chooseFuZeRen_loadItems();
+							}
 						">
 						点击选择
 					</span>
-					<span v-if="chosenFuZeRen" class="unselectable" 
+					<span v-if="chosenFuZeRen"  
 						style="display:inline-block;position: absolute; left:5px; right:5px;line-height:40px;height:40px;">
-						<span class="unselectable" 
-							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;">
+						<span  
+							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 							{{ chosenFuZeRen.alias || chosenFuZeRen.nickname }}
 						</span>
-						<span class="active unselectable" 
+						<span class="active" 
 							style="margin-left:5px;line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
-							@click="chooseFuZeRen.todo=1;chooseFuZeRen.pn=1;chooseFuZeRen_loadItems();">
-							O
+							@click="
+								chooseFuZeRen.run=1;
+								if(chooseFuZeRen.currItems == null){
+									chooseFuZeRen.pn=1;
+									chooseFuZeRen_loadItems();
+								}
+							">
+							<img draggable="false" src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
 						</span>
-						<span class="active unselectable" 
+						<span class="active" 
 							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
 							@click="chosenFuZeRen=null">
 							X
@@ -87,7 +105,7 @@
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:200px;border-bottom:1px solid #8F8F8F;position: relative;">
-				<span style="font-size: 16px;height: 186px;width:80px;display: inline-block;line-height:20px;padding:7px 5px 7px 5px;
+				<span  style="font-size: 16px;height: 186px;width:80px;display: inline-block;line-height:20px;padding:7px 5px 7px 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					内容
 				</span>
@@ -99,8 +117,9 @@
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
-				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
-					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+				<span  style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;"
+					:style="{color:errParam=='type'?'red':null}">
 					类型
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
@@ -119,7 +138,7 @@
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
-				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+				<span  style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					截止时间
 				</span>
@@ -129,16 +148,16 @@
 				
 				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
 					<span style="display: inline-block;line-height:48px;position: absolute;left:5px;right:15px;height: 40px;">
-						<input v-model="endTimeDate" type="date" style="font-size: 14px;height:30px;border:none;width: 140px;" />
+						<input v-model="finalTimeDate" type="date" style="font-size: 14px;height:30px;border:none;width: 140px;" />
 					</span>
-					<span v-show="endTime || endTimeDate" @click="endTime=endTimeDate=null" 
+					<span v-show="finalTime || finalTimeDate" @click="finalTime=finalTimeDate=null" 
 						style="font-size: 16px;cursor: pointer;line-height:40px;position: absolute;display:inline-block;right: 0px;width: 15px;text-align: center;">
 						x
 					</span>
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
-				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+				<span  style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					排序
 				</span>
@@ -158,73 +177,85 @@
 			</div>
 		</div>
 		<div class="unselectable active"
-			style="height:50px;border-top:1px solid #8F8F8f;position:absolute;bottom:0px;width:100%;text-align: center;line-height: 50px;font-size: 18px;cursor: pointer;">
+			style="height:50px;border-top:1px solid #8F8F8f;position:absolute;bottom:0px;width:100%;text-align: center;line-height: 50px;font-size: 18px;cursor: pointer;"
+			@click="createTask()">
 			创&nbsp;&nbsp;&nbsp;&nbsp;建
 		</div>
 
 
 		<!-- 选择发起人 -->
-		<div v-if="chooseFaBuRen.todo" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="chooseFaQiRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">选择发起人</div>
+				<div style="font-size: 16px;color:#8F8F8F;">
+					选择发起人
+				</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="chooseFaBuRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" />
-						<span v-if="chooseFaBuRen.kw" 
+						<input v-model="chooseFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" 
+							@keyup.enter="chooseFaQiRen.pn=1;chooseFaQiRen.items=[];chooseFaQiRen_loadItems();"/>
+						<span v-if="chooseFaQiRen.kw" 
 							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
-							@click="chooseFaBuRen.kw=null">
+							@click="chooseFaQiRen.kw=null">
 							X
 						</span>
 					</span>
 					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
-						@click="chooseFaBuRen.pn=1;chooseFaBuRen.items=[];chooseFaBuRen_loadItems();">搜索</button>
+						@click="chooseFaQiRen.pn=1;chooseFaQiRen.items=[];chooseFaQiRen_loadItems();">
+						搜索
+					</button>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
-					<div class="active unselectable" v-for="item in chooseFaBuRen.items" :key="item.userId" @click=""
+					<div class="active" v-for="item in chooseFaQiRen.items" :key="item.userId" @click=""
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
-							chosenFaBuRen=item
-							chooseFaBuRen.todo=null
+							chosenFaQiRen=item
+							chooseFaQiRen.run=0
 						">
 						<span><img :src="item.headimg" /></span>
-						<span style="display:inline-block;width: 60px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
-						<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;">(</span>
-						<span v-if="item.alias" 
-							style="display:inline-block;width: 60px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
-							{{ item.nickname }}
-						</span>
-						<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;">)</span>
-						<span v-if="item.orderNo" 
-							style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
-								overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-							{{item.orderNo}}
+						<span v-if="item.nickname != item.alias">
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">(</span>
+							<span v-if="item.alias" 
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#8F8F8F;">
+								{{ item.nickname }}
+							</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">)</span>
+							<span v-if="item.orderNo" 
+								style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
+									overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+								{{item.orderNo}}
+							</span>
 						</span>
 					</div>
-					<div v-if="chooseFaBuRen.pItems && chooseFaBuRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="chooseFaQiRen.currItems && chooseFaQiRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="activeText unselectable" v-if="chooseFaBuRen.pItems && !chooseFaBuRen.loading && chooseFaBuRen.pItems.length == chooseFaBuRen.ps" 
-						@click="chooseFaBuRen.pn++;chooseFaBuRen_loadItems()" 
+					<div class="active-text unselectable" v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length == chooseFaQiRen.ps" 
+						@click="chooseFaQiRen.pn++;chooseFaQiRen_loadItems()" 
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div class="unselectable" v-if="chooseFaBuRen.pItems && !chooseFaBuRen.loading && chooseFaBuRen.pItems.length < chooseFaBuRen.ps" 
+					<div  v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length < chooseFaQiRen.ps" 
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chooseFaBuRen.todo=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chooseFaQiRen.run=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
+						关闭
+					</button>
 				</div>
 			</div>
 		</div>
 
 		<!-- 选择负责人 -->
-		<div v-if="chooseFuZeRen.todo" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="chooseFuZeRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">选择负责人</div>
+				<div style="font-size: 16px;color:#8F8F8F;">
+					选择负责人
+				</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
 						<input v-model="chooseFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" />
@@ -235,46 +266,50 @@
 						</span>
 					</span>
 					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
-						@click="chooseFuZeRen.pn=1;chooseFuZeRen.items=[];chooseFuZeRen_loadItems();">搜索</button>
+						@click="chooseFuZeRen.pn=1;chooseFuZeRen.items=[];chooseFuZeRen_loadItems();">
+						搜索
+					</button>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
-					<div class="active unselectable" v-for="item in chooseFuZeRen.items" :key="item.userId" @click=""
+					<div class="active" v-for="item in chooseFuZeRen.items" :key="item.userId" @click=""
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
 							chosenFuZeRen=item
-							chooseFuZeRen.todo=null
+							chooseFuZeRen.run=null
 						">
 						<span><img :src="item.headimg" /></span>
-						<span style="display:inline-block;width: 60px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
-						<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;">(</span>
-						<span v-if="item.alias" 
-							style="display:inline-block;width: 60px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
-							{{ item.nickname }}
+						<span v-if="item.nickname != item.alias">
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">(</span>
+							<span v-if="item.alias" 
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#8F8F8F;">
+								{{ item.nickname }}
+							</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">)</span>
 						</span>
-						<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;">)</span>
 						<span v-if="item.orderNo" 
 							style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
 								overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="chooseFuZeRen.pItems && chooseFuZeRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="chooseFuZeRen.currItems && chooseFuZeRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="activeText unselectable" v-if="chooseFuZeRen.pItems && !chooseFuZeRen.loading && chooseFuZeRen.pItems.length == chooseFuZeRen.ps" 
+					<div class="active-text unselectable" v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length == chooseFuZeRen.ps" 
 						@click="chooseFuZeRen.pn++;chooseFuZeRen_loadItems()" 
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div class="unselectable" v-if="chooseFuZeRen.pItems && !chooseFuZeRen.loading && chooseFuZeRen.pItems.length < chooseFuZeRen.ps" 
+					<div  v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length < chooseFuZeRen.ps" 
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chooseFuZeRen.todo=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chooseFuZeRen.run=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
 				</div>
 			</div>
 		</div>
@@ -285,183 +320,142 @@
 		name: 'create-task',
 		data() {
 			return {
-				taskName:null,
-				nameIf:0,
+				query:null,
 				type:null,
 				content:null,
 				orderNo:null,
-				endTime:null,
-				endTimeDate:null,
+				finalTime:null,
+				finalTimeDate:null,
 				imageList:[],
 				query: '',
-				chosenFaBuRen: null,
+				chosenFaQiRen: null,
 				chosenFuZeRen: null,
 				autoRedoTomorrowIs:0,
-				chooseFaBuRen: {
-					todo: null,
+				errParam:null,
+				chooseFaQiRen: {
+					run: null,
 					kw: null,
 					pn: null,
 					ps: 15,
 					items : null,
-					pItems : null
+					currItems : null
 				},
 				chooseFuZeRen: {
-					todo: null,
+					run: null,
 					kw: null,
 					pn: null,
 					ps: 15,
 					items : null,
-					pItems : null
+					currItems : null
 				},
 			}
 		},
 		activated() {
 			debugger
-			let thisV = this
-			window.thisV=thisV;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
-
-				thisV.query = JSON.stringify(thisV.$route.query);
-
+			let vue = this
+			window.vue=vue;
+			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
+				Object.assign(vue.$data, vue.$options.data());
+				vue.query = vue.$route.query;
+				vue.load();
 			}else{
-				if(thisV.$store.state.chooseFaBuRenUserId)
-					thisV.faBuRenUserId=thisV.$store.state.chooseFaBuRenUserId
-				if(thisV.$store.state.chooseFaBuRenUserNickname)
-					thisV.faBuRenUserNickname=thisV.$store.state.chooseFaBuRenUserNickname
-				if(thisV.$store.state.chooseFuZeRenUserId)
-					thisV.fuZeRenUserId=thisV.$store.state.chooseFuZeRenUserId
-				if(thisV.$store.state.chooseFuZeRenUserNickname)
-					thisV.fuZeRenUserNickname=thisV.$store.state.chooseFuZeRenUserNickname
-
-
-				thisV.$store.state.chooseFaBuRenUserId = null
-				thisV.$store.state.chooseFaBuRenUserNickname = null
-				thisV.$store.state.chooseFuZeRenUserId = null
-				thisV.$store.state.chooseFuZeRenUserNickname = null
+			
 			}
 		},
 		methods: {
-			reload() {
+			load() {
 				debugger
-				let thisV = this
-				Object.assign(thisV.$data, thisV.$options.data());
-				thisV.nameIf = 1
-				if(thisV.$store.state.cloneTask){
-					thisV.name=thisV.$store.state.cloneTask.name
-					thisV.type=thisV.$store.state.cloneTask.type
-					thisV.content=thisV.$store.state.cloneTask.content
-					thisV.imageList=thisV.$store.state.cloneTask.imageList
-
-					thisV.faBuRenUserId = thisV.$store.state.cloneTask.faBuRenUserId
-					thisV.faBuRenUserNickname = thisV.$store.state.cloneTask.faBuRenUserNickname
-					thisV.fuZeRenUserId = thisV.$store.state.cloneTask.fuZeRenUserId
-					thisV.fuZeRenUserNickname = thisV.$store.state.cloneTask.fuZeRenUserNickname
-
-					thisV.$store.state.cloneTask=null;
-				}
+				let vue = this;
 			},
 			createTask() {
-				let thisV = this
+				let vue = this
 				
-				if(!window.confirm('确认发布吗 ?')){
-					return ;
-				}
-				
-				let finalTime = null;
-				if(thisV.finalTimeDate){
-					finalTime = thisV.$moment(thisV.finalTimeDate+" "+(thisV.finalTimeTime?(thisV.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
-				}
-				
-				thisV.$axios.post('/recording/my-task/create-task',thisV.$qs.stringify({autoRedoTomorrowIs:thisV.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisV.faBuRenUserId,fuZeRenUserId:thisV.fuZeRenUserId,name:thisV.name,type:thisV.type,content:thisV.content,
-				orderNo:thisV.orderNo,
-				image:thisV.imageList[0]?thisV.imageList[0]:null,
-				image1:thisV.imageList[1]?thisV.imageList[1]:null,
-				image2:thisV.imageList[2]?thisV.imageList[2]:null,
-				image3:thisV.imageList[3]?thisV.imageList[3]:null,
-				image4:thisV.imageList[4]?thisV.imageList[4]:null,
-				image5:thisV.imageList[5]?thisV.imageList[5]:null,})).then(res=>{
+				vue.$dialog.confirm({message:'确认创建吗?'}).then(param=>{
+					if(vue.finalTimeDate){
+						vue.finalTime = vue.$moment(vue.finalTimeDate+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z');
+					}
+					
+					var task = {
+						finalTime:vue.finalTime,
+						faQiRenUserId:vue.$o(vue.chosenFaQiRen).attr('toUserId'),
+						faQiRenNickname:vue.$o(vue.chosenFaQiRen).attr('nickname'),
+						faQiRenAlias:vue.$o(vue.chosenFaQiRen).attr('alias'),
+						fuZeRenUserId:vue.$o(vue.chosenFuZeRen).attr('toUserId'),
+						fuZeRenNickname:vue.$o(vue.chosenFuZeRen).attr('nickname'),
+						fuZeRenAlias:vue.$o(vue.chosenFuZeRen).attr('alias'),
+						type:vue.type,
+						content:vue.content,
+						orderNo:vue.orderNo,
+					}
+					vue.$axios.post('/recording/my-task/create-task',vue.$qs.stringify(task)).then(res=>{
 						debugger
+						vue.errParam=res.data.errParam
 						if(res.data.codeMsg)
-							alert(res.data.codeMsg)
+							vue.$dialog.alert({ type:'primary', message:res.data.codeMsg})
 						if (res.data.code == 0) {
-							if(window.confirm('成功 , 是否返回 ?')){
-								thisV.$router.back();
-							}else{
-								thisV.$router.replace({path:'/create-task',query:{time:new Date().getTime()+""}})
+							if(!res.data.codeMsg) {
+								task.taskId=res.data.data.taskId;
+								vue.$store.state.createdTask=task
+								vue.$dialog.alert({type:'success',message:'创建成功'}).then(res=>{
+									vue.$router.back()
+								})
 							}
 						}
 					})
-
+				})
+				
+				
 			},
-			addImage(){
+			chooseFaQiRen_loadItems(){
 				debugger
-				let thisV = this
-				if(!(thisV.imageList.length<6)){
-					alert("最多添加 6 张图片")
-					return;
-				}
-				thisV.$(`<input type="file" />`).change(function(){
-					debugger
-					let file= this.files[0];
-					let fd = new FormData()
-                    fd.append('file', file);
-					thisV.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
-						debugger
-						thisV.imageList.push(res.data.data.url)
-					})
-				}).click()
-			},
-			chooseFaBuRen_loadItems(){
-				debugger
-				let thisV = this
-				thisV.chooseFaBuRen.loading=1
+				let vue = this
+				vue.chooseFaQiRen.loading=1
 				var obj = {
-					kw:thisV.chooseFaBuRen.kw,
-					pn:thisV.chooseFaBuRen.pn,
-					ps:thisV.chooseFaBuRen.ps
+					kw:vue.chooseFaQiRen.kw,
+					pn:vue.chooseFaQiRen.pn,
+					ps:vue.chooseFaQiRen.ps
 				}
-				thisV.$axios.get('/recording/my-friends?' + thisV.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					debugger
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
-							if(thisV.chooseFaBuRen.pn==1)
-								thisV.chooseFaBuRen.items=[]
-							thisV.chooseFaBuRen.pItems = data.data.data.items
-							thisV.chooseFaBuRen.items=thisV.chooseFaBuRen.items.concat(data.data.data.items)
+							if(vue.chooseFaQiRen.pn==1)
+								vue.chooseFaQiRen.items=[]
+							vue.chooseFaQiRen.currItems = data.data.data.items
+							vue.chooseFaQiRen.items=vue.chooseFaQiRen.items.concat(data.data.data.items)
 						}else
-							thisV.chooseFaBuRen.pn--;
+							vue.chooseFaQiRen.pn--;
 					} else {
 						if(data.data.codeMsg)
-							thisV.$notify({ type: 'danger', message: data.data.codeMsg });
+							vue.$dialog.alert({  message: data.data.codeMsg });
 					}
-					thisV.chooseFaBuRen.loading=0
+					vue.chooseFaQiRen.loading=0
 				})
 			},
 			chooseFuZeRen_loadItems(){
 				debugger
-				let thisV = this
-				thisV.chooseFuZeRen.loading=1
+				let vue = this
+				vue.chooseFuZeRen.loading=1
 				var obj = {
-					kw:thisV.chooseFuZeRen.kw,
-					pn:thisV.chooseFuZeRen.pn,
-					ps:thisV.chooseFuZeRen.ps
+					kw:vue.chooseFuZeRen.kw,
+					pn:vue.chooseFuZeRen.pn,
+					ps:vue.chooseFuZeRen.ps
 				}
-				thisV.$axios.get('/recording/my-friends?' + thisV.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					debugger
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
-							if(thisV.chooseFuZeRen.pn==1)
-								thisV.chooseFuZeRen.items=[]
-							thisV.chooseFuZeRen.pItems = data.data.data.items
-							thisV.chooseFuZeRen.items=thisV.chooseFuZeRen.items.concat(data.data.data.items)
+							if(vue.chooseFuZeRen.pn==1)
+								vue.chooseFuZeRen.items=[]
+							vue.chooseFuZeRen.currItems = data.data.data.items
+							vue.chooseFuZeRen.items=vue.chooseFuZeRen.items.concat(data.data.data.items)
 						}else
-							thisV.chooseFuZeRen.pn--;
+							vue.chooseFuZeRen.pn--;
 					} else {
 						if(data.data.codeMsg)
-							thisV.$notify({ type: 'danger', message: data.data.codeMsg });
+							vue.$dialog.alert({  message: data.data.codeMsg });
 					}
-					thisV.chooseFuZeRen.loading=0
+					vue.chooseFuZeRen.loading=0
 				})
 			},
 		}

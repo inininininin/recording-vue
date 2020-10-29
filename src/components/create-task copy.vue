@@ -15,19 +15,19 @@
 			</div>
 
 			<div style="display: inline;float:left;height: 60px;">
-				<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发布人</div>
+				<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发起人</div>
 				<div style="position: relative;margin:5px 0 0 5px;">
 
-					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faBuRenUserId?'我':faBuRenUserNickname}}</span>
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faQiRenUserId?'我':faQiRenNickname}}</span>
 
-					<span v-show="faBuRenUserId" 
-					@click="faBuRenUserId = faBuRenUserNickname = null;" 
+					<span v-show="faQiRenUserId" 
+					@click="faQiRenUserId = faQiRenNickname = null;" 
 					style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;"
 					>x</span>
 
 					<button 
-					v-show="!faBuRenUserId" 
-					@click="$router.push({path:'/choose-faburen',query:{time:new Date().getTime()+''}})" 
+					v-show="!faQiRenUserId" 
+					@click="$router.push({path:'/choose-fa-qi-ren'})" 
 					style="cursor: pointer;"
 					>选择</button>
 					
@@ -37,9 +37,9 @@
 			<div style="display: inline;float:left;height: 60px;">
 				<div style="font-size: 14px;margin:10px 0 0 0;color: #8f8f8f;">负责人</div>
 				<div style="position: relative;margin:5px 0 0 0;">
-					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenUserNickname}}</span>
-					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenUserNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
-					<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fuzeren',query:{time:new Date().getTime()+''}})" style="cursor: pointer;">选择</button>
+					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenNickname}}</span>
+					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
+					<button v-show="!fuZeRenUserId" @click="$router.push({path:'/choose-fu-ze-ren'})" style="cursor: pointer;">选择</button>
 				</div>
 			</div>
 		
@@ -115,10 +115,10 @@
 				finalTimeTime:null,
 				imageList:[],
 				query: '',
-				faBuRenUserId: null,
-				faBuRenUserNickname: null,
+				faQiRenUserId: null,
+				faQiRenNickname: null,
 				fuZeRenUserId: null,
-				fuZeRenUserNickname: null,
+				fuZeRenNickname: null,
 				autoRedoTomorrowIs:0,
 			}
 		},
@@ -132,20 +132,20 @@
 				thisV.query = JSON.stringify(thisV.$route.query);
 
 			}else{
-				if(thisV.$store.state.chooseFaBuRenUserId)
-					thisV.faBuRenUserId=thisV.$store.state.chooseFaBuRenUserId
-				if(thisV.$store.state.chooseFaBuRenUserNickname)
-					thisV.faBuRenUserNickname=thisV.$store.state.chooseFaBuRenUserNickname
+				if(thisV.$store.state.chooseFaQiRenUserId)
+					thisV.faQiRenUserId=thisV.$store.state.chooseFaQiRenUserId
+				if(thisV.$store.state.chooseFaQiRenNickname)
+					thisV.faQiRenNickname=thisV.$store.state.chooseFaQiRenNickname
 				if(thisV.$store.state.chooseFuZeRenUserId)
 					thisV.fuZeRenUserId=thisV.$store.state.chooseFuZeRenUserId
-				if(thisV.$store.state.chooseFuZeRenUserNickname)
-					thisV.fuZeRenUserNickname=thisV.$store.state.chooseFuZeRenUserNickname
+				if(thisV.$store.state.chooseFuZeRenNickname)
+					thisV.fuZeRenNickname=thisV.$store.state.chooseFuZeRenNickname
 
 
-				thisV.$store.state.chooseFaBuRenUserId = null
-				thisV.$store.state.chooseFaBuRenUserNickname = null
+				thisV.$store.state.chooseFaQiRenUserId = null
+				thisV.$store.state.chooseFaQiRenNickname = null
 				thisV.$store.state.chooseFuZeRenUserId = null
-				thisV.$store.state.chooseFuZeRenUserNickname = null
+				thisV.$store.state.chooseFuZeRenNickname = null
 			}
 		},
 		methods: {
@@ -160,10 +160,10 @@
 					thisV.content=thisV.$store.state.cloneTask.content
 					thisV.imageList=thisV.$store.state.cloneTask.imageList
 
-					thisV.faBuRenUserId = thisV.$store.state.cloneTask.faBuRenUserId
-					thisV.faBuRenUserNickname = thisV.$store.state.cloneTask.faBuRenUserNickname
+					thisV.faQiRenUserId = thisV.$store.state.cloneTask.faQiRenUserId
+					thisV.faQiRenNickname = thisV.$store.state.cloneTask.faQiRenNickname
 					thisV.fuZeRenUserId = thisV.$store.state.cloneTask.fuZeRenUserId
-					thisV.fuZeRenUserNickname = thisV.$store.state.cloneTask.fuZeRenUserNickname
+					thisV.fuZeRenNickname = thisV.$store.state.cloneTask.fuZeRenNickname
 
 					thisV.$store.state.cloneTask=null;
 				}
@@ -180,7 +180,7 @@
 					finalTime = thisV.$moment(thisV.finalTimeDate+" "+(thisV.finalTimeTime?(thisV.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				thisV.$axios.post('/recording/my-task/create-task',thisV.$qs.stringify({autoRedoTomorrowIs:thisV.autoRedoTomorrowIs,finalTime:finalTime,faBuRenUserId:thisV.faBuRenUserId,fuZeRenUserId:thisV.fuZeRenUserId,name:thisV.name,type:thisV.type,content:thisV.content,
+				thisV.$axios.post('/recording/my-task/create-task',thisV.$qs.stringify({autoRedoTomorrowIs:thisV.autoRedoTomorrowIs,finalTime:finalTime,faQiRenUserId:thisV.faQiRenUserId,fuZeRenUserId:thisV.fuZeRenUserId,name:thisV.name,type:thisV.type,content:thisV.content,
 				orderNo:thisV.orderNo,
 				image:thisV.imageList[0]?thisV.imageList[0]:null,
 				image1:thisV.imageList[1]?thisV.imageList[1]:null,
@@ -195,7 +195,7 @@
 							if(window.confirm('成功 , 是否返回 ?')){
 								thisV.$router.back();
 							}else{
-								thisV.$router.replace({path:'/create-task',query:{time:new Date().getTime()+""}})
+								thisV.$router.replace({path:'/create-task'})
 							}
 						}
 					})

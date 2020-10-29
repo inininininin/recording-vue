@@ -16,6 +16,9 @@ import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
 Vue.use(Dialog).use(Notify);
+Dialog.setDefaultOptions({
+  messageAlign:'left'
+})
 Vue.prototype.$version = '1.0.2009011821';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.config.productionTip = false;
@@ -35,11 +38,11 @@ Vue.prototype.window = window;
 Vue.prototype.$axios.interceptors.request.use(
   config => {
     debugger;
-    Vue.prototype.$store.state.requesting++;
+    Vue.prototype.$store.state.requestingCount++;
     return config;
   },
   error => {
-    Vue.prototype.$store.state.requesting--;
+    Vue.prototype.$store.state.requestingCount--;
     return Promise.reject(error.response);
   }
 );
@@ -47,11 +50,11 @@ Vue.prototype.$axios.interceptors.request.use(
 Vue.prototype.$axios.interceptors.response.use(
   response => {
     debugger;
-    Vue.prototype.$store.state.requesting--;
+    Vue.prototype.$store.state.requestingCount--;
         return response;
   },
   error => {
-    Vue.prototype.$store.state.requesting--;
+    Vue.prototype.$store.state.requestingCount--;
     return Promise.reject(error.response);
   }
 );
@@ -119,17 +122,17 @@ Vue.directive('focus', {
   }
 });
 
-function O(data){
-  this.v=data;
+function O(p_value){
+  this.value=p_value;
 
   O.prototype.attr = function(keyChain){
     debugger
     this.last=null;
-    if(!this.v || !keyChain){
-      return this;
+    if(!this.value || !keyChain){
+      return null;
     }
      var keys= keyChain.split('.')
-     var value1 = this.v;
+     var value1 = this.value;
      for(var i in keys){
          if(keys[i].indexOf('[')>=0){
             var key=keys[i].substring(0,keys[i].indexOf('['));
@@ -153,17 +156,7 @@ function O(data){
               
          }
      }
-     this.v=value1;
-     return this;
-  }
-  O.prototype.trim = function(){
-    debugger
-    if(this.v==null || this.v==undefined)
-      return '';
-    else if(this.v instanceof String)
-      return this.v.trim();
-    else
-      return this.v;
+     return value1;
   }
 }
 
