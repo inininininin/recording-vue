@@ -204,7 +204,7 @@
 
 		<!-- 加好友 -->
 		<div v-if="addFriend.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
-			<div v-if="addFriend.queryUsersRun" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
+			<div v-if="addFriend.queryUsers" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">添加好友</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
@@ -258,7 +258,7 @@
 				</div>
 			</div>
 
-			<div v-if="addFriend.setFriendRun" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div v-if="addFriend.setFriend" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 				<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 					<div style="font-size: 16px;color:#8F8F8F;">设置好友</div>
 					<div style="height:30px;margin-top:10px;position: relative;">
