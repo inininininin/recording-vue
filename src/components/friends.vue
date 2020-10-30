@@ -161,8 +161,8 @@
 		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
 				@click="
-					addFriend.start=addFriend.queryUsersRun=1;
-					addFriend.setFriendRun=0;
+					addFriend.start=addFriend.queryUsers=1;
+					addFriend.setFriend=0;
 					if(!addFriend.users || addFriend.users.length==0)
 						addFriend_loadUsers();">
 				找 朋 友 +
@@ -226,7 +226,7 @@
 							$dialog.confirm({
 								message: `确认添加 ${item.nickname} 为好友吗?`
 							}).then(() => {
-								addFriend.setFriendRun=1;
+								addFriend.setFriend=1;
 								addFriend.chosenUser=item;
 							}).catch(() => {
 							});
@@ -271,7 +271,7 @@
 						</span>
 					</div>
 					<div style="margin-top:10px;">
-						<button @click="addFriend.setFriendRun=addFriend.chosenUser=null;" 
+						<button @click="addFriend.setFriend=addFriend.chosenUser=null;" 
 							style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
 							取消
 						</button>
@@ -369,7 +369,7 @@
 					kws:null,
 				},
 				addFriend: {
-					run: null,
+					start: null,
 					kw: null,
 					pn: 1,
 					ps: 15,
@@ -378,8 +378,8 @@
 					usersScrollTop:null,
 					currUsers : null,
 					chosenUser:null,
-					queryUsersRun:null,
-					setFriendRun:null,
+					queryUsers:null,
+					setFriend:null,
 				}
 			}
 		},
@@ -521,7 +521,7 @@
 							updateTime: vue.addFriend.chosenUser.updateTime
 						})
 						vue.friendsSum.count++;
-						vue.addFriend.setFriendRun=0;
+						vue.addFriend.setFriend=0;
 						vue.addFriend.chosenUser=null;
 					}
 				})

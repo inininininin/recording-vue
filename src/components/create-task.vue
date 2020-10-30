@@ -333,7 +333,7 @@
 				autoRedoTomorrowIs:0,
 				errParam:null,
 				chooseFaQiRen: {
-					run: null,
+					start: null,
 					kw: null,
 					pn: null,
 					ps: 15,
@@ -341,7 +341,7 @@
 					currItems : null
 				},
 				chooseFuZeRen: {
-					run: null,
+					start: null,
 					kw: null,
 					pn: null,
 					ps: 15,

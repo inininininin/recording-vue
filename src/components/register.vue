@@ -103,12 +103,12 @@
 				vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						vue.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(res.data.codeMsg);
 					if (res.data.code == 0) {
 						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
 							debugger
 							if (res.data.codeMsg)
-								vue.$dialog.alert(data.data.codeMsg);
+								vue.$dialog.alert(res.data.codeMsg);
 							if (res.data.code == 0) {
 								vue.$router.push({ path: '/index' })
 							}
@@ -122,12 +122,12 @@
 				vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, smsVcode:vue.smsVcode}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						vue.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(res.data.codeMsg);
 					if (res.data.code == 0) {
 						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
 							debugger
 							if (res.data.codeMsg)
-								vue.$dialog.alert(data.data.codeMsg);
+								vue.$dialog.alert(res.data.codeMsg);
 							if (res.data.code == 0) {
 								vue.$router.push({ path: '/index' })
 							}

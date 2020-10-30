@@ -129,7 +129,7 @@
 				vue.$axios.post('/recording/update-password-by-email',vue.$qs.stringify({email:vue.email, vcode: vue.emailVcode, newPassword:vue.newPassword}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						vue.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(res.data.codeMsg);
 					if (res.data.code == 0) {
 						if (!res.data.codeMsg)
 							vue.$dialog.alert('修改成功');
@@ -142,7 +142,7 @@
 				vue.$axios.post('/recording/update-password-by-sms',vue.$qs.stringify({phone:vue.phone, vcode: vue.emailVcode, newPassword:vue.newPassword}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						vue.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(res.data.codeMsg);
 					if (res.data.code == 0) {
 						if (!res.data.codeMsg)
 							vue.$dialog.alert('修改成功');

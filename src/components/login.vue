@@ -114,17 +114,17 @@
 			 loginBySms(){
 				debugger
 				let vue = this;
-				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,smsVcode:vue.smsVcode})).then(data => {
+				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,smsVcode:vue.smsVcode})).then(res => {
 					debugger
-					if(data.data.codeMsg)
-						vue.$dialog.alert(data.data.codeMsg);
-					if(data.data.code == 0){
+					if(res.data.codeMsg)
+						vue.$dialog.alert(res.data.codeMsg);
+					if(res.data.code == 0){
 						vue.$axios.post('/recording/login-refresh').then(data => {
 							debugger
-							if(data.data.codeMsg)
-								vue.$dialog.alert(data.data.codeMsg);
-							if (data.data.code == 0) {
-								vue.$store.state.login=data.data.data;
+							if(res.data.codeMsg)
+								vue.$dialog.alert(res.data.codeMsg);
+							if (res.data.code == 0) {
+								vue.$store.state.login=res.data.data;
 								vue.$router.push({path:'/index'})
 							}
 						})

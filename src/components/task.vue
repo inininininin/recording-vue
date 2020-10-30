@@ -548,20 +548,20 @@
 					loading:null,
 				},
 				editType:{
-					run: null,
+					start: null,
 					value: null,
 				},
 				editFinalTime:{
-					run: null,
+					start: null,
 					date: null,
 					value: null,
 				},
 				editOrderNo:{
-					run: null,
+					start: null,
 					value: null,
 				},
 				editFaQiRen: {
-					run: null,
+					start: null,
 					kw: null,
 					pn: null,
 					ps: 15,
@@ -569,7 +569,7 @@
 					currItems : null
 				},
 				editFuZeRen: {
-					run: null,
+					start: null,
 					kw: null,
 					pn: null,
 					ps: 15,
