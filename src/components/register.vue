@@ -84,33 +84,33 @@
 		},
 		activated() {
 			debugger
-			let thisV = this;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
+			let vue = this;
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				vue.reload();
 
-				thisV.query = JSON.stringify(thisV.$route.query);
+				vue.query = JSON.stringify(vue.$route.query);
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisV = this;
-				Object.assign(thisV.$data, thisV.$options.data());
+				let vue = this;
+				Object.assign(vue.$data, vue.$options.data());
 			},
 			register() {
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/register',thisV.$qs.stringify({nickname:thisV.nickname,account:thisV.account, password:thisV.password}) ).then(res => {
+				let vue = this;
+				vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						thisV.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(data.data.codeMsg);
 					if (res.data.code == 0) {
-						thisV.$axios.post('/recording/login-by-login-code', thisV.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
+						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
 							debugger
 							if (res.data.codeMsg)
-								thisV.$dialog.alert(data.data.codeMsg);
+								vue.$dialog.alert(data.data.codeMsg);
 							if (res.data.code == 0) {
-								thisV.$router.push({ path: '/index', query: { time: new Date().getTime()+"" } })
+								vue.$router.push({ path: '/index' })
 							}
 						})
 					}
@@ -118,18 +118,18 @@
 			},
 			registerBySms() {
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/register-by-sms',thisV.$qs.stringify({nickname:thisV.nickname,phone:thisV.phone, smsVcode:thisV.smsVcode}) ).then(res => {
+				let vue = this;
+				vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, smsVcode:vue.smsVcode}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						thisV.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(data.data.codeMsg);
 					if (res.data.code == 0) {
-						thisV.$axios.post('/recording/login-by-login-code', thisV.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
+						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
 							debugger
 							if (res.data.codeMsg)
-								thisV.$dialog.alert(data.data.codeMsg);
+								vue.$dialog.alert(data.data.codeMsg);
 							if (res.data.code == 0) {
-								thisV.$router.push({ path: '/index', query: { time: new Date().getTime()+"" } })
+								vue.$router.push({ path: '/index' })
 							}
 						})
 					}

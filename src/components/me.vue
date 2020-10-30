@@ -2,7 +2,7 @@
 	<div id="me" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
 		<div style="height:150px;border-bottom: 1px solid #888888;">
 			<img style="width:80px;height:80px;border: 1px solid #888888;display: inline-block;margin:30px 0 0 20px;"/>
-			<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;vertical-align: baseline;">{{$attr($store.state.login,'nickname')}}</span>
+			<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;vertical-align: baseline;">{{$o($store.state.login).attr('nickname')}}</span>
 			
 		</div>
 		<div @click="logout()" style="height:45px;line-height:45px;font-size:16px;cursor: pointer;padding:0 20px;border-bottom: 1px solid #888888;">退出登录</div>
@@ -53,11 +53,11 @@
 			}
 		},
 		activated() {
-			let thisV = this
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				Object.assign(thisV.$data, thisV.$options.data());
-				thisV.query = JSON.stringify(thisV.$route.query);
-				thisV.reload();
+			let vue = this
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				Object.assign(vue.$data, vue.$options.data());
+				vue.query = JSON.stringify(vue.$route.query);
+				vue.reload();
 
 			}
 		},
@@ -67,18 +67,18 @@
 			},
 			logout(){
 				debugger
-				let thisV = this;
-				thisV.$dialog.confirm({
+				let vue = this;
+				vue.$dialog.confirm({
 					message: '确认退出吗?'
 				}).then(()=> {
 					debugger
-					thisV.$axios.post('/recording/logout').then(res => {
+					vue.$axios.post('/recording/logout').then(res => {
 						debugger
 						if(res.data.codeMsg)
 							alert(res.data.codeMsg)
 						if(res.data.code == 0){
-							thisV.$store.state.login=null;
-							thisV.$router.push({path:'/login'})
+							vue.$store.state.login=null;
+							vue.$router.push({path:'/login'})
 						}
 					})
 				}).catch(() => {

@@ -5,6 +5,9 @@ Vue.use(Router);
 // const _import = require('./_import_' + process.env.NODE_ENV + '.js')
 // 开发环境不使用懒加载, 因为懒加载页面太多的话会造成webpack热更新太慢, 所以只有生产环境使用懒加载
 const _import = require('./_import_' + process.env.NODE_ENV + '.js');
+console.log(process.env.NODE_ENV);
+
+console.dir(_import);
 
 const routes = [
   {
@@ -56,16 +59,6 @@ const routes = [
     name: '/redirect',
     component: _import('redirect')
   },
-  {
-    path: '/choose-fu-ze-ren',
-    name: '/choose-fu-ze-ren',
-    component: _import('choose-fu-ze-ren')
-  },
-  {
-    path: '/choose-fa-qi-ren',
-    name: '/choose-fa-qi-ren',
-    component: _import('choose-fa-qi-ren')
-  }
 ];
 
 const router = new Router({

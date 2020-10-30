@@ -78,34 +78,34 @@
 		},
 		activated(){
 		   debugger
-			let thisV = this;
-			if(thisV.query != JSON.stringify(thisV.$route.query)){
-				thisV.reload();
-				thisV.query = JSON.stringify(thisV.$route.query);
+			let vue = this;
+			if(vue.query != JSON.stringify(vue.$route.query)){
+				vue.reload();
+				vue.query = JSON.stringify(vue.$route.query);
 			}
 		},
 		methods:{
 			reload(){
-				let thisV = this;
-				Object.assign(thisV.$data, thisV.$options.data());
+				let vue = this;
+				Object.assign(vue.$data, vue.$options.data());
 			 },
 			 login(){
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/login',thisV.$qs.stringify({account:thisV.account,password:thisV.password})).then(data => {
+				let vue = this;
+				vue.$axios.post('/recording/login',vue.$qs.stringify({account:vue.account,password:vue.password})).then(data => {
 					debugger;
 					if(data.data.codeMsg)
-						thisV.$dialog.alert({message:data.data.codeMsg});
+						vue.$dialog.alert({message:data.data.codeMsg});
 					if(data.data.code == 0){
-						thisV.$axios.post('/recording/login-refresh').then(data => {
+						vue.$axios.post('/recording/login-refresh').then(data => {
 							debugger;
 							if(data.data.codeMsg) {
 								debugger;
-								thisV.$dialog.alert({message:data.data.codeMsg});
+								vue.$dialog.alert({message:data.data.codeMsg});
 							}
 							if (data.data.code == 0) {
-								thisV.$store.state.login=data.data.data;
-								thisV.$router.push({path:'/index'})
+								vue.$store.state.login=data.data.data;
+								vue.$router.push({path:'/index'})
 							}
 						})
 					}
@@ -113,19 +113,19 @@
 			 },
 			 loginBySms(){
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/login-by-sms',thisV.$qs.stringify({phone:thisV.phone,smsVcode:thisV.smsVcode})).then(data => {
+				let vue = this;
+				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,smsVcode:vue.smsVcode})).then(data => {
 					debugger
 					if(data.data.codeMsg)
-						thisV.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(data.data.codeMsg);
 					if(data.data.code == 0){
-						thisV.$axios.post('/recording/login-refresh').then(data => {
+						vue.$axios.post('/recording/login-refresh').then(data => {
 							debugger
 							if(data.data.codeMsg)
-								thisV.$dialog.alert(data.data.codeMsg);
+								vue.$dialog.alert(data.data.codeMsg);
 							if (data.data.code == 0) {
-								thisV.$store.state.login=data.data.data;
-								thisV.$router.push({path:'/index'})
+								vue.$store.state.login=data.data.data;
+								vue.$router.push({path:'/index'})
 							}
 						})
 					}

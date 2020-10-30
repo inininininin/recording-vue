@@ -110,42 +110,42 @@
 		},
 		activated() {
 			debugger
-			let thisV = this;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
+			let vue = this;
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				vue.reload();
 
-				thisV.query = JSON.stringify(thisV.$route.query);
+				vue.query = JSON.stringify(vue.$route.query);
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisV = this;
-				Object.assign(thisV.$data, thisV.$options.data());
+				let vue = this;
+				Object.assign(vue.$data, vue.$options.data());
 			},
 			forgetByEmail() {
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/update-password-by-email',thisV.$qs.stringify({email:thisV.email, vcode: thisV.emailVcode, newPassword:thisV.newPassword}) ).then(res => {
+				let vue = this;
+				vue.$axios.post('/recording/update-password-by-email',vue.$qs.stringify({email:vue.email, vcode: vue.emailVcode, newPassword:vue.newPassword}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						thisV.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(data.data.codeMsg);
 					if (res.data.code == 0) {
 						if (!res.data.codeMsg)
-							thisV.$dialog.alert('修改成功');
+							vue.$dialog.alert('修改成功');
 					}
 				})
 			},
 			forgetBySms() {
 				debugger
-				let thisV = this;
-				thisV.$axios.post('/recording/update-password-by-sms',thisV.$qs.stringify({phone:thisV.phone, vcode: thisV.emailVcode, newPassword:thisV.newPassword}) ).then(res => {
+				let vue = this;
+				vue.$axios.post('/recording/update-password-by-sms',vue.$qs.stringify({phone:vue.phone, vcode: vue.emailVcode, newPassword:vue.newPassword}) ).then(res => {
 					debugger
 					if (res.data.codeMsg)
-						thisV.$dialog.alert(data.data.codeMsg);
+						vue.$dialog.alert(data.data.codeMsg);
 					if (res.data.code == 0) {
 						if (!res.data.codeMsg)
-							thisV.$dialog.alert('修改成功');
+							vue.$dialog.alert('修改成功');
 					}
 				})
 			}

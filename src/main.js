@@ -4,32 +4,27 @@ import Vue from 'vue';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
-import moment from 'moment';
 import axios from 'axios';
 import qs from 'qs';
-import jquery from 'jquery';
-import _ from 'lodash';
 import Viewer from 'v-viewer';
 import 'viewerjs/dist/viewer.css';
-//if (process.env.NODE_ENV == 'development') require('./mock')
-import (process.env.NODE_ENV == 'development')?'./mock.js':null;
+if (process.env.NODE_ENV == 'development') require('./mock')
+//import (process.env.NODE_ENV == 'development')?'./mock.js':null;
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
+Vue.prototype.$version = '1.0.0.3.201030';
+Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
   messageAlign:'left'
 })
-Vue.prototype.$version = '1.0.2009011821';
-Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.config.productionTip = false;
 Vue.prototype.$store = store;
 moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
-Vue.prototype.$ = jquery;
-Vue.prototype._ = _;
 Vue.use(Viewer);
 
 
@@ -60,66 +55,39 @@ Vue.prototype.$axios.interceptors.response.use(
   }
 );
 
-Vue.prototype.$attr = function (obj, keyChain) {
-  debugger
-    if(!obj || !keyChain)
-      return null;
-     var keys= keyChain.split('.')
-     var obj1 = obj;
-     for(var i in keys){
-         if(keys[i].indexOf('[')>=0){
-            var key=keys[i].substring(0,keys[i].indexOf('['));
-            var index = keys[i].substring(keys[i].indexOf('[')+1,keys[i].indexOf(']'));
-            obj1=obj1[key];
-            if(obj1==null || obj1==undefined)
-                return null
-            if(obj1.length<=index)
-                return null
-            obj1=obj1[index];
-         }else {
-            obj1=obj1[keys[i]];
-            if(obj1==null || obj1==undefined)
-                return null
-         }
-     }
-     return obj1;
-};
-
-Vue.prototype.$highlight = function (text, kw, data) {
+Vue.prototype.$highlight = function (base, kw, data) {
   debugger;
   data = data? data : {};
   var color = data.color? data.color:'#c00000';
-  let kwList = [];
-  let textOut = text;
+  let kws = [];
+  let outBase = base;
   if (kw == null || kw == '' || kw == undefined) {
-    return textOut;
+    return outBase;
   }
-  if (text == null || text == '' || text == undefined) {
-    return textOut;
+  if (base == null || base == '' || base == undefined) {
+    return outBase;
   }
    if (kw.constructor == String) {
-    kwList = [kw];
+    kws = [kw];
    }
 
    if (kw.constructor == Array) {
-    kwList = kw;
+    kws = kw;
    }
 
-   for (let k in kwList) {
-      if (text.indexOf(kwList[k]) >= 0) {
-        textOut = textOut.substring(0, textOut.indexOf(kwList[k])) + `<span style="color:${color}">${kwList[k]}</span>` + textOut.substr(textOut.indexOf(kwList[k]) + kwList[k].length);
+   for (let k in kws) {
+      if (base.indexOf(kws[k]) >= 0) {
+        outBase = outBase.substring(0, outBase.indexOf(kws[k])) + `<span style="color:${color}">${kws[k]}</span>` + outBase.substr(outBase.indexOf(kws[k]) + kws[k].length);
       }
    }
-   return textOut;
+   return outBase;
 };
 
 Vue.directive('focus', {
     // 当被绑定的元素插入到 DOM 中时……
   inserted: function (el, attr) {
     // 聚焦元素
-  if (attr.value) {
     el.focus();
-    }
   }
 });
 

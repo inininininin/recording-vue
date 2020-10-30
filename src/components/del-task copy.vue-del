@@ -309,71 +309,71 @@
 			next()
 		},
 		activated() {
-			let thisV = this
-			window.thisV=thisV;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
+			let vue = this
+			window.vue=vue;
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				vue.reload();
 
-				thisV.query = JSON.stringify(thisV.$route.query);
+				vue.query = JSON.stringify(vue.$route.query);
 			}
 		},
 		methods: {
 			reload() {
-				let thisV = this
-				Object.assign(thisV.$data, thisV.$options.data());
-				thisV.taskId=thisV.$route.query.taskId;
+				let vue = this
+				Object.assign(vue.$data, vue.$options.data());
+				vue.taskId=vue.$route.query.taskId;
 
-				thisV.$axios.get('/recording/my-task/task-list?taskId='+thisV.taskId).then(res=>{
+				vue.$axios.get('/recording/my-task/task-list?taskId='+vue.taskId).then(res=>{
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisV.task=res.data.data.itemList[0];
-						thisV.task.imageList=[]
-						if(thisV.task.image)
-							thisV.task.imageList.push(thisV.task.image)
-						if(thisV.task.image1)
-							thisV.task.imageList.push(thisV.task.image1)
-						if(thisV.task.image2)
-							thisV.task.imageList.push(thisV.task.image2)
-						if(thisV.task.image3)
-							thisV.task.imageList.push(thisV.task.image3)
-						if(thisV.task.image4)
-							thisV.task.imageList.push(thisV.task.image4)
-						if(thisV.task.image5)
-							thisV.task.imageList.push(thisV.task.image5)
+						vue.task=res.data.data.itemList[0];
+						vue.task.imageList=[]
+						if(vue.task.image)
+							vue.task.imageList.push(vue.task.image)
+						if(vue.task.image1)
+							vue.task.imageList.push(vue.task.image1)
+						if(vue.task.image2)
+							vue.task.imageList.push(vue.task.image2)
+						if(vue.task.image3)
+							vue.task.imageList.push(vue.task.image3)
+						if(vue.task.image4)
+							vue.task.imageList.push(vue.task.image4)
+						if(vue.task.image5)
+							vue.task.imageList.push(vue.task.image5)
 						
-						let finalTimeM = thisV.task.finalTime?thisV.$moment(thisV.task.finalTime):null;
-						thisV.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
-						thisV.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
+						let finalTimeM = vue.task.finalTime?vue.$moment(vue.task.finalTime):null;
+						vue.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
+						vue.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
 
-						Object.assign(thisV.taskUpdate,thisV.task)
-						thisV.taskUpdate.imageList=[]
-						if(thisV.task.image)
-							thisV.taskUpdate.imageList.push(thisV.task.image)
-						if(thisV.task.image1)
-							thisV.taskUpdate.imageList.push(thisV.task.image1)
-						if(thisV.task.image2)
-							thisV.taskUpdate.imageList.push(thisV.task.image2)
-						if(thisV.task.image3)
-							thisV.taskUpdate.imageList.push(thisV.task.image3)
-						if(thisV.task.image4)
-							thisV.taskUpdate.imageList.push(thisV.task.image4)
-						if(thisV.task.image5)
-							thisV.taskUpdate.imageList.push(thisV.task.image5)
+						Object.assign(vue.taskUpdate,vue.task)
+						vue.taskUpdate.imageList=[]
+						if(vue.task.image)
+							vue.taskUpdate.imageList.push(vue.task.image)
+						if(vue.task.image1)
+							vue.taskUpdate.imageList.push(vue.task.image1)
+						if(vue.task.image2)
+							vue.taskUpdate.imageList.push(vue.task.image2)
+						if(vue.task.image3)
+							vue.taskUpdate.imageList.push(vue.task.image3)
+						if(vue.task.image4)
+							vue.taskUpdate.imageList.push(vue.task.image4)
+						if(vue.task.image5)
+							vue.taskUpdate.imageList.push(vue.task.image5)
 					}
 				})
 
-				thisV.loadTaskTrackList()
+				vue.loadTaskTrackList()
 			},
 			updateTask(name) {
 				debugger
-				let thisV = this
-				if(JSON.stringify(thisV.task[name])==JSON.stringify(thisV.taskUpdate[name]))
+				let vue = this
+				if(JSON.stringify(vue.task[name])==JSON.stringify(vue.taskUpdate[name]))
 					return;
 
 				if(!window.confirm('确认修改吗 ?'))
 				{
-					thisV.taskUpdate[name]=thisV.task[name];
+					vue.taskUpdate[name]=vue.task[name];
 					if(name=='finalTime'){
 						taskUpdate.finalTime=task.finalTime;
 						taskUpdate.finalTimeDate=task.finalTimeDate;
@@ -384,110 +384,110 @@
 				
 
 				var param={}
-				param.taskId=thisV.taskId
-				param[name]=thisV.taskUpdate[name]
+				param.taskId=vue.taskId
+				param[name]=vue.taskUpdate[name]
 				if(name=='imageList'){
-					param.image=thisV.taskUpdate.imageList[0]?thisV.taskUpdate.imageList[0]:null,
-					param.image1=thisV.taskUpdate.imageList[1]?thisV.taskUpdate.imageList[1]:null,
-					param.image2=thisV.taskUpdate.imageList[2]?thisV.taskUpdate.imageList[2]:null,
-					param.image3=thisV.taskUpdate.imageList[3]?thisV.taskUpdate.imageList[3]:null,
-					param.image4=thisV.taskUpdate.imageList[4]?thisV.taskUpdate.imageList[4]:null,
-					param.image5=thisV.taskUpdate.imageList[5]?thisV.taskUpdate.imageList[5]:null
+					param.image=vue.taskUpdate.imageList[0]?vue.taskUpdate.imageList[0]:null,
+					param.image1=vue.taskUpdate.imageList[1]?vue.taskUpdate.imageList[1]:null,
+					param.image2=vue.taskUpdate.imageList[2]?vue.taskUpdate.imageList[2]:null,
+					param.image3=vue.taskUpdate.imageList[3]?vue.taskUpdate.imageList[3]:null,
+					param.image4=vue.taskUpdate.imageList[4]?vue.taskUpdate.imageList[4]:null,
+					param.image5=vue.taskUpdate.imageList[5]?vue.taskUpdate.imageList[5]:null
 				}
 				if(name=='finalTime'){
-					if(thisV.taskUpdate.finalTimeDate){
-						param.finalTime = thisV.$moment(thisV.taskUpdate.finalTimeDate+" "+(thisV.taskUpdate.finalTimeTime?(thisV.taskUpdate.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+					if(vue.taskUpdate.finalTimeDate){
+						param.finalTime = vue.$moment(vue.taskUpdate.finalTimeDate+" "+(vue.taskUpdate.finalTimeTime?(vue.taskUpdate.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 					}else{
 						param.finalTime = ""
 					}
 
-					// if(!thisV.taskUpdate.finalTimeTime)
-					// 	thisV.taskUpdate.finalTimeTime="00:00"
-					// if(thisV.taskUpdate.finalTimeDate && thisV.taskUpdate.finalTimeTime)
-					// 	param.finalTime = thisV.$moment(thisV.taskUpdate.finalTimeDate+" "+thisV.taskUpdate.finalTimeTime).toDate().getTime();
-					// else if(!thisV.taskUpdate.finalTimeDate && !thisV.taskUpdate.finalTimeTime)
+					// if(!vue.taskUpdate.finalTimeTime)
+					// 	vue.taskUpdate.finalTimeTime="00:00"
+					// if(vue.taskUpdate.finalTimeDate && vue.taskUpdate.finalTimeTime)
+					// 	param.finalTime = vue.$moment(vue.taskUpdate.finalTimeDate+" "+vue.taskUpdate.finalTimeTime).toDate().getTime();
+					// else if(!vue.taskUpdate.finalTimeDate && !vue.taskUpdate.finalTimeTime)
 					// 	param.finalTime = ""
 					// else
 					// 	param.finalTime = null;
-					thisV.taskUpdate.finalTime=param.finalTime
+					vue.taskUpdate.finalTime=param.finalTime
 				}
 
-				thisV.$axios.post('/recording/my-task/update-task',thisV.$qs.stringify(param)).then(res=>{
+				vue.$axios.post('/recording/my-task/update-task',vue.$qs.stringify(param)).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisV.task[name]=JSON.parse(JSON.stringify(thisV.taskUpdate[name])) 
+						vue.task[name]=JSON.parse(JSON.stringify(vue.taskUpdate[name])) 
 						if(name=='finalTime'){
-							let finalTimeM = thisV.task.finalTime?thisV.$moment(thisV.task.finalTime):null;
-							thisV.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
-							thisV.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
+							let finalTimeM = vue.task.finalTime?vue.$moment(vue.task.finalTime):null;
+							vue.task.finalTimeDate=finalTimeM?finalTimeM.format("YYYY-MM-DD"):null;
+							vue.task.finalTimeTime=finalTimeM?finalTimeM.format("HH:mm:ss")	:null;
 						}
 					}
 				})
 			},
 			addImage(){
 				debugger
-				let thisV = this
-				if(!(thisV.taskUpdate.imageList.length<6)){
+				let vue = this
+				if(!(vue.taskUpdate.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
-				thisV.$(`<input type="file" />`).change(function(){
+				vue.$(`<input type="file" />`).change(function(){
 					debugger
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisV.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
-						thisV.taskUpdate.imageList.push(res.data.data.url)
+						vue.taskUpdate.imageList.push(res.data.data.url)
 					})
 				}).click()
 			},
 			createTrack(){
 				debugger
-				let thisV = this
-				thisV.$axios.post('/recording/my-task/create-task-track',thisV.$qs.stringify({taskId:thisV.taskId,content:thisV.trackContent})).then(res=>{
+				let vue = this
+				vue.$axios.post('/recording/my-task/create-task-track',vue.$qs.stringify({taskId:vue.taskId,content:vue.trackContent})).then(res=>{
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
-						thisV.taskTrack_list.unshift({content:thisV.trackContent,createTime:new Date().getTime()})
-						thisV.taskTrack_count++;
-						thisV.trackContent=null;
-						thisV.$refs.taskTrackList.scrollTop=0
+						vue.taskTrack_list.unshift({content:vue.trackContent,createTime:new Date().getTime()})
+						vue.taskTrack_count++;
+						vue.trackContent=null;
+						vue.$refs.taskTrackList.scrollTop=0
 					}
 					
 				})
 			},
 			taskTrackListScroll(event){
 				debugger
-				let thisV = this
-				thisV.taskTrack_scrollTop=event.target.scrollTop;
-				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
-					thisV.taskTrack_pn++;thisV.loadTaskTrackList()
+				let vue = this
+				vue.taskTrack_scrollTop=event.target.scrollTop;
+				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
+					vue.taskTrack_pn++;vue.loadTaskTrackList()
 				}
 			},
 			loadTaskTrackList(){
 				debugger
-				let thisV = this
-				thisV.taskTrack_loading=1
+				let vue = this
+				vue.taskTrack_loading=1
 
-				thisV.taskTrack_count =null;
-				thisV.$axios.get('/recording/my-task/task-track-list?'+thisV.$qs.stringify({taskId:thisV.taskId,kw:thisV.taskTrack_kw,pn:thisV.taskTrack_pn,ps:thisV.taskTrack_ps})).then(res => {
+				vue.taskTrack_count =null;
+				vue.$axios.get('/recording/my-task/task-track-list?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
-							thisV.taskTrack_list=thisV.taskTrack_list.concat(res.data.data.itemList)
+							vue.taskTrack_list=vue.taskTrack_list.concat(res.data.data.itemList)
 						else
-							thisV.taskTrack_pn--;
+							vue.taskTrack_pn--;
 					}
-					thisV.taskTrack_loading=0
+					vue.taskTrack_loading=0
 				})
-				thisV.$axios.get('/recording/my-task/task-track-list-sum?'+thisV.$qs.stringify({taskId:thisV.taskId,kw:thisV.taskTrack_kw,pn:thisV.taskTrack_pn,ps:thisV.taskTrack_ps})).then(res => {
+				vue.$axios.get('/recording/my-task/task-track-list-sum?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
-						thisV.taskTrack_count=res.data.data.itemCount
+						vue.taskTrack_count=res.data.data.itemCount
 					}
 				})
 			},

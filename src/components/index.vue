@@ -8,7 +8,7 @@
 						if(queryHistory.kws)
 							return;
 						queryHistory.kws=[];
-						queryHistory.run=1;
+						queryHistory.start=1;
 						if($store.state.login){
 							$axios.get(`/recording/cache/get?name=${'queryHistory.kws-'+$store.state.login.userId}`)
 								.then(res=>{
@@ -18,33 +18,33 @@
 								})
 						}
 					" 
-					@click="queryHistory.run=1;"
-					@keyup.enter="pn=1;tasks=[];queryHistory.run=0;loadTasks();" 
+					@click="queryHistory.start=1;"
+					@keyup.enter="pn=1;tasks=[];queryHistory.start=0;loadTasks();" 
 				/>
 				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
 					@click="kw=null;">
 					X
 				</span>
 			</span>
-			<span class="active" @click="pn=1;tasks=[];queryHistory.run=0;loadTasks();"
+			<span class="active" @click="pn=1;tasks=[];queryHistory.start=0;loadTasks();"
 				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 				搜索
 			</span>
 			<span class="active" 
-				@click="sort=order=cancelIs=completeIs=kw=null,type=status='',pn=1;tasks=[];queryHistory.run=0;loadTasks()" 
+				@click="sort=order=cancelIs=completeIs=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
 				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
 			</span>
 		</div>
-		<div class="scrollbar1" style="position: relative;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;height: 30px;padding-right: 50px;">
+		<div class="scrollbar1" style="position: relative;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;height: 34px;padding-right: 50px;">
 			<!-- <span class="active"
 				@click="
 					order=sort=='createTime'?order:null;
 					sort='createTime';
 					order=!order?'desc':order=='desc'?'asc':order=='asc'?'':null;
 					sort=order?sort:null;
-					pn=1;tasks=[];queryHistory.run=0;loadTasks();
+					pn=1;tasks=[];queryHistory.start=0;loadTasks();
 				"
 				:style="{color:sort=='createTime'?'red':'#000000'}"
 				style="width: 52px;line-height: 26px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
@@ -59,19 +59,19 @@
 					sort='finalTime';
 					order=!order?'desc':order=='desc'?'asc':order=='asc'?'':null;
 					sort=order?sort:null;
-					pn=1;tasks=[];queryHistory.run=0;loadTasks();
+					pn=1;tasks=[];queryHistory.start=0;loadTasks();
 				"
 				:style="{color:sort=='finalTime'?'red':'#000000'}"
-				style="width: 52px;line-height: 26px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
+				style="width: 52px;line-height: 30px;height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 				限期
 				<span v-if="sort=='finalTime' && order=='asc'">&nbsp;&and;</span>
 				<span v-if="sort=='finalTime' && order=='desc'">&nbsp;&or;</span>
 				<span v-if="sort!='finalTime' || !order">&nbsp;&nbsp;</span>
 			</span>
 		
-			<span style="width: 81px;vertical-align: top;line-height: 26px;height: 26px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-				<select class="active" v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.run=0;loadTasks()" 
-					style="background-color: #ffffff;font-size: 16px;height:26px;border:none;cursor: pointer;padding: 0px 5px;">
+			<span style="width: 81px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				<select class="active" v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
+					style="background-color: #ffffff;font-size: 16px;height:30px;border:none;cursor: pointer;padding: 0px 5px;">
 					<option value=''>状态</option>
 					<option value="1">进行中</option>
 					<option value="2">已完成</option>
@@ -79,22 +79,22 @@
 				</select>
 			</span>
 
-			<span style="width: 64px;vertical-align: top;line-height: 26px;height: 26px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-				<select class="active" v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.run=0;loadTasks()" 
-					style="background-color: #ffffff;font-size: 16px;height:26px;border:none;cursor: pointer;padding:0 5px;">
+			<span style="width: 64px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				<select class="active" v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
+					style="background-color: #ffffff;font-size: 16px;height:30px;border:none;cursor: pointer;padding:0 5px;">
 					<option value=''>类型</option>
 					<option value="1">推进</option>
 					<option value="2">缺陷</option>
 				</select>
 			</span>
-			<span class="active" style="font-weight: 900;background-color:#fff;line-height: 26px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+			<span class="active" style="font-weight: 900;background-color:#fff;line-height: 30px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
 				position: absolute;right:0px;top:0px;border-left:1px solid #8f8f8f;">
 				···
 			</span>
 		</div>
 		
 		<div class="n1-line" style="height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;">
-			<span class="active" @click="faQiRenUserId=null;tasks=[],pn=1;queryHistory.run=0;loadTasks();" 
+			<span class="active" @click="faQiRenUserId=null;tasks=[],pn=1;queryHistory.start=0;loadTasks();" 
 				style="width: 48px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;background-color: #d8d5d5;vertical-align: top;">
 				发起人
 			</span>
@@ -103,7 +103,7 @@
 					debugger;
 					faQiRenUserId=faQiRenUserId == $o($store.state.login).attr('userId') ?null : $o($store.state.login).attr('userId');
 					tasks=[],pn=1;
-					queryHistory.run=0;loadTasks();
+					queryHistory.start=0;loadTasks();
 				" 
 				style="width: 20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;
 					vertical-align: top;"
@@ -115,7 +115,7 @@
 					debugger;
 					faQiRenUserId=faQiRenUserId == item.userId ? null:item.userId;
 					tasks=[],pn=1;
-					queryHistory.run=0;loadTasks();" 
+					queryHistory.start=0;loadTasks();" 
 				:style="{'background-color':(faQiRenUserId==item.userId?'#d8d5d5':'#ffffff')}" 
 				style="padding:0 8px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;min-width: 20px;text-align: left;
 					overflow: hidden;text-overflow:ellipsis;max-width:60px;vertical-align: baseline;">
@@ -127,7 +127,7 @@
 			</span>
 		</div>
 		<div class="n1-line" style="width:100%;height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;overflow: hidden;text-overflow:ellipsis;">
-			<span  class="active" @click="fuZeRenUserId=null;tasks=[],pn=1;queryHistory.run=0;loadTasks();"  
+			<span  class="active" @click="fuZeRenUserId=null;tasks=[],pn=1;queryHistory.start=0;loadTasks();"  
 				style="width: 48px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;background-color: #d8d5d5;vertical-align: top;">
 				负责人
 			</span>
@@ -135,7 +135,7 @@
 				@click="
 					fuZeRenUserId=fuZeRenUserId == $o($store.state.login).attr('userId') ?null : $o($store.state.login).attr('userId');
 					tasks=[],pn=1;
-					queryHistory.run=0;loadTasks();
+					queryHistory.start=0;loadTasks();
 				" 
 				style="width: 20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;
 					vertical-align: top;"
@@ -146,7 +146,7 @@
 				@click="
 					fuZeRenUserId=fuZeRenUserId == item.userId ? null:item.userId;
 					tasks=[],pn=1;
-					queryHistory.run=0;loadTasks();
+					queryHistory.start=0;loadTasks();
 				" 
 				style="padding:0 8px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;min-width: 20px;text-align: left;
 					overflow: hidden;text-overflow:ellipsis;max-width:60px;vertical-align: baseline;"
@@ -238,11 +238,11 @@
 			<div v-if="loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
-			<div class="active-text unselectable" v-if="!loading && tasks.length<$o(tasksSum).attr('count')" @click="pn++;queryHistory.run=0;loadTasks();" 
+			<div class="active-text unselectable" v-if="!loading && tasks && tasks.length<$o(tasksSum).attr('count')" @click="pn++;queryHistory.start=0;loadTasks();" 
 				style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && tasks && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
 			</div>
 		</div>
@@ -287,10 +287,10 @@
 		</div>
 
 		<!-- 搜索历史 -->
-		<div v-if="queryHistory.run" 
+		<div v-if="queryHistory.start" 
 			@click="
 				if($event.currentTarget==$event.target) {
-					queryHistory.run=0;
+					queryHistory.start=0;
 				}
 			" 
 			style="position: absolute;top:32px;bottom:0;width:100%;background-color: #00000087;">
@@ -300,7 +300,7 @@
 					<span 
 						@click="
 							kw=item;
-							pn=1;tasks=[];queryHistory.run=0;loadTasks();
+							pn=1;tasks=[];queryHistory.start=0;loadTasks();
 						"
 						style="
 							font-size: 16px;display: inline-block;background-color: #e5e5e5;max-width: 200px;
@@ -344,8 +344,6 @@
 	</div>
 </template>
 <script>
-	import Vue from 'vue'
-	import _ from 'lodash'
 	export default {
 		name: 'index',
 		data() {
@@ -369,7 +367,7 @@
 				sort:null,
 				order:null,
 				queryHistory:{
-					run:null,
+					start:null,
 					kws:null
 				}
 			}
@@ -402,15 +400,8 @@
 			load() {
 				debugger
 				let vue = this
-				
-				if(!vue.$store.state.login){
-					vue.$axios.post('/recording/logout').then(res => {
-							vue.$store.state.login=null;
-							vue.$router.push({path:'/login'})
-						})
-				}
 
-				vue.queryHistory.run=0;
+				vue.queryHistory.start=0;
 				vue.loadTasks()
 
 				vue.$axios.get('/recording/my-task/my-fa-qi-rens?'+vue.$qs.stringify({sort:'orderNo',order:'asc'})).then(res => {
@@ -442,7 +433,7 @@
 					if(vue.tasks && vue.tasks.length < vue.ps)
 						return;
 					vue.pn++;
-					vue.queryHistory.run=0;
+					vue.queryHistory.start=0;
 					vue.loadTasks()
 				}
 			},

@@ -124,78 +124,78 @@
 		},
 		activated() {
 			debugger
-			let thisV = this
-			window.thisV=thisV;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
+			let vue = this
+			window.vue=vue;
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				vue.reload();
 
-				thisV.query = JSON.stringify(thisV.$route.query);
+				vue.query = JSON.stringify(vue.$route.query);
 
 			}else{
-				if(thisV.$store.state.chooseFaQiRenUserId)
-					thisV.faQiRenUserId=thisV.$store.state.chooseFaQiRenUserId
-				if(thisV.$store.state.chooseFaQiRenNickname)
-					thisV.faQiRenNickname=thisV.$store.state.chooseFaQiRenNickname
-				if(thisV.$store.state.chooseFuZeRenUserId)
-					thisV.fuZeRenUserId=thisV.$store.state.chooseFuZeRenUserId
-				if(thisV.$store.state.chooseFuZeRenNickname)
-					thisV.fuZeRenNickname=thisV.$store.state.chooseFuZeRenNickname
+				if(vue.$store.state.chooseFaQiRenUserId)
+					vue.faQiRenUserId=vue.$store.state.chooseFaQiRenUserId
+				if(vue.$store.state.chooseFaQiRenNickname)
+					vue.faQiRenNickname=vue.$store.state.chooseFaQiRenNickname
+				if(vue.$store.state.chooseFuZeRenUserId)
+					vue.fuZeRenUserId=vue.$store.state.chooseFuZeRenUserId
+				if(vue.$store.state.chooseFuZeRenNickname)
+					vue.fuZeRenNickname=vue.$store.state.chooseFuZeRenNickname
 
 
-				thisV.$store.state.chooseFaQiRenUserId = null
-				thisV.$store.state.chooseFaQiRenNickname = null
-				thisV.$store.state.chooseFuZeRenUserId = null
-				thisV.$store.state.chooseFuZeRenNickname = null
+				vue.$store.state.chooseFaQiRenUserId = null
+				vue.$store.state.chooseFaQiRenNickname = null
+				vue.$store.state.chooseFuZeRenUserId = null
+				vue.$store.state.chooseFuZeRenNickname = null
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisV = this
-				Object.assign(thisV.$data, thisV.$options.data());
-				thisV.nameIf = 1
-				if(thisV.$store.state.cloneTask){
-					thisV.name=thisV.$store.state.cloneTask.name
-					thisV.type=thisV.$store.state.cloneTask.type
-					thisV.content=thisV.$store.state.cloneTask.content
-					thisV.imageList=thisV.$store.state.cloneTask.imageList
+				let vue = this
+				Object.assign(vue.$data, vue.$options.data());
+				vue.nameIf = 1
+				if(vue.$store.state.cloneTask){
+					vue.name=vue.$store.state.cloneTask.name
+					vue.type=vue.$store.state.cloneTask.type
+					vue.content=vue.$store.state.cloneTask.content
+					vue.imageList=vue.$store.state.cloneTask.imageList
 
-					thisV.faQiRenUserId = thisV.$store.state.cloneTask.faQiRenUserId
-					thisV.faQiRenNickname = thisV.$store.state.cloneTask.faQiRenNickname
-					thisV.fuZeRenUserId = thisV.$store.state.cloneTask.fuZeRenUserId
-					thisV.fuZeRenNickname = thisV.$store.state.cloneTask.fuZeRenNickname
+					vue.faQiRenUserId = vue.$store.state.cloneTask.faQiRenUserId
+					vue.faQiRenNickname = vue.$store.state.cloneTask.faQiRenNickname
+					vue.fuZeRenUserId = vue.$store.state.cloneTask.fuZeRenUserId
+					vue.fuZeRenNickname = vue.$store.state.cloneTask.fuZeRenNickname
 
-					thisV.$store.state.cloneTask=null;
+					vue.$store.state.cloneTask=null;
 				}
 			},
 			createTask() {
-				let thisV = this
+				let vue = this
 				
 				if(!window.confirm('确认发布吗 ?')){
 					return ;
 				}
 				
 				let finalTime = null;
-				if(thisV.finalTimeDate){
-					finalTime = thisV.$moment(thisV.finalTimeDate+" "+(thisV.finalTimeTime?(thisV.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
+				if(vue.finalTimeDate){
+					finalTime = vue.$moment(vue.finalTimeDate+" "+(vue.finalTimeTime?(vue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				thisV.$axios.post('/recording/my-task/create-task',thisV.$qs.stringify({autoRedoTomorrowIs:thisV.autoRedoTomorrowIs,finalTime:finalTime,faQiRenUserId:thisV.faQiRenUserId,fuZeRenUserId:thisV.fuZeRenUserId,name:thisV.name,type:thisV.type,content:thisV.content,
-				orderNo:thisV.orderNo,
-				image:thisV.imageList[0]?thisV.imageList[0]:null,
-				image1:thisV.imageList[1]?thisV.imageList[1]:null,
-				image2:thisV.imageList[2]?thisV.imageList[2]:null,
-				image3:thisV.imageList[3]?thisV.imageList[3]:null,
-				image4:thisV.imageList[4]?thisV.imageList[4]:null,
-				image5:thisV.imageList[5]?thisV.imageList[5]:null,})).then(res=>{
+				vue.$axios.post('/recording/my-task/create-task',vue.$qs.stringify({autoRedoTomorrowIs:vue.autoRedoTomorrowIs,finalTime:finalTime,faQiRenUserId:vue.faQiRenUserId,fuZeRenUserId:vue.fuZeRenUserId,name:vue.name,type:vue.type,content:vue.content,
+				orderNo:vue.orderNo,
+				image:vue.imageList[0]?vue.imageList[0]:null,
+				image1:vue.imageList[1]?vue.imageList[1]:null,
+				image2:vue.imageList[2]?vue.imageList[2]:null,
+				image3:vue.imageList[3]?vue.imageList[3]:null,
+				image4:vue.imageList[4]?vue.imageList[4]:null,
+				image5:vue.imageList[5]?vue.imageList[5]:null,})).then(res=>{
 						debugger
 						if(res.data.codeMsg)
 							alert(res.data.codeMsg)
 						if (res.data.code == 0) {
 							if(window.confirm('成功 , 是否返回 ?')){
-								thisV.$router.back();
+								vue.$router.back();
 							}else{
-								thisV.$router.replace({path:'/create-task'})
+								vue.$router.replace({path:'/create-task'})
 							}
 						}
 					})
@@ -203,19 +203,19 @@
 			},
 			addImage(){
 				debugger
-				let thisV = this
-				if(!(thisV.imageList.length<6)){
+				let vue = this
+				if(!(vue.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
-				thisV.$(`<input type="file" />`).change(function(){
+				vue.$(`<input type="file" />`).change(function(){
 					debugger
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					thisV.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						debugger
-						thisV.imageList.push(res.data.data.url)
+						vue.imageList.push(res.data.data.url)
 					})
 				}).click()
 			}

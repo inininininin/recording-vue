@@ -3,7 +3,7 @@
 		<div  style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 				width: 100%;top:0;background-color: #FFFFFF;">
 			<span class="active"
-				@click="window.history.length<=1 ? $router.push({path:'/index',query:{time:new Date().getTime+''}}) : $router.back();"
+				@click="window.history.length<=1 ? $router.push({path:'/index'}) : $router.back();"
 				style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;font-size:16px;">
 				<
 			</span>
@@ -25,7 +25,7 @@
 					<span v-if="!chosenFaQiRen" class="active" 
 						style="text-align: center;cursor: pointer;font-size: 14px;display:inline-block;width:100%"
 						@click="
-							chooseFaQiRen.run=1;
+							chooseFaQiRen.start=1;
 							if(chooseFaQiRen.currItems == null){
 								chooseFaQiRen.pn=1;
 								chooseFaQiRen_loadItems();
@@ -42,7 +42,7 @@
 						<span class="active" 
 							style="margin-left:5px;width:20x;line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
 							@click="
-								chooseFaQiRen.run=1;
+								chooseFaQiRen.start=1;
 								if(chooseFaQiRen.currItems == null){
 									chooseFaQiRen.pn=1;
 									chooseFaQiRen_loadItems();
@@ -71,7 +71,7 @@
 					<span v-if="!chosenFuZeRen" class="active" 
 						style="text-align: center;cursor: pointer;font-size: 14px;display:inline-block;width:100%"
 						@click="
-							chooseFuZeRen.run=1;
+							chooseFuZeRen.start=1;
 							if(chooseFuZeRen.currItems == null){
 								chooseFuZeRen.pn=1;
 								chooseFuZeRen_loadItems();
@@ -88,7 +88,7 @@
 						<span class="active" 
 							style="margin-left:5px;line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
 							@click="
-								chooseFuZeRen.run=1;
+								chooseFuZeRen.start=1;
 								if(chooseFuZeRen.currItems == null){
 									chooseFuZeRen.pn=1;
 									chooseFuZeRen_loadItems();
@@ -113,7 +113,7 @@
 					<span style="display: inline-block;height:190px;border-left:1px solid #8F8F8F;vertical-align: middle;"></span>
 				</span>
 				<span style="display: inline-block;position: absolute;left:96px;right:5px;height: 200px;">
-					<textarea class="scrollbar1" v-model="content" style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
+					<textarea v-focus class="scrollbar1" v-model="content" style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
@@ -184,7 +184,7 @@
 
 
 		<!-- 选择发起人 -->
-		<div v-if="chooseFaQiRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="chooseFaQiRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">
 					选择发起人
@@ -209,7 +209,7 @@
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
 							chosenFaQiRen=item
-							chooseFaQiRen.run=0
+							chooseFaQiRen.start=0
 						">
 						<span><img :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
@@ -243,7 +243,7 @@
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chooseFaQiRen.run=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
+					<button @click="chooseFaQiRen.start=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
 						关闭
 					</button>
 				</div>
@@ -251,7 +251,7 @@
 		</div>
 
 		<!-- 选择负责人 -->
-		<div v-if="chooseFuZeRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="chooseFuZeRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">
 					选择负责人
@@ -275,7 +275,7 @@
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
 							chosenFuZeRen=item
-							chooseFuZeRen.run=null
+							chooseFuZeRen.start=null
 						">
 						<span><img :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
@@ -309,7 +309,7 @@
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chooseFuZeRen.run=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chooseFuZeRen.start=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
 				</div>
 			</div>
 		</div>

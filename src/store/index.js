@@ -4,11 +4,6 @@ Vue.use(Vuex);
 
 const state = {
 	login: null,
-	chooseFuZeRenUserId: null,
-	chooseFuZeRenNickname: null,
-	chooseFaQiRenUserId: null,
-	chooseFaQiRenNickname: null,
-	cloneTask: null,
 	now: new Date(),
 	nowTimer: null,
 	requestingCount: 0,

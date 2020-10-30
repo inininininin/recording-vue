@@ -151,38 +151,38 @@
 		},
 		activated() {
 			debugger
-			let thisV = this
-			window.thisV=thisV;
-			if (thisV.query != JSON.stringify(thisV.$route.query)) {
-				thisV.reload();
+			let vue = this
+			window.vue=vue;
+			if (vue.query != JSON.stringify(vue.$route.query)) {
+				vue.reload();
 
-				thisV.query = JSON.stringify(thisV.$route.query);
+				vue.query = JSON.stringify(vue.$route.query);
 			}else{
-				thisV.$refs.friendList.scrollTop=thisV.scrollTop
+				vue.$refs.friendList.scrollTop=vue.scrollTop
 			}
 		},
 		methods: {
 			reload() {
 				debugger
-				let thisV = this
-				Object.assign(thisV.$data, thisV.$options.data());
+				let vue = this
+				Object.assign(vue.$data, vue.$options.data());
 
-				if(!thisV.$store.state.login){
-					thisV.$axios.post('/recording/logout').then(res => {
-							thisV.$store.state.login=null;
-							thisV.$router.push({path:'/login'})
+				if(!vue.$store.state.login){
+					vue.$axios.post('/recording/logout').then(res => {
+							vue.$store.state.login=null;
+							vue.$router.push({path:'/login'})
 						})
 				}
 					
 
-				thisV.loadFriendList()
+				vue.loadFriendList()
 			},
 			addFriendDo(item){
 				if(!item.followId){
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							thisV.$axios.post(`/recording/my-follow/create-follow`,thisV.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							vue.$axios.post(`/recording/my-follow/create-follow`,vue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -196,7 +196,7 @@
 					var r=window.prompt(`你和 ${item.nickname} 已经是好友 , 你可以修改别名`,item.followAlias||'')
 					if (r!=null)
 						{
-							thisV.$axios.post(`/recording/my-follow/update-follow`,thisV.$qs.stringify({followId:item.followId,alias:r})).then(res => {
+							vue.$axios.post(`/recording/my-follow/update-follow`,vue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
 								debugger
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -210,65 +210,65 @@
 			},
 			findMoreFriendUserList(){
 				debugger
-				let thisV = this
-				thisV.addFriend.loading=1
-				thisV.addFriend.userCount=null;
-				thisV.$axios.get(`/recording/user/user-list?kw=${thisV.addFriend.kw||''}&pn=${thisV.addFriend.pn}`).then(res => {
+				let vue = this
+				vue.addFriend.loading=1
+				vue.addFriend.userCount=null;
+				vue.$axios.get(`/recording/user/user-list?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
 					debugger
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
 						if(!res.data.data.itemList || res.data.data.itemList.length==0){
-							if(thisV.addFriend.pn==1){
+							if(vue.addFriend.pn==1){
 								alert('未找到用户')
 							}
-							thisV.addFriend.pn--;
+							vue.addFriend.pn--;
 						}
 						else{
-							if(thisV.addFriend.pn==1){
-								thisV.addFriend.users=[]
+							if(vue.addFriend.pn==1){
+								vue.addFriend.users=[]
 							}
-							thisV.addFriend.addIs=0
-							thisV.addFriend.users=thisV.addFriend.users.concat(res.data.data.itemList)
+							vue.addFriend.addIs=0
+							vue.addFriend.users=vue.addFriend.users.concat(res.data.data.itemList)
 						}
 					}
-					thisV.addFriend.loading=0
+					vue.addFriend.loading=0
 				})
 
-				thisV.$axios.get(`/recording/user/user-list-sum?kw=${thisV.addFriend.kw||''}&pn=${thisV.addFriend.pn}`).then(res => {
+				vue.$axios.get(`/recording/user/user-list-sum?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
 					debugger
 					if (res.data.code == 0) {
-							thisV.addFriend.userCount=res.data.data.itemCount
+							vue.addFriend.userCount=res.data.data.itemCount
 					}
 				})
 			},
 			addFriendUserListScroll(event){
 				debugger
-				let thisV = this
-				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
-					thisV.addFriend.pn++;
-					thisV.findMoreFriendUserList ()
+				let vue = this
+				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
+					vue.addFriend.pn++;
+					vue.findMoreFriendUserList ()
 				}
 			},
 			friendListScroll(event){
 				debugger
-				let thisV = this
-				thisV.scrollTop=event.target.scrollTop;
-				if((event.target.scrollTop+thisV.$(event.target).height())>=event.target.scrollHeight) {
-					thisV.pn++;
-					thisV.loadFriendList ()
+				let vue = this
+				vue.scrollTop=event.target.scrollTop;
+				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
+					vue.pn++;
+					vue.loadFriendList ()
 				}
 			},
 			loadFriendList (){
 				debugger
-				let thisV = this
-				thisV.loading=1
+				let vue = this
+				vue.loading=1
 				let sorts=[]
 				let orders=[]
-				for(var c in thisV.sortMap1) {
-					if(thisV.sortMap1[c]){
+				for(var c in vue.sortMap1) {
+					if(vue.sortMap1[c]){
 						sorts.push(c)
-						orders.push(thisV.sortMap1[c]==1?'asc':thisV.sortMap1[c]==2?'desc':'c')
+						orders.push(vue.sortMap1[c]==1?'asc':vue.sortMap1[c]==2?'desc':'c')
 					}
 				}
 				if(!sorts || sorts.length==0){
@@ -276,23 +276,23 @@
 					orders=['asc','asc','desc','desc']
 				}
 
-				thisV.itemCount =null;
+				vue.itemCount =null;
 				
 
-				thisV.$axios.get('/recording/my-follow/follow-list?'+thisV.$qs.stringify({kw:thisV.kw,sort:sorts.join(),order:orders.join(),pn:thisV.pn,ps:thisV.ps})).then(res => {
+				vue.$axios.get('/recording/my-follow/follow-list?'+vue.$qs.stringify({kw:vue.kw,sort:sorts.join(),order:orders.join(),pn:vue.pn,ps:vue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
-							thisV.friendList=thisV.friendList.concat(res.data.data.itemList)
+							vue.friendList=vue.friendList.concat(res.data.data.itemList)
 						else
-						thisV.pn--;
+						vue.pn--;
 					}
-					thisV.loading=0
+					vue.loading=0
 				})
-				thisV.$axios.get('/recording/my-follow/follow-list-sum?'+thisV.$qs.stringify({kw:thisV.kw,pn:thisV.pn,ps:thisV.ps})).then(res => {
+				vue.$axios.get('/recording/my-follow/follow-list-sum?'+vue.$qs.stringify({kw:vue.kw,pn:vue.pn,ps:vue.ps})).then(res => {
 					debugger
 					if (res.data.code == 0) {
-						thisV.itemCount=res.data.data.itemCount
+						vue.itemCount=res.data.data.itemCount
 					}
 				})
 			},

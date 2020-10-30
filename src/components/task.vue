@@ -3,7 +3,7 @@
 		<div style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 				width: 100%;top:0;background-color: #FFFFFF;">
 			<span class="active"
-				@click="window.history.length<=1 ? $router.push({path:'/index',query:{time:new Date().getTime+''}}) : $router.back();"
+				@click="window.history.length<=1 ? $router.push({path:'/index'}) : $router.back();"
 				style="position: absolute;left:0;width:40px;cursor: pointer;font-weight: 900;font-size: 16px;">
 				<
 			</span>
@@ -28,7 +28,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #8f8f8f;"
 						@click="
-							editFaQiRen.run=1;
+							editFaQiRen.start=1;
 							if(editFaQiRen.currItems == null){
 								editFaQiRen.pn=1;
 								chooseFaQiRen_loadItems();
@@ -56,7 +56,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #8f8f8f;"
 						@click="
-							editFuZeRen.run=1;
+							editFuZeRen.start=1;
 							if(editFuZeRen.currItems == null){
 								editFuZeRen.pn=1;
 								chooseFuZeRen_loadItems();
@@ -98,7 +98,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #8f8f8f;"
 						@click="
-							editType.run=1;
+							editType.start=1;
 							editType.value=task.type;">
 						改
 					</span>
@@ -131,7 +131,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #8f8f8f;"
 						@click="
-							editFinalTime.run=1;
+							editFinalTime.start=1;
 							editFinalTime.value=task.finalTime;
 							editFinalTime.date=task.finalTime?$moment(task.finalTime).format('YYYY-MM-DD'):null;">
 						改
@@ -156,7 +156,7 @@
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #8f8f8f;"
-						@click="editOrderNo.run=1;editOrderNo.value=$o(task).attr('orderNo');">
+						@click="editOrderNo.start=1;editOrderNo.value=$o(task).attr('orderNo');">
 						改
 					</span>
 				</span>
@@ -176,7 +176,7 @@
 			<div v-if="lookAllTracks" style="height: 30px;border-style:solid;border-color: #8F8F8F;border-width:1px 0;">
 				<span style="width:50%;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
 					<svg t="1591346902986" style="position: absolute;left:1%;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
-					<input v-model="tracks.kw" type="text" style="line-height: 28px;width:83%;border:none;margin-left:8%;"
+					<input v-focus v-model="tracks.kw" type="text" style="line-height: 28px;width:83%;border:none;margin-left:8%;"
 						@keyup.enter="tracks.pn=1;tracks.items=[];loadTracks();" 
 					/>
 					<span v-if="tracks.kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
@@ -198,7 +198,7 @@
 			</div>
 			<div class="scrollbar1" style="position:absolute;bottom:51px;left:0;right:0;padding:0 5px;overflow: auto;"
 				:style="{top:(lookAllTracks?'65px':'30px')}">
-				<div v-for="item in tracks.items" :key="task.trackId" style="margin-bottom:5px;">
+				<div v-for="item in tracks.items" :key="item.trackId" style="margin-bottom:5px;">
 					<div class="selectable" style="font-size: 16px;white-space: pre-wrap;word-break: break-all;">{{item.content}}</div>
 					<div class="selectable" style="font-size: 14px;color: #8F8F8F;">
 						{{
@@ -215,7 +215,7 @@
 			</div>
 			<div style="height:50px;border-style: solid;border-color: #8F8F8F;border-width: 1px 0 0 0;position: absolute;bottom:0;left:0;right:0;">
 				<span style="height:50px;display:inline-block;line-height: 50px;position: absolute;left:5px;right:53px;">
-					<textarea v-model="trackContent" class="scrollbar1" placeholder="填写跟踪记录" style="resize: none;height:44px;border:none;width:100%;line-height:16px;vertical-align: middle;padding:0;font-size: 16px;"
+					<textarea v-focus v-model="trackContent" class="scrollbar1" placeholder="填写跟踪记录" style="resize: none;height:44px;border:none;width:100%;line-height:16px;vertical-align: middle;padding:0;font-size: 16px;"
 						@keydown.enter.prevent="createTrack();">
 					</textarea>
 				</span>
@@ -243,7 +243,7 @@
 		</div>
 
 		<!-- 选择发起人 -->
-		<div v-if="editFaQiRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="editFaQiRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">选择发起人</div>
 				<div style="margin-top:5px;">
@@ -267,7 +267,7 @@
 								if(res.data.codeMsg)
 									$notify({type:'primary', message:res.data.codeMsg})
 								if(res.data.code == 0){
-									editFaQiRen.run=0;
+									editFaQiRen.start=0;
 									task.faQiRenUserId=item.toUserId
 									task.faQiRenNickname=item.nickname
 									task.faQiRenAlias=item.alias
@@ -311,14 +311,14 @@
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editFaQiRen.run=0;editFaQiRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
+					<button @click="editFaQiRen.start=0;editFaQiRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
 									$notify({type:'primary', message:res.data.codeMsg})
 								if(res.data.code == 0){
-									editFaQiRen.run=0;
+									editFaQiRen.start=0;
 									task.faQiRenUserId=null
 									task.faQiRenNickname=null
 									task.faQiRenAlias=null
@@ -337,7 +337,7 @@
 		</div>
 
 		<!-- 选择负责人 -->
-		<div v-if="editFuZeRen.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="editFuZeRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">选择负责人</div>
 				<div style="margin-top:5px;">
@@ -361,7 +361,7 @@
 								if(res.data.codeMsg)
 									$notify({type:'primary', message:res.data.codeMsg})
 								if(res.data.code == 0){
-									editFuZeRen.run=0;
+									editFuZeRen.start=0;
 									task.fuZeRenUserId=item.toUserId
 									task.fuZeRenNickname=item.nickname
 									task.fuZeRenAlias=item.alias
@@ -405,14 +405,14 @@
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editFuZeRen.run=0;editFuZeRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
+					<button @click="editFuZeRen.start=0;editFuZeRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
 									$notify({type:'primary', message:res.data.codeMsg})
 								if(res.data.code == 0){
-									editFuZeRen.run=0;
+									editFuZeRen.start=0;
 									task.fuZeRenUserId=null
 									task.fuZeRenNickname=null
 									task.fuZeRenAlias=null
@@ -430,7 +430,7 @@
 			</div>
 		</div>
 
-		<div v-if="editType.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="editType.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">修改类型</div>
 				<div style="line-height:30px;position: relative;height: 30px;border:none;margin-top:5px;">
@@ -444,25 +444,25 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
+					<button @click="editType.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.type != editType.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
-									editType.run=0;
+									editType.start=0;
 									task.type=editType.value;
 								})
 							}else{
-								editType.run=0;
+								editType.start=0;
 							}
 						" >
 						确认
 					</button>
-					<button @click="editType.run=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 				</div>
 			</div>
 		</div>
 
-		<div v-if="editFinalTime.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="editFinalTime.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">修改截止时间</div>
 				<div style="line-height:30px;position: relative;height: 30px;border-style: solid;border-color: #8F8F8F;border-width: 1px;margin-top:5px;">
@@ -474,28 +474,28 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
+					<button @click="editFinalTime.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 					<button
 						style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							editFinalTime.value=editFinalTime.date?$moment(editFinalTime.date+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z'):null;
 							if(task.finalTime != editFinalTime.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,finalTime:editFinalTime.value})).then(res=>{
-									editFinalTime.run=0;
+									editFinalTime.start=0;
 									task.finalTime=editFinalTime.value;
 									$store.state.chosenTask.finalTime=editFinalTime.value
 								})
 							}else{
-								editFinalTime.run=0;
+								editFinalTime.start=0;
 							}
 						">
 						确认
 					</button>
-					<button @click="editFinalTime.run=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 				</div>
 			</div>
 		</div>
 		
-		<div v-if="editOrderNo.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+		<div v-if="editOrderNo.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">修改排序</div>
 				<div style="line-height:30px;position: relative;height: 30px;border-style: solid;border-color: #8F8F8F;border-width: 1px;margin-top:5px;">
@@ -508,21 +508,21 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
+					<button @click="editOrderNo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.orderNo != editOrderNo.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
-									editOrderNo.run=0;
+									editOrderNo.start=0;
 									task.orderNo=editOrderNo.value;
 									$store.state.chosenTask.orderNo=editOrderNo.value
 								})
 							}else{
-								editOrderNo.run=0;
+								editOrderNo.start=0;
 							}
 						" >
 						确认
 					</button>
-					<button @click="editOrderNo.run=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
 				</div>
 			</div>
 		</div>

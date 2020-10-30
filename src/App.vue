@@ -12,7 +12,7 @@
 
 export default {
   name: 'App',
-  created(){
+  async created(){
     debugger
     let vue=this
     window.vue=vue;
@@ -23,21 +23,18 @@ export default {
 					vue.$store.state.now=new Date();
         },1000)
         
-
-    vue.$.ajax(
-      {
-        url:'/recording/login-refresh',
-        type:'post',
-        dataType:'json',
-        async:false,
-        success(data){
-          debugger
-					if (data.code == 0) {
-						vue.$store.state.login=data.data;
-					}
-        }
+    vue.$axios.post('/recording/login-refresh').then(res=>{
+      if(res.data.code == 0){
+        vue.$store.state.login=res.data.data;
       }
-    )
+    })
+    setInterval(function(){
+      vue.$axios.post('/recording/login-refresh').then(res=>{
+        if(res.data.code == 0){
+          vue.$store.state.login=res.data.data;
+        }
+      })
+    },5 * 60* 1000)
   }
 }
 </script>

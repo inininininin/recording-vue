@@ -8,7 +8,7 @@
 						if(queryHistory.kws)
 								return;
 						queryHistory.kws=[];
-						queryHistory.run=1;
+						queryHistory.start=1;
 						if($store.state.login){
 							$axios.get(`/recording/cache/get?name=${'queryHistory.friends.kws-'+$store.state.login.userId}`)
 								.then(res=>{
@@ -18,19 +18,19 @@
 								})
 						}
 					" 
-					@click="queryHistory.run=1;"
-					@keyup.enter="pn=1;friends=[];queryHistory.run=0;loadFriends();" 
+					@click="queryHistory.start=1;"
+					@keyup.enter="pn=1;friends=[];queryHistory.start=0;loadFriends();" 
 				/>
 				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
 					@click="kw=null;">
 					X
 				</span>
 			</span>
-			<span class="active" @click="pn=1;friends=[];queryHistory.run=0;loadFriends();"
+			<span class="active" @click="pn=1;friends=[];queryHistory.start=0;loadFriends();"
 				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 				搜索
 			</span>
-			<span class="active" @click="kw=null;pn=1;friends=[];queryHistory.run=0;loadFriends()" 
+			<span class="active" @click="kw=null;pn=1;friends=[];queryHistory.start=0;loadFriends()" 
 				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
@@ -42,7 +42,7 @@
 			</span>
 		</div>
 		<div class="scrollbar" @scroll="friendsScroll($event)" ref="friends" style="overflow: auto;width:100%;position: absolute;top: 58px;bottom: 88px;">
-			<div v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.run=1;"
+			<div v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.start=1;"
 				style="padding:5px;border:1px solid #8F8F8F;margin:  5px ;cursor:pointer;background-color: #FFFFFF;position: relative;">
 				<span><img :src="item.headimg" /></span>
 				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:120px;">
@@ -62,11 +62,11 @@
 			<div v-if="loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
-			<div class="active-text unselectable" v-if="!loading && friends.length<$o(friendsSum).attr('count')" @click="pn++;queryHistory.run=0;loadFriends();"
+			<div class="active-text unselectable" v-if="!loading && friends && friends.length<$o(friendsSum).attr('count')" @click="pn++;queryHistory.start=0;loadFriends();"
 				style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && friends && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
 			</div>
 		</div>
@@ -74,7 +74,7 @@
 
 
 		<!-- 好友详情 -->
-		<div v-if="friendInfo.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
+		<div v-if="friendInfo.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div class="scrollbar1" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">好友详情</div>
 				<div style="margin-top:10px;">
@@ -84,7 +84,7 @@
 					<span style="font-size:16px;">别名 : </span>
 					<span style="font-size:16px;">{{chosenFriend.alias}}</span>
 					<span  style="position: absolute;right:0;font-size:16px;padding:0 3px;background-color: #cccccc;cursor: pointer;color:#767676;"
-						@click="friendInfo.editAlias.run=1;friendInfo.editAlias.value=chosenFriend.alias">
+						@click="friendInfo.editAlias.start=1;friendInfo.editAlias.value=chosenFriend.alias">
 						改
 					</span>
 				</div>
@@ -96,7 +96,7 @@
 					<span style="font-size:16px;">排序 : </span><span style="font-size:16px;">{{chosenFriend.orderNo}}</span>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chosenFriend=null;friendInfo.run=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chosenFriend=null;friendInfo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$dialog.confirm({
@@ -108,9 +108,9 @@
 									if(res.data.code == 0){
 										if(!res.data.codeMsg)
 											$notify({type:'success',message:'删除成功'})
-										friends.splice(chosenFriend)
+										friends.splice(friends.indexOf(chosenFriend),1)
 										chosenFriend=null;
-										friendInfo.run=0
+										friendInfo.start=0
 									}
 								})
 							}).catch(() => {
@@ -122,13 +122,14 @@
 			</div>
 
 			<!-- 修改别名 -->
-			<div v-if="friendInfo.editAlias.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div v-if="friendInfo.editAlias.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 				<div class="scrollbar1" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 					<div style="font-size: 16px;color:#767676;">修改别名</div>
 					<div style="margin-top:10px;">
 						<input v-model="friendInfo.editAlias.value" style="font-size: 16px;"/>
 					</div>
 					<div style="margin-top:10px;">
+						<button style="font-size: 16px;width:100px;height:30px;margin-right:5px;" @click="friendInfo.editAlias.start=0;">取消</button>
 						<button style="font-size: 16px;width:100px;height:30px;"
 							@click="
 								if(chosenFriend.alias==friendInfo.editAlias.value)
@@ -143,7 +144,7 @@
 										if(res.data.code == 0){
 											if(!res.data.codeMsg)
 												$notify({type:'success',message:'修改成功'})
-											friendInfo.editAlias.run=0;
+											friendInfo.editAlias.start=0;
 											chosenFriend.alias=friendInfo.editAlias.value
 										}
 									})
@@ -151,7 +152,6 @@
 							">
 							确认
 						</button>
-						<button style="font-size: 16px;width:100px;height:30px;margin-left:5px;" @click="friendInfo.editAlias.run=0;">取消</button>
 					</div>
 				</div>
 			</div>
@@ -161,7 +161,7 @@
 		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
 				@click="
-					addFriend.run=addFriend.queryUsersRun=1;
+					addFriend.start=addFriend.queryUsersRun=1;
 					addFriend.setFriendRun=0;
 					if(!addFriend.users || addFriend.users.length==0)
 						addFriend_loadUsers();">
@@ -203,7 +203,7 @@
 		</div>
 
 		<!-- 加好友 -->
-		<div v-if="addFriend.run" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
+		<div v-if="addFriend.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div v-if="addFriend.queryUsersRun" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">添加好友</div>
 				<div style="margin-top:5px;">
@@ -245,16 +245,16 @@
 					<div v-if="addFriend.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="!addFriend.loading && addFriend.currUsers.length == addFriend.ps" @click="addFriend.pn++;addFriend_loadUsers()" 
+					<div class="active-text unselectable" v-if="!addFriend.loading && addFriend.currUsers && addFriend.currUsers.length == addFriend.ps" @click="addFriend.pn++;addFriend_loadUsers()" 
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="!addFriend.loading && addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="!addFriend.loading && addFriend.currUsers && addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="addFriend.run=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="addFriend.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
 				</div>
 			</div>
 
@@ -265,19 +265,19 @@
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;width:50px;">别名</span>
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;margin-left:5px;position: absolute;left:50px;right:0;">
 							<span style="border-width:1px;border-style: solid;border-color: #cccccc;height:28px;line-height:28px;position: absolute;left:5px;right:5px;padding:0 5px;">
-								<input v-model="addFriend.chosenUser.friendAlias" style="line-height:24px;padding:0px;border:none;width:100%;"
+								<input v-model="addFriend.chosenUser.friendAlias || addFriend.chosenUser.nickname" style="line-height:24px;padding:0px;border:none;width:100%;"
 									@keyup.enter="addFriend_addFriend();"/>
 							</span>
 						</span>
 					</div>
 					<div style="margin-top:10px;">
-						<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
-							@click="addFriend_addFriend();">
-							确认
-						</button>
 						<button @click="addFriend.setFriendRun=addFriend.chosenUser=null;" 
 							style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
 							取消
+						</button>
+						<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+							@click="addFriend_addFriend();">
+							确认
 						</button>
 					</div>
 				</div>
@@ -285,10 +285,10 @@
 		</div>
 
 		<!-- 搜索历史 -->
-		<div v-if="queryHistory.run" 
+		<div v-if="queryHistory.start" 
 			@click="
 				if($event.currentTarget==$event.target) {
-					queryHistory.run=0;
+					queryHistory.start=0;
 				}
 			" 
 			style="position: absolute;top:32px;bottom:0;width:100%;background-color: #00000087;">
@@ -298,7 +298,7 @@
 					<span 
 						@click="
 							kw=item;
-							pn=1;friends=[];queryHistory.run=0;loadFriends();
+							pn=1;friends=[];queryHistory.start=0;loadFriends();
 						"
 					style="
 						font-size: 16px;display: inline-block;background-color: #e5e5e5;max-width: 200px;
@@ -342,8 +342,6 @@
 	</div>
 </template>
 <script>
-	import Vue from 'vue'
-	import _ from 'lodash'
 	export default {
 		name: 'index',
 		data() {
@@ -360,14 +358,14 @@
 				scrollTop: null,
 				chosenFriend: null,
 				friendInfo:{
-					run:null,
+					start:null,
 					editAlias:{
-						run:null,
+						start:null,
 						value:null,
 					}
 				},
 				queryHistory: {
-					run:null,
+					start:null,
 					kws:null,
 				},
 				addFriend: {
@@ -402,14 +400,7 @@
 				debugger
 				let vue = this
 
-				if(!vue.$store.state.login){
-					vue.$axios.post('/recording/logout').then(res => {
-							vue.$store.state.login=null;
-							vue.$router.push({path:'/login'})
-						})
-				}
-
-				vue.queryHistory.run=0;
+				vue.queryHistory.start=0;
 				vue.loadFriends()
 			},
 			friendsScroll(event){
@@ -420,7 +411,7 @@
 					if(vue.friends && vue.friends.length < vue.ps)
 						return;
 					vue.pn++;
-					vue.queryHistory.run=0;
+					vue.queryHistory.start=0;
 					vue.loadFriends()
 				}
 			},
@@ -519,6 +510,17 @@
 					if(res.data.code==0) {
 						if(!res.data.codeMsg)
 							vue.$notify({type:'success',message:'添加成功'})
+						vue.friends.unshift({
+							alias: vue.addFriend.chosenUser.friendAlias,
+							createTime: vue.$moment().format('YYYY-MM-DD HH:mm:ss.SSS Z'),
+							friendId: res.data.data.friendId,
+							nickname: vue.addFriend.chosenUser.nickname,
+							orderNo: vue.addFriend.chosenUser.orderNo,
+							phone: vue.addFriend.chosenUser.phone,
+							toUserId: vue.addFriend.chosenUser.userId,
+							updateTime: vue.addFriend.chosenUser.updateTime
+						})
+						vue.friendsSum.count++;
 						vue.addFriend.setFriendRun=0;
 						vue.addFriend.chosenUser=null;
 					}
