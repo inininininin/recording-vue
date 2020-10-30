@@ -13,11 +13,14 @@ if (process.env.NODE_ENV == 'development') require('./mock')
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
-Vue.prototype.$version = '1.0.1.4.201030';
+Vue.prototype.$version = '1.0.2.5.201030';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
   messageAlign:'left'
+})
+Notify.setDefaultOptions({
+  type:"primary"
 })
 Vue.config.productionTip = false;
 Vue.prototype.$store = store;

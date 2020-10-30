@@ -165,7 +165,7 @@
 				总数:{{ $o(tasksSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 150px;bottom: 88px;">
+		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 154px;bottom: 88px;">
 			<div :key="item.taskId" v-for="item in tasks" class="active visited"
 				@click="
 					debugger;
@@ -383,9 +383,10 @@
 			}else{
 				debugger
 				vue.$refs.tasks.scrollTop=vue.scrollTop
-				if(vue.$store.state.chosenTask && vue.$store.state.chosenTaskDel){
+				if(vue.$store.state.chosenTaskDel){
 					vue.tasksSum.count--;
-					vue.tasks.splice(vue.tasks.indexOf(vue.$store.state.chosenTask),1)
+					if(vue.$store.state.chosenTask)
+						vue.tasks.splice(vue.tasks.indexOf(vue.$store.state.chosenTask),1)
 				}
 				if(vue.$store.state.createdTask){
 					vue.tasksSum.count++;
@@ -446,7 +447,9 @@
 
 				vue.tasksSum = null;
 				if(vue.status==1){
-					vue.completeIs=vue.cancelIs=0
+					vue.running=1
+					vue.completeIs=null
+					vue.cancelIs=null
 				}else if(vue.status==2){
 					vue.completeIs=1
 					vue.cancelIs=null
@@ -454,6 +457,7 @@
 					vue.completeIs=null
 					vue.cancelIs=1
 				}else{
+					vue.running=null
 					vue.completeIs=null
 					vue.cancelIs=null
 				}
@@ -473,7 +477,7 @@
 					cancelIs:vue.cancelIs,
 					completeIs:vue.completeIs,
 					type:vue.type,
-					sort:vue.sort?('doing,'+vue.sort):'doing,orderNo',
+					sort:vue.sort?('running,'+vue.sort):'running,orderNo',
 					order:vue.order?('desc,'+vue.order):'desc,asc',
 					pn:vue.pn,
 					ps:vue.ps

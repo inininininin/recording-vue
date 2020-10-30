@@ -227,16 +227,73 @@
 				</span>
 			</div>
 		</div>
-		<div
-			style="height:30px;position:absolute;bottom:0px;left:0;right:0;padding:5px;">
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">完&nbsp;成</button>
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">放&nbsp;弃</button>
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">重&nbsp;启</button>
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">延&nbsp;续</button>
+		<div style="height:30px;position:absolute;bottom:0px;left:0;right:0;padding:5px;">
+			<button v-if="!task.completeIs" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+				@click="
+					$axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						if(res.data.codeMsg)
+							vue.$notify({message:res.data.codeMsg})
+						if(res.data.code == 0){
+							vue.$notify({message:'已完成'})
+							task.completeIs=1;
+							task.running=0;
+							task.completeTime=new Date()
+							$store.state.chosenTask.completeIs=1;
+							$store.state.chosenTask.running=0;
+						}
+					})
+				">
+				完&nbsp;成
+			</button>
+			<button v-if="!task.cancelIs" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+				@click="
+					$axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						if(res.data.codeMsg)
+							vue.$notify({message:res.data.codeMsg})
+						if(res.data.code == 0){
+							vue.$notify({message:'已放弃'})
+							task.cancelIs=1;
+							task.running=0;
+							task.cancelTime=new Date()
+							$store.state.chosenTask.cancelIs=1;
+							$store.state.chosenTask.running=0;
+						}
+					})
+				">
+				放&nbsp;弃
+			</button>
+			<button v-if="!task.running" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+				@click="
+					$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						if(res.data.codeMsg)
+							vue.$notify({message:res.data.codeMsg})
+						if(res.data.code == 0){
+							vue.$notify({message:'已开启'})
+							task.cancelIs=0;
+							task.completeIs=0;
+							task.running=1;
+							$store.state.chosenTask.cancelIs=0;
+							$store.state.chosenTask.completeIs=0;
+							$store.state.chosenTask.running=1;
+						}
+					})
+				">
+				开&nbsp;启
+			</button>
+			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">
+				延&nbsp;续
+			</button>
 			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
 				@click="
-					$store.state.chosenTaskDel=1;
-					$router.back();
+					$axios.post('/recording/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						if(res.data.codeMsg)
+							vue.$notify({message:res.data.codeMsg})
+						if(res.data.code == 0){
+							vue.$notify({message:'已删除'})
+							$store.state.chosenTaskDel=1;
+							$router.back();
+						}
+					})
 				">
 				删&nbsp;除
 			</button>
