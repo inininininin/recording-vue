@@ -199,7 +199,7 @@
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
+					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
 						@click="chooseFaQiRen.pn=1;chooseFaQiRen.items=[];chooseFaQiRen_loadItems();">
 						搜索
 					</button>
@@ -229,22 +229,26 @@
 							</span>
 						</span>
 					</div>
-					<div  v-if="chooseFaQiRen.currItems && chooseFaQiRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="chooseFaQiRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
 					<div class="active-text unselectable" v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length == chooseFaQiRen.ps" 
 						@click="chooseFaQiRen.pn++;chooseFaQiRen_loadItems()" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length < chooseFaQiRen.ps" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.items.length>0 && chooseFaQiRen.currItems.length < chooseFaQiRen.ps" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
+					</div>
+					<div v-if="!chooseFaQiRen.loading && (!chooseFaQiRen.items || chooseFaQiRen.items.length==0)" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						暂无数据
 					</div>
 				</div>
 				<div style="margin-top:10px;">
 					<button @click="chooseFaQiRen.start=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
-						关闭
+						关 闭
 					</button>
 				</div>
 			</div>
@@ -265,7 +269,7 @@
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
+					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
 						@click="chooseFuZeRen.pn=1;chooseFuZeRen.items=[];chooseFuZeRen_loadItems();">
 						搜索
 					</button>
@@ -295,21 +299,25 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="chooseFuZeRen.currItems && chooseFuZeRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="chooseFuZeRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
 					<div class="active-text unselectable" v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length == chooseFuZeRen.ps" 
 						@click="chooseFuZeRen.pn++;chooseFuZeRen_loadItems()" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length < chooseFuZeRen.ps" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.items.length>0 && chooseFuZeRen.currItems.length < chooseFuZeRen.ps" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
+					</div>
+					<div v-if="!chooseFuZeRen.loading && (!chooseFuZeRen.items || chooseFuZeRen.items.length==0)" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						暂无数据
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chooseFuZeRen.start=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chooseFuZeRen.start=null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关 闭</button>
 				</div>
 			</div>
 		</div>
@@ -334,6 +342,7 @@
 				errParam:null,
 				chooseFaQiRen: {
 					start: null,
+					loading:null,
 					kw: null,
 					pn: null,
 					ps: 15,
@@ -342,6 +351,7 @@
 				},
 				chooseFuZeRen: {
 					start: null,
+					loading:null,
 					kw: null,
 					pn: null,
 					ps: 15,

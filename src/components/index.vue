@@ -175,7 +175,8 @@
 				" 
 				style="padding:3px 5px;;border:1px solid #8F8F8F;margin:5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
-				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" v-html="$highlight(item.content,kw)">
+				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" 
+					v-html="item.content?$highlight(item.content,kw).split('\n')[0]:null">
 				</div>
 				<div v-if='item.lastTrackContent' style="font-size:15px;line-height: 15px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 					{{item.lastTrackContent}}
@@ -215,7 +216,11 @@
 						</span>
 					</span>
 					<span v-if="item.finalTime" style="font-size:12px;margin-left:15px;max-width:105px;display:inline-block;vertical-align: top;" 
-						:style="{color: item.status!=1?'#8F8F8F':item.finalTime>$store.state.now.getTime()?'#ff5500':'#ff0000'}">
+						:style="{color: item.status!=1?'#8F8F8F'
+						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() > 7*24*60*60*1000)?'#008000'
+						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() < 7*24*60*60*1000
+							&& $moment(item.finalTime).valueOf() - $store.state.now.getTime() > 0)?'#ff8100'
+							:'#ff0000'}">
 						{{
 							item.finalTime?(
 								'终:' + $moment(item.finalTime).format(
@@ -235,15 +240,18 @@
 					</span>
 				</div>
 			</div>
-			<div v-if="loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div v-if="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
 			<div class="active-text unselectable" v-if="!loading && tasks && tasks.length<$o(tasksSum).attr('count')" @click="pn++;queryHistory.start=0;loadTasks();" 
-				style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+				style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && tasks && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && tasks && tasks.length>0 && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
+			</div>
+			<div  v-if="!loading && (!tasks || tasks.length==0)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+				暂无数据
 			</div>
 		</div>
 		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
@@ -251,36 +259,36 @@
 				@click="$router.push({path:'/create-task',query:{reload:1}})">
 				新 任 务 +
 			</div>
-			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;">
+			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow: hidden;">
 				<span @click="$router.replace({path:'/index'})"
-					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;
-						background-color: #ff7f08;color:#ffffff;vertical-align: middle;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;
+						background-color: #366CB3;color:#ffffff;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					工 作
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					日 常
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					记 录
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span @click="$router.replace({path:'/friends'})"
-					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					好 友
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					消 息
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span @click="$router.replace({path:'/me'})"
-					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					我
 				</span>
 			</div>

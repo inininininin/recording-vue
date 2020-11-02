@@ -66,7 +66,7 @@
 				<div style="margin-top:10px;padding-left:30px;"><span style="font-size:16px;">别名 : </span><span style="font-size:16px;">{{$attr(lookFriend,'alias')}}</span></div>
 				<div style="margin-top:10px;padding-left:30px;"><span style="font-size:16px;">手机 : </span><span><a :href="'tel:'+$attr(lookFriend,'phone')" style="font-size:16px;">{{$attr(lookFriend,'phone')}}</a></span></div>
 				<div style="margin-top:10px;padding-left:30px;">
-					<button @click="lookFriend=null;" style="cursor: pointer;width:150px;height:30px;">关闭</button>
+					<button @click="lookFriend=null;" style="cursor: pointer;width:150px;height:30px;">关 闭</button>
 				</div>
 			</div>
 		</div>
@@ -95,7 +95,7 @@
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
 				<span @click="$router.push({path:'/friend'})"
-					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;background-color: #ff7f08;color:#ffffff;">
+					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;background-color: #366CB3;color:#ffffff;">
 					好 友
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>

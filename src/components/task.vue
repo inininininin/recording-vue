@@ -64,8 +64,6 @@
 						改
 					</span>
 				</span>
-					
-					
 			</div>
 			<div style="font-size: 0px;width:100%;height:200px;border-bottom:1px solid #8F8F8F;position: relative;">
 				<span style="font-size: 16px;height: 186px;width:80px;display: inline-block;line-height:20px;padding:7px 5px 7px 5px;
@@ -73,10 +71,23 @@
 					内容
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 200px;vertical-align: text-top;height: 200px;">
-					<span style="display: inline-block;height:190px;border-left:1px solid #8F8F8F;vertical-align: middle;"></span>
+					<span style="display: inline-block;height:190px;border-left:1px solid #8F8F8F;vertical-align: middle;">
+					</span>
 				</span>
-				<span style="display: inline-block;position: absolute;left:96px;right:5px;height: 200px;">
-					<textarea v-if="$o(task).attr('content')" class="scrollbar1" v-model="task.content" style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
+				<span style="display: inline-block;position: absolute;left:96px;right:0px;height: 200px;">
+					<span style="display: inline-block;position: absolute;left:0;right:25px;height: 200px;">
+						<textarea readonly="true" v-if="$o(task).attr('content')" class="scrollbar1" v-model="task.content" 
+						style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;">
+						</textarea>
+					</span>
+					<span class="active" 
+						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;
+							right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #8f8f8f;"
+						@click="
+							editContent.start=1;
+							editContent.value=task.content;">
+						改
+					</span>
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
@@ -85,7 +96,8 @@
 					类型
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
-					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
+					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;">
+					</span>
 				</span>
 				
 				<span style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
@@ -214,7 +226,7 @@
 				</div>
 			</div>
 			<div style="height:50px;border-style: solid;border-color: #8F8F8F;border-width: 1px 0 0 0;position: absolute;bottom:0;left:0;right:0;">
-				<span style="height:50px;display:inline-block;line-height: 50px;position: absolute;left:5px;right:53px;">
+				<span style="height:50px;display:inline-block;line-height: 50px;position: absolute;left:5px;right:58px;">
 					<textarea v-focus v-model="trackContent" class="scrollbar1" placeholder="填写跟踪记录" style="resize: none;height:44px;border:none;width:100%;line-height:16px;vertical-align: middle;padding:0;font-size: 16px;"
 						@keydown.enter.prevent="createTrack();">
 					</textarea>
@@ -223,7 +235,7 @@
 					style="cursor:pointer;font-size: 16px;height:50px;padding:0 10px;display:inline-block;
 						border-style: solid;border-color: #8F8F8F;border-width: 0 0 0 1px;line-height: 50px;position:absolute;right:0;"
 					@click="createTrack()">
-					确认
+					确 认
 				</span>
 			</div>
 		</div>
@@ -285,9 +297,9 @@
 				@click="
 					$axios.post('/recording/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
-							vue.$notify({message:res.data.codeMsg})
+							$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
-							vue.$notify({message:'已删除'})
+							$notify({message:'已删除'})
 							$store.state.chosenTaskDel=1;
 							$router.back();
 						}
@@ -310,7 +322,7 @@
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
+					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
 						@click="editFaQiRen.pn=1;editFaQiRen.items=[];chooseFaQiRen_loadItems();">搜索</button>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
@@ -352,21 +364,25 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="editFaQiRen.currItems && editFaQiRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="editFaQiRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
 					<div class="active-text unselectable" v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.currItems.length == editFaQiRen.ps" 
 						@click="editFaQiRen.pn++;chooseFaQiRen_loadItems()" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.currItems.length < editFaQiRen.ps" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.items.length>0 && editFaQiRen.currItems.length < editFaQiRen.ps" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
+					</div>
+					<div v-if="!editFaQiRen.loading && (!editFaQiRen.items || editFaQiRen.items.length==0)" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						暂无数据
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editFaQiRen.start=0;editFaQiRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
+					<button @click="editFaQiRen.start=0;editFaQiRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:null})).then(res=>{
@@ -385,7 +401,7 @@
 								}
 							})
 						">
-						清除
+						清 除
 					</button>
 				</div>
 			</div>
@@ -404,7 +420,7 @@
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;"
+					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
 						@click="editFuZeRen.pn=1;editFuZeRen.items=[];chooseFuZeRen_loadItems();">搜索</button>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
@@ -446,21 +462,25 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="editFuZeRen.currItems && editFuZeRen.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="editFuZeRen.currItems && editFuZeRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
 					<div class="active-text unselectable" v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.currItems.length == editFuZeRen.ps" 
 						@click="editFuZeRen.pn++;chooseFuZeRen_loadItems()" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.currItems.length < editFuZeRen.ps" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.items.length>0 && editFuZeRen.currItems.length < editFuZeRen.ps" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
+					</div>
+					<div v-if="!editFuZeRen.loading && (!editFuZeRen.items || editFuZeRen.items.length==0)" 
+						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						暂无数据
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editFuZeRen.start=0;editFuZeRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
+					<button @click="editFuZeRen.start=0;editFuZeRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:null})).then(res=>{
@@ -479,7 +499,7 @@
 								}
 							})
 						">
-						清除
+						清 除
 					</button>
 				</div>
 			</div>
@@ -499,8 +519,8 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editType.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
-					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+					<button @click="editType.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
+					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.type != editType.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
@@ -511,12 +531,40 @@
 								editType.start=0;
 							}
 						" >
-						确认
+						确 认
 					</button>
 				</div>
 			</div>
 		</div>
 
+		<div v-if="editContent.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
+				<div style="font-size: 16px;color:#8F8F8F;">修改类型</div>
+				<div style="position: relative;height: 200px;border:none;margin-top:5px;">
+					<div style="border-width:1px;border-style: solid;height: 198px;border-color: #8f8f8f;padding:0 0 0 3px;">
+						<textarea v-model="editContent.value" class="scrollbar1" style="font-size:16px;width:100%;height:100%;resize: none;border:none;padding:0px;">
+						</textarea>
+					</div>
+				</div>
+				<div style="margin-top:10px;">
+					<button @click="editContent.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
+					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+						@click="
+							if(task.content != editContent.value){
+								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,content:editContent.value})).then(res=>{
+									editContent.start=0;
+									task.content=editContent.value;
+								})
+							}else{
+								editContent.start=0;
+							}
+						" >
+						确 认
+					</button>
+				</div>
+			</div>
+		</div>
+		
 		<div v-if="editFinalTime.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">修改截止时间</div>
@@ -529,9 +577,9 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editFinalTime.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
+					<button @click="editFinalTime.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
 					<button
-						style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+						style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							editFinalTime.value=editFinalTime.date?$moment(editFinalTime.date+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z'):null;
 							if(task.finalTime != editFinalTime.value){
@@ -544,7 +592,7 @@
 								editFinalTime.start=0;
 							}
 						">
-						确认
+						确 认
 					</button>
 				</div>
 			</div>
@@ -563,8 +611,8 @@
 					</span>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="editOrderNo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">取消</button>
-					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+					<button @click="editOrderNo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
+					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.orderNo != editOrderNo.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
@@ -576,7 +624,7 @@
 								editOrderNo.start=0;
 							}
 						" >
-						确认
+						确 认
 					</button>
 				</div>
 			</div>
@@ -606,6 +654,10 @@
 					start: null,
 					value: null,
 				},
+				editContent:{
+					start: null,
+					value: null,
+				},
 				editFinalTime:{
 					start: null,
 					date: null,
@@ -617,6 +669,7 @@
 				},
 				editFaQiRen: {
 					start: null,
+					loading:null,
 					kw: null,
 					pn: null,
 					ps: 15,
@@ -625,6 +678,7 @@
 				},
 				editFuZeRen: {
 					start: null,
+					loading:null,
 					kw: null,
 					pn: null,
 					ps: 15,

@@ -128,7 +128,7 @@ export default {
     background-color: #cccccc!important;
   }
   .active-text:active {
-    color: #cccccc!important;
+    color: #8F8F8F!important;
   }
  
 

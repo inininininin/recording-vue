@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'development') require('./mock')
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
-Vue.prototype.$version = '1.0.3.6.201102';
+Vue.prototype.$version = '1.0.4.7.201102';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
@@ -80,7 +80,10 @@ Vue.prototype.$highlight = function (base, kw, data) {
 
    for (let k in kws) {
       if (base.indexOf(kws[k]) >= 0) {
-        outBase = outBase.substring(0, outBase.indexOf(kws[k])) + `<span style="color:${color}">${kws[k]}</span>` + outBase.substr(outBase.indexOf(kws[k]) + kws[k].length);
+        // outBase = outBase.substring(0, outBase.indexOf(kws[k])) 
+        // + `<span style="color:${color}">${kws[k]}</span>` 
+        // + outBase.substr(outBase.indexOf(kws[k]) + kws[k].length);
+        outBase=outBase.replace(new RegExp(kws[k],'g'),`<span style="color:${color}">${kws[k]}</span>`)
       }
    }
    return outBase;

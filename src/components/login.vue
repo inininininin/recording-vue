@@ -105,7 +105,7 @@
 							}
 							if (data.data.code == 0) {
 								vue.$store.state.login=data.data.data;
-								vue.$router.push({path:'/index'})
+								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
 						})
 					}
@@ -125,7 +125,7 @@
 								vue.$dialog.alert(res.data.codeMsg);
 							if (res.data.code == 0) {
 								vue.$store.state.login=res.data.data;
-								vue.$router.push({path:'/index'})
+								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
 						})
 					}

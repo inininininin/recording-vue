@@ -85,17 +85,18 @@
 		activated() {
 			debugger
 			let vue = this;
-			if (vue.query != JSON.stringify(vue.$route.query)) {
-				vue.reload();
-
-				vue.query = JSON.stringify(vue.$route.query);
+			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
+				Object.assign(vue.$data, vue.$options.data());
+				vue.query = vue.$route.query;
+				vue.load();
+			}else{
+				
 			}
 		},
 		methods: {
-			reload() {
+			load() {
 				debugger
 				let vue = this;
-				Object.assign(vue.$data, vue.$options.data());
 			},
 			register() {
 				debugger
@@ -110,7 +111,7 @@
 							if (res.data.codeMsg)
 								vue.$dialog.alert(res.data.codeMsg);
 							if (res.data.code == 0) {
-								vue.$router.push({ path: '/index' })
+								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
 						})
 					}
@@ -129,7 +130,7 @@
 							if (res.data.codeMsg)
 								vue.$dialog.alert(res.data.codeMsg);
 							if (res.data.code == 0) {
-								vue.$router.push({ path: '/index' })
+								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
 						})
 					}

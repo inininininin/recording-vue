@@ -9,14 +9,14 @@ import Mock from 'mockjs';
 //     };
 // });
 
-Mock.mock('/recording/login-by-sms', 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/login-by-sms', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
 // Mock.mock('/recording/login-refresh', 'post', (data) => {
 //     debugger;
@@ -30,43 +30,43 @@ Mock.mock('/recording/login-by-sms', 'post', (data) => {
 //     };
 // });
 
-Mock.mock('/recording/register', 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            loginCode: '123123'
-        }
-    };
-});
+// Mock.mock('/recording/register', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             loginCode: '123123'
+//         }
+//     };
+// });
 
-Mock.mock('/recording/login-by-login-code', 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/login-by-login-code', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
-Mock.mock('/recording/register-by-sms', 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/register-by-sms', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
-Mock.mock('/recording/logout', 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/logout', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
 // Mock.mock(RegExp('/recording/my-task/tasks' + '\\?.*'), 'get', (data) => {
 //     debugger;
@@ -145,69 +145,69 @@ Mock.mock('/recording/logout', 'post', (data) => {
 //     };
 // });
 
-Mock.mock(RegExp('/recording/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            items: [
-                {
-                    userId: '1',
-                    nickname: '发起人1',
-                    alias: '发起人1'
-                },
-                {
-                    userId: '2',
-                    nickname: '发起人2',
-                    alias: '发起人2'
-                },
-                {
-                    userId: '3',
-                    nickname: '发起人3',
-                    alias: '发起人3'
-                },
-                {
-                    userId: '4',
-                    nickname: '发起人4',
-                    alias: '发起人4'
-                },
-                {
-                    userId: '5',
-                    nickname: '发起人5',
-                    alias: '发起人5'
-                },
-                {
-                    userId: '6',
-                    nickname: '发起人6',
-                    alias: '发起人6'
-                },
-            ]
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             items: [
+//                 {
+//                     userId: '1',
+//                     nickname: '发起人1',
+//                     alias: '发起人1'
+//                 },
+//                 {
+//                     userId: '2',
+//                     nickname: '发起人2',
+//                     alias: '发起人2'
+//                 },
+//                 {
+//                     userId: '3',
+//                     nickname: '发起人3',
+//                     alias: '发起人3'
+//                 },
+//                 {
+//                     userId: '4',
+//                     nickname: '发起人4',
+//                     alias: '发起人4'
+//                 },
+//                 {
+//                     userId: '5',
+//                     nickname: '发起人5',
+//                     alias: '发起人5'
+//                 },
+//                 {
+//                     userId: '6',
+//                     nickname: '发起人6',
+//                     alias: '发起人6'
+//                 },
+//             ]
+//         }
+//     };
+// });
 
-Mock.mock(RegExp('/recording/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            items: [
-                {
-                    userId: '1',
-                    nickname: '负责人1',
-                    alias: '负责人1'
-                },
-                {
-                    userId: '2',
-                    nickname: '负责人2',
-                    alias: '负责人2'
-                },
-            ]
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             items: [
+//                 {
+//                     userId: '1',
+//                     nickname: '负责人1',
+//                     alias: '负责人1'
+//                 },
+//                 {
+//                     userId: '2',
+//                     nickname: '负责人2',
+//                     alias: '负责人2'
+//                 },
+//             ]
+//         }
+//     };
+// });
 
 // Mock.mock(RegExp('/recording/my-friends/friends' + '\\?.*'), 'get', (data) => {
 //     debugger;
@@ -247,73 +247,73 @@ Mock.mock(RegExp('/recording/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
 //     };
 // });
 
-Mock.mock(RegExp('/recording/users' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            items: [
-                {
-                    userId: '1',
-                    nickname: '用户1',
-                    headimg: '',
-                    phone:'17372202877',
-                },
-                {
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },
-                {
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },{
-                    userId: '2',
-                    nickname: '用户2',
-                    headimg: '',
-                },
-            ]
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/users' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             items: [
+//                 {
+//                     userId: '1',
+//                     nickname: '用户1',
+//                     headimg: '',
+//                     phone:'17372202877',
+//                 },
+//                 {
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },
+//                 {
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },{
+//                     userId: '2',
+//                     nickname: '用户2',
+//                     headimg: '',
+//                 },
+//             ]
+//         }
+//     };
+// });
 
 
 // Mock.mock(RegExp('/recording/my-task/tracks' + '\\?.*'), 'get', (data) => {

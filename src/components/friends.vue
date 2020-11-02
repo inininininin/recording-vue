@@ -59,15 +59,18 @@
 					{{item.orderNo}}
 				</span>
 			</div>
-			<div v-if="loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div v-if="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
 			<div class="active-text unselectable" v-if="!loading && friends && friends.length<$o(friendsSum).attr('count')" @click="pn++;queryHistory.start=0;loadFriends();"
-				style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+				style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && friends && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && friends && friends.length>0 && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
+			</div>
+			<div  v-if="!loading && (!friends || friends.length==0)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+				暂无数据
 			</div>
 		</div>
 
@@ -96,7 +99,7 @@
 					<span style="font-size:16px;">排序 : </span><span style="font-size:16px;">{{chosenFriend.orderNo}}</span>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="chosenFriend=null;friendInfo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="chosenFriend=null;friendInfo.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关 闭</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							$dialog.confirm({
@@ -129,8 +132,8 @@
 						<input v-model="friendInfo.editAlias.value" style="font-size: 16px;"/>
 					</div>
 					<div style="margin-top:10px;">
-						<button style="font-size: 16px;width:100px;height:30px;margin-right:5px;" @click="friendInfo.editAlias.start=0;">取消</button>
-						<button style="font-size: 16px;width:100px;height:30px;"
+						<button style="font-size: 16px;width:100px;height:30px;margin-right:15px;" @click="friendInfo.editAlias.start=0;">取 消</button>
+						<button style="color:#ff0000;font-size: 16px;width:100px;height:30px;"
 							@click="
 								if(chosenFriend.alias==friendInfo.editAlias.value)
 									return;
@@ -150,7 +153,7 @@
 									})
 								})
 							">
-							确认
+							确 认
 						</button>
 					</div>
 				</div>
@@ -167,38 +170,39 @@
 						addFriend_loadUsers();">
 				找 朋 友 +
 			</div>
-			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;">
+			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;overflow: hidden;">
 				<span  @click="$router.replace({path:'/index'})"
-					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					工 作
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					日 常
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					记 录
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span  @click="$router.replace({path:'/friends'})"
-					style="line-height:50px;font-size:14px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;
-						background-color: #ff7f08;color:#ffffff;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;
+						background-color: #366CB3;color:#ffffff;margin-left:-1px;">
 					好 友
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					消 息
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;"></span>
+				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span  @click="$router.replace({path:'/me'})"
-					style="line-height:50px;font-size:16px;width:14%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;">
+					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					我
 				</span>
+				
 			</div>
 		</div>
 
@@ -254,7 +258,7 @@
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="addFriend.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关闭</button>
+					<button @click="addFriend.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关 闭</button>
 				</div>
 			</div>
 
@@ -272,12 +276,12 @@
 					</div>
 					<div style="margin-top:10px;">
 						<button @click="addFriend.setFriend=addFriend.chosenUser=null;" 
-							style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
-							取消
+							style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">
+							取 消
 						</button>
-						<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="addFriend_addFriend();">
-							确认
+							确 认
 						</button>
 					</div>
 				</div>
