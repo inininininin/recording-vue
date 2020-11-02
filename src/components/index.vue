@@ -31,7 +31,7 @@
 				搜索
 			</span>
 			<span class="active" 
-				@click="sort=order=cancelIs=completeIs=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
+				@click="sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
 				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
@@ -174,7 +174,7 @@
 					$router.push({path:'/task',query:{taskId:item.taskId,reload:1}})
 				" 
 				style="padding:3px 5px;;border:1px solid #8F8F8F;margin:5px;cursor:pointer;position: relative;" 
-				:style="{'background-color':(item.completeIs?'#ffe063':item.cancelIs?'#d5d5d5':'#FFFFFF')}">
+				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" v-html="$highlight(item.content,kw)">
 				</div>
 				<div v-if='item.lastTrackContent' style="font-size:15px;line-height: 15px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
@@ -215,7 +215,7 @@
 						</span>
 					</span>
 					<span v-if="item.finalTime" style="font-size:12px;margin-left:15px;max-width:105px;display:inline-block;vertical-align: top;" 
-						:style="{color: (item.completeIs||item.cancelIs)?'#8F8F8F':item.finalTime>$store.state.now.getTime()?'#ff5500':'#ff0000'}">
+						:style="{color: item.status!=1?'#8F8F8F':item.finalTime>$store.state.now.getTime()?'#ff5500':'#ff0000'}">
 						{{
 							item.finalTime?(
 								'终:' + $moment(item.finalTime).format(
@@ -351,8 +351,6 @@
 				query: null,
 				kw:null,
 				type:'',
-				completeIs:null,
-				cancelIs:null,
 				status:'',
 				fuZeRenUserId:null,
 				faQiRenUserId:null,
@@ -446,22 +444,6 @@
 				vue.ps=vue.ps?vue.ps:15;
 
 				vue.tasksSum = null;
-				if(vue.status==1){
-					vue.running=1
-					vue.completeIs=null
-					vue.cancelIs=null
-				}else if(vue.status==2){
-					vue.completeIs=1
-					vue.cancelIs=null
-				}else if(vue.status==3){
-					vue.completeIs=null
-					vue.cancelIs=1
-				}else{
-					vue.running=null
-					vue.completeIs=null
-					vue.cancelIs=null
-				}
-				
 
 				if(vue.kw && vue.queryHistory.kws.indexOf(vue.kw)==-1){
 					vue.queryHistory.kws.splice(0,0,vue.kw)
@@ -474,8 +456,7 @@
 					fuZeRenUserId:vue.fuZeRenUserId,
 					faQiRenUserId:vue.faQiRenUserId,
 					kw:vue.kw,
-					cancelIs:vue.cancelIs,
-					completeIs:vue.completeIs,
+					status:vue.status,
 					type:vue.type,
 					sort:vue.sort?('running,'+vue.sort):'running,orderNo',
 					order:vue.order?('desc,'+vue.order):'desc,asc',
