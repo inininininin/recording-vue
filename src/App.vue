@@ -45,7 +45,7 @@ export default {
     height: 100%;
     margin:auto;
     position:relative;
-    
+    background-color: #FFFFFF;
   }
 
   @media screen and (max-width:768px){
@@ -57,16 +57,12 @@ export default {
   @media screen and (min-width:768px){
     #app {
       width: 80%;
-      border-left:1px solid #8f8f8f;
-      border-right:1px solid #8f8f8f;
     }
   }
 
   @media screen and (min-width:1200px){
     #app {
       width: 50%;
-      border-left:1px solid #8f8f8f;
-      border-right:1px solid #8f8f8f;
     }
   }
   
@@ -126,6 +122,7 @@ export default {
 
   .active:active {
     background-color: #cccccc!important;
+    color: #000000!important;
   }
   .active-text:active {
     color: #8F8F8F!important;

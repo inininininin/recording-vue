@@ -96,6 +96,7 @@
 						if(res.data.code == 0){
 							vue.$store.state.login=null;
 							vue.$router.replace({path:'/login'})
+							location.reload()
 						}
 					})
 				})

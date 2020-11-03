@@ -82,7 +82,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;
-							right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #8f8f8f;"
+							top:0;right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #8f8f8f;"
 						@click="
 							editContent.start=1;
 							editContent.value=task.content;">
@@ -130,11 +130,11 @@
 						style="font-size: 16px;height: 40px;line-height: 40px;display: inline-block;margin-left: 5px;
 							overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 						{{
-							$moment(task.finalTime).format(
-								($moment().year()==$moment(task.finalTime).year()? 'M-D': 'YY. M-D') +
+							$moment(task.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
+								($moment().year()==$moment(task.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY. M-D') +
 								(
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(task.finalTime).unix() &&
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(task.finalTime).unix()  < 7 * 24 * 60 * 60 ? '. E':''
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(task.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix() &&
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(task.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix()  < 7 * 24 * 60 * 60 ? '. E':''
 								)
 							)
 						}}
@@ -186,9 +186,9 @@
 				</span>
 			</div>
 			<div v-if="lookAllTracks" style="height: 30px;border-style:solid;border-color: #8F8F8F;border-width:1px 0;">
-				<span style="width:50%;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
-					<svg t="1591346902986" style="position: absolute;left:1%;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
-					<input v-focus v-model="tracks.kw" type="text" style="line-height: 28px;width:83%;border:none;margin-left:8%;"
+				<span style="width:180px;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
+					<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
+					<input v-model="tracks.kw" type="text" style="line-height: 28px;height:28px;width:145px;border:none;margin-left:20px;padding:0;"
 						@keyup.enter="tracks.pn=1;tracks.items=[];loadTracks();" 
 					/>
 					<span v-if="tracks.kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
@@ -197,13 +197,13 @@
 					</span>
 				</span>
 				<span class="active" @click="tracks.pn=1;tracks.items=[];loadTracks();"
-					style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+					style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 					搜索
 				</span>
 				<span class="active" 
 					@click="
 						tracks.kw=null;tracks.pn=1;tracks.items=[];loadTracks()" 
-					style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
+					style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 						border-right:1px solid #8f8f8f;">
 					重置
 				</span>
@@ -214,11 +214,11 @@
 					<div class="selectable" style="font-size: 16px;white-space: pre-wrap;word-break: break-all;">{{item.content}}</div>
 					<div class="selectable" style="font-size: 14px;color: #8F8F8F;">
 						{{
-							$moment(item.createTime).format(
-								($moment().year()==$moment(item.createTime).year()? 'M-D': 'YY. M-D') +
+							$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
+								($moment().year()==$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY. M-D') +
 								(
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.createTime).unix() &&
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.createTime).unix()  < 7 * 24 * 60 * 60 ? '. E':''
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix() &&
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix()  < 7 * 24 * 60 * 60 ? '.E':''
 								)
 							)
 						}}
@@ -227,7 +227,7 @@
 			</div>
 			<div style="height:50px;border-style: solid;border-color: #8F8F8F;border-width: 1px 0 0 0;position: absolute;bottom:0;left:0;right:0;">
 				<span style="height:50px;display:inline-block;line-height: 50px;position: absolute;left:5px;right:58px;">
-					<textarea v-focus v-model="trackContent" class="scrollbar1" placeholder="填写跟踪记录" style="resize: none;height:44px;border:none;width:100%;line-height:16px;vertical-align: middle;padding:0;font-size: 16px;"
+					<textarea v-model="trackContent" class="scrollbar1" placeholder="填写跟踪记录" style="resize: none;height:44px;border:none;width:100%;line-height:16px;vertical-align: middle;padding:0;font-size: 16px;"
 						@keydown.enter.prevent="createTrack();">
 					</textarea>
 				</span>
@@ -240,7 +240,9 @@
 			</div>
 		</div>
 		<div style="height:30px;position:absolute;bottom:0px;left:0;right:0;padding:5px;">
-			<button v-if="task && task.status==1" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+			<span class="active" v-if="task && task.status==1" 
+				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;"
 				@click="
 					$axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -256,8 +258,10 @@
 					})
 				">
 				完&nbsp;成
-			</button>
-			<button v-if="task && task.status==1" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+			</span>
+			<span v-if="task && task.status==1"
+				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;"
 				@click="
 					$axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -273,8 +277,10 @@
 					})
 				">
 				放&nbsp;弃
-			</button>
-			<button v-if="task && task.status!=1" style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+			</span>
+			<span v-if="task && task.status!=1"
+				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;"
 				@click="
 					$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -289,24 +295,30 @@
 					})
 				">
 				开&nbsp;启
-			</button>
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;">
+			</span>
+			<span style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;">
 				延&nbsp;续
-			</button>
-			<button style="font-size:16px;width:50px;height: 30px;display:inline-block;margin-right:5px;"
+			</span>
+			<span style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;"
 				@click="
-					$axios.post('/recording/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
-						if(res.data.codeMsg)
-							$notify({message:res.data.codeMsg})
-						if(res.data.code == 0){
-							$notify({message:'已删除'})
-							$store.state.chosenTaskDel=1;
-							$router.back();
-						}
+					$dialog.confirm({
+						message:'确认删除吗?'
+					}).then(res=>{
+						$axios.post('/recording/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+							if(res.data.codeMsg)
+								$notify({message:res.data.codeMsg})
+							if(res.data.code == 0){
+								$notify({message:'已删除'})
+								$store.state.chosenTaskDel=1;
+								$router.back();
+							}
+						})
 					})
 				">
 				删&nbsp;除
-			</button>
+			</span>
 		</div>
 
 		<!-- 选择发起人 -->
@@ -315,15 +327,19 @@
 				<div style="font-size: 16px;color:#8F8F8F;">选择发起人</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="editFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" />
+						<input v-model="editFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" />
 						<span v-if="editFaQiRen.kw" 
 							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
 							@click="editFaQiRen.kw=null">
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
-						@click="editFaQiRen.pn=1;editFaQiRen.items=[];chooseFaQiRen_loadItems();">搜索</button>
+					<span class="active" 
+						style="font-size:16px;height:28px;line-height:28px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;
+							text-align: center;border:1px solid #8f8f8f;display:inline-block;"
+						@click="editFaQiRen.pn=1;editFaQiRen.items=[];chooseFaQiRen_loadItems();">
+						搜索
+					</span>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
 					<div class="active" v-for="item in editFaQiRen.items" :key="item.userId"
@@ -413,15 +429,19 @@
 				<div style="font-size: 16px;color:#8F8F8F;">选择负责人</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="editFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" />
+						<input v-model="editFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" />
 						<span v-if="editFuZeRen.kw" 
 							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
 							@click="editFuZeRen.kw=null">
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
-						@click="editFuZeRen.pn=1;editFuZeRen.items=[];chooseFuZeRen_loadItems();">搜索</button>
+					<span class="active" 
+						style="font-size:16px;height:28px;line-height:28px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;
+							text-align: center;border:1px solid #8f8f8f;display:inline-block;"
+						@click="editFuZeRen.pn=1;editFuZeRen.items=[];chooseFuZeRen_loadItems();">
+						搜索
+					</span>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
 					<div class="active" v-for="item in editFuZeRen.items" :key="item.userId"
@@ -539,10 +559,10 @@
 
 		<div v-if="editContent.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">修改类型</div>
+				<div style="font-size: 16px;color:#8F8F8F;">修改内容</div>
 				<div style="position: relative;height: 200px;border:none;margin-top:5px;">
-					<div style="border-width:1px;border-style: solid;height: 198px;border-color: #8f8f8f;padding:0 0 0 3px;">
-						<textarea v-model="editContent.value" class="scrollbar1" style="font-size:16px;width:100%;height:100%;resize: none;border:none;padding:0px;">
+					<div style="border-width:1px;border-style: solid;height: 198px;border-color: #8f8f8f;padding:1px;">
+						<textarea v-model="editContent.value" class="scrollbar1" style="font-size:16px;width:100%;height:100%;resize: none;border:none;padding:0px;display:inline-block;">
 						</textarea>
 					</div>
 				</div>

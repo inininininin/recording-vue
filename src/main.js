@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'development') require('./mock')
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
-Vue.prototype.$version = '1.0.4.7.201102';
+Vue.prototype.$version = '1.0.5.8.201103';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
@@ -143,6 +143,7 @@ Vue.prototype.$O=O
 Vue.prototype.$o=o
 
 Vue.prototype.routes=[]
+
 
 new Vue({
   el: '#app',

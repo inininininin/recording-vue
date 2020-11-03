@@ -7,7 +7,7 @@
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">Email</span>
 				<input v-model="email" @keyup.enter="register()" type="text"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
+					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
 				<span v-if="email" style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="email=null">
 					x
 				</span>
@@ -15,7 +15,7 @@
 
 			<div  style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span class="n1-line" style="width:70px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
-				<input v-model="emailVcode"  @keyup.enter="loginBySms()" type="text" style="width:125px;height:28px;padding-right:15px;font-size: 16px;"/>
+				<input v-model="emailVcode"  @keyup.enter="loginBySms()" type="text" style="width:125px;height:28px;padding-right:15px;font-size: 16px;padding:0;"/>
 				<span v-if="emailVcode"  @click="emailVcode=null" style="line-height: 34px;font-size: 16px;position: absolute;right: 55px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 16px;line-height: 30px;margin-left:5px;	">获取</button>
 			</div>
@@ -23,7 +23,7 @@
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">新密码</span>
 				<input v-model="newPassword"  @keyup.enter="register()" type="password"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
+					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
 				<span v-if="newPassword"
 					style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;"
 					@click="newPassword=null">x</span>
@@ -32,7 +32,7 @@
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">密码确认</span>
 				<input v-model="confirmNewPassword"  @keyup.enter="register()" type="password"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;" />
+					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
 				<span v-if="confirmNewPassword"
 					style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="confirmNewPassword=null">
 					x

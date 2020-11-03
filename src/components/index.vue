@@ -1,9 +1,10 @@
 <template>
 	<div id="index" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
-		<div style="height: 30px;border-bottom:1px solid #8f8f8f;">
-			<span style="width:50%;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
-				<svg t="1591346902986" style="position: absolute;left:1%;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
-				<input v-model="kw" type="text" style="line-height: 28px;width:83%;border:none;margin-left:8%;"
+		<div style="height: 30px;border-bottom:1px solid #8f8f8f;overflow: hidden;">
+			<span style="width:200px;line-height: 30px;height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
+				<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
+				<input v-model="kw" type="text" 
+					style="border-radius: 0px;line-height: 30px;height:30px;width:159px;display:inline-block;border:none;margin-left:20px;padding:0;"
 					@focus="
 						if(queryHistory.kws)
 							return;
@@ -26,16 +27,16 @@
 					X
 				</span>
 			</span>
-			<span class="active" @click="pn=1;tasks=[];queryHistory.start=0;loadTasks();"
-				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+			 <span class="active" @click="pn=1;tasks=[];queryHistory.start=0;loadTasks();"
+				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 				搜索
 			</span>
-			<span class="active" 
+			<span class="active"  
 				@click="sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
-				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
+				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
-			</span>
+			</span> 
 		</div>
 		<div class="scrollbar1" style="position: relative;white-space: nowrap;overflow-x: scroll;overflow-y: hidden;height: 34px;padding-right: 50px;">
 			<!-- <span class="active"
@@ -69,9 +70,11 @@
 				<span v-if="sort!='finalTime' || !order">&nbsp;&nbsp;</span>
 			</span>
 		
-			<span style="width: 81px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+			<span style="width: 81px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;
+					display:inline-block;border-right:1px solid #8f8f8f;">
 				<select class="active" v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
-					style="background-color: #ffffff;font-size: 16px;height:30px;border:none;cursor: pointer;padding: 0px 5px;">
+					style="border-radius:0;background-color: #ffffff;font-size: 16px;width:100%;display:inline-block;height:30px;border:none;
+						cursor: pointer;padding: 0px 5px;vertical-align: top;">
 					<option value=''>状态</option>
 					<option value="1">进行中</option>
 					<option value="2">已完成</option>
@@ -79,9 +82,10 @@
 				</select>
 			</span>
 
-			<span style="width: 64px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+			<span style="width: 66px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 				<select class="active" v-model="type" :style="{color:type?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
-					style="background-color: #ffffff;font-size: 16px;height:30px;border:none;cursor: pointer;padding:0 5px;">
+					style="border-radius:0;background-color: #ffffff;font-size: 16px;width:100%;display:inline-block;height:30px;border:none;
+						cursor: pointer;padding:0 5px;vertical-align: top;">
 					<option value=''>类型</option>
 					<option value="1">推进</option>
 					<option value="2">缺陷</option>
@@ -173,22 +177,23 @@
 					$store.state.chosenTask=item;
 					$router.push({path:'/task',query:{taskId:item.taskId,reload:1}})
 				" 
-				style="padding:3px 5px;;border:1px solid #8F8F8F;margin:5px;cursor:pointer;position: relative;" 
+				style="padding:3px 5px;;border:1px solid #bababa;margin:5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" 
 					v-html="item.content?$highlight(item.content,kw).split('\n')[0]:null">
 				</div>
-				<div v-if='item.lastTrackContent' style="font-size:15px;line-height: 15px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+				<div v-if='item.lastTrackContent' 
+					style="font-size:15px;line-height: 15px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 					{{item.lastTrackContent}}
 				</div>
 				<div style="position:relative;margin-top:5px;height:15px;line-height: 15px;">
-					<span style="font-size:12px;color:#8F8F8F;max-width:45px;display:inline-block;vertical-align: top;">
+					<span style="font-size:12px;color:#8F8F8F;max-width:46px;display:inline-block;vertical-align: top;">
 						{{
-							$moment(item.createTime).format(
-								($moment().year()==$moment(item.createTime).year()? 'M-D': 'YY. M-D') +
+							$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
+								($moment().year()==$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY.M-D') +
 								(
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.createTime).unix() &&
-									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.createTime).unix()  < 7 * 24 * 60 * 60 ? '. E':''
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix() &&
+									$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix()  < 7 * 24 * 60 * 60 ? '.E':''
 								)
 							)
 						}}
@@ -223,11 +228,11 @@
 							:'#ff0000'}">
 						{{
 							item.finalTime?(
-								'终:' + $moment(item.finalTime).format(
-									($moment().year()==$moment(item.finalTime).year()? 'M-D': 'YY. M-D') +
+								'终:' + $moment(item.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
+									($moment().year()==$moment(item.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY. M-D') +
 									(
-										$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.finalTime).unix() &&
-										$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.finalTime).unix()  < 7 * 24 * 60 * 60 ? '. E':''
+										$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix() >= $moment(item.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix() &&
+										$moment().isoWeekday(7).hour(23).minute(59).second(59).millisecond(999).unix()-$moment(item.finalTime,'YYYY-MM-DD HH:mm:ss.SSS Z').unix()  < 7 * 24 * 60 * 60 ? '.E':''
 									)
 								)
 							) : ''
@@ -381,7 +386,7 @@
 		activated() {
 			debugger
 			let vue = this
-			
+			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
 				Object.assign(vue.$data, vue.$options.data());
 				vue.query = vue.$route.query;

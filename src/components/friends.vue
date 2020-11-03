@@ -1,9 +1,10 @@
 <template>
 	<div id="index" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
-		<div style="height: 30px;border-bottom:1px solid #8f8f8f;">
-			<span style="width:50%;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
-				<svg t="1591346902986" style="position: absolute;left:1%;top:8px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
-				<input v-model="kw" type="text" style="line-height: 28px;width:83%;border:none;margin-left:8%;"
+		<div style="height: 30px;border-bottom:1px solid #8f8f8f;overflow: hidden;">
+			<span style="width:200px;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
+				<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
+				<input v-model="kw" type="text" 
+					style="border-radius: 0px;line-height: 30px;height:30px;width:159px;display:inline-block;border:none;margin-left:20px;padding:0;"
 					@focus="
 						if(queryHistory.kws)
 								return;
@@ -27,11 +28,11 @@
 				</span>
 			</span>
 			<span class="active" @click="pn=1;friends=[];queryHistory.start=0;loadFriends();"
-				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
 				搜索
 			</span>
 			<span class="active" @click="kw=null;pn=1;friends=[];queryHistory.start=0;loadFriends()" 
-				style="width: 32px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
+				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
 			</span>
@@ -45,14 +46,14 @@
 			<div v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.start=1;"
 				style="padding:5px;border:1px solid #8F8F8F;margin:  5px ;cursor:pointer;background-color: #FFFFFF;position: relative;">
 				<span><img :src="item.headimg" /></span>
-				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:120px;">
+				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:100px;">
 					{{ item.alias?item.alias:item.nickname }}
 				</span>
-				<span style="vertical-align: text-bottom;font-size:16px;color:#767676;margin-left:5px;">(</span>
-				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#767676;max-width:120px;">
+				<span style="vertical-align: bottom;font-size:16px;color:#767676;margin-left:5px;">(</span>
+				<span style="vertical-align: bottom;display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#767676;max-width:100px;">
 					{{ item.alias?`${item.nickname}`:'' }}
 				</span>
-				<span style="vertical-align: text-bottom;font-size:16px;color:#767676;">)</span>
+				<span style="vertical-align: bottom;font-size:16px;color:#767676;">)</span>
 				<span v-if="item.orderNo" 
 					style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
 						overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
@@ -113,6 +114,7 @@
 											$notify({type:'success',message:'删除成功'})
 										friends.splice(friends.indexOf(chosenFriend),1)
 										chosenFriend=null;
+										friendsSum.count--;
 										friendInfo.start=0
 									}
 								})
@@ -129,7 +131,7 @@
 				<div class="scrollbar1" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 					<div style="font-size: 16px;color:#767676;">修改别名</div>
 					<div style="margin-top:10px;">
-						<input v-model="friendInfo.editAlias.value" style="font-size: 16px;"/>
+						<input v-model="friendInfo.editAlias.value" style="font-size: 16px;padding:0;"/>
 					</div>
 					<div style="margin-top:10px;">
 						<button style="font-size: 16px;width:100px;height:30px;margin-right:15px;" @click="friendInfo.editAlias.start=0;">取 消</button>
@@ -164,7 +166,8 @@
 		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
 				@click="
-					addFriend.start=addFriend.queryUsers=1;
+					addFriend.start=1;
+					addFriend.queryUsers=1;
 					addFriend.setFriend=0;
 					if(!addFriend.users || addFriend.users.length==0)
 						addFriend_loadUsers();">
@@ -210,21 +213,25 @@
 		<div v-if="addFriend.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div v-if="addFriend.queryUsers" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#8F8F8F;">添加好友</div>
-				<div style="margin-top:5px;">
+				<div style="margin-top:5px;height:30px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="addFriend.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" 
+						<input v-model="addFriend.kw" 
+							style="font-size:16px;height:28px;line-height: 28px;border: none;width: 175px;margin-left: 5px;padding:0;border-radius: 0px;padding:0;" 
 							@keyup.enter="addFriend.pn=1;addFriend.users=null,addFriend_loadUsers();" />
 						<span v-if="addFriend.kw" 
-							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
+							style="font-size:16px;line-height: 28px;height:28px;display:inline-block;position: absolute;
+								width:20px;right:0;text-align: center;cursor: pointer;"
 							@click="addFriend.kw=null;addFriend.pn=1;addFriend.users=null,addFriend_loadUsers();">
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;"
-						@click="addFriend.pn=1;addFriend.users=null,addFriend_loadUsers();">搜索</button>
+					<span class="active" 
+						style="font-size:16px;height:28px;line-height:28px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;
+							text-align: center;border:1px solid #8f8f8f;display:inline-block;"
+						@click="addFriend.pn=1;addFriend.users=null,addFriend_loadUsers();">搜索</span>
 				</div>
 				<div class="scrollbar1" @scroll="addFriend_usersScroll($event)" style="overflow: auto;max-height: 350px;margin-top: 5px;">
-					<div class="active" v-for="item in addFriend.users" :key="item.userId" @click=""
+					<div class="active" v-if="addFriend.users" v-for="item in addFriend.users" :key="item.userId" @click=""
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;"
 						@click="
 							$dialog.confirm({
@@ -236,13 +243,13 @@
 							});
 						">
 						<span><img :src="item.headimg" /></span>
-						<span style="display:inline-block;width:120px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
+						<span style="display:inline-block;width:100px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{ item.nickname }}
 						</span>
 						<span v-if="item.phone" style="margin-left:10px;width:100px;display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
-							{{ item.phone.replace(new RegExp('(?<=^.{3}).{4}'),'****') }}
+							{{ item.phone.replace(new RegExp("(^.{3})(.{4})"),'$1****') }}
 						</span>
-						<span style="margin-left:10px;display:inline-block;width: 21px;font-size:16px;color:#ff0000;">
+						<span style="margin-left:10px;display:inline-block;width: 16px;font-size:16px;color:#ff0000;">
 							{{ item.friendId?'友':'' }}
 						</span>
 					</div>
@@ -253,12 +260,17 @@
 						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="!addFriend.loading && addFriend.currUsers && addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="!addFriend.loading && addFriend.currUsers && addFriend.users.length>0 &&addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
+					</div>
+					<div  v-if="!addFriend.loading && (!addFriend.users || addFriend.users.length==0)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						暂无数据
 					</div>
 				</div>
 				<div style="margin-top:10px;">
-					<button @click="addFriend.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">关 闭</button>
+					<button @click="addFriend.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;">
+						关 闭
+					</button>
 				</div>
 			</div>
 
@@ -269,7 +281,8 @@
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;width:50px;">别名</span>
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;margin-left:5px;position: absolute;left:50px;right:0;">
 							<span style="border-width:1px;border-style: solid;border-color: #cccccc;height:28px;line-height:28px;position: absolute;left:5px;right:5px;padding:0 5px;">
-								<input v-model="addFriend.chosenUser.friendAlias || addFriend.chosenUser.nickname" style="line-height:24px;padding:0px;border:none;width:100%;"
+								<input v-model="addFriend.chosenUser.friendAlias || addFriend.chosenUser.nickname" 
+									style="line-height:24px;padding:0px;border:none;width:100%;"
 									@keyup.enter="addFriend_addFriend();"/>
 							</span>
 						</span>
@@ -390,7 +403,7 @@
 		activated() {
 			debugger
 			let vue = this
-			
+			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
 				Object.assign(vue.$data, vue.$options.data());
 				vue.query = vue.$route.query;
@@ -468,31 +481,36 @@
 			},
 			addFriend_loadUsers(){
 				debugger
-				let vue = this
-				vue.addFriend.loading=1
-				vue.addFriend.pn=vue.addFriend.pn?vue.addFriend.pn:1;
+				try{
+					let vue = this
+					vue.addFriend.loading=1
+					vue.addFriend.pn=vue.addFriend.pn?vue.addFriend.pn:1;
 
-				var obj = {
-					kw:vue.addFriend.kw,
-					pn:vue.addFriend.pn,
-					ps:vue.addFriend.ps
-				}
-				vue.$axios.get('/recording/user/users?' + vue.$qs.stringify(obj)).then(res => {
-					debugger
-					if (res.data.code == 0) {
-						if(res.data.data.items.length>0){
-							if(vue.addFriend.pn==1)
-								vue.addFriend.users=[]
-							vue.addFriend.currUsers = res.data.data.items
-							vue.addFriend.users=vue.addFriend.users.concat(res.data.data.items)
-						}else
-							vue.addFriend.pn--;
-					} else {
-						if(res.data.codeMsg)
-							vue.$notify({ type:'primary',message: res.data.codeMsg });
+					var obj = {
+						kw:vue.addFriend.kw,
+						pn:vue.addFriend.pn,
+						ps:vue.addFriend.ps
 					}
-					vue.addFriend.loading=0
-				})
+					vue.$axios.get('/recording/user/users?' + vue.$qs.stringify(obj)).then(res => {
+						debugger
+						if (res.data.code == 0) {
+							if(res.data.data.items.length>0){
+								if(vue.addFriend.pn==1)
+									vue.addFriend.users=[]
+								vue.addFriend.currUsers = res.data.data.items
+								vue.addFriend.users=vue.addFriend.users.concat(res.data.data.items)
+							}else
+								vue.addFriend.pn--;
+						} else {
+							if(res.data.codeMsg)
+								vue.$notify({ type:'primary',message: res.data.codeMsg });
+						}
+						vue.addFriend.loading=0
+					})
+				}catch (err){
+					vue.$dialog.alert({message:err.message });
+				}
+				
 			},
 			addFriend_usersScroll(event){
 				debugger
@@ -514,6 +532,7 @@
 					if(res.data.code==0) {
 						if(!res.data.codeMsg)
 							vue.$notify({type:'success',message:'添加成功'})
+						vue.friends=vue.friends?vue.friends:[];
 						vue.friends.unshift({
 							alias: vue.addFriend.chosenUser.friendAlias,
 							createTime: vue.$moment().format('YYYY-MM-DD HH:mm:ss.SSS Z'),

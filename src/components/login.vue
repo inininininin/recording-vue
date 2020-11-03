@@ -6,13 +6,13 @@
 		<form v-if="loginByAccountPad" class="loginByAccountPad" style="width:250px;margin:auto;margin-top:30px;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span class="n1-line" style="width:50px;display: inline-block;font-size: 16px;">账号</span>
-				<input v-model="account" @keyup.enter="login()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;" />
+				<input v-model="account" @keyup.enter="login()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;" />
 				<span v-if="account" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="account=null">x</span>
 			</div>
 
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span style="width:50px;display: inline-block;font-size: 16px;">密码</span>
-				<input v-model="password"  @keyup.enter="login()" type="password" style="width:180px;height:26px;padding-right:15px;	font-size: 16px;"/>
+				<input v-model="password"  @keyup.enter="login()" type="password" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;"/>
 				<span v-if="password" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="password=null">x</span>
 			</div>
 			
@@ -24,13 +24,13 @@
 		<form v-if="loginBySmsPad" class="loginBySmsPad" style="width:250px;margin:auto;margin-top:30px;">
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span class="n1-line" style="width:50px;display: inline-block;font-size: 16px;">手机</span>
-				<input v-model="phone" @keyup.enter="loginBySms()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;" />
+				<input v-model="phone" @keyup.enter="loginBySms()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;" />
 				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="phone=null">x</span>
 			</div>
 
 			<div  style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span class="n1-line" style="width:50px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
-				<input v-model="smsVcode"  @keyup.enter="loginBySms()" type="text" style="width:130px;height:26px;padding-right:15px;font-size: 16px;"/>
+				<input v-model="smsVcode"  @keyup.enter="loginBySms()" type="text" style="width:130px;height:26px;padding-right:15px;font-size: 16px;padding:0;"/>
 				<span v-if="smsVcode"  @click="smsVcode=null" style="font-size: 14px;position:absolute;right:56px;cursor: pointer;color: #8f8f8f;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 14px;line-height: 28px;margin-left:5px;"
 					@click="

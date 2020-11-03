@@ -113,7 +113,8 @@
 					<span style="display: inline-block;height:190px;border-left:1px solid #8F8F8F;vertical-align: middle;"></span>
 				</span>
 				<span style="display: inline-block;position: absolute;left:96px;right:5px;height: 200px;">
-					<textarea v-focus class="scrollbar1" v-model="content" style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
+					<textarea v-focus class="scrollbar1" v-model="content" 
+						style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
 				</span>
 			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
@@ -127,7 +128,7 @@
 				</span>
 				
 				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0px;height: 40px;">
-					<input v-model="type" value="1" id="type1" name="type" style="cursor: pointer;" type="radio"/>
+					<input v-model="type" value="1" id="type1" name="type" style="cursor: pointer;margin-left:5px;" type="radio"/>
 					<label for="type1" style="font-size: 16px;cursor: pointer;">推进</label>
 					<input v-model="type" value="2" id="type2" name="type" style="margin-left:20px;cursor: pointer;" type="radio"/>
 					<label for="type2" style="font-size: 16px;cursor: pointer;">缺陷</label>
@@ -146,9 +147,9 @@
 					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
 				</span>
 				
-				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
-					<span style="display: inline-block;line-height:48px;position: absolute;left:5px;right:15px;height: 40px;">
-						<input v-model="finalTimeDate" type="date" style="font-size: 14px;height:30px;border:none;width: 140px;" />
+				<span style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span style="display: inline-block;line-height:40px;position: absolute;left:5px;right:15px;height: 40px;">
+						<input v-model="finalTimeDate" type="date" style="font-size: 14px;height:30px;line-height:30px;border:none;width: 140px;vertical-align: middle;" />
 					</span>
 					<span v-show="finalTime || finalTimeDate" @click="finalTime=finalTimeDate=null" 
 						style="font-size: 16px;cursor: pointer;line-height:40px;position: absolute;display:inline-block;right: 0px;width: 15px;text-align: center;">
@@ -167,7 +168,7 @@
 				
 				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
 					<span style="display: inline-block;line-height:40px;position: absolute;left:5px;right:15px;text-align: center;height: 40px;">
-						<input v-model="orderNo" style="font-size: 16px;line-height:38px;border: none;width:100%;" type="number"/>
+						<input v-model="orderNo" style="font-size: 16px;line-height:38px;border: none;width:100%;padding:0;" type="number"/>
 					</span>
 					<span v-if="orderNo" @click="orderNo=null" 
 						style="font-size: 16px;cursor: pointer;line-height:40px;position: absolute;display:inline-block;right: 0px;width: 15px;text-align: center;">
@@ -177,7 +178,8 @@
 			</div>
 		</div>
 		<div class="unselectable active"
-			style="height:50px;border-top:1px solid #8F8F8f;position:absolute;bottom:0px;width:100%;text-align: center;line-height: 50px;font-size: 18px;cursor: pointer;"
+			style="height:50px;position:absolute;bottom:0px;width:100%;text-align: center;
+				line-height: 50px;font-size: 18px;cursor: pointer;background-color:#366cb3;color:#ffffff;"
 			@click="createTask()">
 			创&nbsp;&nbsp;&nbsp;&nbsp;建
 		</div>
@@ -191,7 +193,7 @@
 				</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="chooseFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" 
+						<input v-model="chooseFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" 
 							@keyup.enter="chooseFaQiRen.pn=1;chooseFaQiRen.items=[];chooseFaQiRen_loadItems();"/>
 						<span v-if="chooseFaQiRen.kw" 
 							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
@@ -199,10 +201,12 @@
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
+					<span class="active" 
+						style="font-size:16px;height:28px;line-height:28px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;
+							text-align: center;border:1px solid #8f8f8f;display:inline-block;"
 						@click="chooseFaQiRen.pn=1;chooseFaQiRen.items=[];chooseFaQiRen_loadItems();">
 						搜索
-					</button>
+					</span>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
 					<div class="active" v-for="item in chooseFaQiRen.items" :key="item.userId" @click=""
@@ -262,17 +266,19 @@
 				</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
-						<input v-model="chooseFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;" />
+						<input v-model="chooseFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" />
 						<span v-if="chooseFuZeRen.kw" 
 							style="font-size:16px;line-height: 28px;display:inline-block;position: absolute;width:20px;right:0;text-align: center;cursor: pointer;"
 							@click="chooseFuZeRen.kw=null">
 							X
 						</span>
 					</span>
-					<button style="font-size:16px;height:30px;width:48px;vertical-align: bottom;cursor: pointer;margin-left:-1px;"
+					<span class="active" 
+						style="font-size:16px;height:28px;line-height:28px;width:48px;vertical-align: bottom;cursor: pointer;margin-left: -1px;
+							text-align: center;border:1px solid #8f8f8f;display:inline-block;"
 						@click="chooseFuZeRen.pn=1;chooseFuZeRen.items=[];chooseFuZeRen_loadItems();">
 						搜索
-					</button>
+					</span>
 				</div>
 				<div class="scrollbar1" style="overflow: auto;max-height: 350px;margin-top: 5px;">
 					<div class="active" v-for="item in chooseFuZeRen.items" :key="item.userId" @click=""
