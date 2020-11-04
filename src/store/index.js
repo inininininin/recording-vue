@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.runtime.esm.js';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
@@ -10,7 +10,6 @@ const state = {
 	chosenTask: null,
 	chosenTaskDel:null,
 	createdTask: null,
-	noSleep: 1,
 };
 const getters = {
 };

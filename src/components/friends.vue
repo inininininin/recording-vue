@@ -200,7 +200,7 @@
 				<span style="width:16.7%;display:inline-block;line-height:50px;font-size: 16px;vertical-align: middle;margin-left:-1px;">
 					&nbsp;
 				</span>
-				<span @click="$router.push({path:'/me'})"
+				<span @click="$router.replace({path:'/me'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;position:absolute;right:0;
 						vertical-align: middle;">
 					我

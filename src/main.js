@@ -1,18 +1,21 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.runtime.esm.js';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
 import axios from 'axios';
 import qs from 'qs';
 import Viewer from 'v-viewer';
-import 'viewerjs/dist/viewer.css';
+import 'viewerjs/dist/viewer.min.css';
 if (process.env.NODE_ENV == 'development') require('./mock')
 //import (process.env.NODE_ENV == 'development')?'./mock.js':null;
-import { Notify, Dialog } from 'vant';
-import 'vant/lib/index.css';
-
+import Notify from 'vant/lib/notify';
+import 'vant/lib/notify/style';
+import Dialog from 'vant/lib/dialog';
+import 'vant/lib/dialog/style';
+import Router from 'vue-router';
+Vue.use(Router);
 Vue.prototype.$version = '1.0.6.9.201104';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
@@ -145,11 +148,16 @@ Vue.prototype.$o=o
 Vue.prototype.routes=[]
 
 
+// new Vue({
+//   el: '#app',
+//   router,
+//   store,
+//   components: { App },
+//   template: '<App/>'
+// });
+
 new Vue({
-  el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-});
-
+  render: h => h(App)
+}).$mount("#app")

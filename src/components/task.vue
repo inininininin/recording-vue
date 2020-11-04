@@ -282,16 +282,20 @@
 				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
-					$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
-						if(res.data.codeMsg)
-							$notify({message:res.data.codeMsg})
-						if(res.data.code == 0){
-							$notify({message:'已开启'})
-							task.status=1;
-							task.running=1;
-							$store.state.chosenTask.status=1;
-							$store.state.chosenTask.running=1;
-						}
+					$dialog.confirm({
+						message:'确认开启吗?'
+					}).then(res=>{
+						$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+							if(res.data.codeMsg)
+								$notify({message:res.data.codeMsg})
+							if(res.data.code == 0){
+								$notify({message:'已开启'})
+								task.status=1;
+								task.running=1;
+								$store.state.chosenTask.status=1;
+								$store.state.chosenTask.running=1;
+							}
+						})
 					})
 				">
 				开&nbsp;启

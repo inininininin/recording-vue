@@ -40,21 +40,6 @@
 			">
 			调试模式
 		</div>
-		<div class="active" 
-			style="height:45px;line-height:45px;font-size:16px;cursor: pointer;padding:0 20px;border-bottom: 1px solid #8f8f8f;"
-			@click="
-				if($store.state.noSleep){
-					window.noSleep.disable()
-					$store.state.noSleep=0
-					window.noSleep.isEnable=0
-				}else{
-					window.noSleep.enable()
-					$store.state.noSleep=1
-					window.noSleep.isEnable=1
-				}
-			">
-			{{$store.state.noSleep?'恢复息屏':'阻止息屏'}}
-		</div>
 		<div class="active" @click="logout()" v-if="$store.state.login && $store.state.login.userId" 
 			style="height:45px;line-height:45px;font-size:16px;cursor: pointer;padding:0 20px;border-bottom: 1px solid #8f8f8f;">
 			退出登录
@@ -67,7 +52,7 @@
 		</div>
 		<div style="height:50px;position:absolute;bottom:0;left:0;right:0;box-shadow: 0px -1px 4px 0px #8f8f8f;overflow: hidden;background-color: #FFFFFF;">
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;overflow-x: auto;">
-				<span @click="$router.push({path:'/index'})"
+				<span @click="$router.replace({path:'/index'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
@@ -80,7 +65,7 @@
 					记 录
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span @click="$router.push({path:'/friends'})"
+				<span @click="$router.replace({path:'/friends'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					好 友
 				</span>
@@ -92,7 +77,7 @@
 				<span style="background-color: #366CB3;width:16.7%;display:inline-block;line-height:50px;font-size: 16px;vertical-align: middle;margin-left:-1px;">
 					&nbsp;
 				</span>
-				<span @click="$router.push({path:'/me'})"
+				<span @click="$router.replace({path:'/me'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;position:absolute;right:0;
 						vertical-align: middle;background-color: #366CB3;color:#ffffff;">
 					我

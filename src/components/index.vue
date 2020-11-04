@@ -169,7 +169,7 @@
 				总数:{{ $o(tasksSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 152px;bottom: 91px;padding-top: 5px;">
+		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 155px;bottom: 91px;padding-top: 2px;">
 			<div :key="item.taskId" v-for="item in tasks" class="active visited"
 				@click="
 					debugger;
@@ -270,7 +270,7 @@
 						background-color: #366CB3;color:#ffffff;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
+				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					日 常
 				</span>
@@ -291,7 +291,7 @@
 				<span style="width:16.7%;display:inline-block;line-height:50px;font-size: 16px;vertical-align: middle;margin-left:-1px;">
 					&nbsp;
 				</span>
-				<span @click="$router.push({path:'/me'})"
+				<span @click="$router.replace({path:'/me'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;position:absolute;right:0;
 						vertical-align: middle;">
 					我
