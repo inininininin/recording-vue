@@ -1,6 +1,6 @@
 <template>
-	<div id="register" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;">
-		<h1 style="text-align: center;font-size: 24px;margin:0;margin-top:30px;">Recording</h1>
+	<div id="register" style="font-size: 0;padding:30px 0 0 0;position:absolute;top:0;bottom:0;right:0;left:0;">
+		<h1 style="text-align: center;font-size: 30px;margin:0;">板板</h1>
 		<h1 style="text-align: center;font-size: 20px;margin:10px;">注册</h1>
 
 		<form id="byAccountPad" v-if="byAccountPad" style="width:270px;margin:auto;margin-top:30px;">

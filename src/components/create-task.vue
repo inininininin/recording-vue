@@ -1,5 +1,5 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;font-size:0;" >
+	<div id="create-task" class="scrollbar" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;" >
 		<div  style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 				width: 100%;top:0;background-color: #FFFFFF;">
 			<span class="active"
@@ -188,7 +188,7 @@
 		<!-- 选择发起人 -->
 		<div v-if="chooseFaQiRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">
+				<div style="font-size: 16px;color:#6b6b6b;">
 					选择发起人
 				</div>
 				<div style="margin-top:5px;">
@@ -220,12 +220,12 @@
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
 						<span v-if="item.nickname != item.alias">
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">(</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#6b6b6b;">(</span>
 							<span v-if="item.alias" 
-								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#8F8F8F;">
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#6b6b6b;">
 								{{ item.nickname }}
 							</span>
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">)</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#6b6b6b;">)</span>
 							<span v-if="item.orderNo" 
 								style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
 									overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
@@ -233,20 +233,20 @@
 							</span>
 						</span>
 					</div>
-					<div  v-if="chooseFaQiRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="chooseFaQiRen.loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length == chooseFaQiRen.ps" 
+					<div class="active unselectable" v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.currItems.length == chooseFaQiRen.ps" 
 						@click="chooseFaQiRen.pn++;chooseFaQiRen_loadItems()" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
 					<div  v-if="chooseFaQiRen.currItems && !chooseFaQiRen.loading && chooseFaQiRen.items.length>0 && chooseFaQiRen.currItems.length < chooseFaQiRen.ps" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 					<div v-if="!chooseFaQiRen.loading && (!chooseFaQiRen.items || chooseFaQiRen.items.length==0)" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						暂无数据
 					</div>
 				</div>
@@ -261,7 +261,7 @@
 		<!-- 选择负责人 -->
 		<div v-if="chooseFuZeRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">
+				<div style="font-size: 16px;color:#6b6b6b;">
 					选择负责人
 				</div>
 				<div style="margin-top:5px;">
@@ -292,12 +292,12 @@
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
 						<span v-if="item.nickname != item.alias">
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">(</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#6b6b6b;">(</span>
 							<span v-if="item.alias" 
-								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#8F8F8F;">
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#6b6b6b;">
 								{{ item.nickname }}
 							</span>
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#8F8F8F;">)</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color:#6b6b6b;">)</span>
 						</span>
 						<span v-if="item.orderNo" 
 							style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
@@ -305,20 +305,20 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="chooseFuZeRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="chooseFuZeRen.loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length == chooseFuZeRen.ps" 
+					<div class="active unselectable" v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.currItems.length == chooseFuZeRen.ps" 
 						@click="chooseFuZeRen.pn++;chooseFuZeRen_loadItems()" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
 					<div  v-if="chooseFuZeRen.currItems && !chooseFuZeRen.loading && chooseFuZeRen.items.length>0 && chooseFuZeRen.currItems.length < chooseFuZeRen.ps" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 					<div v-if="!chooseFuZeRen.loading && (!chooseFuZeRen.items || chooseFuZeRen.items.length==0)" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						暂无数据
 					</div>
 				</div>
@@ -411,6 +411,7 @@
 						if (res.data.code == 0) {
 							if(!res.data.codeMsg) {
 								task.taskId=res.data.data.taskId;
+								task.createTime=vue.$moment().format('YYYY-MM-DD HH:mm:ss.SSS Z')
 								vue.$store.state.createdTask=task
 								vue.$dialog.alert({type:'success',message:'创建成功'}).then(res=>{
 									vue.$router.back()

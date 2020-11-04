@@ -1,5 +1,5 @@
 <template>
-	<div id="index" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
+	<div id="index" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;">
 		<div style="height: 30px;border-bottom:1px solid #8f8f8f;overflow: hidden;">
 			<span style="width:200px;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
 				<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
@@ -22,7 +22,7 @@
 					@click="queryHistory.start=1;"
 					@keyup.enter="pn=1;friends=[];queryHistory.start=0;loadFriends();" 
 				/>
-				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
+				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #6b6b6b;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
 					@click="kw=null;">
 					X
 				</span>
@@ -37,40 +37,40 @@
 				重置
 			</span>
 		</div>
-		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 1px 0px #888888;height: 15px;">
-			<span style="font-size: 16px;color: #8f8f8f;line-height:16px;" >
+		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 4px 0px #6b6b6b;height: 15px;">
+			<span style="font-size: 16px;color: #6b6b6b;line-height:16px;" >
 				总数:{{$o(friendsSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="friendsScroll($event)" ref="friends" style="overflow: auto;width:100%;position: absolute;top: 58px;bottom: 88px;">
+		<div class="scrollbar" @scroll="friendsScroll($event)" ref="friends" style="overflow: auto;width:100%;position: absolute;top: 56px;bottom: 91px;padding-top: 5px;">
 			<div v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.start=1;"
-				style="padding:5px;border:1px solid #8F8F8F;margin:  5px ;cursor:pointer;background-color: #FFFFFF;position: relative;">
-				<span><img :src="item.headimg" /></span>
-				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:100px;">
+				style="padding:5px;border:1px solid #8F8F8F;margin:  5px ;cursor:pointer;background-color: #FFFFFF;position: relative;height:20px;line-height:20px;">
+				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:100px;vertical-align: bottom;">
 					{{ item.alias?item.alias:item.nickname }}
 				</span>
-				<span style="vertical-align: bottom;font-size:16px;color:#767676;margin-left:5px;">(</span>
-				<span style="vertical-align: bottom;display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#767676;max-width:100px;">
+				<span style="vertical-align: bottom;font-size:16px;color:#6b6b6b;margin-left:5px;height:20px;line-height:20px;">(</span>
+				<span style="vertical-align: bottom;display:inline-block;font-size:16px;
+					overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#6b6b6b;max-width:100px;height:20px;line-height:20px;">
 					{{ item.alias?`${item.nickname}`:'' }}
 				</span>
-				<span style="vertical-align: bottom;font-size:16px;color:#767676;">)</span>
+				<span style="vertical-align: bottom;font-size:16px;color:#6b6b6b;height:20px;line-height:20px;">)</span>
 				<span v-if="item.orderNo" 
 					style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
 						overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 					{{item.orderNo}}
 				</span>
 			</div>
-			<div v-if="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div v-if="loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
-			<div class="active-text unselectable" v-if="!loading && friends && friends.length<$o(friendsSum).attr('count')" @click="pn++;queryHistory.start=0;loadFriends();"
-				style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+			<div class="active unselectable" v-if="!loading && friends && friends.length<$o(friendsSum).attr('count')" @click="pn++;queryHistory.start=0;loadFriends();"
+				style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && friends && friends.length>0 && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && friends && friends.length>0 && !(friends.length<$o(friendsSum).attr('count'))" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
 			</div>
-			<div  v-if="!loading && (!friends || friends.length==0)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && (!friends || friends.length==0)" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				暂无数据
 			</div>
 		</div>
@@ -80,14 +80,14 @@
 		<!-- 好友详情 -->
 		<div v-if="friendInfo.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div class="scrollbar1" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">好友详情</div>
+				<div style="font-size: 16px;color:#6b6b6b;">好友详情</div>
 				<div style="margin-top:10px;">
 					<span style="font-size:16px;">昵称 : </span><span style="font-size:16px;">{{chosenFriend.nickname}}</span>
 				</div>
 				<div style="margin-top:10px;position: relative;">
 					<span style="font-size:16px;">别名 : </span>
 					<span style="font-size:16px;">{{chosenFriend.alias}}</span>
-					<span  style="position: absolute;right:0;font-size:16px;padding:0 3px;background-color: #cccccc;cursor: pointer;color:#767676;"
+					<span  style="position: absolute;right:0;font-size:16px;padding:0 3px;background-color: #cccccc;cursor: pointer;color:#6b6b6b;"
 						@click="friendInfo.editAlias.start=1;friendInfo.editAlias.value=chosenFriend.alias">
 						改
 					</span>
@@ -129,7 +129,7 @@
 			<!-- 修改别名 -->
 			<div v-if="friendInfo.editAlias.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 				<div class="scrollbar1" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-					<div style="font-size: 16px;color:#767676;">修改别名</div>
+					<div style="font-size: 16px;color:#6b6b6b;">修改别名</div>
 					<div style="margin-top:10px;">
 						<input v-model="friendInfo.editAlias.value" style="font-size: 16px;padding:0;"/>
 					</div>
@@ -163,7 +163,7 @@
 		</div>
 	
 
-		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
+		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px -1px 4px 0px #6b6b6b;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
 				@click="
 					addFriend.start=1;
@@ -175,34 +175,34 @@
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;overflow: hidden;">
 				<span  @click="$router.replace({path:'/index'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
-					工 作
-				</span>
-				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span  style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					日 常
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span  style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					记 录
 				</span>
 				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span  @click="$router.replace({path:'/friends'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;
 						background-color: #366CB3;color:#ffffff;margin-left:-1px;">
 					好 友
 				</span>
 				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span  style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span  style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					消 息
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span  @click="$router.replace({path:'/me'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span style="width:16.7%;display:inline-block;line-height:50px;font-size: 16px;vertical-align: middle;margin-left:-1px;">
+					&nbsp;
+				</span>
+				<span @click="$router.push({path:'/me'})"
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;position:absolute;right:0;
+						vertical-align: middle;">
 					我
 				</span>
 				
@@ -212,7 +212,7 @@
 		<!-- 加好友 -->
 		<div v-if="addFriend.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div v-if="addFriend.queryUsers" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">添加好友</div>
+				<div style="font-size: 16px;color:#6b6b6b;">添加好友</div>
 				<div style="margin-top:5px;height:30px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
 						<input v-model="addFriend.kw" 
@@ -232,7 +232,8 @@
 				</div>
 				<div class="scrollbar1" @scroll="addFriend_usersScroll($event)" style="overflow: auto;max-height: 350px;margin-top: 5px;">
 					<div class="active" v-if="addFriend.users" v-for="item in addFriend.users" :key="item.userId" @click=""
-						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;"
+						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;
+							background-color: #FFFFFF;position: relative;height:20px;line-height:20px;"
 						@click="
 							$dialog.confirm({
 								message: `确认添加 ${item.nickname} 为好友吗?`
@@ -242,28 +243,28 @@
 							}).catch(() => {
 							});
 						">
-						<span><img :src="item.headimg" /></span>
-						<span style="display:inline-block;width:100px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
+						<span style="display:inline-block;width:100px;font-size:16px;overflow:hidden;
+								text-overflow:ellipsis;white-space: nowrap;height:20px;line-height:20px;vertical-align: bottom;">
 							{{ item.nickname }}
 						</span>
-						<span v-if="item.phone" style="margin-left:10px;width:100px;display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
+						<span v-if="item.phone" 
+							style="margin-left:10px;width:100px;display:inline-block;font-size:16px;height:20px;line-height:20px;
+								overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{ item.phone.replace(new RegExp("(^.{3})(.{4})"),'$1****') }}
 						</span>
-						<span style="margin-left:10px;display:inline-block;width: 16px;font-size:16px;color:#ff0000;">
-							{{ item.friendId?'友':'' }}
-						</span>
+						<img style="width:20px;height:17px;display:inline-block;vertical-align: bottom;margin-left: 10px;" src="../assets/img/friend.png"/>
 					</div>
-					<div v-if="addFriend.loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="addFriend.loading"  style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="!addFriend.loading && addFriend.currUsers && addFriend.currUsers.length == addFriend.ps" @click="addFriend.pn++;addFriend_loadUsers()" 
-						style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+					<div class="active unselectable" v-if="!addFriend.loading && addFriend.currUsers && addFriend.currUsers.length == addFriend.ps" @click="addFriend.pn++;addFriend_loadUsers()" 
+						style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
-					<div  v-if="!addFriend.loading && addFriend.currUsers && addFriend.users.length>0 &&addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="!addFriend.loading && addFriend.currUsers && addFriend.users.length>0 &&addFriend.currUsers.length < addFriend.ps" style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
-					<div  v-if="!addFriend.loading && (!addFriend.users || addFriend.users.length==0)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div  v-if="!addFriend.loading && (!addFriend.users || addFriend.users.length==0)" style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						暂无数据
 					</div>
 				</div>
@@ -276,7 +277,7 @@
 
 			<div v-if="addFriend.setFriend" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 				<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-					<div style="font-size: 16px;color:#8F8F8F;">设置好友</div>
+					<div style="font-size: 16px;color:#6b6b6b;">设置好友</div>
 					<div style="height:30px;margin-top:10px;position: relative;">
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;width:50px;">别名</span>
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;margin-left:5px;position: absolute;left:50px;right:0;">
@@ -308,7 +309,7 @@
 					queryHistory.start=0;
 				}
 			" 
-			style="position: absolute;top:32px;bottom:0;width:100%;background-color: #00000087;">
+			style="position: absolute;top:32px;bottom:0;width:100%;background-color: rgba(0, 0, 0, 0.6);">
 			<div style="background-color: #ffffff;padding:0 10px 10px 10px;min-height:100px;">
 				<span v-for="(item,index) in queryHistory.kws" :key="index"
 					style="margin:10px 15px 0 0;display: inline-block;background-color: #e5e5e5;cursor: pointer;">
@@ -333,7 +334,7 @@
 						"
 						style="
 							font-size: 16px;display: inline-block;padding:5px;padding: 5px 0px;
-							vertical-align: bottom;background-color: #ffffff;color: #8f8f8f;border: 1px solid #e5e5e5;
+							vertical-align: bottom;background-color: #ffffff;color: #6b6b6b;border: 1px solid #e5e5e5;
 						">
 						X
 					</span>
@@ -347,13 +348,13 @@
 						}
 					"
 					style="
-						font-size: 16px;cursor: pointer;text-align: center;margin-top:10px;color:#8F8F8F;border:1px dashed #8f8f8f;
+						font-size: 16px;cursor: pointer;text-align: center;margin-top:10px;color:#6b6b6b;border:1px dashed #8f8f8f;
 						padding: 5px;width: 120px;margin: auto;
 					">
 					清空历史记录
 				</div>
 				<div v-if="!queryHistory.kws || queryHistory.kws.length==0" 
-					style="font-size: 16px;text-align: center;margin-top:10px;color:#8F8F8F;">暂无历史记录</div>
+					style="font-size: 16px;text-align: center;margin-top:10px;color:#6b6b6b;">暂无历史记录</div>
 			</div>
 		</div>
 	</div>

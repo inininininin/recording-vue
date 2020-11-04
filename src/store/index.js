@@ -10,6 +10,7 @@ const state = {
 	chosenTask: null,
 	chosenTaskDel:null,
 	createdTask: null,
+	noSleep: 1,
 };
 const getters = {
 };

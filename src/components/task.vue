@@ -1,5 +1,5 @@
 <template>
-	<div id="create-task" class="scrollbar" style="height:100%;overflow:auto;position: relative;font-size:0px" >
+	<div id="create-task" class="scrollbar" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;" >
 		<div style="text-align: center;height:40px;line-height: 40px;border-bottom:1px solid #8F8F8f;position: absolute;
 				width: 100%;top:0;background-color: #FFFFFF;">
 			<span class="active"
@@ -26,7 +26,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
-							background-color: #e4e4e4;color: #8f8f8f;"
+							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editFaQiRen.start=1;
 							if(editFaQiRen.currItems == null){
@@ -54,7 +54,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
-							background-color: #e4e4e4;color: #8f8f8f;"
+							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editFuZeRen.start=1;
 							if(editFuZeRen.currItems == null){
@@ -82,7 +82,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;
-							top:0;right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #8f8f8f;"
+							top:0;right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editContent.start=1;
 							editContent.value=task.content;">
@@ -108,7 +108,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
-							background-color: #e4e4e4;color: #8f8f8f;"
+							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editType.start=1;
 							editType.value=task.type;">
@@ -141,7 +141,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
-							background-color: #e4e4e4;color: #8f8f8f;"
+							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editFinalTime.start=1;
 							editFinalTime.value=task.finalTime;
@@ -167,7 +167,7 @@
 					</span>
 					<span class="active" 
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
-							background-color: #e4e4e4;color: #8f8f8f;"
+							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="editOrderNo.start=1;editOrderNo.value=$o(task).attr('orderNo');">
 						改
 					</span>
@@ -175,14 +175,14 @@
 			</div>
 		</div>
 		<div style="position:absolute;bottom:40px;left:0;right:0;border-style: solid;border-color: #8F8F8F;border-width: 1px 0 1px 0;
-				box-shadow: rgb(136, 136, 136) 0px 0px 4px 0px;background-color: #ffffff;"
+				box-shadow: rgb(136, 136, 136) 0px -1px 4px 0px;background-color: #ffffff;"
 			:style="{top:(lookAllTracks?'40px':null),height:(lookAllTracks?null:'251px')}">
 			<div class="active" style="height:20px;cursor: pointer;padding:5px;" @click="lookAllTracks=lookAllTracks?0:1;">
-				<span style="font-size: 16px;color:#8F8F8F;height:30px;height: 20px;line-height: 20px;display:inline-block;height: 20px;line-height: 20px;">
+				<span style="font-size: 16px;color:#6b6b6b;height:30px;height: 20px;line-height: 20px;display:inline-block;height: 20px;line-height: 20px;">
 					跟踪记录
 				</span>
-				<span style="margin-left:10px;font-size: 16px;color:#8F8F8F;height:30px;height: 20px;line-height: 20px;display:inline-block;height: 20px;line-height: 20px;">
-					总数: 20
+				<span style="margin-left:10px;font-size: 16px;color:#6b6b6b;height:30px;height: 20px;line-height: 20px;display:inline-block;height: 20px;line-height: 20px;">
+					总数: {{$o(tracks).attr('sum.count')}}
 				</span>
 			</div>
 			<div v-if="lookAllTracks" style="height: 30px;border-style:solid;border-color: #8F8F8F;border-width:1px 0;">
@@ -191,7 +191,7 @@
 					<input v-model="tracks.kw" type="text" style="line-height: 28px;height:28px;width:145px;border:none;margin-left:20px;padding:0;"
 						@keyup.enter="tracks.pn=1;tracks.items=[];loadTracks();" 
 					/>
-					<span v-if="tracks.kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
+					<span v-if="tracks.kw" style="font-size: 16px;cursor: pointer;color: #6b6b6b;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
 						@click="tracks.kw=null;">
 						X
 					</span>
@@ -212,7 +212,7 @@
 				:style="{top:(lookAllTracks?'65px':'30px')}">
 				<div v-for="item in tracks.items" :key="item.trackId" style="margin-bottom:5px;">
 					<div class="selectable" style="font-size: 16px;white-space: pre-wrap;word-break: break-all;">{{item.content}}</div>
-					<div class="selectable" style="font-size: 14px;color: #8F8F8F;">
+					<div class="selectable" style="font-size: 14px;color: #6b6b6b;">
 						{{
 							$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
 								($moment().year()==$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY. M-D') +
@@ -242,7 +242,7 @@
 		<div style="height:30px;position:absolute;bottom:0px;left:0;right:0;padding:5px;">
 			<span class="active" v-if="task && task.status==1" 
 				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
-					text-align: center;background-color:#bebebe;"
+					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -259,9 +259,9 @@
 				">
 				完&nbsp;成
 			</span>
-			<span v-if="task && task.status==1"
+			<span class="active" v-if="task && task.status==1"
 				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
-					text-align: center;background-color:#bebebe;"
+					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -278,9 +278,9 @@
 				">
 				放&nbsp;弃
 			</span>
-			<span v-if="task && task.status!=1"
+			<span class="active" v-if="task && task.status!=1"
 				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
-					text-align: center;background-color:#bebebe;"
+					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
@@ -296,12 +296,12 @@
 				">
 				开&nbsp;启
 			</span>
-			<span style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
-					text-align: center;background-color:#bebebe;">
+			<span class="active" style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;cursor: pointer;">
 				延&nbsp;续
 			</span>
-			<span style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
-					text-align: center;background-color:#bebebe;"
+			<span class="active" style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$dialog.confirm({
 						message:'确认删除吗?'
@@ -324,7 +324,7 @@
 		<!-- 选择发起人 -->
 		<div v-if="editFaQiRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">选择发起人</div>
+				<div style="font-size: 16px;color:#6b6b6b;">选择发起人</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
 						<input v-model="editFaQiRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" />
@@ -367,12 +367,12 @@
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
 						<span v-if="item.nickname != item.alias">
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #8F8F8F;">(</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #6b6b6b;">(</span>
 							<span v-if="item.alias" 
-								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color: #8F8F8F;">
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color: #6b6b6b;">
 								{{ item.nickname }}
 							</span>
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #8F8F8F;">)</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #6b6b6b;">)</span>
 						</span>
 						<span v-if="item.orderNo" 
 							style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
@@ -380,20 +380,20 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="editFaQiRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="editFaQiRen.loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.currItems.length == editFaQiRen.ps" 
+					<div class="active unselectable" v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.currItems.length == editFaQiRen.ps" 
 						@click="editFaQiRen.pn++;chooseFaQiRen_loadItems()" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
 					<div  v-if="editFaQiRen.currItems && !editFaQiRen.loading && editFaQiRen.items.length>0 && editFaQiRen.currItems.length < editFaQiRen.ps" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 					<div v-if="!editFaQiRen.loading && (!editFaQiRen.items || editFaQiRen.items.length==0)" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						暂无数据
 					</div>
 				</div>
@@ -426,7 +426,7 @@
 		<!-- 选择负责人 -->
 		<div v-if="editFuZeRen.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">选择负责人</div>
+				<div style="font-size: 16px;color:#6b6b6b;">选择负责人</div>
 				<div style="margin-top:5px;">
 					<span style="height:28px;display: inline-block;position: relative;width:198px;border: 1px solid #8f8f8f;">
 						<input v-model="editFuZeRen.kw" style="font-size:16px;line-height: 26px;border: none;width: 175px;margin-left: 5px;padding:0;" />
@@ -469,12 +469,12 @@
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
 						<span v-if="item.nickname != item.alias">
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #8F8F8F;">(</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #6b6b6b;">(</span>
 							<span v-if="item.alias" 
-								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color: #8F8F8F;">
+								style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color: #6b6b6b;">
 								{{ item.nickname }}
 							</span>
-							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #8F8F8F;">)</span>
+							<span v-if="item.alias" style="font-size: 16px;height: 20px;line-height: 20px;display: inline-block;vertical-align: top;color: #6b6b6b;">)</span>
 						</span>
 						<span v-if="item.orderNo" 
 							style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
@@ -482,20 +482,20 @@
 							{{item.orderNo}}
 						</span>
 					</div>
-					<div v-if="editFuZeRen.currItems && editFuZeRen.loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+					<div v-if="editFuZeRen.currItems && editFuZeRen.loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
 					</div>
-					<div class="active-text unselectable" v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.currItems.length == editFuZeRen.ps" 
+					<div class="active unselectable" v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.currItems.length == editFuZeRen.ps" 
 						@click="editFuZeRen.pn++;chooseFuZeRen_loadItems()" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 						点击加载更多
 					</div>
 					<div  v-if="editFuZeRen.currItems && !editFuZeRen.loading && editFuZeRen.items.length>0 && editFuZeRen.currItems.length < editFuZeRen.ps" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						已全部加载
 					</div>
 					<div v-if="!editFuZeRen.loading && (!editFuZeRen.items || editFuZeRen.items.length==0)" 
-						style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+						style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						暂无数据
 					</div>
 				</div>
@@ -527,7 +527,7 @@
 
 		<div v-if="editType.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">修改类型</div>
+				<div style="font-size: 16px;color:#6b6b6b;">修改类型</div>
 				<div style="line-height:30px;position: relative;height: 30px;border:none;margin-top:5px;">
 					<input v-model="editType.value" value="1" id="type1" name="type" style="cursor: pointer;margin-left:0" type="radio"/>
 					<label for="type1" style="font-size: 16px;cursor: pointer;">推进</label>
@@ -559,7 +559,7 @@
 
 		<div v-if="editContent.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">修改内容</div>
+				<div style="font-size: 16px;color:#6b6b6b;">修改内容</div>
 				<div style="position: relative;height: 200px;border:none;margin-top:5px;">
 					<div style="border-width:1px;border-style: solid;height: 198px;border-color: #8f8f8f;padding:1px;">
 						<textarea v-model="editContent.value" class="scrollbar1" style="font-size:16px;width:100%;height:100%;resize: none;border:none;padding:0px;display:inline-block;">
@@ -587,7 +587,7 @@
 		
 		<div v-if="editFinalTime.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">修改截止时间</div>
+				<div style="font-size: 16px;color:#6b6b6b;">修改截止时间</div>
 				<div style="line-height:30px;position: relative;height: 30px;border-style: solid;border-color: #8F8F8F;border-width: 1px;margin-top:5px;">
 					<input v-model="editFinalTime.date" style="font-size: 16px;line-height:28px;border: none;width:160px;" type="date"/>
 					<span v-if="editFinalTime.date"
@@ -620,7 +620,7 @@
 		
 		<div v-if="editOrderNo.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
-				<div style="font-size: 16px;color:#8F8F8F;">修改排序</div>
+				<div style="font-size: 16px;color:#6b6b6b;">修改排序</div>
 				<div style="line-height:30px;position: relative;height: 30px;border-style: solid;border-color: #8F8F8F;border-width: 1px;margin-top:5px;">
 					<span style="display: inline-block;line-height:30px;position: absolute;left:5px;right:15px;text-align: center;height: 30px;">
 						<input v-model="editOrderNo.value" style="font-size: 16px;line-height:28px;border: none;width:100%;" type="number"/>

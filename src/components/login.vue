@@ -1,19 +1,19 @@
 <template>
-    <div id="login" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;">
-		<h1 style="text-align: center;font-size: 24px;margin:30px 0 0 0;">Recording</h1>
+    <div id="login" style="font-size: 0;padding:30px 0 0 0;position:absolute;top:0;bottom:0;right:0;left:0;">
+		<h1 style="text-align: center;font-size: 30px;margin:0;">板板</h1>
 		<h1 style="text-align: center;font-size: 20px;margin:10px 0 0 0;">登录</h1>
 
 		<form v-if="loginByAccountPad" class="loginByAccountPad" style="width:250px;margin:auto;margin-top:30px;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span class="n1-line" style="width:50px;display: inline-block;font-size: 16px;">账号</span>
 				<input v-model="account" @keyup.enter="login()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;" />
-				<span v-if="account" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="account=null">x</span>
+				<span v-if="account" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #6b6b6b;" @click="account=null">x</span>
 			</div>
 
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span style="width:50px;display: inline-block;font-size: 16px;">密码</span>
 				<input v-model="password"  @keyup.enter="login()" type="password" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;"/>
-				<span v-if="password" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="password=null">x</span>
+				<span v-if="password" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #6b6b6b;" @click="password=null">x</span>
 			</div>
 			
 			<div style="text-align: center;margin-top:50px;">
@@ -25,13 +25,13 @@
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span class="n1-line" style="width:50px;display: inline-block;font-size: 16px;">手机</span>
 				<input v-model="phone" @keyup.enter="loginBySms()" type="text" style="width:180px;height:26px;padding-right:15px;font-size: 16px;padding:0;" />
-				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #8f8f8f;" @click="phone=null">x</span>
+				<span v-if="phone" style="font-size: 14px;position:absolute;right:6px;cursor: pointer;color: #6b6b6b;" @click="phone=null">x</span>
 			</div>
 
 			<div  style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
 				<span class="n1-line" style="width:50px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
 				<input v-model="smsVcode"  @keyup.enter="loginBySms()" type="text" style="width:130px;height:26px;padding-right:15px;font-size: 16px;padding:0;"/>
-				<span v-if="smsVcode"  @click="smsVcode=null" style="font-size: 14px;position:absolute;right:56px;cursor: pointer;color: #8f8f8f;">x</span>
+				<span v-if="smsVcode"  @click="smsVcode=null" style="font-size: 14px;position:absolute;right:56px;cursor: pointer;color: #6b6b6b;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 14px;line-height: 28px;margin-left:5px;"
 					@click="
 						$axios.post('/recording/send-sms-vcode?'+$qs.stringify({phone:smsVcode})).then(data => {

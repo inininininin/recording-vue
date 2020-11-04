@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'development') require('./mock')
 import { Notify, Dialog } from 'vant';
 import 'vant/lib/index.css';
 
-Vue.prototype.$version = '1.0.5.8.201103';
+Vue.prototype.$version = '1.0.6.9.201104';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({

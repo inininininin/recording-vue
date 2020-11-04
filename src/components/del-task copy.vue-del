@@ -9,14 +9,14 @@
 		<div style="padding:0 5px;margin:40px 0 0 0;">
 			<div style="height:10px"></div>
 			<div style="margin:0 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">任务名</span>
-				<span v-if="!nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">任务名</span>
+				<span v-if="!nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;taskUpdate.name=task.name;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="nameEditIs && !task.completeIs && !task.cancelIs" @click="nameEditIs=0;updateTask('name');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="nameEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.name" v-focus="nameEditIs" type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.name=null">x</span>
+				<span v-if="taskUpdate.name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="taskUpdate.name=null">x</span>
 			</div>
 
 			<div v-if="!nameEditIs"  style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
@@ -24,26 +24,26 @@
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">追踪</span>
+				<span style="font-size: 14px;color: #6b6b6b;">追踪</span>
 			</div>
 			<div style="border:1px solid #8F8F8F;height:290px;margin:5px 0 0 5px;">
 				<div @scroll="taskTrackListScroll($event)" ref="taskTrackList" style="height:250px;border-bottom:1px solid #8F8F8F;overflow: auto;">
 					
 
 					<div style="margin: 5px;">
-						<span style="font-size: 14px;color: #8f8f8f;">{{$moment(new Date()).format('MM-DD, d, HH:mm')}}</span>
-						<span style="font-size: 14px;color: #8f8f8f;margin-left:30px;">共 {{taskTrack_count}} 条记录</span>
+						<span style="font-size: 14px;color: #6b6b6b;">{{$moment(new Date()).format('MM-DD, d, HH:mm')}}</span>
+						<span style="font-size: 14px;color: #6b6b6b;margin-left:30px;">共 {{taskTrack_count}} 条记录</span>
 					</div>
 					
 						<div :key="item.taskTrackId" v-for="item in taskTrack_list" @click="$($event.currentTarget).css('background-color','#e6e4e4');" style="margin:5px 5px 5px 5px;cursor: pointer;">
 							<div style="font-size: 14px;word-wrap: break-word;word-break: break-all;">{{item.content}}</div>
-							<div style="font-size: 12px;color:#8f8f8f;">{{$moment(item.createTime).format(new Date().getFullYear()==new Date(item.createTime).getFullYear()? 'MM-DD, 周d, HH:mm': 'MM-DD, 周d, HH:mm, YYYY').replace('周0','周7').replace('周','')}}</div>
+							<div style="font-size: 12px;color:#6b6b6b;">{{$moment(item.createTime).format(new Date().getFullYear()==new Date(item.createTime).getFullYear()? 'MM-DD, 周d, HH:mm': 'MM-DD, 周d, HH:mm, YYYY').replace('周0','周7').replace('周','')}}</div>
 						</div>
 					
-					<div v-show="taskTrack_loading"  style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">加载中</div>
+					<div v-show="taskTrack_loading"  style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:5px;margin-top: 10px;">加载中</div>
 			
-					<div v-show="!taskTrack_loading && taskTrack_list.length<taskTrack_count" @click="pn++;loadTaskTrackList();" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
-					<div  v-show="!taskTrack_loading && !(taskTrack_list.length<taskTrack_count)" style="font-size:12px;text-align: center;color:#8F8F8F;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
+					<div v-show="!taskTrack_loading && taskTrack_list.length<taskTrack_count" @click="pn++;loadTaskTrackList();" style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:5px;margin-top: 10px;">点击加载更多</div>
+					<div  v-show="!taskTrack_loading && !(taskTrack_list.length<taskTrack_count)" style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:5px;margin-top: 10px;">已全部加载</div>
 				</div>
 
 				<div style="height:39px;position: relative;">
@@ -133,37 +133,37 @@
 			 " style="font-size: 14px;width:50px;height:30px;margin:10px 0 0 5px;cursor: pointer; ">删除</button>
 
 			 <div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">状态</span>
+				<span style="font-size: 14px;color: #6b6b6b;">状态</span>
 			</div>
 			<div style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
 				{{(task.completeIs?'已完成':task.cancelIs?'已撤销':'') + ' '+ ((!task.cancelIs && !task.completeIs)?'进行中':'')}}
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">责任关系</span>
+				<span style="font-size: 14px;color: #6b6b6b;">责任关系</span>
 			</div>
 			<div style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
 				{{$attr($store.state.login,"userId")==task.faQiRenUserId?'我':task.faQiRenNickname}} {{ task.taskId?'>':'' }} {{$attr($store.state.login,"userId")==task.fuZeRenUserId?'我':task.fuZeRenNickname}}
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
-				<span v-if="!finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">最终期限</span>
+				<span v-if="!finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;taskUpdate.finalTime=task.finalTime;taskUpdate.finalTimeDate=task.finalTimeDate;taskUpdate.finalTimeTime=task.finalTimeTime;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="finalTimeEditIs && !task.completeIs && !task.cancelIs" @click="finalTimeEditIs=0;updateTask('finalTime');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="finalTimeEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.finalTimeDate" @change="taskUpdate.finalTime++" type="date"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 				<input v-model="taskUpdate.finalTimeTime" @change="taskUpdate.finalTime++" type="time"  style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.finalTimeDate || taskUpdate.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.finalTime=taskUpdate.finalTimeDate=taskUpdate.finalTimeTime=null">x</span>
+				<span v-if="taskUpdate.finalTimeDate || taskUpdate.finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="taskUpdate.finalTime=taskUpdate.finalTimeDate=taskUpdate.finalTimeTime=null">x</span>
 			</div>
 			<div v-if="!finalTimeEditIs" style="font-size:16px;line-height: 25px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;">
 				{{task.finalTime?moment(task.finalTime).format('MM-DD, d, HH:mm'):''}}
 			</div>
 			
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">类型</span>
-				<span v-if="!typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">类型</span>
+				<span v-if="!typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;taskUpdate.type=task.type;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="typeEditIs && !task.completeIs && !task.cancelIs" @click="typeEditIs=0;updateTask('type');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
@@ -179,8 +179,8 @@
 			</div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">日常 ( 每天自动重发 )</span>
-				<span v-if="!autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">日常 ( 每天自动重发 )</span>
+				<span v-if="!autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;taskUpdate.autoRedoTomorrowIs=task.autoRedoTomorrowIs;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="autoRedoTomorrowIsEditIs && !task.completeIs && !task.cancelIs" @click="autoRedoTomorrowIsEditIs=0;updateTask('autoRedoTomorrowIs');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
@@ -200,8 +200,8 @@
 			
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">图片</span>
-				<span v-if="!imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">图片</span>
+				<span v-if="!imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;taskUpdate.imageList=task.imageList;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="imageListEditIs && !task.completeIs && !task.cancelIs" @click="imageListEditIs=0;updateTask('imageList');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>		
@@ -219,8 +219,8 @@
 			</div>	
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">内容</span>
-				<span v-if="!contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">内容</span>
+				<span v-if="!contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;taskUpdate.content=task.content;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="contentEditIs && !task.completeIs && !task.cancelIs" @click="contentEditIs=0;updateTask('content');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
@@ -231,14 +231,14 @@
 
 			
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
-				<span v-if="!orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #8f8f8f;">Edit</span>
+				<span style="font-size: 14px;color: #6b6b6b;">序号</span>
+				<span v-if="!orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=1" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #6b6b6b;">Edit</span>
 				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;taskUpdate.orderNo=task.orderNo;" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Cancel</span>
 				<span v-if="orderNoEditIs && !task.completeIs && !task.cancelIs" @click="orderNoEditIs=0;updateTask('orderNo');" style="font-size: 12px;margin-left:10px;cursor: pointer;;color: #ff0000;">Done</span>
 			</div>
 			<div v-if="orderNoEditIs" style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="taskUpdate.orderNo" v-focus="orderNoEditIs"  type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="taskUpdate.orderNo=null">x</span>
+				<span v-if="taskUpdate.orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="taskUpdate.orderNo=null">x</span>
 			</div>
 			<div v-if="!orderNoEditIs" style="font-size:16px;margin:5px 0 0 5px;word-wrap: break-word;word-break: break-all;white-space: pre-wrap;">{{task.orderNo}}</div>
 

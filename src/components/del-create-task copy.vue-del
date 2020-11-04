@@ -8,14 +8,14 @@
 		</div>
 		<div style="padding:0 5px;margin:40px 0 0 0;">
 			<div style="height:10px;"></div>
-			<div style="font-size: 14px;margin:0 0 0 5px;color: #8f8f8f;">任务名</div>
+			<div style="font-size: 14px;margin:0 0 0 5px;color: #6b6b6b;">任务名</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<span v-if="nameIf"><input @keyup.enter="createTask()" v-model="name" v-focus='nameIf' type="text" style="width:97%;padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" /></span>
-				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="name=null">x</span>
+				<span v-if="name" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="name=null">x</span>
 			</div>
 
 			<div style="display: inline;float:left;height: 60px;">
-				<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">发起人</div>
+				<div style="font-size: 14px;margin:10px 0 0 5px;color: #6b6b6b;">发起人</div>
 				<div style="position: relative;margin:5px 0 0 5px;">
 
 					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==faQiRenUserId?'我':faQiRenNickname}}</span>
@@ -35,7 +35,7 @@
 			</div>
 			<div style="font-size: 14px;float:left;vertical-align: bottom;height: 60px;line-height: 94px;margin:0 25px;">></div>
 			<div style="display: inline;float:left;height: 60px;">
-				<div style="font-size: 14px;margin:10px 0 0 0;color: #8f8f8f;">负责人</div>
+				<div style="font-size: 14px;margin:10px 0 0 0;color: #6b6b6b;">负责人</div>
 				<div style="position: relative;margin:5px 0 0 0;">
 					<span style="font-size:14px;">{{$attr($store.state.login,'userId')==fuZeRenUserId?'我':fuZeRenNickname}}</span>
 					<span v-show="fuZeRenUserId" @click="fuZeRenUserId=fuZeRenNickname=null;" style="font-size:14px;cursor: pointer;padding:0 5px;margin:0 5px;vertical-align: baseline;">x</span>
@@ -45,15 +45,15 @@
 		
 		<div style="clear: both;"></div>
 		<div style="margin:10px 0 0 5px;">
-			<span style="font-size: 14px;color: #8f8f8f;">最终期限</span>
+			<span style="font-size: 14px;color: #6b6b6b;">最终期限</span>
 		</div>
 		<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 			<input v-model="finalTimeDate" type="date" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
 			<input v-model="finalTimeTime" type="time" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-			<span v-if="finalTimeDate || finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="finalTimeDate=finalTimeTime=null">x</span>
+			<span v-if="finalTimeDate || finalTimeTime" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="finalTimeDate=finalTimeTime=null">x</span>
 		</div>
 		
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">类型</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #6b6b6b;">类型</div>
 			<div style="margin:5px 0 0 5px;">
 				<label for="developIs" style="font-size:14px;cursor: pointer;padding-right: 5px;">推进</label>
 				<input id="developIs" name="type" type="radio"  style="cursor: pointer;margin:0;" value="1" v-model="type"/>
@@ -62,7 +62,7 @@
 				<input id="bugIs" name="type" type="radio"  style="cursor: pointer;margin:0;"  value="2" v-model="type"/>
 			</div>
 
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">日常 ( 每天自动重发 )</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #6b6b6b;">日常 ( 每天自动重发 )</div>
 			<div style="margin:5px 0 0 5px;">
 				<label for="autoRedoTomorrowIsNo" style="font-size:14px;cursor: pointer;padding-right: 5px;">否</label>
 				<input id="autoRedoTomorrowIsNo" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;" value="0" v-model="autoRedoTomorrowIs"/>
@@ -70,7 +70,7 @@
 				<label for="autoRedoTomorrowIsYes" style="font-size:14px;cursor: pointer;padding-right: 5px;">是</label>
 				<input id="autoRedoTomorrowIsYes" name="autoRedoTomorrowIs" type="radio"  style="cursor: pointer;margin:0;"  value="1" v-model="autoRedoTomorrowIs"/>
 			</div>
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">图片</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #6b6b6b;">图片</div>
 			<div v-viewer="{navbar:true,title:false,toolbar:true}" >
 				<span v-for="(item, i) in imageList" :key="i" style="position: relative;padding-right:15px;">
 				<span style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;">
@@ -84,15 +84,15 @@
 				<span v-if="imageList.length<6" @click="addImage()" style="width:50px;height:50px;border:1px solid #8f8f8f;display:inline-block;margin:5px 0 0 5px;font-size: 14px;vertical-align: bottom;cursor: pointer;text-align: center;line-height: 50px;">+</span>
 			</div>
 
-			<div style="font-size: 14px;margin:10px 0 0 5px;color: #8f8f8f;">内容</div>
+			<div style="font-size: 14px;margin:10px 0 0 5px;color: #6b6b6b;">内容</div>
 			<div><textarea v-model="content" type="text" style="width:95%;margin:5px 0 0 5px;padding:3px;border:1px solid #8f8f8f;height:300px;resize:none;" ></textarea></div>
 
 			<div style="margin:10px 0 0 5px;">
-				<span style="font-size: 14px;color: #8f8f8f;">序号</span>
+				<span style="font-size: 14px;color: #6b6b6b;">序号</span>
 			</div>
 			<div style="position: relative;height:30px;line-height: 30px;border:1px solid #8f8f8f;margin:5px 0 0 5px;">
 				<input v-model="orderNo" type="number" style="padding:0;border:none;height:30px;line-height: 30px;padding-left: 3px;" />
-				<span v-if="orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #8f8f8f;" @click="orderNo=null">x</span>
+				<span v-if="orderNo" style="font-size: 14px;position:absolute;padding: 0 1%;cursor: pointer;color: #6b6b6b;" @click="orderNo=null">x</span>
 			</div>
 
 			<div style="text-align: center;margin-top:30px;">

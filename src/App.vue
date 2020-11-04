@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="unselectable">
+  <div id="app" class="unselectable" >
     <div v-show="$store.state.requestingCount>0" style="width:100%;height:6px;position: absolute;top:0;z-index: 999999;overflow: hidden;">
       <img src="./assets/img/loading.gif" style="height:100%;width:110%;vertical-align: top;margin-left: -20px;"/>
     </div>
@@ -42,6 +42,7 @@ export default {
 
 <style scoped>
   #app {
+    z-index:0;
     height: 100%;
     margin:auto;
     position:relative;
@@ -107,7 +108,7 @@ export default {
     width:6px;
   }
   .scrollbar1::-webkit-scrollbar-track{
-    background-color:#8F8F8F;
+    background-color:#8f8f8f;
   }
   .scrollbar1::-webkit-scrollbar-thumb{
     background-color:#000000;
@@ -121,11 +122,7 @@ export default {
   }
 
   .active:active {
-    background-color: #cccccc!important;
-    color: #000000!important;
-  }
-  .active-text:active {
-    color: #8F8F8F!important;
+    opacity: 0.6;
   }
  
 

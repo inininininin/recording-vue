@@ -1,5 +1,5 @@
 <template>
-	<div id="index" style="font-size: 0;height:100%;padding:1px 0 0 0;margin-top: -1px;position: relative;">
+	<div id="index" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;">
 		<div style="height: 30px;border-bottom:1px solid #8f8f8f;overflow: hidden;">
 			<span style="width:200px;line-height: 30px;height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
 				<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
@@ -22,7 +22,7 @@
 					@click="queryHistory.start=1;"
 					@keyup.enter="pn=1;tasks=[];queryHistory.start=0;loadTasks();" 
 				/>
-				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #8f8f8f;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
+				<span v-if="kw" style="font-size: 16px;cursor: pointer;color: #6b6b6b;position: absolute;right:0px;top:0px;width: 20px;text-align: center;" 
 					@click="kw=null;">
 					X
 				</span>
@@ -161,15 +161,15 @@
 				···
 			</span>
 		</div>
-		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 1px 0px #888888;height: 15px;">
+		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 4px 0px #6b6b6b;height: 15px;">
 			<span style="font-size: 16px;color: #008000;font-weight: 600;line-height:16px;">
 				{{$moment($store.state.now).format('M-D. E')}}
 			</span>
-			<span style="font-size: 16px;color: #8f8f8f;margin-left:15px;line-height:16px;" >
+			<span style="font-size: 16px;color: #6b6b6b;margin-left:15px;line-height:16px;" >
 				总数:{{ $o(tasksSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 154px;bottom: 88px;">
+		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 152px;bottom: 91px;padding-top: 5px;">
 			<div :key="item.taskId" v-for="item in tasks" class="active visited"
 				@click="
 					debugger;
@@ -177,17 +177,17 @@
 					$store.state.chosenTask=item;
 					$router.push({path:'/task',query:{taskId:item.taskId,reload:1}})
 				" 
-				style="padding:3px 5px;;border:1px solid #bababa;margin:5px;cursor:pointer;position: relative;" 
+				style="padding:3px 5px;;border:1px solid #8f8f8f;margin:5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" 
 					v-html="item.content?$highlight(item.content,kw).split('\n')[0]:null">
 				</div>
 				<div v-if='item.lastTrackContent' 
-					style="font-size:15px;line-height: 15px;color:#8F8F8F;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
+					style="font-size:15px;line-height: 15px;color:#6b6b6b;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 					{{item.lastTrackContent}}
 				</div>
 				<div style="position:relative;margin-top:5px;height:15px;line-height: 15px;">
-					<span style="font-size:12px;color:#8F8F8F;max-width:46px;display:inline-block;vertical-align: top;">
+					<span style="font-size:12px;color:#6b6b6b;max-width:46px;display:inline-block;vertical-align: top;">
 						{{
 							$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').format(
 								($moment().year()==$moment(item.createTime,'YYYY-MM-DD HH:mm:ss.SSS Z').year()? 'M-D': 'YY.M-D') +
@@ -208,20 +208,20 @@
 							)
 						">
 						<span class="n1-line" v-if="item.faQiRenUserId && item.faQiRenUserId != $o($store.state.login).attr('userId')"
-							style="font-size:12px;color:#8F8F8F;display:inline-block;max-width:48px;vertical-align: top;margin-right: 5px;">
+							style="font-size:12px;color:#6b6b6b;display:inline-block;max-width:48px;vertical-align: top;margin-right: 5px;">
 							{{item.faQiRenAlias || item.faQiRenNickname}}
 						</span>
 						<span
-							style="font-size:12px;color:#8F8F8F;display: inline-block;vertical-align: top;">
+							style="font-size:12px;color:#6b6b6b;display: inline-block;vertical-align: top;">
 							>
 						</span>
 						<span class="n1-line" v-if="item.fuZeRenUserId && item.fuZeRenUserId != $o($store.state.login).attr('userId')" 
-							style="font-size:12px;color:#8F8F8F;display:inline-block;max-width:48px;margin-left:5px;vertical-align: top;">
+							style="font-size:12px;color:#6b6b6b;display:inline-block;max-width:48px;margin-left:5px;vertical-align: top;">
 							{{item.fuZeRenAlias || item.fuZeRenNickname}}
 						</span>
 					</span>
 					<span v-if="item.finalTime" style="font-size:12px;margin-left:15px;max-width:105px;display:inline-block;vertical-align: top;" 
-						:style="{color: item.status!=1?'#8F8F8F'
+						:style="{color: item.status!=1?'#6b6b6b'
 						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() > 7*24*60*60*1000)?'#008000'
 						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() < 7*24*60*60*1000
 							&& $moment(item.finalTime).valueOf() - $store.state.now.getTime() > 0)?'#ff8100'
@@ -245,55 +245,55 @@
 					</span>
 				</div>
 			</div>
-			<div v-if="loading"  style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div v-if="loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				加载中
 			</div>
-			<div class="active-text unselectable" v-if="!loading && tasks && tasks.length<$o(tasksSum).attr('count')" @click="pn++;queryHistory.start=0;loadTasks();" 
-				style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+			<div class="active unselectable" v-if="!loading && tasks && tasks.length<$o(tasksSum).attr('count')" @click="pn++;queryHistory.start=0;loadTasks();" 
+				style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
 				点击加载更多
 			</div>
-			<div  v-if="!loading && tasks && tasks.length>0 && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && tasks && tasks.length>0 && !(tasks.length<$o(tasksSum).attr('count'))" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				已全部加载
 			</div>
-			<div  v-if="!loading && (!tasks || tasks.length==0)" style="font-size:14px;text-align: center;color:#8F8F8F;margin-bottom:10px;margin-top: 10px;">
+			<div  v-if="!loading && (!tasks || tasks.length==0)" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				暂无数据
 			</div>
 		</div>
-		<div style="height:91px;position:absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px 0 4px 0px #888888;">
+		<div style="height:91px;position: absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px -1px 4px 0px #6b6b6b;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
-				@click="$router.push({path:'/create-task',query:{reload:1}})">
+				@click="$router.push({path:'/create-task',query:{time:new Date().getTime+''}})">
 				新 任 务 +
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow: hidden;">
 				<span @click="$router.replace({path:'/index'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;
 						background-color: #366CB3;color:#ffffff;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
-				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
-					工 作
-				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					日 常
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					记 录
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span @click="$router.replace({path:'/friends'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					好 友
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					消 息
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span @click="$router.replace({path:'/me'})"
-					style="line-height:50px;font-size:16px;width:14.4%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+				<span style="width:16.7%;display:inline-block;line-height:50px;font-size: 16px;vertical-align: middle;margin-left:-1px;">
+					&nbsp;
+				</span>
+				<span @click="$router.push({path:'/me'})"
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;position:absolute;right:0;
+						vertical-align: middle;">
 					我
 				</span>
 			</div>
@@ -306,7 +306,7 @@
 					queryHistory.start=0;
 				}
 			" 
-			style="position: absolute;top:32px;bottom:0;width:100%;background-color: #00000087;">
+			style="position: absolute;top:32px;bottom:0;width:100%;background-color: rgba(0, 0, 0, 0.6);z-index: 100;">
 			<div style="background-color: #ffffff;padding:0 10px 10px 10px;min-height:100px;">
 				<span v-for="(item,index) in queryHistory.kws" :key="index"
 					style="margin:10px 15px 0 0;display: inline-block;background-color: #e5e5e5;cursor: pointer;">
@@ -331,7 +331,7 @@
 						"
 						style="
 							font-size: 16px;display: inline-block;padding:5px;padding: 5px 0px;
-							vertical-align: bottom;background-color: #ffffff;color: #8f8f8f;border: 1px solid #e5e5e5;
+							vertical-align: bottom;background-color: #ffffff;color: #6b6b6b;border: 1px solid #e5e5e5;
 						">
 						X
 					</span>
@@ -345,13 +345,13 @@
 						}
 					"
 					style="
-						font-size: 16px;cursor: pointer;text-align: center;margin-top:10px;color:#8F8F8F;border:1px dashed #8f8f8f;
+						font-size: 16px;cursor: pointer;text-align: center;margin-top:10px;color:#6b6b6b;border:1px dashed #8f8f8f;
 						padding: 5px;width: 120px;margin: auto;
 					">
 					清空历史记录
 				</div>
 				<div v-if="!queryHistory.kws || queryHistory.kws.length==0" 
-					style="font-size: 16px;text-align: center;margin-top:10px;color:#8F8F8F;">暂无历史记录</div>
+					style="font-size: 16px;text-align: center;margin-top:10px;color:#6b6b6b;">暂无历史记录</div>
 			</div>
 		</div>
 	</div>
