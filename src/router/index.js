@@ -42,6 +42,11 @@ const routes = [
     component: _import('task')
   },
   {
+    path: '/daily',
+    name: '/daily',
+    component: _import('daily')
+  },
+  {
     path: '/friends',
     name: '/friends',
     component: _import('friends')
