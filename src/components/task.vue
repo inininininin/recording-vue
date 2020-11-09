@@ -548,8 +548,11 @@
 						@click="
 							if(task.type != editType.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
-									editType.start=0;
-									task.type=editType.value;
+									if(res.data.code==0){
+										editType.start=0;
+										task.type=editType.value;
+										$store.state.chosenTask.type=editType.value
+									}
 								})
 							}else{
 								editType.start=0;
@@ -576,8 +579,11 @@
 						@click="
 							if(task.content != editContent.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,content:editContent.value})).then(res=>{
-									editContent.start=0;
-									task.content=editContent.value;
+									if(res.data.code==0){
+										editContent.start=0;
+										task.content=editContent.value;
+										$store.state.chosenTask.content=editContent.value
+									}
 								})
 							}else{
 								editContent.start=0;
@@ -608,9 +614,11 @@
 							editFinalTime.value=editFinalTime.date?$moment(editFinalTime.date+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z'):null;
 							if(task.finalTime != editFinalTime.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,finalTime:editFinalTime.value})).then(res=>{
-									editFinalTime.start=0;
-									task.finalTime=editFinalTime.value;
-									$store.state.chosenTask.finalTime=editFinalTime.value
+									if(res.data.code==0){
+										editFinalTime.start=0;
+										task.finalTime=editFinalTime.value;
+										$store.state.chosenTask.finalTime=editFinalTime.value
+									}
 								})
 							}else{
 								editFinalTime.start=0;
@@ -640,9 +648,11 @@
 						@click="
 							if(task.orderNo != editOrderNo.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
-									editOrderNo.start=0;
-									task.orderNo=editOrderNo.value;
-									$store.state.chosenTask.orderNo=editOrderNo.value
+									if(res.data.code==0){
+										editOrderNo.start=0;
+										task.orderNo=editOrderNo.value;
+										$store.state.chosenTask.orderNo=editOrderNo.value
+									}
 								})
 							}else{
 								editOrderNo.start=0;

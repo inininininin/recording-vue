@@ -16,7 +16,7 @@ import Dialog from 'vant/lib/dialog';
 import 'vant/lib/dialog/style';
 import Router from 'vue-router';
 Vue.use(Router);
-Vue.prototype.$version = '1.0.6.9.201104';
+Vue.prototype.$version = '20110916.1.0.7.10';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({

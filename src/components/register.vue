@@ -1,14 +1,15 @@
 <template>
 	<div id="register" style="font-size: 0;padding:30px 0 0 0;position:absolute;top:0;bottom:0;right:0;left:0;">
 		<h1 style="text-align: center;font-size: 30px;margin:0;">板板</h1>
-		<h1 style="text-align: center;font-size: 20px;margin:10px;">注册</h1>
+		<h1 v-if="byAccount" style="text-align: center;font-size: 20px;margin:10px;">账号注册</h1>
+		<h1 v-if="bySms" style="text-align: center;font-size: 20px;margin:10px;">手机注册</h1>
 
-		<form id="byAccountPad" v-if="byAccountPad" style="width:270px;margin:auto;margin-top:30px;">
+		<div id="byAccount" v-if="byAccount" style="width:270px;margin:auto;margin-top:30px;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">账号</span>
 				<input v-model="account" @keyup.enter="register()" type="text"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
-				<span v-if="account" style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="account=null">
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
+				<span v-if="account" style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="account=null">
 					x
 				</span>
 			</div>
@@ -16,54 +17,88 @@
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">密码</span>
 				<input v-model="password"  @keyup.enter="register()" type="password"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
 				<span v-if="password"
-					style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;"
+					style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;"
 					@click="password=null">x</span>
 			</div>
 
 			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">密码确认</span>
 				<input v-model="confirmPassword"  @keyup.enter="register()" type="password"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
 				<span v-if="confirmPassword"
-					style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="confirmPassword=null">
+					style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="confirmPassword=null">
+					x
+				</span>
+			</div>
+			<div style="height:30px;line-height:30px;position:relative;">
+				<span style="width:70px;display: inline-block;font-size: 16px;margin-top:10px;">昵称</span>
+				<input v-model="nickname" @keyup.enter="register()" type="text"
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
+				<span v-if="nickname" style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="nickname=null">
 					x
 				</span>
 			</div>
 			<div style="text-align: center;margin-top:50px;">
 				<button style="width:270px;height:35px;font-size:16px;" @click="register()">注册</button>
 			</div>
-		</form>
+		</div>
 
-		<form id="bySmsPad" v-if="bySmsPad" style="width:270px;margin:auto;margin-top:30px;">
+		<div id="bySms" @keyup.enter.prevent v-if="bySms" style="width:270px;margin:auto;margin-top:30px;">
 			<div style="height:30px;line-height:30px;position:relative;">
 				<span style="width:70px;display: inline-block;font-size: 16px;">手机</span>
-				<input v-model="account" @keyup.enter="register()" type="text"
-					style="width:178px;height:28px;padding-right:18px;font-size: 16px;padding:0;" />
-				<span v-if="account" style="line-height: 34px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="account=null">
+				<input v-model="phone" @keyup.enter="registerBySms()" type="text"
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
+				<span v-if="phone" style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="phone=null">
 					x
 				</span>
 			</div>
 
 			<div  style="height:30px;line-height:30px;position:relative;margin-top:10px;" >
-				<span class="n1-line" style="width:70px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
-				<input v-model="smsVcode"  @keyup.enter="loginBySms()" type="text" style="width:125px;height:28px;padding-right:15px;font-size: 16px;padding:0;"/>
-				<span v-if="smsVcode"  @click="smsVcode=null" style="line-height: 34px;font-size: 16px;position: absolute;right: 55px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;">x</span>
-				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 16px;line-height: 30px;margin-left:5px;	">获取</button>
+				<span style="width:70px;display: inline-block; font-size: 16px;font-size: 16px;">验证码</span>
+				<input v-model="code"  @keyup.enter="registerBySms()" type="text" style="width:125px;height:26px;padding:0;padding-right:15px;font-size: 16px;"/>
+				<span v-if="code"  @click="code=null" style="line-height: 30px;font-size: 16px;position: absolute;right: 55px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;">x</span>
+				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 16px;line-height: 26px;margin-left:5px;	"
+					@click="
+						$axios.post('/recording/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
+							if(data.data.codeMsg)
+								$dialog.alert({message:data.data.codeMsg});
+							if(data.data.code == 0){
+								if(!data.data.codeMsg)
+									$notify({message:'已发送'});
+							}
+						})
+					">
+					获取
+				</button>
 			</div>
-
+			<div style="height:30px;line-height:30px;position:relative;margin-top:10px;">
+				<span style="width:70px;display: inline-block;font-size: 16px;">昵称</span>
+				<input v-model="nickname" @keyup.enter="registerBySms()" type="text"
+					style="width:178px;height:26px;padding:0;padding-right:18px;font-size: 16px;" />
+				<span v-if="nickname" style="line-height: 30px;font-size: 16px;position: absolute;right: 0px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;" @click="nickname=null">
+					x
+				</span>
+			</div>
 			<div style="text-align: center;margin-top:50px;">
 				<button style="width:270px;height:35px;font-size:16px;" @click="registerBySms()">注册</button>
 			</div>
-		</form>
+		</div>
 
-		<div style="text-align:center;margin-top:50px;">
-			<button v-if="bySmsPad" @click="byAccountPad=1;bySmsPad=0;" type="button" style="width:270px;height:35px;margin-top:5px;font-size: 16px;" >账号注册</button>
-			<br/>
-			<button v-if="byAccountPad" @click="byAccountPad=0;bySmsPad=1;" type="button" style="width:270px;height:35px;margin-top:5px;font-size: 16px;" >手机注册</button>
-			<br/>
-			<button style="width:270px;height:35px;margin-top:5px;font-size:16px;" @click="$router.replace({path:'/login'})">去登录</button>
+		<div style="width:270px;margin:auto;">
+			<button v-if="bySms" @click="byAccount=1;bySms=0;" type="button" 
+				style="width:270px;height:35px;margin-top:5px;font-size: 16px;display:block;" >
+				通过账号注册
+			</button>
+			<button v-if="byAccount" @click="byAccount=0;bySms=1;" type="button" 
+				style="width:270px;height:35px;margin-top:5px;font-size: 16px;display:block;" >
+				通过用手机注册
+			</button>
+			<span @click="$router.replace({path:'/login'})"  
+				style="height:35px;font-size: 16px;line-height: 35px;text-align: right;cursor: pointer;float: right;text-decoration: underline;">
+				去登录
+			</span>
 		</div>
 	</div>
 </template>
@@ -74,12 +109,13 @@
 		data() {
 			return {
 				account: null,
+				phone: null,
 				nickname:null,
 				password: null,
 				confirmPassword: null,
-				smsVcode: null,
-				bySmsPad: 0,
-				byAccountPad: 1
+				code: null,
+				bySms: 1,
+				byAccount: 0
 			}
 		},
 		activated() {
@@ -101,40 +137,68 @@
 			register() {
 				debugger
 				let vue = this;
-				vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
-					debugger
-					if (res.data.codeMsg)
-						vue.$dialog.alert(res.data.codeMsg);
-					if (res.data.code == 0) {
-						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
-							debugger
-							if (res.data.codeMsg)
-								vue.$dialog.alert(res.data.codeMsg);
-							if (res.data.code == 0) {
-								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
-							}
-						})
-					}
-				})
+				if(vue.password != vue.confirmPassword)
+					vue.$dialog.alert({message:'两次密码不一致'});
+				else {
+					vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
+						debugger
+						if (res.data.codeMsg)
+							vue.$dialog.alert({message:res.data.codeMsg});
+						if (res.data.code == 0) {
+							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
+								debugger
+								if (res.data.codeMsg)
+									vue.$dialog.alert({message:res.data.codeMsg});
+								if (res.data.code == 0) {
+									vue.$axios.post('/recording/login-refresh').then(data => {
+										debugger;
+										if(data.data.codeMsg)
+											vue.$dialog.alert({message:data.data.codeMsg});
+										if (data.data.code == 0) {
+											if(!res.data.codeMsg)
+												vue.$notify({message:'注册成功'});
+											vue.$store.state.login=data.data.data;
+											vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
+										}
+									})
+								}
+							})
+						}
+					})
+				}
 			},
 			registerBySms() {
 				debugger
 				let vue = this;
-				vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, smsVcode:vue.smsVcode}) ).then(res => {
-					debugger
-					if (res.data.codeMsg)
-						vue.$dialog.alert(res.data.codeMsg);
-					if (res.data.code == 0) {
-						vue.$axios.post('/recording/login-by-login-code', vue.$qs.stringify({loginCode: res.data.data.loginCode})).then(res => {
-							debugger
-							if (res.data.codeMsg)
-								vue.$dialog.alert(res.data.codeMsg);
-							if (res.data.code == 0) {
-								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
-							}
-						})
-					}
-				})
+				if(vue.password != vue.confirmPassword)
+					vue.$dialog.alert({message:'两次密码不一致'});
+				else {
+					vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, code:vue.code}) ).then(res => {
+						debugger
+						if (res.data.codeMsg)
+							vue.$dialog.alert({message:res.data.codeMsg});
+						if (res.data.code == 0) {
+							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
+								debugger
+								if (res.data.codeMsg)
+									vue.$dialog.alert({message:res.data.codeMsg});
+								if (res.data.code == 0) {
+									vue.$axios.post('/recording/login-refresh').then(data => {
+										debugger;
+										if(data.data.codeMsg)
+											vue.$dialog.alert({message:data.data.codeMsg});
+										if (data.data.code == 0) {
+											if(!res.data.codeMsg)
+												vue.$notify({message:'注册成功'});
+											vue.$store.state.login=data.data.data;
+											vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
+										}
+									})
+								}
+							})
+						}
+					})
+				}
 			}
 		}
 	}

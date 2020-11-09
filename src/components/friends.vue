@@ -1,7 +1,7 @@
 <template>
 	<div id="index" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;">
 		<div style="height: 30px;border-bottom:1px solid #8f8f8f;overflow: hidden;">
-			<span style="width:200px;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
+			<span style="width:211px;line-height: 30px;font-size: 16px;display:inline-block;border-right:1px solid #8f8f8f;position: relative;">
 				<svg t="1591346902986" style="position: absolute;left:5px;top:8px;width:15px;height:15px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2627" width="15" height="15"><path d="M830.486464 796.124515 672.790943 638.42797c44.959904-52.799318 72.109099-121.232412 72.109099-196.016087 0-167.084182-135.448007-302.533214-302.53219-302.533214s-302.533214 135.449031-302.533214 302.533214 135.449031 302.53219 302.533214 302.53219c74.782651 0 143.215745-27.149196 196.017111-72.109099L796.101988 830.531518c9.499249 9.499249 24.885227 9.499249 34.384476 0S839.986737 805.623764 830.486464 796.124515zM442.366829 698.401131c-141.380814 0-255.989248-114.631985-255.989248-255.989248 0-141.403341 114.608434-255.989248 255.989248-255.989248 141.37979 0 255.989248 114.585907 255.989248 255.989248C698.356077 583.769146 583.747643 698.401131 442.366829 698.401131z" p-id="2628" fill="#8a8a8a"></path></svg>
 				<input v-model="kw" type="text" 
 					style="border-radius: 0px;line-height: 30px;height:30px;width:159px;display:inline-block;border:none;margin-left:20px;padding:0;"
@@ -210,7 +210,7 @@
 			</div>
 		</div>
 
-		<!-- 加好友 -->
+		<!-- 添加好友 -->
 		<div v-if="addFriend.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;z-index: 1000;" >
 			<div v-if="addFriend.queryUsers" style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#6b6b6b;">添加好友</div>
@@ -241,6 +241,7 @@
 							}).then(() => {
 								addFriend.setFriend=1;
 								addFriend.chosenUser=item;
+								addFriend.chosenUser.alias=addFriend.chosenUser.alias||addFriend.chosenUser.nickname
 							}).catch(() => {
 							});
 						">
@@ -253,7 +254,7 @@
 								overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{ item.phone.replace(new RegExp("(^.{3})(.{4})"),'$1****') }}
 						</span>
-						<img style="width:20px;height:17px;display:inline-block;vertical-align: bottom;margin-left: 10px;" src="../assets/img/friend.png"/>
+						<img v-if="item.friendId" style="width:20px;height:17px;display:inline-block;vertical-align: bottom;margin-left: 10px;" src="../assets/img/friend.png"/>
 					</div>
 					<div v-if="addFriend.loading"  style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
@@ -283,7 +284,7 @@
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;width:50px;">别名</span>
 						<span style="font-size: 16px;display:inline-block;height:30px;line-height:30px;margin-left:5px;position: absolute;left:50px;right:0;">
 							<span style="border-width:1px;border-style: solid;border-color: #cccccc;height:28px;line-height:28px;position: absolute;left:5px;right:5px;padding:0 5px;">
-								<input v-model="addFriend.chosenUser.friendAlias || addFriend.chosenUser.nickname" 
+								<input v-model="addFriend.chosenUser.alias" 
 									style="line-height:24px;padding:0px;border:none;width:100%;"
 									@keyup.enter="addFriend_addFriend();"/>
 							</span>
@@ -527,7 +528,7 @@
 				let vue = this
 				vue.$axios.post('/recording/my-friend/create-friend?',vue.$qs.stringify({
 					toUserId:vue.addFriend.chosenUser.userId,
-					alias:vue.addFriend.chosenUser.friendAlias
+					alias:vue.addFriend.chosenUser.alias
 				})).then(res=>{
 					if(res.data.codeMsg)
 						vue.$notify({type:'primary',message:res.data.codeMsg})
@@ -536,7 +537,7 @@
 							vue.$notify({type:'success',message:'添加成功'})
 						vue.friends=vue.friends?vue.friends:[];
 						vue.friends.unshift({
-							alias: vue.addFriend.chosenUser.friendAlias,
+							alias: vue.addFriend.chosenUser.alias,
 							createTime: vue.$moment().format('YYYY-MM-DD HH:mm:ss.SSS Z'),
 							friendId: res.data.data.friendId,
 							nickname: vue.addFriend.chosenUser.nickname,

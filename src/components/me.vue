@@ -12,11 +12,15 @@
 		</div>
 
 		<div class="active" v-if="$store.state.login && $store.state.login.userId"  
-			style="height:120px;border-bottom: 1px solid #8f8f8f;border-top:1px solid #ffffff;">
+			style="height:120px;border-bottom: 1px solid #8f8f8f;border-top:1px solid #ffffff;"
+			@click="myInfo=1">
 			<div v-if="$store.state.login && $store.state.login.userId" style="margin: 30px 0 0 20px;">
 				<img style="width:50px;height:50px;border: 1px solid #8f8f8f;display: inline-block;vertical-align: bottom;cursor: pointer;"/>
-				<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;">
+				<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;vertical-align: bottom;">
 					{{$o($store.state.login).attr('nickname')}}
+				</span>
+				<span style="height:30px;line-height: 30px;width:30px;text-align: center;display: inline-block;vertical-align: bottom;cursor: pointer;">
+					<img src="../assets/img/info.png" style="height:25px;width:25px;vertical-align: bottom;"/>
 				</span>
 			</div>
 		</div>
@@ -85,6 +89,96 @@
 				</span>
 			</div>
 		</div>
+
+		<div v-if="myInfo && $store.state.login" style="position:absolute;left:0;right:0;top:0;bottom:0;background-color: rgba(0, 0, 0, 0.7);">
+			<div style="margin-top:10%;background-color: #ffffff;min-height:200px;max-height:80%;padding:10px 10px 10px 40px;">
+				<div style="height:30px;font-size: 16px;color: #808080;">
+					我的信息
+				</div>
+				<div style="height:30px;position: relative;">
+					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
+						头像
+					</span>
+					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
+						<img :src=$store.state.login.headimg  style="height:25px;width:25px;cursor: pointer;vertical-align: middle;"/>
+					</span>
+					<span v-if="0" class="active" 
+					style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
+						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+					</span>
+				</div>
+				<div style="height:30px;position: relative;">
+					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
+						昵称
+					</span>
+					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
+						{{$store.state.login.nickname}}
+					</span>
+					<span class="active" 
+						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;"
+						@click="
+							var r= window.prompt('修改昵称',$store.state.login.nickname)
+							if(r){
+								$axios.post('/recording/update-my-info',$qs.stringify({
+									nickname:r
+								})).then(res=>{
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code==0){
+										if(!res.data.codeMsg)
+											$notify({message:'修改成功'})
+										$store.state.login.nickname=r
+									}
+								})
+							}
+						">
+						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+					</span>
+				</div>
+				<div style="height:30px;position: relative;">
+					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
+						账号
+					</span>
+					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
+						{{$store.state.login.account}}
+					</span>
+					<span v-if="0" class="active" 
+						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
+						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+					</span>
+				</div>
+				<div style="height:30px;position: relative;">
+					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
+						手机
+					</span>
+					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
+						{{$store.state.login.phone}}
+					</span>
+					<span v-if="0" class="active" 
+						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
+						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+					</span>
+				</div>
+				<div style="height:30px;position: relative;">
+					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
+						邮箱
+					</span>
+					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
+						{{$store.state.login.email}}
+					</span>
+					<span v-if="0" class="active" 
+						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
+						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+					</span>
+				</div>
+				<div style="margin-top:10px;">
+					<button style="font-size: 16px;cursor: pointer;min-width:80px;height:30px;"
+						@click="myInfo=0">
+						关闭
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -92,7 +186,8 @@
 		name: 'index',
 		data() {
 			return {
-				query: null
+				query: null,
+				myInfo:0
 			}
 		},
 		activated() {

@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="unselectable" >
-    <div v-show="$store.state.requestingCount>0" style="width:100%;height:6px;position: absolute;top:0;z-index: 999999;overflow: hidden;">
+    <div v-show="$store.state.requestingCount>0" style="width:100%;height:10px;position: absolute;top:0;z-index: 999999;overflow: hidden;">
       <img src="./assets/img/loading.gif" style="height:100%;width:110%;vertical-align: top;margin-left: -20px;"/>
     </div>
     <keep-alive>
@@ -22,19 +22,26 @@ export default {
 				vue.$store.state.nowTimer = setInterval(function(){
 					vue.$store.state.now=new Date();
         },1000)
-        
+    vue.$store.state.requestingCount--;
     vue.$axios.post('/recording/login-refresh').then(res=>{
+      vue.$store.state.requestingCount++;
       if(res.data.code == 0){
         vue.$store.state.login=res.data.data;
       }
+    }).catch(res=>{
+      vue.$store.state.requestingCount++;
     })
     setInterval(function(){
+      vue.$store.state.requestingCount--;
       vue.$axios.post('/recording/login-refresh').then(res=>{
+        vue.$store.state.requestingCount++;
         if(res.data.code == 0){
           vue.$store.state.login=res.data.data;
         }
+      }).catch(res=>{
+        vue.$store.state.requestingCount++;
       })
-    },5 * 60* 1000)
+    },5000)
   }
 }
 </script>
@@ -44,7 +51,6 @@ export default {
   #app {
     z-index:0;
     height: 100%;
-    margin:auto;
     position:relative;
     background-color: #FFFFFF;
   }
@@ -57,12 +63,15 @@ export default {
 
   @media screen and (min-width:768px){
     #app {
+      margin:auto;
       width: 80%;
     }
   }
 
   @media screen and (min-width:1200px){
     #app {
+      margin:unset;
+      margin-left:250px;
       width: 50%;
     }
   }
@@ -124,7 +133,9 @@ export default {
   .active:active {
     opacity: 0.6;
   }
- 
+  .hover:hover {
+    opacity: 0.6;
+  }
 
   .unselectable {
     -webkit-user-select:none;
