@@ -264,7 +264,7 @@
 		</div>
 		<div style="height:30px;position:absolute;bottom:0px;left:0;right:0;padding:5px;">
 			<span class="active" v-if="task && task.status==1" 
-				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+				style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
@@ -283,7 +283,7 @@
 				完&nbsp;成
 			</span>
 			<span class="active" v-if="task && task.status==1"
-				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+				style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
@@ -302,7 +302,7 @@
 				放&nbsp;弃
 			</span>
 			<span class="active" v-if="task && task.status!=1"
-				style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+				style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$dialog.confirm({
@@ -323,11 +323,11 @@
 				">
 				开&nbsp;启
 			</span>
-			<span class="active" style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+			<span class="active" style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;">
 				延&nbsp;续
 			</span>
-			<span class="active" style="font-size:16px;width:50px;line-height:28px;height: 28px;display:inline-block;margin-right:5px;
+			<span class="active" style="font-size:16px;width:60px;line-height:33px;height: 33px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
 					$dialog.confirm({

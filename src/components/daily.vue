@@ -155,14 +155,14 @@
 				</div>
 				<div style="height:37px;margin-top:10px;">
 					<span class="active" 
-						style="font-size: 16px;height:35px;line-height: 35px;display: inline-block;
-							text-align: center;min-width:70px;border: 1px solid #000000;cursor: pointer;"
+						style="font-size: 16px;height:33px;line-height: 33px;display: inline-block;
+							text-align: center;min-width:80px;border: 1px solid #000000;cursor: pointer;"
 						@click="dailyInfo=0;chosenDaily=null"	>
 						关闭
 					</span>
 					<span class="active" 
-						style="font-size: 16px;height:35px;line-height: 35px;display: inline-block;
-							text-align: center;min-width:70px;border: 1px solid #000000;cursor: pointer;margin-left:20px;"
+						style="font-size: 16px;height:33px;line-height: 33px;display: inline-block;
+							text-align: center;min-width:80px;border: 1px solid #000000;cursor: pointer;margin-left:20px;"
 						@click="
 							$dialog.confirm({message:'确认删除吗?'}).then(()=>{
 								$axios.post('/recording/daily/delete-daily',$qs.stringify({dailyId:chosenDaily.dailyId})).then(res=>{
