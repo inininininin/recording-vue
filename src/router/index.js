@@ -42,9 +42,9 @@ const routes = [
     component: _import('task')
   },
   {
-    path: '/daily',
-    name: '/daily',
-    component: _import('daily')
+    path: '/tasks',
+    name: '/tasks',
+    component: _import('tasks')
   },
   {
     path: '/friends',
