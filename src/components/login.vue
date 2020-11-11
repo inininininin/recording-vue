@@ -134,12 +134,12 @@
 				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,code:vue.code})).then(res => {
 					debugger
 					if(res.data.codeMsg)
-						vue.$dialog.alert(res.data.codeMsg);
+						vue.$dialog.alert({message:res.data.codeMsg});
 					if(res.data.code == 0){
 						vue.$axios.post('/recording/login-refresh').then(data => {
 							debugger
 							if(res.data.codeMsg)
-								vue.$dialog.alert(res.data.codeMsg);
+								vue.$dialog.alert({message:res.data.codeMsg});
 							if (res.data.code == 0) {
 								if(!res.data.codeMsg)
 									vue.$notify({message:'登录成功'});
