@@ -66,7 +66,7 @@
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
 								if(!data.data.codeMsg)
-									$notify({message:'已发送'});
+									$notify({type:'success',message:'已发送'});
 							}
 						})
 					">
@@ -156,7 +156,7 @@
 											vue.$dialog.alert({message:data.data.codeMsg});
 										if (data.data.code == 0) {
 											if(!res.data.codeMsg)
-												vue.$notify({message:'注册成功'});
+												vue.$notify({type:'success',message:'注册成功'});
 											vue.$store.state.login=data.data.data;
 											vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 										}
@@ -189,7 +189,7 @@
 											vue.$dialog.alert({message:data.data.codeMsg});
 										if (data.data.code == 0) {
 											if(!res.data.codeMsg)
-												vue.$notify({message:'注册成功'});
+												vue.$notify({type:'success',message:'注册成功'});
 											vue.$store.state.login=data.data.data;
 											vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 										}

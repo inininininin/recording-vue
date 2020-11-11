@@ -19,14 +19,15 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 Vue.prototype.$ = jQuery;
-Vue.prototype.$version = '20111111.12.1.0.9';
+Vue.prototype.$version = '20111115.13.1.0.10';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
   messageAlign:'left'
 })
 Notify.setDefaultOptions({
-  type:"primary"
+  type:"primary",
+  duration:1000,
 })
 Vue.config.productionTip = false;
 Vue.prototype.$store = store;

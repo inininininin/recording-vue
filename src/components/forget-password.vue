@@ -64,7 +64,7 @@
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
 								if(!data.data.codeMsg)
-									$notify({message:'已发送'});
+									$notify({type:'success',message:'已发送'});
 							}
 						})
 					">
@@ -155,7 +155,7 @@
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
 							if (!res.data.codeMsg)
-								vue.$dialog.alert({message:'修改成功'});
+								vue.$notify({type:'success',message:'修改成功'});
 						}
 					})
 				}
@@ -172,7 +172,7 @@
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
 							if (!res.data.codeMsg)
-								vue.$dialog.alert({message:'修改成功'});
+								vue.$notify({type:'success',message:'修改成功'});
 						}
 					})
 				}

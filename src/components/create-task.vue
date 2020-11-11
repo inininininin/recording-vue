@@ -436,9 +436,8 @@
 								task.taskId=res.data.data.taskId;
 								task.createTime=vue.$moment().format('YYYY-MM-DD HH:mm:ss.SSS Z')
 								vue.$store.state.createdTask=task
-								vue.$dialog.alert({type:'success',message:'创建成功'}).then(res=>{
-									vue.$router.back()
-								})
+								vue.$notify({type:'success',message:'创建成功'})
+								vue.$router.back()
 							}
 						}
 					})

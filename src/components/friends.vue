@@ -13,7 +13,7 @@
 						if($store.state.login){
 							$axios.get(`/recording/cache/get?name=${'queryHistory.friends.kws-'+$store.state.login.userId}`)
 								.then(res=>{
-									if(res.data.code==0)
+									if(res.data.code == 0)
 										if(res.data.data.value)
 											queryHistory.kws=res.data.data.value.split(',');
 								})
@@ -469,7 +469,7 @@
 							vue.pn--;
 					} else {
 						if(res.data.codeMsg)
-							vue.$notify({ type:'primary',message: res.data.codeMsg });
+							vue.$dialog.alert({ message: res.data.codeMsg });
 					}
 					vue.loading=0
 				})
@@ -479,7 +479,7 @@
 						vue.friendsSum=res.data.data
 					} else {
 						if(res.data.codeMsg)
-							vue.$notify({ type:'primary',message: res.data.codeMsg });
+							vue.$dialog.alert({ message: res.data.codeMsg });
 					}
 				})
 			},
@@ -507,7 +507,7 @@
 								vue.addFriend.pn--;
 						} else {
 							if(res.data.codeMsg)
-								vue.$notify({ type:'primary',message: res.data.codeMsg });
+								vue.$dialog.alert({ message: res.data.codeMsg });
 						}
 						vue.addFriend.loading=0
 					})
@@ -533,7 +533,7 @@
 				})).then(res=>{
 					if(res.data.codeMsg)
 						vue.$notify({type:'primary',message:res.data.codeMsg})
-					if(res.data.code==0) {
+					if(res.data.code == 0) {
 						if(!res.data.codeMsg)
 							vue.$notify({type:'success',message:'添加成功'})
 						vue.friends=vue.friends?vue.friends:[];

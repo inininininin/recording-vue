@@ -271,7 +271,8 @@
 						if(res.data.codeMsg)
 							$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
-							$notify({message:'已完成'})
+							if(!res.data.codeMsg)
+								$notify({type:'success',message:'已完成',color:'#000000',background:'#ffe063'})
 							task.status=2;
 							task.running=0;
 							task.completeTime=new Date()
@@ -290,7 +291,8 @@
 						if(res.data.codeMsg)
 							$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
-							$notify({message:'已放弃'})
+							if(!res.data.codeMsg)
+								$notify({type:'success',message:'已放弃',color:'#000000',background:'#d5d5d5'})
 							task.status=3;
 							task.running=0;
 							task.cancelTime=new Date()
@@ -312,7 +314,8 @@
 							if(res.data.codeMsg)
 								$notify({message:res.data.codeMsg})
 							if(res.data.code == 0){
-								$notify({message:'已开启'})
+								if(!res.data.codeMsg)
+									$notify({type:'success',message:'已开启'})
 								task.status=1;
 								task.running=1;
 								$store.state.chosenTask.status=1;
@@ -337,7 +340,8 @@
 							if(res.data.codeMsg)
 								$notify({message:res.data.codeMsg})
 							if(res.data.code == 0){
-								$notify({message:'已删除'})
+								if(!res.data.codeMsg)
+									$notify({type:'success',message:'已删除'})
 								$store.state.chosenTaskDel=1;
 								$router.back();
 							}
@@ -375,8 +379,10 @@
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:item.toUserId})).then(res=>{
 								if(res.data.codeMsg)
-									$notify({type:'primary', message:res.data.codeMsg})
+									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
+									if(!res.data.codeMsg)
+										$notify({type:'success', message:'修改成功'})
 									editFaQiRen.start=0;
 									task.faQiRenUserId=item.toUserId
 									task.faQiRenNickname=item.nickname
@@ -430,8 +436,10 @@
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
-									$notify({type:'primary', message:res.data.codeMsg})
+									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
+									if(!res.data.codeMsg)
+										$notify({type:'success', message:'修改成功'})
 									editFaQiRen.start=0;
 									task.faQiRenUserId=null
 									task.faQiRenNickname=null
@@ -477,8 +485,10 @@
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:item.toUserId})).then(res=>{
 								if(res.data.codeMsg)
-									$notify({type:'primary', message:res.data.codeMsg})
+									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
+									if(!res.data.codeMsg)
+										$notify({type:'success', message:'修改成功'})
 									editFuZeRen.start=0;
 									task.fuZeRenUserId=item.toUserId
 									task.fuZeRenNickname=item.nickname
@@ -532,8 +542,10 @@
 						@click="
 							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
-									$notify({type:'primary', message:res.data.codeMsg})
+									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
+									if(!res.data.codeMsg)
+										$notify({type:'success', message:'修改成功'})
 									editFuZeRen.start=0;
 									task.fuZeRenUserId=null
 									task.fuZeRenNickname=null
@@ -571,7 +583,11 @@
 						@click="
 							if(task.type != editType.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
-									if(res.data.code==0){
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code == 0){
+										if(!res.data.codeMsg)
+											$notify({type:'success', message:'修改成功'})
 										editType.start=0;
 										task.type=editType.value;
 										$store.state.chosenTask.type=editType.value
@@ -604,7 +620,11 @@
 						@click="
 							if(task.name != editName.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,name:editName.value})).then(res=>{
-									if(res.data.code==0){
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code == 0){
+										if(!res.data.codeMsg)
+											$notify({type:'success', message:'修改成功'})
 										editName.start=0;
 										task.name=editName.value;
 										$store.state.chosenTask.name=editName.value
@@ -634,7 +654,11 @@
 						@click="
 							if(task.content != editContent.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,content:editContent.value})).then(res=>{
-									if(res.data.code==0){
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code == 0){
+										if(!res.data.codeMsg)
+											$notify({type:'success', message:'修改成功'})
 										editContent.start=0;
 										task.content=editContent.value;
 										$store.state.chosenTask.content=editContent.value
@@ -669,7 +693,11 @@
 							editFinalTime.value=editFinalTime.date?$moment(editFinalTime.date+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z'):null;
 							if(task.finalTime != editFinalTime.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,finalTime:editFinalTime.value})).then(res=>{
-									if(res.data.code==0){
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code == 0){
+										if(!res.data.codeMsg)
+											$notify({type:'success', message:'修改成功'})
 										editFinalTime.start=0;
 										task.finalTime=editFinalTime.value;
 										$store.state.chosenTask.finalTime=editFinalTime.value
@@ -703,7 +731,11 @@
 						@click="
 							if(task.orderNo != editOrderNo.value){
 								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
-									if(res.data.code==0){
+									if(res.data.codeMsg)
+										$dialog.alert({message:res.data.codeMsg})
+									if(res.data.code == 0){
+										if(!res.data.codeMsg)
+											$notify({type:'success', message:'修改成功'})
 										editOrderNo.start=0;
 										task.orderNo=editOrderNo.value;
 										$store.state.chosenTask.orderNo=editOrderNo.value
@@ -877,7 +909,7 @@
 							vue.editFuZeRen.pn--;
 					} else {
 						if(data.data.codeMsg)
-							vue.$dialog.alert({  type:'primary', message: data.data.codeMsg });
+							vue.$dialog.alert({ message: data.data.codeMsg });
 					}
 					vue.editFuZeRen.loading=0
 				})
@@ -886,14 +918,14 @@
 				debugger
 				let vue = this
 				if(!vue.trackContent){
-					vue.$notify({type:'primary',message:'内容不可空'})
+					vue.$notify({message:'内容不可空'})
 				}else{
 					vue.$axios.post('/recording/my-task/create-track',vue.$qs.stringify({
 						taskId:vue.query.taskId,
 						content:vue.trackContent
 					})).then(res=>{
 						if(res.data.codeMsg)
-							vue.$notify({type:'primary',message:res.data.codeMsg})
+							vue.$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
 							vue.tracks.items=vue.tracks.items==null?[]:vue.tracks.items;
 							var createdTrack = {

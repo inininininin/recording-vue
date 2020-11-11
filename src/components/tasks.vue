@@ -13,7 +13,7 @@
 						if($store.state.login){
 							$axios.get(`/recording/cache/get?name=${'queryHistory.kws-'+$store.state.login.userId}`)
 								.then(res=>{
-									if(res.data.code==0)
+									if(res.data.code == 0)
 										if(res.data.data.value)
 											queryHistory.kws=res.data.data.value.split(',');
 								})

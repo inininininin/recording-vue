@@ -60,7 +60,7 @@
 								})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
-									if(res.data.code== 0){
+									if(res.data.code == 0){
 										for (let i = 0; i < item.does.length; i++) {
 											const itemDo = item.does[i];
 											if(itemDo.done &&
@@ -81,7 +81,7 @@
 								})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
-									if(res.data.code== 0){
+									if(res.data.code == 0){
 										item.does.push({doId:res.data.data.doId,done:1,doneTime:doneDate.format('YYYY-MM-DD')})
 									}
 								})
@@ -124,8 +124,9 @@
 									})).then(res => {
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
-										if(res.data.code==0){
-											$notify({type:'success',message:'修改成功'})
+										if(res.data.code == 0){
+											if(!res.data.codeMsg)
+												$notify({type:'success',message:'修改成功'})
 											chosenDaily.name=r;
 										}
 									})
@@ -152,7 +153,7 @@
 								$axios.post('/recording/daily/delete-daily',$qs.stringify({dailyId:chosenDaily.dailyId})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
-									if(res.data.code==0){
+									if(res.data.code == 0){
 										if(!res.data.codeMsg)
 											$notify({type:'success',message:'删除成功'})
 										dailies.splice(dailies.indexOf(chosenDaily),1)
@@ -177,9 +178,9 @@
 						$axios.post('/recording/daily/create-daily',$qs.stringify({name:r})).then(res=>{
 							if(res.data.codeMsg)
 								$dialog.alert({message:res.data.codeMsg})
-							if(res.data.code== 0){
-								if(res.data.codeMsg)
-									$dialog.notify({message:'创建成功'})
+							if(res.data.code == 0){
+								if(!res.data.codeMsg)
+									$notify({type:'success',message:'创建成功'})
 								dailies.push({
 									dailyId:res.data.data.dailyId,
 									name:r
@@ -270,7 +271,7 @@
 				).then(res=>{
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg})
-					if(res.data.code==0){
+					if(res.data.code == 0){
 						vue.firstDate=res.data.data.date?vue.$moment(res.data.data.date):null;
 
 						var lastMonthDay = vue.$moment().subtract(1, 'month').set('date',1).subtract(1,'day');
@@ -301,7 +302,7 @@
 				).then(res=>{
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg})
-					if(res.data.code==0){
+					if(res.data.code == 0){
 						vue.dailies.push(...res.data.data.items);
 						var c =(vue.fromDate.valueOf() - vue.toDate.valueOf())/1000/60/60/24
 						if(c == 0)

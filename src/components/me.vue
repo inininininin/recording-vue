@@ -124,9 +124,9 @@
 								})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
-									if(res.data.code==0){
+									if(res.data.code == 0){
 										if(!res.data.codeMsg)
-											$notify({message:'修改成功'})
+											$notify({type:'success',message:'修改成功'})
 										$store.state.login.nickname=r
 									}
 								})

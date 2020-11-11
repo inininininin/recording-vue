@@ -45,7 +45,7 @@
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
 								if(!data.data.codeMsg)
-									$dialog.alert({message:'已发送'});
+									$notify({type:'success',message:'已发送'});
 							}
 						})
 					">
@@ -120,7 +120,7 @@
 							}
 							if (res.data.code == 0) {
 								if(!res.data.codeMsg)
-									vue.$notify({message:'登录成功'});
+									vue.$notify({type:'success',message:'登录成功'});
 								vue.$store.state.login=res.data.data;
 								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
@@ -142,7 +142,7 @@
 								vue.$dialog.alert({message:res.data.codeMsg});
 							if (res.data.code == 0) {
 								if(!res.data.codeMsg)
-									vue.$notify({message:'登录成功'});
+									vue.$notify({type:'success',message:'登录成功'});
 								vue.$store.state.login=res.data.data;
 								vue.$router.push({path:'/index',query:{time:new Date().getTime()+""}})
 							}
