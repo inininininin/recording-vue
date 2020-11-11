@@ -89,7 +89,7 @@
 					<span style="font-size:16px;">{{chosenFriend.alias}}</span>
 					<span  style="position: absolute;right:0;font-size:16px;padding:0 3px;background-color: #cccccc;cursor: pointer;color:#6b6b6b;"
 						@click="friendInfo.editAlias.start=1;friendInfo.editAlias.value=chosenFriend.alias">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="margin-top:10px;">

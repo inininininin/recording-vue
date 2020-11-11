@@ -10,6 +10,29 @@
 			<span style="font-weight: 900;font-size: 16px;">任务详情</span>
 		</div>
 		<div class="scrollbar" style="top:41px;bottom: 302px;position: absolute;overflow:auto;width:100%;">
+			<div style="font-size: 0px;width:100%;height:40px;position: relative;border-bottom: 1px solid rgb(143, 143, 143);">
+				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+					任务名
+				</span>
+				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
+					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
+				</span>
+				
+				<span style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span class="selectable" v-if="$o(task).attr('name')" 
+						style="font-size: 16px;height: 40px;line-height: 40px;display: inline-block;margin-left: 5px;
+							overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+						{{ task.name }}
+					</span>
+					<span class="active" 
+						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
+							background-color: #e4e4e4;color: #6b6b6b;"
+						@click="editName.start=1;editName.value=$o(task).attr('name');">
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+					</span>
+				</span>
+			</div>
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
 				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
@@ -33,7 +56,7 @@
 								editFaQiRen.pn=1;
 								chooseFaQiRen_loadItems();
 							}">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -61,7 +84,7 @@
 								editFuZeRen.pn=1;
 								chooseFuZeRen_loadItems();
 							}">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -81,12 +104,12 @@
 						</textarea>
 					</span>
 					<span class="active" 
-						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;
+						style="width:25px;height: 200px;line-height: 200px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;
 							top:0;right: 0px;bottom:0;position: absolute;background-color: #e4e4e4;color: #6b6b6b;"
 						@click="
 							editContent.start=1;
 							editContent.value=task.content;">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -112,7 +135,7 @@
 						@click="
 							editType.start=1;
 							editType.value=task.type;">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -146,7 +169,7 @@
 							editFinalTime.start=1;
 							editFinalTime.value=task.finalTime;
 							editFinalTime.date=task.finalTime?$moment(task.finalTime).format('YYYY-MM-DD'):null;">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -169,7 +192,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="editOrderNo.start=1;editOrderNo.value=$o(task).attr('orderNo');">
-						改
+						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -563,7 +586,39 @@
 				</div>
 			</div>
 		</div>
-
+		<div v-if="editName.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
+			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
+				<div style="font-size: 16px;color:#6b6b6b;">修改任务名</div>
+				<div style="line-height:30px;position: relative;height: 30px;border-style: solid;border-color: #8F8F8F;border-width: 1px;margin-top:5px;">
+					<span style="display: inline-block;line-height:30px;position: absolute;left:5px;right:15px;text-align: center;height: 30px;">
+						<input v-model="editName.value" style="font-size: 16px;line-height:28px;border: none;width:100%;"/>
+					</span>
+					<span v-if="editName.value" @click="editName.value=null" 
+						style="font-size: 16px;cursor: pointer;line-height:30px;position: absolute;display:inline-block;right: 0px;width: 15px;text-align: center;">
+						x
+					</span>
+				</div>
+				<div style="margin-top:10px;">
+					<button @click="editName.start=0;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
+					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
+						@click="
+							if(task.name != editName.value){
+								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,name:editName.value})).then(res=>{
+									if(res.data.code==0){
+										editName.start=0;
+										task.name=editName.value;
+										$store.state.chosenTask.name=editName.value
+									}
+								})
+							}else{
+								editName.start=0;
+							}
+						" >
+						确 认
+					</button>
+				</div>
+			</div>
+		</div>
 		<div v-if="editContent.start" style="height:100%;width:100%;background-color: rgba(0,0,0,0.6);position: absolute; top:0;" >
 			<div style="padding:10px 10px 10px 40px;background-color: #ffffff;margin-top:100px;max-height: 500px;overflow: auto;">
 				<div style="font-size: 16px;color:#6b6b6b;">修改内容</div>
@@ -685,6 +740,10 @@
 					loading:null,
 				},
 				editType:{
+					start: null,
+					value: null,
+				},
+				editName:{
 					start: null,
 					value: null,
 				},

@@ -15,6 +15,25 @@
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
 				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+					任务名
+				</span>
+				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
+					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
+				</span>
+				
+				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span style="display: inline-block;line-height:40px;position: absolute;left:5px;right:15px;text-align: center;height: 40px;">
+						<input ref="nameRef" v-model="name" style="font-size: 16px;line-height:38px;border: none;width:100%;padding:0;" />
+					</span>
+					<span v-if="name" @click="name=null" 
+						style="font-size: 16px;cursor: pointer;line-height:40px;position: absolute;display:inline-block;right: 0px;width: 15px;text-align: center;">
+						x
+					</span>
+				</span>
+			</div>
+			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
+				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					发起人
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
@@ -113,7 +132,7 @@
 					<span style="display: inline-block;height:190px;border-left:1px solid #8F8F8F;vertical-align: middle;"></span>
 				</span>
 				<span style="display: inline-block;position: absolute;left:96px;right:5px;height: 200px;">
-					<textarea v-focus class="scrollbar1" v-model="content" 
+					<textarea class="scrollbar1" v-model="content" 
 						style="resize:none;font-size: 16px;height:188px;border: none;width:100%;margin-top: 7px;padding:0;"></textarea>
 				</span>
 			</div>
@@ -336,6 +355,7 @@
 			return {
 				query:null,
 				type:null,
+				name:null,
 				content:null,
 				orderNo:null,
 				finalTime:null,
@@ -371,7 +391,8 @@
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
-				Object.assign(vue.$data, vue.$options.data());
+				if(vue.query)
+					Object.assign(vue.$data, vue.$options.data());
 				vue.query = vue.$route.query;
 				vue.load();
 			}else{
@@ -382,6 +403,7 @@
 			load() {
 				debugger
 				let vue = this;
+				vue.$refs.nameRef.focus()
 			},
 			createTask() {
 				let vue = this
@@ -400,6 +422,7 @@
 						fuZeRenNickname:vue.$o(vue.chosenFuZeRen).attr('nickname'),
 						fuZeRenAlias:vue.$o(vue.chosenFuZeRen).attr('alias'),
 						type:vue.type,
+						name:vue.name,
 						content:vue.content,
 						orderNo:vue.orderNo,
 					}

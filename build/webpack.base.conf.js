@@ -90,5 +90,6 @@ module.exports = {
   },
   externals: {
     Vue: 'vue',
+    $: 'jQuery',
   },
 }

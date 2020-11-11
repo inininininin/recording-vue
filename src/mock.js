@@ -374,98 +374,99 @@ import Mock from 'mockjs';
 //     };
 // });
 
-Mock.mock.daily={
-    dailies :[
-        {
-            dailyId:'434132123',
-            name:'学英语',
-            does:[
-                {
-                    doId:'1232131',
-                    done:1,
-                    doneTime:'2020-11-08 15:33:44.343 +0800'
-                },
-                {
-                    doId:'1232132',
-                    done:0,
-                    doneTime:'2020-11-07 15:33:44.343 +0800'
-                }
-                ,
-                {
-                    doId:'12321323',
-                    done:1,
-                    doneTime:'2020-11-06 15:33:44.343 +0800'
-                }
-            ]
-        },{
-            dailyId:'134132123',
-            name:'学日语',
-            does:[
-                {
-                    doId:'12321312',
-                    done:1,
-                    doneTime:'2020-11-08 15:33:44.343 +0800'
-                },
-                {
-                    doId:'12321321',
-                    done:1,
-                    doneTime:'2020-11-07 15:33:44.343 +0800'
-                }
-                ,
-                {
-                    doId:'123213234',
-                    done:1,
-                    doneTime:'2020-11-06 15:33:44.343 +0800'
-                }
-            ]
-        }
-    ],
+// Mock.mock.daily={
+//     dailies :[
+//         {
+//             dailyId:'434132123',
+//             name:'学英语',
+//             does:[
+//                 {
+//                     doId:'1232131',
+//                     done:1,
+//                     doneTime:'2020-11-08 15:33:44.343 +0800'
+//                 },
+//                 {
+//                     doId:'1232132',
+//                     done:0,
+//                     doneTime:'2020-11-07 15:33:44.343 +0800'
+//                 }
+//                 ,
+//                 {
+//                     doId:'12321323',
+//                     done:1,
+//                     doneTime:'2020-11-06 15:33:44.343 +0800'
+//                 }
+//             ]
+//         },{
+//             dailyId:'134132123',
+//             name:'学日语',
+//             does:[
+//                 {
+//                     doId:'12321312',
+//                     done:1,
+//                     doneTime:'2020-11-08 15:33:44.343 +0800'
+//                 },
+//                 {
+//                     doId:'12321321',
+//                     done:1,
+//                     doneTime:'2020-11-07 15:33:44.343 +0800'
+//                 }
+//                 ,
+//                 {
+//                     doId:'123213234',
+//                     done:1,
+//                     doneTime:'2020-11-06 15:33:44.343 +0800'
+//                 }
+//             ]
+//         }
+//     ],
     
-}
+// }
 
-Mock.mock('/recording/daily/dailies', 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            items:Mock.mock.daily.dailies
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/daily/dailies' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     console.log('/recording/daily/dailies')
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             items:Mock.mock.daily.dailies
+//         }
+//     };
+// });
 
-Mock.mock('/recording/daily/done', 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/daily/done' + '\\?.*', 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
-Mock.mock('/recording/daily/undone', 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/daily/undone', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
-Mock.mock('/recording/daily/create-daily', 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/daily/create-daily', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });
 
-Mock.mock('/recording/daily/delete-daily', 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {}
-    };
-});
+// Mock.mock('/recording/daily/delete-daily', 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {}
+//     };
+// });

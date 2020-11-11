@@ -39,21 +39,21 @@
 			</span> 
 		</div>
 		<div  style="position: relative;white-space: nowrap;border-bottom:1px solid #8f8f8f;overflow: hidden;height: 30px;padding-right: 50px;">
-			<!-- <span class="active"
+			<span class="active"
 				@click="
-					order=sort=='createTime'?order:null;
-					sort='createTime';
-					order=!order?'desc':order=='desc'?'asc':order=='asc'?'':null;
+					order=sort=='name'?order:null;
+					sort='name';
+					order=!order?'asc':order=='asc'?'desc':order=='desc'?'':null;
 					sort=order?sort:null;
 					pn=1;tasks=[];queryHistory.start=0;loadTasks();
 				"
-				:style="{color:sort=='createTime'?'red':'#000000'}"
-				style="width: 52px;line-height: 26px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
-				时间
-				<span v-if="sort=='createTime' && order=='asc'">&nbsp;&and;</span>
-				<span v-if="sort=='createTime' && order=='desc'">&nbsp;&or;</span>
-				<span v-if="sort!='createTime' || !order">&nbsp;&nbsp;</span>
-			</span> -->
+				:style="{color:sort=='name'?'red':'#000000'}"
+				style="width: 52px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;">
+				名称
+				<span v-if="sort=='name' && order=='asc'">&nbsp;&and;</span>
+				<span v-if="sort=='name' && order=='desc'">&nbsp;&or;</span>
+				<span v-if="sort!='name' || !order">&nbsp;&nbsp;</span>
+			</span>
 			<span class="active"
 				@click="
 					order=sort=='finalTime'?order:null;
@@ -180,7 +180,7 @@
 				style="padding:3px 5px;;border:1px solid #8f8f8f;margin:5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" 
-					v-html="item.content?$highlight(item.content,kw).split('\n')[0]:null">
+					v-html="item.name?$highlight(item.name,kw).split('\n')[0]:null">
 				</div>
 				<div v-if='item.lastTrackContent' 
 					style="font-size:15px;line-height: 15px;color:#6b6b6b;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
@@ -261,7 +261,7 @@
 		</div>
 		<div style="height:91px;position: absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px -1px 4px 0px #6b6b6b;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
-				@click="$router.push({path:'/create-task',query:{time:new Date().getTime+''}})">
+				@click="$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})">
 				新 任 务 +
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow: hidden;">
