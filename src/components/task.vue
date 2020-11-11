@@ -29,7 +29,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="editName.start=1;editName.value=$o(task).attr('name');">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -56,7 +56,7 @@
 								editFaQiRen.pn=1;
 								chooseFaQiRen_loadItems();
 							}">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -84,7 +84,7 @@
 								editFuZeRen.pn=1;
 								chooseFuZeRen_loadItems();
 							}">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -109,7 +109,7 @@
 						@click="
 							editContent.start=1;
 							editContent.value=task.content;">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -135,7 +135,7 @@
 						@click="
 							editType.start=1;
 							editType.value=task.type;">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -169,7 +169,7 @@
 							editFinalTime.start=1;
 							editFinalTime.value=task.finalTime;
 							editFinalTime.date=task.finalTime?$moment(task.finalTime).format('YYYY-MM-DD'):null;">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -192,7 +192,7 @@
 						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
 							background-color: #e4e4e4;color: #6b6b6b;"
 						@click="editOrderNo.start=1;editOrderNo.value=$o(task).attr('orderNo');">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</span>
 			</div>
@@ -389,7 +389,7 @@
 								}
 							})
 						">
-						<span><img :src="item.headimg" /></span>
+						<span><img draggable="false"  :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
@@ -491,7 +491,7 @@
 								}
 							})
 						">
-						<span><img :src="item.headimg" /></span>
+						<span><img draggable="false"  :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>

@@ -67,7 +67,7 @@
 									chooseFaQiRen_loadItems();
 								}
 							">
-							<img draggable="false" src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
+							<img draggable="false"  src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
 						</span>
 						<span class="active" 
 							style="line-height:40px;width:20x;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
@@ -113,7 +113,7 @@
 									chooseFuZeRen_loadItems();
 								}
 							">
-							<img draggable="false" src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
+							<img draggable="false"  src="../assets/img/refresh.png" style="width: 18px;vertical-align: sub;"/>
 						</span>
 						<span class="active" 
 							style="line-height:40px;height:40px;font-size: 16px;display:inline-block;width: 20px;text-align: center;cursor: pointer;"
@@ -234,7 +234,7 @@
 							chosenFaQiRen=item
 							chooseFaQiRen.start=0
 						">
-						<span><img :src="item.headimg" /></span>
+						<span><img draggable="false"  :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>
@@ -306,7 +306,7 @@
 							chosenFuZeRen=item
 							chooseFuZeRen.start=null
 						">
-						<span><img :src="item.headimg" /></span>
+						<span><img draggable="false"  :src="item.headimg" /></span>
 						<span style="display:inline-block;max-width: 100px;height: 20px;line-height: 20px;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">
 							{{ item.alias?item.alias:item.nickname }}
 						</span>

@@ -134,7 +134,7 @@
 								}
 							}
 						">
-						<img style="width:25px;line-height: 25px;vertical-align: middle;" src="../assets/img/edit.png"/>
+						<img draggable="false"  style="width:25px;line-height: 25px;vertical-align: middle;" src="../assets/img/edit.png"/>
 					</span>
 				</div>
 				<div style="height:37px;margin-top:10px;">

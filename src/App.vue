@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="unselectable" >
     <div v-show="$store.state.requestingCount>0" style="width:100%;height:10px;position: absolute;top:0;z-index: 999999;overflow: hidden;">
-      <img src="./assets/img/loading.gif" style="height:100%;width:110%;vertical-align: top;margin-left: -20px;"/>
+      <img draggable="false"  src="./assets/img/loading.gif" style="height:100%;width:110%;vertical-align: top;margin-left: -20px;"/>
     </div>
     <keep-alive>
         <router-view/>

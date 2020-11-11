@@ -46,7 +46,7 @@
 		</div>
 		
 		<div :key="item.userId" v-for="item in friendList" @click="$store.state.chooseFaQiRenUserId=item.userId;$store.state.chooseFaQiRenNickname=item.nickname;$router.back();" style="padding:5px;border:1px solid #8F8F8F;margin:8px 7px 5px 7px;cursor:pointer;background-color: #FFFFFF;">
-			<span><img :src="item.logo" /></span>
+			<span><img draggable="false"  :src="item.logo" /></span>
 			<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{$attr(item,'alias')?$attr(item,'alias'):item.nickname}}
 				{{$attr(item,'alias')?(`(${$attr(item,'nickname')})`):''}}</span>
 		</div>

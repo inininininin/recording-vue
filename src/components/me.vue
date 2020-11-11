@@ -15,12 +15,12 @@
 			style="height:120px;border-bottom: 1px solid #8f8f8f;border-top:1px solid #ffffff;"
 			@click="myInfo=1">
 			<div v-if="$store.state.login && $store.state.login.userId" style="margin: 30px 0 0 20px;">
-				<img style="width:50px;height:50px;border: 1px solid #8f8f8f;display: inline-block;vertical-align: bottom;cursor: pointer;"/>
+				<img draggable="false"  style="width:50px;height:50px;border: 1px solid #8f8f8f;display: inline-block;vertical-align: bottom;cursor: pointer;"/>
 				<span style="font-size:16px;display: inline-block;margin:0 0 0 20px;vertical-align: bottom;">
 					{{$o($store.state.login).attr('nickname')}}
 				</span>
 				<span style="height:30px;line-height: 30px;width:30px;text-align: center;display: inline-block;vertical-align: bottom;cursor: pointer;">
-					<img src="../assets/img/info.png" style="height:25px;width:25px;vertical-align: bottom;"/>
+					<img draggable="false"  src="../assets/img/info.png" style="height:25px;width:25px;vertical-align: bottom;"/>
 				</span>
 			</div>
 		</div>
@@ -100,11 +100,11 @@
 						头像
 					</span>
 					<span style="height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;position: absolute;left:70px;right:30px;">
-						<img :src=$store.state.login.headimg  style="height:25px;width:25px;cursor: pointer;vertical-align: middle;"/>
+						<img draggable="false"  :src=$store.state.login.headimg  style="height:25px;width:25px;cursor: pointer;vertical-align: middle;"/>
 					</span>
 					<span v-if="0" class="active" 
 					style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
-						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="height:30px;position: relative;">
@@ -132,7 +132,7 @@
 								})
 							}
 						">
-						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="height:30px;position: relative;">
@@ -144,7 +144,7 @@
 					</span>
 					<span v-if="0" class="active" 
 						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
-						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="height:30px;position: relative;">
@@ -156,7 +156,7 @@
 					</span>
 					<span v-if="0" class="active" 
 						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
-						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="height:30px;position: relative;">
@@ -168,7 +168,7 @@
 					</span>
 					<span v-if="0" class="active" 
 						style="display: inline-block;width:30px;height:30px;line-height: 30px;font-size: 16px;position: absolute;right:0;cursor: pointer;text-align: center;">
-						<img src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:25px;height:25px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="margin-top:10px;">

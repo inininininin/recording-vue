@@ -89,7 +89,7 @@
 					<span style="font-size:16px;">{{chosenFriend.alias}}</span>
 					<span  style="position: absolute;right:0;font-size:16px;padding:0 3px;background-color: #cccccc;cursor: pointer;color:#6b6b6b;"
 						@click="friendInfo.editAlias.start=1;friendInfo.editAlias.value=chosenFriend.alias">
-						<img src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
 					</span>
 				</div>
 				<div style="margin-top:10px;">
@@ -255,7 +255,7 @@
 								overflow:hidden;text-overflow:ellipsis;white-space: nowrap;vertical-align: bottom;">
 							{{ item.phone.replace(new RegExp("(^.{3})(.{4})"),'$1****') }}
 						</span>
-						<img v-if="item.friendId" style="width:20px;height:17px;display:inline-block;vertical-align: bottom;margin-left: 10px;" src="../assets/img/friend.png"/>
+						<img draggable="false"  v-if="item.friendId" style="width:20px;height:17px;display:inline-block;vertical-align: bottom;margin-left: 10px;" src="../assets/img/friend.png"/>
 					</div>
 					<div v-if="addFriend.loading"  style="font-size:12px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 						加载中
