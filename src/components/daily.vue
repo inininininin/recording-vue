@@ -26,7 +26,7 @@
 			<template v-for="item in dailies" >
 				<div style="height:30px;border-style:solid;border-color:#a1a1a1;border-width:0 0 1px 0;white-space: nowrap;
 						white-space: nowrap;display: inline-block;position: relative;">
-					<span class="hover active" 
+					<span class="hover active n1-line" 
 						style="cursor: pointer;padding:0 5px;line-height: 30px;border-style:solid;border-color:#a1a1a1;
 							border-width:0 1px 0 0;background-color: #FFFFFF;position:absolute;width:90px;height:30px;display:inline-block;font-size:16px;" 
 						:style="{left:(scrollLeft+'px')}"
@@ -122,12 +122,35 @@
 		<div v-if="dailyInfo" style="position: absolute;left:0;right:0;top:0;bottom:0;background-color: rgba(0, 0, 0, 0.7);z-index: 10000;">
 			<div style="margin-top:10%;max-height:80%;padding:10px 10px 10px 40px;background-color: #FFFFFF;">
 				<div style="font-size: 16px;color: #808080;height:30px;line-height: 30px;">日常信息</div>
-				<div style="margin-top:10px;height:30px;">
+				<div style="margin-top:10px;height:30px;position: relative;">
 					<span style="font-size:16px;display: inline-block;width:80px;height:30px;line-height:30px;">
-						名称
+						日常名
 					</span>
 					<span style="font-size:16px;display: inline-block;height:30px;line-height:30px;">
 						{{chosenDaily.name}}
+					</span>
+					<span style="display:inline-block;width:30px;line-height: 30px;position: absolute;right:0;text-align: center;cursor: pointer;"
+						@click="
+							var r = window.prompt('修改日常名',chosenDaily.name)
+							if(r){
+								if(r != chosenDaily.name){
+									$axios.post('/recording/daily/update-daily',$qs.stringify({
+										dailyId:chosenDaily.dailyId,
+										name:r
+									})).then(res => {
+										if(res.data.codeMsg)
+											$dialog.alert({message:res.data.codeMsg})
+										if(res.data.code==0){
+											$notify({type:'success',message:'修改成功'})
+											chosenDaily.name=r;
+										}
+									})
+								}else{
+									$notify({type:'success',message:'无修改'})
+								}
+							}
+						">
+						<img style="width:25px;line-height: 25px;vertical-align: middle;" src="../assets/img/edit.png"/>
 					</span>
 				</div>
 				<div style="height:37px;margin-top:10px;">

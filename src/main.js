@@ -19,7 +19,7 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 Vue.prototype.$ = jQuery;
-Vue.prototype.$version = '20111110.11.1.0.8';
+Vue.prototype.$version = '20111111.12.1.0.9';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({
