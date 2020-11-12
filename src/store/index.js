@@ -10,6 +10,9 @@ const state = {
 	chosenTask: null,
 	chosenTaskDel:null,
 	createdTask: null,
+	chosenMemoryBook:null,
+	chosenMemoryBookDel:null,
+	routes: [],
 };
 const getters = {
 };

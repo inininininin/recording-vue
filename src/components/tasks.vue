@@ -169,7 +169,7 @@
 				总数:{{ $o(tasksSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 155px;bottom: 91px;padding-top: 2px;">
+		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 155px;bottom: 91px;-webkit-overflow-scrolling: touch;">
 			<div :key="item.taskId" v-for="item in tasks" class="active visited"
 				@click="
 					debugger;
@@ -279,8 +279,9 @@
 				</span>
 				<span style="border-left:1px solid #366CB3;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;">
 				</span>
-				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
-					记 录
+				<span @click="$router.replace({path:'/memory'})"
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+					记 忆
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span @click="$router.replace({path:'/friends'})"
@@ -372,6 +373,7 @@
 				fuZeRenUserId:null,
 				faQiRenUserId:null,
 				tasks:null,
+				currTasks:null,
 				tasksSum:null,
 				faQiRens:null,
 				fuZeRens:null,
@@ -446,8 +448,11 @@
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
-					if(vue.tasks && vue.tasks.length < vue.ps)
+					console.log('scroll at bottom')
+					if(vue.currTasks && vue.currTasks.length < vue.ps){
+						console.log('return')
 						return;
+					}
 					vue.pn++;
 					vue.queryHistory.start=0;
 					vue.loadTasks()
@@ -487,6 +492,7 @@
 							if(vue.pn==1)
 								vue.tasks=[]
 							vue.tasks=vue.tasks.concat(res.data.data.items)
+							vue.currTasks=res.data.data.items
 						}else
 							vue.pn--;
 					} else {

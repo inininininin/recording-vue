@@ -68,47 +68,80 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-task/tasks' + '\\?.*'), 'get', (data) => {
-//     debugger;
-//     return {
-//         code: 0,
-//         codeMsg: '',
-//         data: {
-//             items: [
-//                 {
-//                     taskId: '1231231',
-//                     content: '任务1内容',
-//                     faQiRenNickname: '发起人',
-//                     faQiRenUserId: '任务1',
-//                     fuZeRenNickname: '负责人',
-//                     fuZeRenUserId: '任务1',
-//                     createTime : '2020-10-22 15:13:44.222 +0800',
-//                     finalTime : '2020-10-23 15:13:44.222 +0800',
-//                     orderNo:99,
-//                     lastTrace:{
-//                         traceId: '123121',
-//                         content: '追中内容1',
-//                         createTime: '2020-09-22 15:03:03',
-//                     }
-//                 },
-//                 {
-//                     taskId: '1231232',
-//                     content: '任务1内容',
-//                     createTime : '2020-01-02 15:13:44.222 +0800',
-//                     finalTime : '2020-01-02 15:13:44.222 +0800',
-//                     orderNo:1,
-//                     lastTrace:{
-//                         traceId: '123122',
-//                         content: '追中内容2',
-//                         createTime: '2020-09-22 15:03:03',
-//                     }
-//                 }
-//             ]
-//         }
-//     };
-// });
+Mock.mock(RegExp('/recording/my-memory/books' + '\\?.*'), 'get', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            items: [
+                {
+                    bookId: '1231231',
+                    name: 'name1',
+                    orderNo:2,
+                },
+                {
+                    bookId: '1231232',
+                    name: 'name2',
+                    orderNo:1,
+                }
+            ]
+        }
+    };
+});
 
-
+Mock.mock(RegExp('/recording/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            count: 10
+        }
+    };
+});
+Mock.mock(RegExp('/recording/my-memory/book' + '\\?.*'), 'get', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            bookId:"123123",
+            name:'fffff',
+            orderNo:1,
+        }
+    };
+});
+Mock.mock(RegExp('/recording/my-memory/create-book'), 'post', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            bookId:"123123" 
+        }
+    };
+});
+Mock.mock(RegExp('/recording/my-memory/update-book'), 'post', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            bookId:"123123" 
+        }
+    };
+});
+Mock.mock(RegExp('/recording/my-memory/delete-book'), 'post', (data) => {
+    debugger;
+    return {
+        code: 0,
+        codeMsg: '',
+        data: {
+            count:"1" 
+        }
+    };
+});
 // Mock.mock(RegExp('/recording/task' + '\\?.*'), 'get', (data) => {
 //     debugger;
 //     return {
@@ -134,16 +167,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-task/tasks-sum' + '\\?.*'), 'get', (data) => {
-//     debugger;
-//     return {
-//         code: 0,
-//         codeMsg: '',
-//         data: {
-//             itemsCount: 10
-//         }
-//     };
-// });
+
 
 // Mock.mock(RegExp('/recording/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
 //     debugger;

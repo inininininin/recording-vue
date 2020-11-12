@@ -1,6 +1,6 @@
 <template>
 	<div id="daily" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;">
-		<div ref="scroll" style="overflow: auto;position:absolute;top:0;right:0;left:0;bottom:50px;" 
+		<div v-if="dailies && dailies.length>0" ref="scroll" style="overflow: auto;position:absolute;top:0;right:0;left:0;bottom:50px;-webkit-overflow-scrolling: touch;" 
 			@scroll="
 				scrollLeft=$event.target.scrollLeft
 				scrollTop=$event.target.scrollTop
@@ -53,7 +53,7 @@
 							}
 							window.console.log(done)
 							if(done){
-								var doneDate = $moment(fromDate).subtract(i,'day')
+								var doneDate = $moment(fromDate).subtract(day,'day')
 								$axios.post('/recording/daily/undone',$qs.stringify({
 									dailyId:item.dailyId,
 									date:doneDate.format('YYYY-MM-DD')
@@ -82,6 +82,7 @@
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
+										item.does=item.does?item.does:[];
 										item.does.push({doId:res.data.data.doId,done:1,doneTime:doneDate.format('YYYY-MM-DD')})
 									}
 								})
@@ -102,10 +103,12 @@
 				</span>
 			</div> -->
 		</div>
-		
+		<div v-if="dailies && dailies.length==0" style="text-align: center;font-size: 20px;margin-top:100px;">
+			你还没有日常<br/>快去创建一个吧
+		</div>
 		<div v-if="dailyInfo" style="position: absolute;left:0;right:0;top:0;bottom:0;background-color: rgba(0, 0, 0, 0.7);z-index: 10000;">
 			<div style="margin-top:10%;max-height:80%;padding:10px 10px 10px 40px;background-color: #FFFFFF;">
-				<div style="font-size: 16px;color: #808080;height:30px;line-height: 30px;">日常信息</div>
+				<div style="font-size: 16px;color: #808080;height:30px;line-height: 30px;">日常详情</div>
 				<div style="margin-top:10px;height:30px;position: relative;">
 					<span style="font-size:16px;display: inline-block;width:80px;height:30px;line-height:30px;">
 						日常名
@@ -138,16 +141,16 @@
 						<img draggable="false"  style="width:25px;line-height: 25px;vertical-align: middle;" src="../assets/img/edit.png"/>
 					</span>
 				</div>
-				<div style="height:37px;margin-top:10px;">
+				<div style="height:37px;margin-top:20px;">
 					<span class="active" 
 						style="font-size: 16px;height:33px;line-height: 33px;display: inline-block;
-							text-align: center;min-width:80px;border: 1px solid #000000;cursor: pointer;"
+							text-align: center;min-width:85px;border: 1px solid #000000;cursor: pointer;"
 						@click="dailyInfo=0;chosenDaily=null"	>
 						关闭
 					</span>
 					<span class="active" 
 						style="font-size: 16px;height:33px;line-height: 33px;display: inline-block;
-							text-align: center;min-width:80px;border: 1px solid #000000;cursor: pointer;margin-left:20px;"
+							text-align: center;min-width:85px;border: 1px solid #000000;cursor: pointer;margin-left:20px;"
 						@click="
 							$dialog.confirm({message:'确认删除吗?'}).then(()=>{
 								$axios.post('/recording/daily/delete-daily',$qs.stringify({dailyId:chosenDaily.dailyId})).then(res=>{
@@ -183,7 +186,8 @@
 									$notify({type:'success',message:'创建成功'})
 								dailies.push({
 									dailyId:res.data.data.dailyId,
-									name:r
+									name:r,
+									does:[],
 								})
 							}
 						})
@@ -205,8 +209,9 @@
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;">
 				</span>
-				<span  style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
-					记 录
+				<span   @click="$router.replace({path:'/memory'})"
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+					记 忆
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span  @click="$router.replace({path:'/friends'})"
@@ -240,7 +245,7 @@
 				toDate:vue.$moment(),
 				firstDate:null,
 				days:[],
-				dailies: [],
+				dailies: null,
 				scrollTop:null,
 				scrollLeft:null,
 				dailyInfo:0,
@@ -303,6 +308,7 @@
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg})
 					if(res.data.code == 0){
+						vue.dailies=vue.dailies?vue.dailies:[];
 						vue.dailies.push(...res.data.data.items);
 						var c =(vue.fromDate.valueOf() - vue.toDate.valueOf())/1000/60/60/24
 						if(c == 0)

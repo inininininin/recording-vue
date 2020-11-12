@@ -66,8 +66,9 @@
 					任 务
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
-					记 录
+				<span @click="$router.replace({path:'/memory'})"
+					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
+					记 忆
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
 				<span @click="$router.replace({path:'/friends'})"
@@ -93,7 +94,7 @@
 		<div v-if="myInfo && $store.state.login" style="position:absolute;left:0;right:0;top:0;bottom:0;background-color: rgba(0, 0, 0, 0.7);">
 			<div style="margin-top:10%;background-color: #ffffff;min-height:200px;max-height:80%;padding:10px 10px 10px 40px;">
 				<div style="height:30px;font-size: 16px;color: #808080;">
-					我的信息
+					个人详情
 				</div>
 				<div style="height:30px;position: relative;">
 					<span style="width:70px;height:30px;line-height:30px;display: inline-block;font-size: 16px;vertical-align: bottom;">
