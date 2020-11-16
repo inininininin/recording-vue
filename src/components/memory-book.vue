@@ -27,7 +27,6 @@
 						{{item.left}}
 					</span>
 					<img v-show="!item.rightShow" style="width:15px;height:15px;vertical-align: bottom;" draggable="false" src='../assets/img/eye-close.png'/>
-					<img v-show="item.rightShow" style="width:15px;height:15px;vertical-align: bottom;" draggable="false" src='../assets/img/eye-open.png'/>
 				</div>
 				<div v-show="item.rightShow" style="font-size: 16px;white-space:pre-line;margin-top: 5px;">{{item.right}}
 				</div>
@@ -283,12 +282,13 @@
 							if(res.data.code==0){
 								if(!res.data.codeMsg)
 									$notify({type:'success',message:'创建成功'})
-								addItem.item={};
-								addItem.start=0;
 								items.push({
 									itemId:res.data.data.itemId,
+									rightShow:0,
 									...addItem.item
 								})
+								addItem.item={};
+								addItem.start=0;
 							}else{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
