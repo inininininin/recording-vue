@@ -1,7 +1,7 @@
 <template>
     <div id="login" style="font-size: 0;padding:30px 0 0 0;position:absolute;top:0;bottom:0;right:0;left:0;">
 		<h1 style="text-align: center;font-size: 30px;margin:0;">板板</h1>
-		<h1 v-if="byAccount" style="text-align: center;font-size: 20px;margin:10px 0 0 0;">账号登录</h1>
+		<h1 v-if="byAccount" style="text-align: center;font-size: 20px;margin:10px 0 0 0;">密码登录</h1>
 		<h1 v-if="bySms" style="text-align: center;font-size: 20px;margin:10px 0 0 0;">手机登录</h1>
 
 		<form v-if="byAccount" class="byAccount" style="width:270px;margin:auto;margin-top:30px;">
@@ -61,7 +61,7 @@
 		<div style="width:270px;margin:auto;">
 			<button v-if="bySms" @click="byAccount=1;bySms=0;" type="button" 
 				style="width:270px;height:35px;margin-top:5px;font-size: 16px;display:block;" >
-				通过账号登录
+				通过密码登录
 			</button>
 			<button v-if="byAccount" @click="byAccount=0;bySms=1;" type="button" 
 				style="width:270px;height:35px;margin-top:5px;font-size: 16px;display:block;" >

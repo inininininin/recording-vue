@@ -47,7 +47,7 @@
 					$store.state.chosenMemoryBook=item;
 					$router.push({path:'/memory-book',query:{bookId:item.bookId}})
 				" 
-				style="padding: 8px 20px 3px 5px;cursor:pointer;position: relative;" 
+				style="padding: 5px 20px 5px 5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;" 
 					v-html="item.name?$highlight(item.name,kw).split('\n')[0]:null">

@@ -43,8 +43,8 @@
 			</span>
 		</div>
 		<div class="scrollbar" @scroll="friendsScroll($event)" ref="friends" style="overflow: auto;width:100%;position: absolute;top: 56px;bottom: 91px;padding-top: 5px;">
-			<div v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.start=1;"
-				style="padding:5px;border:1px solid #8F8F8F;margin:  5px ;cursor:pointer;background-color: #FFFFFF;position: relative;height:20px;line-height:20px;">
+			<div class="hover active" v-for="item in friends" :key="item.userId" @click="chosenFriend=item;friendInfo.start=1;"
+				style="padding:5px;cursor:pointer;background-color: #FFFFFF;position: relative;height:20px;line-height:20px;">
 				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:100px;vertical-align: bottom;">
 					{{ item.alias?item.alias:item.nickname }}
 				</span>
@@ -234,8 +234,8 @@
 						@click="addFriend.pn=1;addFriend.users=null,addFriend_loadUsers();">搜索</span>
 				</div>
 				<div class="scrollbar1" @scroll="addFriend_usersScroll($event)" style="overflow: auto;max-height: 350px;margin-top: 5px;">
-					<div class="active" v-if="addFriend.users" v-for="item in addFriend.users" :key="item.userId" @click=""
-						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;
+					<div class="active hover" v-if="addFriend.users" v-for="item in addFriend.users" :key="item.userId" @click=""
+						style="padding:5px 5px 5px 0;cursor:pointer;
 							background-color: #FFFFFF;position: relative;height:20px;line-height:20px;"
 						@click="
 							$dialog.confirm({

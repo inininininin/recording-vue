@@ -1,6 +1,6 @@
 <template>
 	<div id="daily" style="font-size: 0;position:absolute;top:0;bottom:0;right:0;left:0;">
-		<div v-if="dailies && dailies.length>0" ref="scroll" style="overflow: auto;position:absolute;top:0;right:0;left:0;bottom:50px;-webkit-overflow-scrolling: touch;" 
+		<div v-if="dailies && dailies.length>0" class="scrollbar1" ref="scroll" style="overflow: auto;position:absolute;top:0;right:0;left:0;bottom:91px;-webkit-overflow-scrolling: touch;" 
 			@scroll="
 				scrollLeft=$event.target.scrollLeft
 				scrollTop=$event.target.scrollTop
@@ -17,8 +17,15 @@
 				</span>
 
 				<template v-for="i in days">
-					<span :key="'a'+i" class="hover active" style="cursor: pointer;line-height: 30px;border-style:solid;border-color:#a1a1a1;border-width:0 1px 0 0;background-color: #FFFFFF;width:41px;padding:0 5px;height:30px;display:inline-block;font-size:16px;">
-						{{$moment().set('date',$moment().get('date')-i).format('M-D')}}
+					<span :key="'a'+i" class="hover active" 
+						style="cursor: pointer;line-height: 30px;border-style:solid;border-color:#a1a1a1;
+							border-width:0 1px 0 0;background-color: #FFFFFF;width:41px;padding:0 5px;height:30px;display:inline-block;font-size:16px;"
+						:style="{width:(i==0?'55px':'41px'),'font-weight': (i==0?'600':null)}">
+						{{
+							$moment().set('date',$moment().get('date')-i).format(
+								'M-D'+(i==0?'.E':'')
+							)
+						}}
 					</span>
 				</template>
 			</div>
@@ -35,8 +42,10 @@
 					</span>
 					<span style="vertical-align: bottom;line-height: 30px;width:101px;height:30px;display:inline-block;">
 					</span>
-					<span v-for="day in days" :key="item.dailyId+'-day'+day" class="hover active" style="cursor: pointer;line-height: 30px;border-style:solid;border-color:#a1a1a1;border-width:0 1px 0 0;background-color: #FFFFFF;width:41px;padding:0 5px;height:30px;display:inline-block;font-size:16px;"
-						:style="{'background-color':foo(item,day)?'#008000':null}"
+					<span v-for="day in days" :key="item.dailyId+'-day'+day" class="hover active" 
+						style="cursor: pointer;line-height: 30px;border-style:solid;border-color:#a1a1a1;border-width:0 1px 0 0;
+							background-color: #FFFFFF;width:41px;padding:0 5px;height:30px;display:inline-block;font-size:16px;"
+						:style="{'background-color':foo(item,day)?'#008000':null,width:(day==0?'55px':'41px')}"
 						@click="
 							var done=0;
 							if(item.does && item.does.length>0){
@@ -174,7 +183,7 @@
 		</div>
 
 		<div style="height:91px;position: absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px -1px 4px 0px #6b6b6b;">
-			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
+			<div class="active" style="height:40px;text-align: center;cursor:pointer;position: relative;"
 				@click="
 					var r = window.prompt('请输入日常名称')
 					if(r){
@@ -193,7 +202,12 @@
 						})
 					}
 				">
-				新 日 常 +
+				<span style="font-size:16px;height:40px;line-height: 40px;font-weight: 900;display: inline-block;">
+					新 日 常 +
+				</span>
+				<span  style="font-size:16px;height:40px;line-height: 40px;font-weight: 900;display: inline-block;position:absolute;left:5px;">
+					{{ (23 - $store.state.now.hour() - 2) + ':' + (59 - $store.state.now.minute()) }}
+				</span>
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;overflow: hidden;">
 				<span  @click="$router.replace({path:'/index'})"

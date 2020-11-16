@@ -163,14 +163,15 @@
 		</div>
 		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 4px 0px #6b6b6b;height: 15px;">
 			<span style="font-size: 16px;color: #008000;font-weight: 600;line-height:16px;">
-				{{$moment($store.state.now).format('M-D. E')}}
+				{{$store.state.now.format('M-D E h:m')}}
 			</span>
 			<span style="font-size: 16px;color: #6b6b6b;margin-left:15px;line-height:16px;" >
 				总数:{{ $o(tasksSum).attr('count')}}
 			</span>
 		</div>
-		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" style="overflow: auto;width:100%;position: absolute;top: 155px;bottom: 91px;-webkit-overflow-scrolling: touch;">
-			<div :key="item.taskId" v-for="item in tasks" class="active visited"
+		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" 
+			style="overflow: auto;width:100%;position: absolute;top: 151px;bottom: 91px;-webkit-overflow-scrolling: touch;">
+			<div :key="item.taskId" v-for="item in tasks" class="active visited hover"
 				@click="
 					debugger;
 					//$($event.currentTarget).css('background-color','#e6e4e4');
@@ -178,7 +179,7 @@
 					$router.push({path:'/task',query:{taskId:item.taskId,reload:1}})
 				" 
 				style="padding:3px 5px;;border:1px solid #8f8f8f;margin:5px;cursor:pointer;position: relative;" 
-				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
+				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#a6ffa6')}">
 				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;height:21px;line-height: 21px;" 
 					v-html="item.name?$highlight(item.name,kw).split('\n')[0]:null">
 				</div>
@@ -222,9 +223,9 @@
 					</span>
 					<span v-if="item.finalTime" style="font-size:12px;margin-left:15px;max-width:105px;display:inline-block;vertical-align: top;" 
 						:style="{color: item.status!=1?'#6b6b6b'
-						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() > 7*24*60*60*1000)?'#008000'
-						:($moment(item.finalTime).valueOf() - $store.state.now.getTime() < 7*24*60*60*1000
-							&& $moment(item.finalTime).valueOf() - $store.state.now.getTime() > 0)?'#ff8100'
+						:($moment(item.finalTime).valueOf() - $store.state.now.valueOf() > 7*24*60*60*1000)?'#008000'
+						:($moment(item.finalTime).valueOf() - $store.state.now.valueOf() < 7*24*60*60*1000
+							&& $moment(item.finalTime).valueOf() - $store.state.now.valueOf() > 0)?'#ff8100'
 							:'#ff0000'}">
 						{{
 							item.finalTime?(
@@ -262,7 +263,14 @@
 		<div style="height:91px;position: absolute;bottom:0;left:0;right:0;background-color: #FFFFFF;box-shadow: 0px -1px 4px 0px #6b6b6b;">
 			<div class="active" style="font-size:16px;height:40px;line-height: 40px;text-align: center;cursor:pointer;font-weight: 900;"
 				@click="$router.push({path:'/create-task',query:{time:new Date().getTime()+''}})">
-				新 任 务 +
+				<span style="font-size:16px;height:40px;line-height: 40px;font-weight: 900;display: inline-block;">
+					新 任 务 +
+				</span>
+				<span  style="font-size:16px;height:40px;line-height: 40px;font-weight: 900;display: inline-block;position:absolute;left:5px;">
+					{{
+						(23 - $store.state.now.hour() - 2) + ':' + (59 - $store.state.now.minute())
+					}}
+				</span>
 			</div>
 			<div class="n1-line scrollbar1" style="height:50px;position: relative;border-top:1px solid #8F8F8F;overflow-x: auto;overflow: hidden;">
 				<span @click="$router.replace({path:'/index'})"

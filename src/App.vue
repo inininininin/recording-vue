@@ -16,11 +16,12 @@ export default {
     debugger
     let vue=this
     window.vue=vue;
-
+    
+    vue.$store.state.now=vue.$moment();
     if(vue.$store.state.nowTimer)
         clearInterval(vue.$store.state.nowTimer)
 				vue.$store.state.nowTimer = setInterval(function(){
-					vue.$store.state.now=new Date();
+					vue.$store.state.now=vue.$moment();
         },1000)
     vue.$store.state.requestingCount--;
     vue.$axios.post('/recording/login-refresh').then(res=>{
@@ -131,10 +132,10 @@ export default {
   }
 
   .active:active {
-    opacity: 0.6;
+    opacity: 0.7!important;
   }
   .hover:hover {
-    opacity: 0.6;
+    opacity: 0.9;
   }
 
   .unselectable {

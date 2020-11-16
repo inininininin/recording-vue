@@ -68,80 +68,80 @@ import Mock from 'mockjs';
 //     };
 // });
 
-Mock.mock(RegExp('/recording/my-memory/books' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            items: [
-                {
-                    bookId: '1231231',
-                    name: 'name1',
-                    orderNo:2,
-                },
-                {
-                    bookId: '1231232',
-                    name: 'name2',
-                    orderNo:1,
-                }
-            ]
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/my-memory/books' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             items: [
+//                 {
+//                     bookId: '1231231',
+//                     name: 'name1',
+//                     orderNo:2,
+//                 },
+//                 {
+//                     bookId: '1231232',
+//                     name: 'name2',
+//                     orderNo:1,
+//                 }
+//             ]
+//         }
+//     };
+// });
 
-Mock.mock(RegExp('/recording/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            count: 10
-        }
-    };
-});
-Mock.mock(RegExp('/recording/my-memory/book' + '\\?.*'), 'get', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            bookId:"123123",
-            name:'fffff',
-            orderNo:1,
-        }
-    };
-});
-Mock.mock(RegExp('/recording/my-memory/create-book'), 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            bookId:"123123" 
-        }
-    };
-});
-Mock.mock(RegExp('/recording/my-memory/update-book'), 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            bookId:"123123" 
-        }
-    };
-});
-Mock.mock(RegExp('/recording/my-memory/delete-book'), 'post', (data) => {
-    debugger;
-    return {
-        code: 0,
-        codeMsg: '',
-        data: {
-            count:"1" 
-        }
-    };
-});
+// Mock.mock(RegExp('/recording/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             count: 10
+//         }
+//     };
+// });
+// Mock.mock(RegExp('/recording/my-memory/book' + '\\?.*'), 'get', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             bookId:"123123",
+//             name:'fffff',
+//             orderNo:1,
+//         }
+//     };
+// });
+// Mock.mock(RegExp('/recording/my-memory/create-book'), 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             bookId:"123123" 
+//         }
+//     };
+// });
+// Mock.mock(RegExp('/recording/my-memory/update-book'), 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             bookId:"123123" 
+//         }
+//     };
+// });
+// Mock.mock(RegExp('/recording/my-memory/delete-book'), 'post', (data) => {
+//     debugger;
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             count:"1" 
+//         }
+//     };
+// });
 // Mock.mock(RegExp('/recording/task' + '\\?.*'), 'get', (data) => {
 //     debugger;
 //     return {

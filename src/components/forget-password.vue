@@ -156,6 +156,7 @@
 						if (res.data.code == 0) {
 							if (!res.data.codeMsg)
 								vue.$notify({type:'success',message:'修改成功'});
+							vue.$router.replace({path:'/login'})
 						}
 					})
 				}
@@ -173,6 +174,7 @@
 						if (res.data.code == 0) {
 							if (!res.data.codeMsg)
 								vue.$notify({type:'success',message:'修改成功'});
+							vue.$router.replace({path:'/login'})
 						}
 					})
 				}
