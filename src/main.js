@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue/dist/vue.runtime.esm.js';
+Vue.prototype.$version = '1.1.0';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
@@ -19,7 +20,6 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 Vue.prototype.$ = jQuery;
-Vue.prototype.$version = '1.1.0';
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
 Vue.use(Dialog).use(Notify);
 Dialog.setDefaultOptions({

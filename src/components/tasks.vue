@@ -163,7 +163,7 @@
 		</div>
 		<div style="padding:5px 5px 5px 5px;box-shadow: 0px 1px 4px 0px #6b6b6b;height: 15px;">
 			<span style="font-size: 16px;color: #008000;font-weight: 600;line-height:16px;">
-				{{$store.state.now.format('M-D E h:m')}}
+				{{$store.state.now.format('M-D E')}}
 			</span>
 			<span style="font-size: 16px;color: #6b6b6b;margin-left:15px;line-height:16px;" >
 				总数:{{ $o(tasksSum).attr('count')}}

@@ -90,7 +90,7 @@
 							$axios.post('/recording/my-memory/delete-item',$qs.stringify({itemId:chosenItem.itemId})).then(res=>{
 								if(res.data.code==0){
 									if(res.data.codeMsg)
-										$notify({message:'删除成功'})
+										$notify({type:'success',message:'删除成功'})
 									items.splice(items.indexOf(chosenItem),1)
 									chosenItem=null
 									itemDetail.start=0
@@ -282,9 +282,13 @@
 						$axios.post('/recording/my-memory/create-item',$qs.stringify({bookId:query.bookId,...addItem.item})).then(res=>{
 							if(res.data.code==0){
 								if(!res.data.codeMsg)
-									$dialog.alert({message:'创建成功'})
+									$notify({type:'success',message:'创建成功'})
 								addItem.item={};
 								addItem.start=0;
+								items.push({
+									itemId:res.data.data.itemId,
+									...addItem.item
+								})
 							}else{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
@@ -337,7 +341,7 @@
 							$axios.post('/recording/my-memory/delete-book',$qs.stringify({bookId:query.bookId})).then(res=>{
 								if(res.data.code==0){
 									if(res.data.codeMsg)
-										$notify({message:'删除成功'})
+										$notify({type:'success',message:'删除成功'})
 									$store.state.chosenMemoryBookDel=1
 									bookDetail=0
 									$router.back();

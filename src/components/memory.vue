@@ -80,7 +80,7 @@
 						$axios.post('/recording/my-memory/create-book',$qs.stringify({name:r})).then(res=>{
 							if(res.data.code == 0){
 								if(!res.data.codeMsg)
-									$notify({message:'创建成功'})
+									$notify({type:'success',message:'创建成功'})
 								var bookId=res.data.data.bookId
 								books=books?books:[];
 								var book={
@@ -89,7 +89,6 @@
 								}
 								$store.state.chosenMemoryBook=book;
 								books.unshift(book)
-								$router.push({path:'/memory-book',query:{bookId:bookId}})
 								booksSum.count++
 							}else{
 								if(res.data.codeMsg)
