@@ -17,8 +17,8 @@
 				<img src='../assets/img/info.png' style="width:25px;height:25px;vertical-align: middle;cursor: pointer;"/>
 			</span>
 		</div>
-		<div ref="scroll" @scroll="scroll($event)" style="position: absolute;top:41px;bottom:35px;left:0;right:0;padding: 5px 0 0 0;overflow: auto;">
-			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:0 5px;cursor: pointer;margin-bottom: 15px;position: relative;" 
+		<div ref="scroll" @scroll="scroll($event)" style="position: absolute;top:41px;bottom:35px;left:0;right:0;overflow: auto;">
+			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:0 5px;cursor: pointer;margin-top:5px;margin-bottom: 15px;position: relative;" 
 				@click="
 					item.rightShow = item.rightShow?0:1;
 				">
@@ -34,6 +34,19 @@
 					@click.stop="chosenItem=item;itemDetail.start=1;">
 					<img style="width:20px;height:5px;vertical-align: middle;" draggable="false" src="../assets/img/more.png" />
 				</div>
+			</div>
+			<div v-if="loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
+				加载中
+			</div>
+			<div class="active unselectable" v-if="!loading && currItems && currItems.length==ps" @click="pn++;loadItems();" 
+				style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;cursor: pointer;">
+				点击加载更多
+			</div>
+			<div v-if="!loading && currItems && currItems.length<ps && currItems.length>0" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
+				已全部加载
+			</div>
+			<div  v-if="!loading && currItems && currItems.length==0 && pn==1" style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
+				暂无数据
 			</div>
 		</div>
 
@@ -468,10 +481,15 @@
 						value: null,
 					}
 				},
+				scrollTop:null,
 				items:[],
 				currItems:[],
+				itemsSum:null,
+				loading:null,
 				book:null,
 				bookDetail:0,
+				ps:15,
+				pn:0,
 				editName:{
 						start: null,
 						value: null,
@@ -498,6 +516,8 @@
 			load() {
 				debugger
 				let vue = this
+				vue.pn=vue.pn?vue.pn:1;
+				vue.ps=vue.ps?vue.ps:15;
 
 				vue.$axios.get('/recording/my-memory/book?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
 					debugger
@@ -512,7 +532,13 @@
 			},
 			loadItems(){
 				let vue = this
-				vue.$axios.get('/recording/my-memory/items?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
+				vue.loading=1;
+				var o = {
+					bookId:vue.query.bookId,
+					pn:vue.pn,
+					ps:vue.ps
+				}
+				vue.$axios.get('/recording/my-memory/items?' + vue.$qs.stringify(o)).then(res => {
 					debugger
 					if (res.data.code == 0) {
 							vue.items=vue.items?vue.items:[];
@@ -527,9 +553,10 @@
 						if(res.data.codeMsg)
 							vue.$dialog.alert({ message: res.data.codeMsg });
 					}
+					vue.loading=0
 				})
 
-				vue.$axios.get('/recording/my-memory/items-sum?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
+				vue.$axios.get('/recording/my-memory/items-sum?' + vue.$qs.stringify(o)).then(res => {
 					debugger
 					if (res.data.code == 0) {
 							vue.itemsSum = res.data.data;
@@ -543,10 +570,12 @@
 				debugger
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
+				console.log(event.target.scrollTop +' '+ vue.$(event.target).height() +' '+ event.target.scrollHeight)
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
-					if(vue.currTasks && vue.currTasks.length < vue.ps){
+					if(vue.currItems && vue.currItems.length < vue.ps){
 						return;
 					}
+					vue.pn++;
 					vue.loadItems()
 				}
 			},

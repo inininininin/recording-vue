@@ -48,12 +48,10 @@
 				<span style="display:inline-block;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;max-width:100px;vertical-align: bottom;">
 					{{ item.alias?item.alias:item.nickname }}
 				</span>
-				<span style="vertical-align: bottom;font-size:16px;color:#6b6b6b;margin-left:5px;height:20px;line-height:20px;">(</span>
-				<span style="vertical-align: bottom;display:inline-block;font-size:16px;
-					overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#6b6b6b;max-width:100px;height:20px;line-height:20px;">
-					{{ item.alias?`${item.nickname}`:'' }}
+				<span  v-if="item.nickname && item.alias != item.nickname" style="vertical-align: bottom;display:inline-block;font-size:16px;
+					overflow:hidden;text-overflow:ellipsis;white-space: nowrap;color:#919191;max-width:100px;height:20px;line-height:20px;">
+					({{ item.nickname }})
 				</span>
-				<span style="vertical-align: bottom;font-size:16px;color:#6b6b6b;height:20px;line-height:20px;">)</span>
 				<span v-if="item.orderNo" 
 					style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 5px;width:14px;text-align: right;
 						overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
