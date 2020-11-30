@@ -77,12 +77,12 @@
 					sort=order?sort:null;
 					pn=1;tasks=[];queryHistory.start=0;loadTasks();
 				"
-				:style="{color:sort=='finalTime'?'red':'#000000'}"
+				:style="{color:sort=='lastTrackCreateTime'?'red':'#000000'}"
 				style="width: 52px;line-height: 30px;height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
 				追踪
-				<span v-if="sort=='finalTime' && order=='asc'">&nbsp;&and;</span>
-				<span v-if="sort=='finalTime' && order=='desc'">&nbsp;&or;</span>
-				<span v-if="sort!='finalTime' || !order">&nbsp;&nbsp;</span>
+				<span v-if="sort=='lastTrackCreateTime' && order=='asc'">&nbsp;&and;</span>
+				<span v-if="sort=='lastTrackCreateTime' && order=='desc'">&nbsp;&or;</span>
+				<span v-if="sort!='lastTrackCreateTime' || !order">&nbsp;&nbsp;</span>
 			</span>
 			<span style="width: 81px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;
 					display:inline-block;border-right:1px solid #8f8f8f;">
