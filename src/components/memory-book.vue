@@ -24,11 +24,11 @@
 				">
 				<div> 
 					<span style="font-size: 16px;vertical-align: baseline;">
-						{{item.left}}
+						{{ reverse?item.right:item.left }}
 					</span>
 					<img v-show="!item.rightShow" style="width:15px;height:15px;vertical-align: bottom;" draggable="false" src='../assets/img/eye-close.png'/>
 				</div>
-				<div v-show="item.rightShow" style="font-size: 16px;white-space:pre-line;margin-top: 5px;">{{item.right}}
+				<div v-show="item.rightShow" style="font-size: 16px;white-space:pre-line;margin-top: 5px;">{{ reverse?item.left:item.right }}
 				</div>
 				<div style="width:20px;height:20px;line-height:20px;position: absolute;top:0;right:5px;cursor: pointer;"
 					@click.stop="chosenItem=item;itemDetail.start=1;">
@@ -243,6 +243,10 @@
 			<span class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
 				@click="addItem.start=1">
 				新 增
+			</span>
+			<span class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
+				@click="reverse=reverse?0:1">
+				翻 转
 			</span>
 		</div>
 
@@ -488,7 +492,7 @@
 				loading:null,
 				book:null,
 				bookDetail:0,
-				ps:15,
+				ps:50,
 				pn:0,
 				editName:{
 						start: null,
@@ -497,7 +501,8 @@
 				editOrderNo:{
 					start: null,
 					value: null,
-				}
+				},
+				reverse:0,
 			}
 		},
 		activated() {
@@ -517,7 +522,7 @@
 				debugger
 				let vue = this
 				vue.pn=vue.pn?vue.pn:1;
-				vue.ps=vue.ps?vue.ps:15;
+				vue.ps=vue.ps?vue.ps:50;
 
 				vue.$axios.get('/recording/my-memory/book?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
 					debugger

@@ -58,7 +58,7 @@
 				@click="
 					order=sort=='finalTime'?order:null;
 					sort='finalTime';
-					order=!order?'desc':order=='desc'?'asc':order=='asc'?'':null;
+					order=!order?'asc':order=='asc'?'desc':order=='desc'?'':null;
 					sort=order?sort:null;
 					pn=1;tasks=[];queryHistory.start=0;loadTasks();
 				"
@@ -69,7 +69,21 @@
 				<span v-if="sort=='finalTime' && order=='desc'">&nbsp;&or;</span>
 				<span v-if="sort!='finalTime' || !order">&nbsp;&nbsp;</span>
 			</span>
-		
+			<span class="active"
+				@click="
+					order=sort=='lastTrackCreateTime'?order:null;
+					sort='lastTrackCreateTime';
+					order=!order?'desc':order=='desc'?'asc':order=='asc'?'':null;
+					sort=order?sort:null;
+					pn=1;tasks=[];queryHistory.start=0;loadTasks();
+				"
+				:style="{color:sort=='finalTime'?'red':'#000000'}"
+				style="width: 52px;line-height: 30px;height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;;">
+				追踪
+				<span v-if="sort=='finalTime' && order=='asc'">&nbsp;&and;</span>
+				<span v-if="sort=='finalTime' && order=='desc'">&nbsp;&or;</span>
+				<span v-if="sort!='finalTime' || !order">&nbsp;&nbsp;</span>
+			</span>
 			<span style="width: 81px;vertical-align: top;line-height: 30px;height: 30px;font-size: 16px;cursor: pointer;
 					display:inline-block;border-right:1px solid #8f8f8f;">
 				<select class="active" v-model="status" :style="{color:status?'red':'#000000'}" @change="pn=1;tasks=[];queryHistory.start=0;loadTasks()" 

@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue/dist/vue.runtime.esm.js';
-Vue.prototype.$version = '1.1.1';
+Vue.prototype.$version = '1.1.2';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
