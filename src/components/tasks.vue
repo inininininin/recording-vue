@@ -32,7 +32,7 @@
 				搜索
 			</span>
 			<span class="active"  
-				@click="kindId=sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
+				@click="kindId='',sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
 				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
