@@ -700,8 +700,11 @@
 				vue.queryHistory.start=0;
 				vue.loadTasks()
 
-				vue.$axios.get('/recording/my-task/my-fa-qi-rens?'+vue.$qs.stringify({sort:'orderNo',order:'asc'})).then(res => {
-					
+				vue.$axios.get('/recording/my-task/my-fa-qi-rens?'+vue.$qs.stringify({
+					kindId:vue.kindId==null?undefined:vue.kindId,
+					sort:'orderNo',
+					order:'asc'
+				})).then(res => {
 					if (res.data.code == 0) {
 						if(vue.faQiRens == null)
 							vue.faQiRens = []
@@ -710,8 +713,11 @@
 					}
 				})
 
-				vue.$axios.get('/recording/my-task/my-fu-ze-rens?'+vue.$qs.stringify({sort:'orderNo',order:'asc'})).then(res => {
-					
+				vue.$axios.get('/recording/my-task/my-fu-ze-rens?'+vue.$qs.stringify({
+					kindId:vue.kindId==null?undefined:vue.kindId,
+					sort:'orderNo',
+					order:'asc'
+				})).then(res => {
 					if (res.data.code == 0) {
 						if(vue.fuZeRens == null)
 							vue.fuZeRens = []
