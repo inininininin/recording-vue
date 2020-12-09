@@ -131,11 +131,11 @@
 					kindId='';
 					pn=1;tasks=[];queryHistory.start=0;loadTasks()
 				" 
-				style="width: 48px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+				style="max-width: 60px;min-width:20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;vertical-align: top;"
 				:style="{
 					'background-color':(kindId=='' ? '#d8d5d5' : '#ffffff')}" >
-				未分类
+				默认
 			</span>
 			<span v-if="unitKinds.chosenKind" class="active"
 				@click="
