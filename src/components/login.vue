@@ -92,7 +92,7 @@
 			}
 		},
 		activated(){
-		   debugger
+		   
 			let vue = this;
 			if(vue.query != JSON.stringify(vue.$route.query)){
 				vue.reload();
@@ -105,17 +105,17 @@
 				Object.assign(vue.$data, vue.$options.data());
 			 },
 			 login(){
-				debugger
+				
 				let vue = this;
 				vue.$axios.post('/recording/login',vue.$qs.stringify({account:vue.account,password:vue.password})).then(res => {
-					debugger;
+					
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg});
 					if(res.data.code == 0){
 						vue.$axios.post('/recording/login-refresh').then(res => {
-							debugger;
+							
 							if(res.data.codeMsg) {
-								debugger;
+								
 								vue.$dialog.alert({message:res.data.codeMsg});
 							}
 							if (res.data.code == 0) {
@@ -129,15 +129,15 @@
 				})
 			 },
 			 loginBySms(){
-				debugger
+				
 				let vue = this;
 				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,code:vue.code})).then(res => {
-					debugger
+					
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg});
 					if(res.data.code == 0){
 						vue.$axios.post('/recording/login-refresh').then(data => {
-							debugger
+							
 							if(res.data.codeMsg)
 								vue.$dialog.alert({message:res.data.codeMsg});
 							if (res.data.code == 0) {

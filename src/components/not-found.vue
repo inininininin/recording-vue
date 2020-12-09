@@ -39,14 +39,14 @@
 
 			},
 			logout(){
-				debugger
+				
 				let vue = this;
 				vue.$dialog.confirm({
 					message: '确认退出吗?'
 				}).then(()=> {
-					debugger
+					
 					vue.$axios.post('/recording/logout').then(res => {
-						debugger
+						
 						if(res.data.codeMsg)
 							vue.$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){

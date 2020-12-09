@@ -506,7 +506,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -519,13 +519,13 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this
 				vue.pn=vue.pn?vue.pn:1;
 				vue.ps=vue.ps?vue.ps:50;
 
 				vue.$axios.get('/recording/my-memory/book?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.book = res.data.data;
 					} else {
@@ -544,7 +544,7 @@
 					ps:vue.ps
 				}
 				vue.$axios.get('/recording/my-memory/items?' + vue.$qs.stringify(o)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.items=vue.items?vue.items:[];
 							if(res.data.data.items){
@@ -562,7 +562,7 @@
 				})
 
 				vue.$axios.get('/recording/my-memory/items-sum?' + vue.$qs.stringify(o)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.itemsSum = res.data.data;
 					} else {
@@ -572,7 +572,7 @@
 				})
 			},
 			scroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				console.log(event.target.scrollTop +' '+ vue.$(event.target).height() +' '+ event.target.scrollHeight)
@@ -585,7 +585,7 @@
 				}
 			},
 			createTrack(){
-				debugger
+				
 				let vue = this
 				if(!vue.trackContent){
 					vue.$notify({message:'内容不可空'})

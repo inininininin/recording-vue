@@ -42,7 +42,7 @@
 			style="overflow: auto;width:100%;position: absolute;top: 33px;bottom: 91px;-webkit-overflow-scrolling: touch;">
 			<div :key="item.bookId" v-for="item in books" class="active visited hover"
 				@click="
-					debugger;
+					
 					//$($event.currentTarget).css('background-color','#e6e4e4');
 					$store.state.chosenMemoryBook=item;
 					$router.push({path:'/memory-book',query:{bookId:item.bookId}})
@@ -220,7 +220,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -228,7 +228,7 @@
 				vue.query = vue.$route.query;
 				vue.load();
 			}else{
-				debugger
+				
 				vue.$refs.books.scrollTop=vue.scrollTop
 				if(vue.$store.state.chosenMemoryBookDel){
 					vue.booksSum.count--;
@@ -241,7 +241,7 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this
 
 				vue.queryHistory.start=0;
@@ -249,7 +249,7 @@
 
 			},
 			scroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				console.log(event.target.scrollTop + ' ' +vue.$(event.target).height()+' '+event.target.scrollHeight)
@@ -265,7 +265,7 @@
 				}
 			},
 			loadBooks(){
-				debugger
+				
 				let vue = this
 				vue.loading=1
 				vue.pn=vue.pn?vue.pn:1;
@@ -286,7 +286,7 @@
 					ps:vue.ps
 				}
 				vue.$axios.get('/recording/my-memory/books?' + vue.$qs.stringify(param)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(res.data.data.items.length>0){
 							if(vue.pn==1)
@@ -302,7 +302,7 @@
 					vue.loading=0
 				})
 				vue.$axios.get('/recording/my-memory/books-sum?' + vue.$qs.stringify(param)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						vue.booksSum=res.data.data
 					} else {

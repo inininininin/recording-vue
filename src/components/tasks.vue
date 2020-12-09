@@ -32,7 +32,7 @@
 				搜索
 			</span>
 			<span class="active"  
-				@click="sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
+				@click="kindId=sort=order=status=kw=null,type=status='',pn=1;tasks=[];queryHistory.start=0;loadTasks()" 
 				style="width: 33px;line-height: 30px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;
 					border-right:1px solid #8f8f8f;">
 				重置
@@ -110,7 +110,58 @@
 				···
 			</span>
 		</div>
-		
+
+		<div class="n1-line" style="height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;">
+			<span class="active" 
+				@click="
+					kindId=null
+					pn=1;tasks=[];queryHistory.start=0;loadTasks()
+				" 
+				style="width: 52px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;
+					background-color: #d8d5d5;vertical-align: top;">
+				分类
+			</span>
+			<span class="active"
+				@click="
+					kindId='';
+					pn=1;tasks=[];queryHistory.start=0;loadTasks()
+				" 
+				style="width: 48px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+					border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;vertical-align: top;"
+				:style="{
+					'background-color':(kindId=='' ? '#d8d5d5' : '#ffffff')}" >
+				未分类
+			</span>
+			<span v-if="unitKinds.chosenKind" class="active"
+				@click="
+					kindId=unitKinds.chosenKind.kindId;
+				" 
+				style="max-width: 60px;min-width: 20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+					border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;vertical-align: top;"
+				:style="{
+					'background-color':(kindId==unitKinds.chosenKind.kindId ? '#d8d5d5' : '#ffffff')}" >
+				{{unitKinds.chosenKind.name}}
+			</span>
+			<span class="active" v-for="item in kinds" :key="item.kindId" 
+				v-if="kinds"
+				@click="
+					kindId=item.kindId
+					pn=1;tasks=[];queryHistory.start=0;loadTasks()
+				" 
+				:style="{'background-color':(kindId==item.kindId ? '#d8d5d5' : '#ffffff')}" 
+				style="padding:0 8px;font-size: 16px;cursor: pointer;display:inline-block;
+					border-right:1px solid #8f8f8f;min-width: 20px;text-align: left;overflow: hidden;
+					text-overflow:ellipsis;max-width:60px;vertical-align: baseline;">
+				{{item.name}}
+			</span>
+			<span class="active" 
+				@click="unitKinds_open()"
+				style="background-color: #fff;font-weight: 900;padding:0 8px;font-size: 16px;cursor: pointer;
+					display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">
+				···
+			</span>
+		</div>
+
 		<div class="n1-line" style="height:30px;line-height:30px;border-bottom:1px solid #8f8f8f;position: relative;">
 			<span class="active" @click="faQiRenUserId=null;tasks=[],pn=1;queryHistory.start=0;loadTasks();" 
 				style="width: 52px;padding:0 5px;font-size: 16px;cursor: pointer;display:inline-block;border-right:1px solid #8f8f8f;background-color: #d8d5d5;vertical-align: top;">
@@ -118,8 +169,7 @@
 			</span>
 			<span class="active"
 				@click="
-					debugger;
-					faQiRenUserId=faQiRenUserId == $o($store.state.login).attr('userId') ?null : $o($store.state.login).attr('userId');
+					faQiRenUserId=$o($store.state.login).attr('userId');
 					tasks=[],pn=1;
 					queryHistory.start=0;loadTasks();
 				" 
@@ -130,8 +180,7 @@
 			</span>
 			<span class="active" v-for="item in faQiRens" :key="item.userId" v-if="item.userId != $o($store.state.login).attr('userId')"
 				@click="
-					debugger;
-					faQiRenUserId=faQiRenUserId == item.userId ? null:item.userId;
+					faQiRenUserId=item.userId;
 					tasks=[],pn=1;
 					queryHistory.start=0;loadTasks();" 
 				:style="{'background-color':(faQiRenUserId==item.userId?'#d8d5d5':'#ffffff')}" 
@@ -151,7 +200,7 @@
 			</span>
 			<span class="active"
 				@click="
-					fuZeRenUserId=fuZeRenUserId == $o($store.state.login).attr('userId') ?null : $o($store.state.login).attr('userId');
+					fuZeRenUserId=$o($store.state.login).attr('userId');
 					tasks=[],pn=1;
 					queryHistory.start=0;loadTasks();
 				" 
@@ -162,7 +211,7 @@
 			</span>
 			<span class="active" v-for="item in fuZeRens" :key="item.userId" v-if="item.userId != $o($store.state.login).attr('userId')"
 				@click="
-					fuZeRenUserId=fuZeRenUserId == item.userId ? null:item.userId;
+					fuZeRenUserId=item.userId;
 					tasks=[],pn=1;
 					queryHistory.start=0;loadTasks();
 				" 
@@ -184,10 +233,9 @@
 			</span>
 		</div>
 		<div class="scrollbar" @scroll="tasksScroll($event)" ref="tasks" 
-			style="overflow: auto;width:100%;position: absolute;top: 151px;bottom: 91px;-webkit-overflow-scrolling: touch;">
+			style="overflow: auto;width:100%;position: absolute;top: 182px;bottom: 91px;-webkit-overflow-scrolling: touch;">
 			<div :key="item.taskId" v-for="item in tasks" class="active visited hover"
 				@click="
-					debugger;
 					//$($event.currentTarget).css('background-color','#e6e4e4');
 					$store.state.chosenTask=item;
 					$router.push({path:'/task',query:{taskId:item.taskId,reload:1}})
@@ -381,6 +429,200 @@
 					style="font-size: 16px;text-align: center;margin-top:10px;color:#6b6b6b;">暂无历史记录</div>
 			</div>
 		</div>
+
+
+		<div name="kinds" v-if="unitKinds.open"
+			style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+			<div 
+				style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+				<div style="height:35px;padding:0 0 0 10px;">
+					<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+						分类列表
+					</span>
+				</div>
+				<div class="scrollbar1" style="max-height:600px;overflow: auto;">
+					<div v-for="item in unitKinds.kinds" v-if="unitKinds.kinds" 
+						style="height:35px;padding:0 0 0 10px;cursor: pointer;position: relative;"
+						@click="
+							kindId=item.kindId
+							unitKinds.chosenKind=item
+							unitKinds_close();
+							pn=1;tasks=[];queryHistory.start=0;loadTasks()
+						">
+						<span style="font-size:14px;display: inline-block;height:35px;line-height:35px;">
+							{{item.name}}
+						</span>
+						<span style="font-size:14px;display: inline-block;height:35px;line-height:35px;float:right;font-weight: 900;padding:0 5px;"
+							@click.stop="
+								unitKinds.kind=item
+								unitKinds_unitKind_open(item)
+							">
+							···
+						</span>
+					</div>
+				</div>
+				<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+					<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+							border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+						@click="unitKinds_close()">
+						关 闭
+					</span>
+					<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+							border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
+						@click="unitKinds_unitCreateKind_open()">
+						新 增
+					</span>
+				</div>
+			</div>
+
+			<div name="kind" v-if="unitKinds.unitKind.open"
+				style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+				<div 
+					style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+					<div style="height:35px;padding:0 0 0 10px;">
+						<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+							分类详情
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							分类名
+						</span>
+						<span style="font-size: 16px;">
+							{{unitKinds.unitKind.kind.name}}
+						</span>
+						<span style="cursor: pointer;"
+							@click="
+								var kind=unitKinds.unitKind.kind
+								var r = window.prompt('修改分类名',kind.name)
+								if(r && r!=kind.name){
+									$axios.post('/recording/my-task/update-kind',
+									$qs.stringify({
+										kindId:kind.kindId,
+										name:r
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'修改成功'})
+											kind.name=r
+											unitKinds.kind.name=r
+										}
+									})
+								}
+							">
+							<img src="../assets/img/edit.png" style="width:25px;height:25px;"/>
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							排序
+						</span>
+						<span style="font-size: 16px;display:inline-block;">
+							{{unitKinds.unitKind.kind.orderNo}}
+						</span>
+						<span style="cursor: pointer;"
+							@click="
+								var kind=unitKinds.unitKind.kind
+								var r = window.prompt('修改排序',kind.orderNo)
+								if(r && r!=kind.orderNo){
+									$axios.post('/recording/my-task/update-kind',
+									$qs.stringify({
+										kindId:kind.kindId,
+										orderNo:r
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'修改成功'})
+											kind.orderNo=r
+											unitKinds.kind.orderNo=r
+										}
+									})
+								}
+							">
+							<img src="../assets/img/edit.png" style="width:25px;height:25px;"/>
+						</span>
+					</div>
+					<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+							@click="unitKinds_unitKind_close()">
+							关 闭
+						</span>
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;margin-left:15px;"
+							@click="
+								var kind=unitKinds.unitKind.kind
+								$dialog.confirm({message:'确认删除吗?'}).then(res=>{
+									$axios.post('/recording/my-task/delete-kind',
+									$qs.stringify({
+										kindId:kind.kindId
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'删除成功'})
+											unitKinds_unitKind_close();
+										}
+									})
+								})
+							">
+							删 除
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div name="createKind" v-if="unitKinds.unitCreateKind.open"
+				style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+				<div 
+					style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+					<div style="height:35px;padding:0 0 0 10px;">
+						<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+							创建分类
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							分类名
+						</span>
+						<span style="font-size: 16px;">
+							<input v-model="unitKinds.unitCreateKind.kind.name" />
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							排序
+						</span>
+						<span style="font-size: 16px;display:inline-block;">
+							<input v-model="unitKinds.unitCreateKind.kind.orderNo"/>
+						</span>
+					</div>
+					<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+							@click="unitKinds_unitCreateKind_close()">
+							关 闭
+						</span>
+
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
+							@click="
+								var kind = unitKinds.unitCreateKind.kind;
+								if(kind){
+									$axios.post('/recording/my-task/create-kind',$qs.stringify({
+										name:kind.name,
+										orderNo:kind.orderNo
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'创建成功'})
+											unitKinds.kinds.push(kind)
+											unitKinds_unitCreateKind_close()
+										}
+									})
+								}
+							">
+							确 认
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -399,6 +641,7 @@
 				tasksSum:null,
 				faQiRens:null,
 				fuZeRens:null,
+				kindId:'',
 				pn:null,
 				ps:null,
 				loading:null,
@@ -408,11 +651,25 @@
 				queryHistory:{
 					start:null,
 					kws:null
+				},
+				kinds:null,
+				unitKinds:{
+					open:null,
+					kinds:null,
+					kind:null,
+					chosenKind:null,
+					unitKind:{
+						open:null,
+						kind:null,
+					},
+					unitCreateKind:{
+						open:null,
+						kind:null,
+					}
 				}
 			}
 		},
 		activated() {
-			debugger
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -420,7 +677,7 @@
 				vue.query = vue.$route.query;
 				vue.load();
 			}else{
-				debugger
+				
 				vue.$refs.tasks.scrollTop=vue.scrollTop
 				if(vue.$store.state.chosenTaskDel){
 					vue.tasksSum.count--;
@@ -438,14 +695,13 @@
 		},
 		methods: {
 			load() {
-				debugger
 				let vue = this
 
 				vue.queryHistory.start=0;
 				vue.loadTasks()
 
 				vue.$axios.get('/recording/my-task/my-fa-qi-rens?'+vue.$qs.stringify({sort:'orderNo',order:'asc'})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(vue.faQiRens == null)
 							vue.faQiRens = []
@@ -455,7 +711,7 @@
 				})
 
 				vue.$axios.get('/recording/my-task/my-fu-ze-rens?'+vue.$qs.stringify({sort:'orderNo',order:'asc'})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(vue.fuZeRens == null)
 							vue.fuZeRens = []
@@ -464,9 +720,18 @@
 					}
 				})
 
+				vue.$axios.get('/recording/my-task/kinds?'
+				+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+				.then(res => {
+					if (res.data.code == 0) {
+						if(!vue.kinds) vue.kinds = []
+						if(res.data.data.kinds.list.length>0)
+							vue.kinds=vue.kinds.concat(res.data.data.kinds.list)
+					}
+				})
 			},
 			tasksScroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
@@ -481,7 +746,7 @@
 				}
 			},
 			loadTasks(){
-				debugger
+				
 				let vue = this
 				vue.loading=1
 				vue.pn=vue.pn?vue.pn:1;
@@ -492,7 +757,9 @@
 				if(vue.kw && vue.queryHistory.kws.indexOf(vue.kw)==-1){
 					vue.queryHistory.kws.splice(0,0,vue.kw)
 					if(vue.$store.state.login){
-						vue.$axios.post('/recording/cache/set',vue.$qs.stringify({name:'queryHistory.kws-'+vue.$store.state.login.userId,value:vue.queryHistory.kws.join()}))
+						vue.$axios.post('/recording/cache/set',vue.$qs.stringify({
+							name:'queryHistory.kws-'+vue.$store.state.login.userId,
+							value:vue.queryHistory.kws.join()}))
 					}
 				}
 
@@ -502,13 +769,18 @@
 					kw:vue.kw,
 					status:vue.status,
 					type:vue.type,
+					kindId:vue.kindId,
 					sort:vue.sort?('running,'+vue.sort):'running,orderNo',
 					order:vue.order?('desc,'+vue.order):'desc,asc',
 					pn:vue.pn,
 					ps:vue.ps
 				}
+				for(var i in param){
+					if(param[i] == null)
+						param[i]=undefined
+				}
 				vue.$axios.get('/recording/my-task/tasks?' + vue.$qs.stringify(param)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(res.data.data.items.length>0){
 							if(vue.pn==1)
@@ -524,7 +796,7 @@
 					vue.loading=0
 				})
 				vue.$axios.get('/recording/my-task/tasks-sum?' + vue.$qs.stringify(param)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						vue.tasksSum=res.data.data
 					} else {
@@ -533,6 +805,43 @@
 					}
 				})
 			},
+			unitKinds_open:function(){
+				let vue = this
+				vue.unitKinds.open=1
+				if(!vue.unitKinds.kinds){
+					vue.$axios.get('/recording/my-task/kinds?'+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+					.then(res => {
+						if(res.data.code==0){
+							vue.unitKinds.kinds=res.data.data.kinds.list
+						}
+					})
+				}
+			},
+			unitKinds_close:function(){
+				let vue = this
+				vue.unitKinds.open=0
+			},
+			unitKinds_unitKind_open:function(kind){
+				let vue = this
+				vue.unitKinds.unitKind.open=1
+				vue.unitKinds.unitKind.kind=kind
+			},
+			unitKinds_unitKind_close:function(){
+				let vue = this
+				vue.unitKinds.unitKind.open=0
+			},
+			unitKinds_unitCreateKind_open:function(){
+				let vue = this
+				if(!vue.unitKinds.unitCreateKind.kind)
+					vue.unitKinds.unitCreateKind.kind={}
+				vue.unitKinds.unitCreateKind.open=1
+
+			},
+			unitKinds_unitCreateKind_close:function(){
+				let vue = this
+				vue.unitKinds.unitCreateKind.kind=null
+				vue.unitKinds.unitCreateKind.open=0
+			}
 		}
 	}
 </script>

@@ -129,7 +129,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this;
 			if (vue.query != JSON.stringify(vue.$route.query)) {
 				vue.reload();
@@ -139,18 +139,18 @@
 		},
 		methods: {
 			reload() {
-				debugger
+				
 				let vue = this;
 				Object.assign(vue.$data, vue.$options.data());
 			},
 			forgetByEmail() {
-				debugger
+				
 				let vue = this;
 				if(vue.newPassword != vue.confirmNewPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
 					vue.$axios.post('/recording/update-password-by-email',vue.$qs.stringify({email:vue.email, code: vue.emailCode, newPassword:vue.newPassword}) ).then(res => {
-						debugger
+						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
@@ -162,13 +162,13 @@
 				}
 			},
 			forgetBySms() {
-				debugger
+				
 				let vue = this;
 				if(vue.newPassword != vue.confirmNewPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
 					vue.$axios.post('/recording/update-password-by-sms',vue.$qs.stringify({phone:vue.phone, code: vue.smsCode, newPassword:vue.newPassword}) ).then(res => {
-						debugger
+						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {

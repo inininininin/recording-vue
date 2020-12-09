@@ -34,6 +34,54 @@
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
 				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+					分类
+				</span>
+				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
+					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
+				</span>
+				
+				<span  style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span class="active"
+						@click="
+							kindId=null;
+						" 
+						style="width: 20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+							border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;vertical-align: top;"
+						:style="{
+							'background-color':(!kindId ? '#d8d5d5' : '#ffffff')}" >
+						无
+					</span>
+					<!-- <span v-if="unitKinds.chosenKind" class="active"
+						@click="
+							kindId=unitKinds.chosenKind.kindId;
+						" 
+						style="max-width: 60px;min-width: 20px;padding:0px 8px;font-size: 16px;cursor: pointer;display:inline-block;
+							border-right:1px solid #8f8f8f;min-width: 20px;text-align: center;vertical-align: top;"
+						:style="{
+							'background-color':(kindId==unitKinds.chosenKind.kindId ? '#d8d5d5' : '#ffffff')}" >
+						{{unitKinds.chosenKind.name}}
+					</span> -->
+					<span class="active" v-for="item in kinds" :key="item.kindId" 
+						v-if="kinds"
+						@click="
+							kindId=item.kindId
+						" 
+						:style="{'background-color':(kindId==item.kindId ? '#d8d5d5' : '#ffffff')}" 
+						style="padding:0 8px;font-size: 16px;cursor: pointer;display:inline-block;
+							border-right:1px solid #8f8f8f;min-width: 20px;text-align: left;overflow: hidden;
+							text-overflow:ellipsis;max-width:60px;vertical-align: baseline;">
+						{{item.name}}
+					</span>
+					<span class="active" 
+						style="background-color: #fff;font-weight: 900;padding:0 8px;font-size: 16px;cursor: pointer;
+							display:inline-block;border-left:1px solid #8f8f8f;position: absolute;right:0px;top:0px;">
+						···
+					</span>
+				</span>
+			</div>
+			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
+				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					发起人
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
@@ -354,8 +402,10 @@
 		data() {
 			return {
 				query:null,
-				type:null,
+				type:1,
 				name:null,
+				kindId:null,
+				kindName:null,
 				content:null,
 				orderNo:null,
 				finalTime:null,
@@ -384,10 +434,11 @@
 					items : null,
 					currItems : null
 				},
+				kinds:null,
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -401,9 +452,19 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this;
 				vue.$refs.nameRef.focus()
+
+				vue.$axios.get('/recording/my-task/kinds?'
+				+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+				.then(res => {
+					if (res.data.code == 0) {
+						if(!vue.kinds) vue.kinds = []
+						if(res.data.data.kinds.list.length>0)
+							vue.kinds=vue.kinds.concat(res.data.data.kinds.list)
+					}
+				})
 			},
 			createTask() {
 				let vue = this
@@ -425,9 +486,11 @@
 						name:vue.name,
 						content:vue.content,
 						orderNo:vue.orderNo,
+						kindId:vue.kindId,
+						kindName:vue.kindName
 					}
 					vue.$axios.post('/recording/my-task/create-task',vue.$qs.stringify(task)).then(res=>{
-						debugger
+						
 						vue.errParam=res.data.errParam
 						if(res.data.codeMsg)
 							vue.$dialog.alert({ type:'primary', message:res.data.codeMsg})
@@ -446,7 +509,7 @@
 				
 			},
 			chooseFaQiRen_loadItems(){
-				debugger
+				
 				let vue = this
 				vue.chooseFaQiRen.loading=1
 				var obj = {
@@ -455,7 +518,7 @@
 					ps:vue.chooseFaQiRen.ps
 				}
 				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
-					debugger
+					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
 							if(vue.chooseFaQiRen.pn==1)
@@ -472,7 +535,7 @@
 				})
 			},
 			chooseFuZeRen_loadItems(){
-				debugger
+				
 				let vue = this
 				vue.chooseFuZeRen.loading=1
 				var obj = {
@@ -481,7 +544,7 @@
 					ps:vue.chooseFuZeRen.ps
 				}
 				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
-					debugger
+					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
 							if(vue.chooseFuZeRen.pn==1)

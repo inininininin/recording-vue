@@ -267,7 +267,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -282,7 +282,7 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this
 
 				vue.$axios.get(
@@ -310,7 +310,7 @@
 				
 			},
 			loadDailies() {
-				debugger
+				
 				let vue = this
 				vue.$axios.get(
 					'/recording/daily/dailies?'+
@@ -334,7 +334,7 @@
 				})
 			},
 			scroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				vue.scrollLeft=event.target.scrollLeft;
@@ -346,7 +346,7 @@
 				}
 			},
 			foo(daily,day){
-				debugger
+				
 				let vue = this
 				if(daily.does && daily.does.length>0){
 					for (let i = 0; i < daily.does.length; i++) {

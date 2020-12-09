@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue/dist/vue.runtime.esm.js';
-Vue.prototype.$version = '1.1.2';
+Vue.prototype.$version = '1.2.0';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
@@ -15,13 +15,17 @@ import Notify from 'vant/lib/notify';
 import 'vant/lib/notify/style';
 import Dialog from 'vant/lib/dialog';
 import 'vant/lib/dialog/style';
+import Picker from 'vant/lib/picker';
+import 'vant/lib/picker/style';
+import Popup from 'vant/lib/popup';
+import 'vant/lib/popup/style';
 import Router from 'vue-router';
-
+import '@vant/touch-emulator';
 
 Vue.use(Router);
 Vue.prototype.$ = jQuery;
 Vue.prototype.$versionIntro = '修复了已知BUG, 优化了用户体验.';
-Vue.use(Dialog).use(Notify);
+Vue.use(Dialog).use(Notify).use(Picker).use(Popup);
 Dialog.setDefaultOptions({
   messageAlign:'left'
 })
@@ -43,7 +47,7 @@ Vue.prototype.window = window;
 
 Vue.prototype.$axios.interceptors.request.use(
   config => {
-    debugger;
+    
     Vue.prototype.$store.state.requestingCount++;
     return config;
   },
@@ -55,7 +59,7 @@ Vue.prototype.$axios.interceptors.request.use(
 
 Vue.prototype.$axios.interceptors.response.use(
   response => {
-    debugger;
+    
     Vue.prototype.$store.state.requestingCount--;
         return response;
   },
@@ -66,7 +70,7 @@ Vue.prototype.$axios.interceptors.response.use(
 );
 
 Vue.prototype.$highlight = function (base, kw, data) {
-  debugger;
+  
   data = data? data : {};
   var color = data.color? data.color:'#c00000';
   let kws = [];
@@ -108,7 +112,7 @@ function O(p_value){
   this.value=p_value;
 
   O.prototype.attr = function(keyChain){
-    debugger
+    
     this.last=null;
     if(!this.value || !keyChain){
       return null;
@@ -150,6 +154,7 @@ Vue.prototype.$O=O
 Vue.prototype.$o=o
 
 Vue.prototype.routes=[]
+
 
 
 // new Vue({

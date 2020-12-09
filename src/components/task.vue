@@ -36,6 +36,29 @@
 			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
 				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
 					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+					分类
+				</span>
+				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
+					<span style="display: inline-block;height:30px;border-left:1px solid #8F8F8F;"></span>
+				</span>
+				
+				<span style="display: inline-block;line-height:40px;position: absolute;left:91px;right:0;height: 40px;">
+					<span class="selectable" v-if="$o(task).attr('name')" 
+						style="font-size: 16px;height: 40px;line-height: 40px;display: inline-block;margin-left: 5px;
+							overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
+						{{ task.kindName }}
+					</span>
+					<span class="active" 
+						style="width:25px;height: 40px;line-height: 40px;display: inline-block;font-size: 16px;cursor: pointer;text-align: center;right: 0px;position: absolute;
+							background-color: #e4e4e4;color: #6b6b6b;"
+						@click="unitEditKind_open()">
+						<img draggable="false"  src="../assets/img/edit.png" style="width:22px;height:22px;vertical-align: middle;"/>
+					</span>
+				</span>
+			</div>
+			<div style="font-size: 0px;width:100%;height:40px;border-bottom:1px solid #8F8F8F;position: relative;">
+				<span style="font-size: 16px;height: 40px;width:80px;display: inline-block;line-height:40px;padding:0 5px;
+					overflow: hidden;text-overflow: ellipsis;white-space: nowrap;vertical-align: top;">
 					发起人
 				</span>
 				<span style="font-size: 16px;display: inline-block;line-height: 60px;vertical-align: text-top;height: 40px;">
@@ -750,6 +773,237 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div name="kinds" v-if="unitEditKind.open"
+			style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+			<div 
+				style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+				<div style="height:35px;padding:0 0 0 10px;">
+					<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+						分类列表
+					</span>
+				</div>
+				<div class="scrollbar1" style="max-height:600px;overflow: auto;">
+					<div v-for="item in unitEditKind.kinds" v-if="unitEditKind.kinds" 
+						style="height:35px;padding:0 0 0 10px;cursor: pointer;position: relative;"
+						@click="
+							$dialog.confirm({message:'确认修改吗?'}).then(res=>{
+								if(item.kindId!=task.kindId){
+									$axios.post('/recording/my-task/update-task',$qs.stringify({
+										taskId:query.taskId,
+										kindId:item.kindId,
+										kindName:item.name
+									})).then(res => {
+										if(res.data.code == 0){
+											task.kindId=item.kindId
+											task.kindName=item.name
+											$notify({type:'success', message:'修改成功'})
+											unitEditKind_close();
+										}
+									})
+								}else{
+									$notify({type:'success', message:'修改成功'})
+									unitEditKind_close();
+								}
+							})
+							
+						">
+						<span style="font-size:14px;display: inline-block;height:35px;line-height:35px;">
+							{{item.name}}
+						</span>
+						<span style="font-size:14px;display: inline-block;height:35px;line-height:35px;float:right;font-weight: 900;padding:0 5px;"
+							@click.stop="
+								unitEditKind.kind=item
+								unitEditKind_unitKind_open(item)
+							">
+							···
+						</span>
+					</div>
+				</div>
+				<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+					<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+							border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+						@click="unitEditKind_close()">
+						关 闭
+					</span>
+					<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+							border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
+						@click="
+							$dialog.confirm({message:'确认清除吗?'}).then(res=>{
+								$axios.post('/recording/my-task/update-task',
+								$qs.stringify({
+									taskId:query.taskId,
+									kindId:'',
+									kindName:'',
+								})).then(res => {
+									if(res.data.code==0){
+										$notify({type:'success',message:'清除成功'})
+										task.kindId=null
+										task.kindName=null
+										unitEditKind_close()
+									}
+								})
+							})
+						">
+						清 除
+					</span>
+					<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+							border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
+						@click="unitEditKind_unitCreateKind_open()">
+						新 增
+					</span>
+				</div>
+			</div>
+
+			<div name="kind" v-if="unitEditKind.unitKind.open"
+				style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+				<div 
+					style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+					<div style="height:35px;padding:0 0 0 10px;">
+						<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+							分类详情
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							分类名
+						</span>
+						<span style="font-size: 16px;">
+							{{unitEditKind.unitKind.kind.name}}
+						</span>
+						<span style="cursor: pointer;"
+							@click="
+								var kind=unitEditKind.unitKind.kind
+								var r = window.prompt('修改分类名',kind.name)
+								if(r && r!=kind.name){
+									$axios.post('/recording/my-task/update-kind',
+									$qs.stringify({
+										kindId:kind.kindId,
+										name:r
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'修改成功'})
+											kind.name=r
+											unitEditKind.kind.name=r
+										}
+									})
+								}
+							">
+							<img src="../assets/img/edit.png" style="width:25px;height:25px;"/>
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							排序
+						</span>
+						<span style="font-size: 16px;display:inline-block;">
+							{{unitEditKind.unitKind.kind.orderNo}}
+						</span>
+						<span style="cursor: pointer;"
+							@click="
+								var kind=unitEditKind.unitKind.kind
+								var r = window.prompt('修改排序',kind.orderNo)
+								if(r && r!=kind.orderNo){
+									$axios.post('/recording/my-task/update-kind',
+									$qs.stringify({
+										kindId:kind.kindId,
+										orderNo:r
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'修改成功'})
+											kind.orderNo=r
+											unitEditKind.kind.orderNo=r
+										}
+									})
+								}
+							">
+							<img src="../assets/img/edit.png" style="width:25px;height:25px;"/>
+						</span>
+					</div>
+					<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+							@click="unitEditKind_unitKind_close()">
+							关 闭
+						</span>
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;margin-left:15px;"
+							@click="
+								var kind=unitEditKind.unitKind.kind
+								$dialog.confirm({message:'确认删除吗?'}).then(res=>{
+									$axios.post('/recording/my-task/delete-kind',
+									$qs.stringify({
+										kindId:kind.kindId
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'删除成功'})
+											unitEditKind_unitKind_close();
+										}
+									})
+								})
+							">
+							删 除
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div name="createKind" v-if="unitEditKind.unitCreateKind.open"
+				style="position: absolute;top:0;bottom:0;width:100%;z-index: 100;background-color: rgba(0, 0, 0, 0.6);">
+				<div 
+					style="background-color: #ffffff;min-height:200px;position:absolute;top:100px;right:0;left:0;padding:0 0 10px 0;">
+					<div style="height:35px;padding:0 0 0 10px;">
+						<span style="font-size:16px;display: inline-block;height:35px;line-height:35px;">
+							创建分类
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							分类名
+						</span>
+						<span style="font-size: 16px;">
+							<input v-model="unitEditKind.unitCreateKind.kind.name" />
+						</span>
+					</div>
+					<div>
+						<span style="font-size: 16px;display:inline-block;">
+							排序
+						</span>
+						<span style="font-size: 16px;display:inline-block;">
+							<input v-model="unitEditKind.unitCreateKind.kind.orderNo"/>
+						</span>
+					</div>
+					<div style="padding:0 5px 0 10px;margin:10px 0 0 0;">
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;"
+							@click="unitEditKind_unitCreateKind_close()">
+							关 闭
+						</span>
+
+						<span style="display: inline-block;height:35px;line-height:35px;font-size: 14px;border-style: solid;border-color:#808080;
+								border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
+							@click="
+								var kind = unitEditKind.unitCreateKind.kind;
+								if(kind){
+									$axios.post('/recording/my-task/create-kind',$qs.stringify({
+										name:kind.name,
+										orderNo:kind.orderNo
+									})).then(res => {
+										if(res.data.code==0){
+											$notify({type:'success',message:'创建成功'})
+											unitEditKind.kinds.push(kind)
+											unitEditKind_unitCreateKind_close()
+										}
+									})
+								}
+							">
+							确 认
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -810,10 +1064,26 @@
 					items : null,
 					currItems : null
 				},
+				kindId:'',
+				kindName:null,
+				kinds:null,
+				unitEditKind:{
+					open:null,
+					kinds:null,
+					kind:null,
+					unitKind:{
+						open:null,
+						kind:null,
+					},
+					unitCreateKind:{
+						open:null,
+						kind:null,
+					}
+				}
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -826,11 +1096,20 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this
 
+				vue.$axios.get('/recording/my-task/kinds?'
+				+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+				.then(res => {
+					if (res.data.code == 0) {
+						if(!vue.kinds) vue.kinds = []
+						if(res.data.data.kinds.list.length>0)
+							vue.kinds=vue.kinds.concat(res.data.data.kinds.list)
+					}
+				})
+
 				vue.$axios.get('/recording/task?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
-					debugger
 					if (res.data.code == 0) {
 							vue.task = res.data.data;
 					} else {
@@ -843,7 +1122,7 @@
 			loadTracks(){
 				let vue = this
 				vue.$axios.get('/recording/my-task/tracks?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.tracks.items = res.data.data.items;
 					} else {
@@ -853,7 +1132,7 @@
 				})
 
 				vue.$axios.get('/recording/my-task/tracks-sum?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.tracks.sum = res.data.data;
 					} else {
@@ -863,7 +1142,7 @@
 				})
 			},
 			chooseFaQiRen_loadItems(){
-				debugger
+				
 				let vue = this
 				vue.editFaQiRen.loading=1
 				var obj = {
@@ -872,7 +1151,7 @@
 					ps:vue.editFaQiRen.ps
 				}
 				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
-					debugger
+					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
 							if(vue.editFaQiRen.pn==1)
@@ -889,7 +1168,7 @@
 				})
 			},
 			chooseFuZeRen_loadItems(){
-				debugger
+				
 				let vue = this
 				vue.editFuZeRen.loading=1
 				var obj = {
@@ -898,7 +1177,7 @@
 					ps:vue.editFuZeRen.ps
 				}
 				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
-					debugger
+					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
 							if(vue.editFuZeRen.pn==1)
@@ -915,7 +1194,7 @@
 				})
 			},
 			createTrack(){
-				debugger
+				
 				let vue = this
 				if(!vue.trackContent){
 					vue.$notify({message:'内容不可空'})
@@ -942,6 +1221,43 @@
 					})
 				}
 			},
+			unitEditKind_open:function(){
+				let vue = this
+				vue.unitEditKind.open=1
+				if(!vue.unitEditKind.kinds){
+					vue.$axios.get('/recording/my-task/kinds?'+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+					.then(res => {
+						if(res.data.code==0){
+							vue.unitEditKind.kinds=res.data.data.kinds.list
+						}
+					})
+				}
+			},
+			unitEditKind_close:function(){
+				let vue = this
+				vue.unitEditKind.open=0
+			},
+			unitEditKind_unitKind_open:function(kind){
+				let vue = this
+				vue.unitEditKind.unitKind.open=1
+				vue.unitEditKind.unitKind.kind=kind
+			},
+			unitEditKind_unitKind_close:function(){
+				let vue = this
+				vue.unitEditKind.unitKind.open=0
+			},
+			unitEditKind_unitCreateKind_open:function(){
+				let vue = this
+				if(!vue.unitEditKind.unitCreateKind.kind)
+					vue.unitEditKind.unitCreateKind.kind={}
+				vue.unitEditKind.unitCreateKind.open=1
+
+			},
+			unitEditKind_unitCreateKind_close:function(){
+				let vue = this
+				vue.unitEditKind.unitCreateKind.kind=null
+				vue.unitEditKind.unitCreateKind.open=0
+			}
 		}
 	}
 </script>

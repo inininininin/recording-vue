@@ -1,7 +1,7 @@
 import Mock from 'mockjs';
 
 // Mock.mock('/recording/login', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -10,7 +10,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/login-by-sms', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -19,7 +19,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/login-refresh', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -31,7 +31,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/register', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -42,7 +42,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/login-by-login-code', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -51,7 +51,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/register-by-sms', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -60,7 +60,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/logout', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -69,7 +69,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/my-memory/books' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -91,7 +91,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -101,7 +101,7 @@ import Mock from 'mockjs';
 //     };
 // });
 // Mock.mock(RegExp('/recording/my-memory/book' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -113,7 +113,7 @@ import Mock from 'mockjs';
 //     };
 // });
 // Mock.mock(RegExp('/recording/my-memory/create-book'), 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -123,7 +123,7 @@ import Mock from 'mockjs';
 //     };
 // });
 // Mock.mock(RegExp('/recording/my-memory/update-book'), 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -133,7 +133,7 @@ import Mock from 'mockjs';
 //     };
 // });
 // Mock.mock(RegExp('/recording/my-memory/delete-book'), 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -143,7 +143,7 @@ import Mock from 'mockjs';
 //     };
 // });
 // Mock.mock(RegExp('/recording/task' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -170,7 +170,7 @@ import Mock from 'mockjs';
 
 
 // Mock.mock(RegExp('/recording/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -212,7 +212,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -234,7 +234,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/my-friends/friends' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -261,7 +261,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/my-friends/friends-sum' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -272,7 +272,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock(RegExp('/recording/users' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -341,7 +341,7 @@ import Mock from 'mockjs';
 
 
 // Mock.mock(RegExp('/recording/my-task/tracks' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -448,7 +448,7 @@ import Mock from 'mockjs';
 // }
 
 // Mock.mock(RegExp('/recording/daily/dailies' + '\\?.*'), 'get', (data) => {
-//     debugger;
+//     
 //     console.log('/recording/daily/dailies')
 //     return {
 //         code: 0,
@@ -460,7 +460,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/daily/done' + '\\?.*', 'get', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -469,7 +469,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/daily/undone', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -478,7 +478,7 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/daily/create-daily', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -487,10 +487,73 @@ import Mock from 'mockjs';
 // });
 
 // Mock.mock('/recording/daily/delete-daily', 'post', (data) => {
-//     debugger;
+//     
 //     return {
 //         code: 0,
 //         codeMsg: '',
 //         data: {}
+//     };
+// });
+
+
+// Mock.mock(RegExp('/recording/my-task/kinds' + '\\??.*'), 'get', (data) => {
+//     debugger
+//     return {
+//         code: 0,
+//         codeMsg: '',
+//         data: {
+//             kinds: [
+//                 {
+//                     kindId: '1',
+//                     name: '分类1',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '2',
+//                     name: '分类2',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '3',
+//                     name: '分类3',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '4',
+//                     name: '分类4',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '5',
+//                     name: '分类5',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '6',
+//                     name: '分类6',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '7',
+//                     name: '分类7',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '8',
+//                     name: '分类8',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '9',
+//                     name: '分类9',
+//                     orderNo: 1,
+//                 },
+//                 {
+//                     kindId: '10',
+//                     name: '分类10',
+//                     orderNo: 1,
+//                 },
+//             ]
+//         }
 //     };
 // });

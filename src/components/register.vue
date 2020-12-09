@@ -119,7 +119,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
 				Object.assign(vue.$data, vue.$options.data());
@@ -131,27 +131,27 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this;
 			},
 			register() {
-				debugger
+				
 				let vue = this;
 				if(vue.password != vue.confirmPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
 					vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
-						debugger
+						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
 							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
-								debugger
+								
 								if (res.data.codeMsg)
 									vue.$dialog.alert({message:res.data.codeMsg});
 								if (res.data.code == 0) {
 									vue.$axios.post('/recording/login-refresh').then(data => {
-										debugger;
+										
 										if(data.data.codeMsg)
 											vue.$dialog.alert({message:data.data.codeMsg});
 										if (data.data.code == 0) {
@@ -168,23 +168,23 @@
 				}
 			},
 			registerBySms() {
-				debugger
+				
 				let vue = this;
 				if(vue.password != vue.confirmPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
 					vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, code:vue.code}) ).then(res => {
-						debugger
+						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
 							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
-								debugger
+								
 								if (res.data.codeMsg)
 									vue.$dialog.alert({message:res.data.codeMsg});
 								if (res.data.code == 0) {
 									vue.$axios.post('/recording/login-refresh').then(data => {
-										debugger;
+										
 										if(data.data.codeMsg)
 											vue.$dialog.alert({message:data.data.codeMsg});
 										if (data.data.code == 0) {

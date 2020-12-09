@@ -123,7 +123,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (vue.query != JSON.stringify(vue.$route.query)) {
@@ -150,7 +150,7 @@
 		},
 		methods: {
 			reload() {
-				debugger
+				
 				let vue = this
 				Object.assign(vue.$data, vue.$options.data());
 				vue.nameIf = 1
@@ -188,7 +188,7 @@
 				image3:vue.imageList[3]?vue.imageList[3]:null,
 				image4:vue.imageList[4]?vue.imageList[4]:null,
 				image5:vue.imageList[5]?vue.imageList[5]:null,})).then(res=>{
-						debugger
+						
 						if(res.data.codeMsg)
 							alert(res.data.codeMsg)
 						if (res.data.code == 0) {
@@ -202,19 +202,19 @@
 
 			},
 			addImage(){
-				debugger
+				
 				let vue = this
 				if(!(vue.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
 				vue.$(`<input type="file" />`).change(function(){
-					debugger
+					
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
 					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
-						debugger
+						
 						vue.imageList.push(res.data.data.url)
 					})
 				}).click()

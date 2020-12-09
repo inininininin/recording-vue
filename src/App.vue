@@ -13,7 +13,7 @@
 export default {
   name: 'App',
   async created(){
-    debugger
+    
     let vue=this
     window.vue=vue;
     

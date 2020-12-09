@@ -150,7 +150,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (vue.query != JSON.stringify(vue.$route.query)) {
@@ -163,7 +163,7 @@
 		},
 		methods: {
 			reload() {
-				debugger
+				
 				let vue = this
 				Object.assign(vue.$data, vue.$options.data());
 
@@ -183,7 +183,7 @@
 					if (r!=null)
 						{
 							vue.$axios.post(`/recording/my-follow/create-follow`,vue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
-								debugger
+								
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
 								if (res.data.code == 0) {
@@ -197,7 +197,7 @@
 					if (r!=null)
 						{
 							vue.$axios.post(`/recording/my-follow/update-follow`,vue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
-								debugger
+								
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
 								if (res.data.code == 0) {
@@ -209,12 +209,12 @@
 				}
 			},
 			findMoreFriendUserList(){
-				debugger
+				
 				let vue = this
 				vue.addFriend.loading=1
 				vue.addFriend.userCount=null;
 				vue.$axios.get(`/recording/user/user-list?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
-					debugger
+					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
@@ -236,14 +236,14 @@
 				})
 
 				vue.$axios.get(`/recording/user/user-list-sum?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 							vue.addFriend.userCount=res.data.data.itemCount
 					}
 				})
 			},
 			addFriendUserListScroll(event){
-				debugger
+				
 				let vue = this
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
 					vue.addFriend.pn++;
@@ -251,7 +251,7 @@
 				}
 			},
 			friendListScroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
@@ -260,7 +260,7 @@
 				}
 			},
 			loadFriendList (){
-				debugger
+				
 				let vue = this
 				vue.loading=1
 				let sorts=[]
@@ -280,7 +280,7 @@
 				
 
 				vue.$axios.get('/recording/my-follow/follow-list?'+vue.$qs.stringify({kw:vue.kw,sort:sorts.join(),order:orders.join(),pn:vue.pn,ps:vue.ps})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
 							vue.friendList=vue.friendList.concat(res.data.data.itemList)
@@ -290,7 +290,7 @@
 					vue.loading=0
 				})
 				vue.$axios.get('/recording/my-follow/follow-list-sum?'+vue.$qs.stringify({kw:vue.kw,pn:vue.pn,ps:vue.ps})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						vue.itemCount=res.data.data.itemCount
 					}

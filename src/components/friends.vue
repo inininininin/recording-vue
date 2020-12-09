@@ -404,7 +404,7 @@
 			}
 		},
 		activated() {
-			debugger
+			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -417,14 +417,14 @@
 		},
 		methods: {
 			load() {
-				debugger
+				
 				let vue = this
 
 				vue.queryHistory.start=0;
 				vue.loadFriends()
 			},
 			friendsScroll(event){
-				debugger
+				
 				let vue = this
 				vue.scrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
@@ -436,7 +436,7 @@
 				}
 			},
 			loadFriends(){
-				debugger
+				
 				let vue = this
 				vue.loading=1
 				vue.pn=vue.pn?vue.pn:1;
@@ -458,7 +458,7 @@
 					ps:vue.ps
 				}
 				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(res.data.data.items.length>0){
 							if(vue.pn==1)
@@ -473,7 +473,7 @@
 					vue.loading=0
 				})
 				vue.$axios.get('/recording/my-friend/friends-sum?' + vue.$qs.stringify(obj)).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						vue.friendsSum=res.data.data
 					} else {
@@ -483,7 +483,7 @@
 				})
 			},
 			addFriend_loadUsers(){
-				debugger
+				
 				try{
 					let vue = this
 					vue.addFriend.loading=1
@@ -495,7 +495,7 @@
 						ps:vue.addFriend.ps
 					}
 					vue.$axios.get('/recording/user/users?' + vue.$qs.stringify(obj)).then(res => {
-						debugger
+						
 						if (res.data.code == 0) {
 							if(res.data.data.items.length>0){
 								if(vue.addFriend.pn==1)
@@ -516,7 +516,7 @@
 				
 			},
 			addFriend_usersScroll(event){
-				debugger
+				
 				let vue = this
 				vue.addFriend.usersScrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {

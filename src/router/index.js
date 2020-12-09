@@ -84,13 +84,13 @@ const router = new Router({
 });
 
 router.beforeEach((to, from,next) => {
-  debugger;
+  
   store.state.requestingCount++
   next()
 });
 
 router.afterEach((to, from) => {
-  debugger;
+  
   store.state.requestingCount--
   if(window.history.length==1){
     store.state.routes=[];

@@ -305,7 +305,7 @@
 			}
 		},
 		beforeRouteLeave(to, from,next){
-			debugger
+			
 			next()
 		},
 		activated() {
@@ -366,7 +366,7 @@
 				vue.loadTaskTrackList()
 			},
 			updateTask(name) {
-				debugger
+				
 				let vue = this
 				if(JSON.stringify(vue.task[name])==JSON.stringify(vue.taskUpdate[name]))
 					return;
@@ -413,7 +413,7 @@
 				}
 
 				vue.$axios.post('/recording/my-task/update-task',vue.$qs.stringify(param)).then(res=>{
-					debugger
+					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
@@ -427,28 +427,28 @@
 				})
 			},
 			addImage(){
-				debugger
+				
 				let vue = this
 				if(!(vue.taskUpdate.imageList.length<6)){
 					alert("最多添加 6 张图片")
 					return;
 				}
 				vue.$(`<input type="file" />`).change(function(){
-					debugger
+					
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
 					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
-						debugger
+						
 						vue.taskUpdate.imageList.push(res.data.data.url)
 					})
 				}).click()
 			},
 			createTrack(){
-				debugger
+				
 				let vue = this
 				vue.$axios.post('/recording/my-task/create-task-track',vue.$qs.stringify({taskId:vue.taskId,content:vue.trackContent})).then(res=>{
-					debugger
+					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
@@ -461,7 +461,7 @@
 				})
 			},
 			taskTrackListScroll(event){
-				debugger
+				
 				let vue = this
 				vue.taskTrack_scrollTop=event.target.scrollTop;
 				if((event.target.scrollTop+vue.$(event.target).height())>=event.target.scrollHeight) {
@@ -469,13 +469,13 @@
 				}
 			},
 			loadTaskTrackList(){
-				debugger
+				
 				let vue = this
 				vue.taskTrack_loading=1
 
 				vue.taskTrack_count =null;
 				vue.$axios.get('/recording/my-task/task-track-list?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
 							vue.taskTrack_list=vue.taskTrack_list.concat(res.data.data.itemList)
@@ -485,7 +485,7 @@
 					vue.taskTrack_loading=0
 				})
 				vue.$axios.get('/recording/my-task/task-track-list-sum?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
-					debugger
+					
 					if (res.data.code == 0) {
 						vue.taskTrack_count=res.data.data.itemCount
 					}
