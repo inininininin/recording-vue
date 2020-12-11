@@ -10,6 +10,9 @@
 			<span style="font-weight: 900;font-size: 16px;position: absolute;left:40px;">
 				记忆单
 			</span>
+			<span style="margin: 0 0 0 5px;font-size:14px;position: absolute;left: 90px;">
+				{{itemsSum.count}}
+			</span>
 			<span v-if="book" style="font-weight: 900;font-size: 16px;display: inline-block;width:45%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 				{{book.name}}
 			</span>
@@ -18,18 +21,12 @@
 			</span>
 		</div>
 		<div ref="scroll" @scroll="scroll($event)" style="position: absolute;top:41px;bottom:35px;left:0;right:0;overflow: auto;">
-			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:0 5px;cursor: pointer;margin-top:5px;margin-bottom: 15px;position: relative;" 
-				@click="
-					item.rightShow = item.rightShow?0:1;
-				">
-				<div> 
-					<span style="font-size: 16px;vertical-align: baseline;">
-						{{ reverse?item.right:item.left }}
-					</span>
-					<img v-show="!item.rightShow" style="width:15px;height:15px;vertical-align: bottom;" draggable="false" src='../assets/img/eye-close.png'/>
+			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:5px 5px;cursor: pointer;position: relative;" 
+				@click="item.rightShow = item.rightShow?0:1;">
+				<div style="font-size: 16px;font-weight: 900;">
+					{{ reverse?item.right:item.left }}
 				</div>
-				<div v-show="item.rightShow" style="font-size: 16px;white-space:pre-line;margin-top: 5px;">{{ reverse?item.left:item.right }}
-				</div>
+				<div v-show="item.rightShow" style="font-size: 16px;margin-top: 5px;white-space: pre-wrap;">{{ reverse?item.left:item.right }}</div>
 				<div style="width:20px;height:20px;line-height:20px;position: absolute;top:0;right:5px;cursor: pointer;"
 					@click.stop="chosenItem=item;itemDetail.start=1;">
 					<img style="width:20px;height:5px;vertical-align: middle;" draggable="false" src="../assets/img/more.png" />
@@ -52,7 +49,7 @@
 
 		<div v-if="itemDetail.start" style="position: absolute;top:0;bottom:0;left:0;right:0;background-color: rgba(0,0,0,0.6);z-index: 1000;">
 			<div style="margin-top:200px;background-color: #FFFFFF;padding:5px 5px 5px 35px;max-height:80%;">
-				<div style="font-size: 16px;width:100px;padding:5px 0;color:#6b6b6b;">记忆项详情</div>
+				<div style="font-size: 16px;width:100px;padding:5px 0;color:#6b6b6b;">记忆项</div>
 				<div style="padding: 5px 0;position:relative;">
 					<span style="font-size: 16px;color:#6b6b6b;display: inline-block;">
 						上
@@ -105,6 +102,7 @@
 										$notify({type:'success',message:'删除成功'})
 									items.splice(items.indexOf(chosenItem),1)
 									chosenItem=null
+									itemsSum.count--
 									itemDetail.start=0
 								}else{
 									if(res.data.codeMsg)
@@ -248,6 +246,24 @@
 				@click="reverse=reverse?0:1">
 				翻 转
 			</span>
+			<span v-if="!allRightShow" class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
+				@click="
+					allRightShow=1;
+					for(var i in items){
+						items[i].rightShow=1
+					}
+				">
+				全 开
+			</span>
+			<span v-if="allRightShow"class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
+				@click="
+					allRightShow=0
+					for(var i in items){
+						items[i].rightShow=0
+					}
+				">
+				全 关
+			</span>
 		</div>
 
 		<div v-if="addItem.start" style="position: absolute;top:0;bottom:0;left:0;right:0;background-color: rgba(0,0,0,0.6);z-index: 1000;">
@@ -304,6 +320,7 @@
 									rightShow:0,
 									...addItem.item
 								})
+								itemsSum.count++
 								addItem.item={};
 								addItem.start=0;
 							}else{
@@ -503,10 +520,10 @@
 					value: null,
 				},
 				reverse:0,
+				allRightShow:null,
 			}
 		},
 		activated() {
-			
 			let vue = this
 			window.vue=vue;
 			if (JSON.stringify(vue.query) != JSON.stringify(vue.$route.query)) {
@@ -549,7 +566,7 @@
 							vue.items=vue.items?vue.items:[];
 							if(res.data.data.items){
 								res.data.data.items.forEach(item=>{
-									item.rightShow=0
+									item.rightShow=vue.allRightShow
 								})
 							}
 							vue.items.push(...res.data.data.items);

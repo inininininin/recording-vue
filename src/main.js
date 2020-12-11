@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue/dist/vue.runtime.esm.js';
-Vue.prototype.$version = '1.2.0';
+Vue.prototype.$version = '1.2.1';
 import App from './App';
 import router from './router/index.js';
 import store from './store/index.js';
@@ -47,7 +47,6 @@ Vue.prototype.window = window;
 
 Vue.prototype.$axios.interceptors.request.use(
   config => {
-    
     Vue.prototype.$store.state.requestingCount++;
     return config;
   },
