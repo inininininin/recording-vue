@@ -27,15 +27,15 @@
 						$axios.post('/recording/my-memory/done-item',$qs.stringify({itemId:item.itemId}))
 						item.done=1
 						item.rightShow=0
-						currShowItem=null
+						currShowItems.splice(currShowItems.indexOf(item),1)
 					}else{
 						$axios.post('/recording/my-memory/undone-item',$qs.stringify({itemId:item.itemId}))
 						item.done=0
 						item.rightShow=1
-						currShowItem=item
+						currShowItems.push(item)
 					}
 				">
-				<div style="font-size: 16px;font-weight: 900;" :style="{color:item.done || (currShowItem &&currShowItem.itemId!=item.itemId)?'#a7a7a7':'#000000'}">
+				<div style="font-size: 16px;font-weight: 900;" :style="{color:item.done || (currShowItems.length>0 && currShowItems.indexOf(item)==-1)?'#c7c7c7':'#000000'}">
 					{{ reverse?item.right:item.left }}
 				</div>
 				<div v-show="item.rightShow" style="font-size: 16px;margin-top: 5px;white-space: pre-wrap;">{{ reverse?item.left:item.right }}</div>
@@ -282,6 +282,7 @@
 						if(res.data.code==0){
 							for(var i in items){
 								items[i].done=null
+								items[i].rightShow=null
 							}
 						}
 					})
@@ -545,7 +546,7 @@
 				},
 				reverse:0,
 				allRightShow:null,
-				currShowItem:null,
+				currShowItems:[],
 			}
 		},
 		activated() {
