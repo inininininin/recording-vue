@@ -22,8 +22,20 @@
 		</div>
 		<div ref="scroll" @scroll="scroll($event)" style="position: absolute;top:41px;bottom:35px;left:0;right:0;overflow: auto;">
 			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:5px 5px;cursor: pointer;position: relative;" 
-				@click="item.rightShow = item.rightShow?0:1;">
-				<div style="font-size: 16px;font-weight: 900;">
+				@click="
+					if(item.rightShow){
+						$axios.post('/recording/my-memory/done-item',$qs.stringify({itemId:item.itemId}))
+						item.done=1
+						item.rightShow=0
+						currShowItem=null
+					}else{
+						$axios.post('/recording/my-memory/undone-item',$qs.stringify({itemId:item.itemId}))
+						item.done=0
+						item.rightShow=1
+						currShowItem=item
+					}
+				">
+				<div style="font-size: 16px;font-weight: 900;" :style="{color:item.done || (currShowItem &&currShowItem.itemId!=item.itemId)?'#a7a7a7':'#000000'}">
 					{{ reverse?item.right:item.left }}
 				</div>
 				<div v-show="item.rightShow" style="font-size: 16px;margin-top: 5px;white-space: pre-wrap;">{{ reverse?item.left:item.right }}</div>
@@ -263,6 +275,18 @@
 					}
 				">
 				全 关
+			</span>
+			<span class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
+				@click="
+					$axios.post('/recording/my-memory/undone-all-items',$qs.stringify({bookId:query.bookId})).then(res => {
+						if(res.data.code==0){
+							for(var i in items){
+								items[i].done=null
+							}
+						}
+					})
+				">
+				重 学
 			</span>
 		</div>
 
@@ -521,6 +545,7 @@
 				},
 				reverse:0,
 				allRightShow:null,
+				currShowItem:null,
 			}
 		},
 		activated() {
