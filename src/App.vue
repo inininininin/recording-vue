@@ -24,7 +24,7 @@ export default {
 					vue.$store.state.now=vue.$moment();
         },1000)
     vue.$store.state.requestingCount--;
-    vue.$axios.post('/recording/login-refresh').then(res=>{
+    vue.$axios.post('/banban/login-refresh').then(res=>{
       vue.$store.state.requestingCount++;
       if(res.data.code == 0){
         vue.$store.state.login=res.data.data;
@@ -34,7 +34,7 @@ export default {
     })
     setInterval(function(){
       vue.$store.state.requestingCount--;
-      vue.$axios.post('/recording/login-refresh').then(res=>{
+      vue.$axios.post('/banban/login-refresh').then(res=>{
         vue.$store.state.requestingCount++;
         if(res.data.code == 0){
           vue.$store.state.login=res.data.data;

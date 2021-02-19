@@ -170,7 +170,7 @@
 				Object.assign(vue.$data, vue.$options.data());
 
 				if(!vue.$store.state.login){
-					vue.$axios.post('/recording/logout').then(res => {
+					vue.$axios.post('/banban/logout').then(res => {
 							vue.$store.state.login=null;
 							vue.$router.push({path:'/login'})
 						})
@@ -184,7 +184,7 @@
 					var r=window.prompt(`确认添加 ${item.nickname} 为好友吗 , 你可以输入别名`)
 					if (r!=null)
 						{
-							vue.$axios.post(`/recording/my-follow/create-follow`,vue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
+							vue.$axios.post(`/banban/my-follow/create-follow`,vue.$qs.stringify({toUserId:item.userId,alias:r})).then(res => {
 								
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -198,7 +198,7 @@
 					var r=window.prompt(`你和 ${item.nickname} 已经是好友 , 你可以修改别名`,item.followAlias||'')
 					if (r!=null)
 						{
-							vue.$axios.post(`/recording/my-follow/update-follow`,vue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
+							vue.$axios.post(`/banban/my-follow/update-follow`,vue.$qs.stringify({followId:item.followId,alias:r})).then(res => {
 								
 								if(res.data.codeMsg)
 									alert(res.data.codeMsg)
@@ -215,7 +215,7 @@
 				let vue = this
 				vue.addFriend.loading=1
 				vue.addFriend.userCount=null;
-				vue.$axios.get(`/recording/user/user-list?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
+				vue.$axios.get(`/banban/user/user-list?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
 					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -237,7 +237,7 @@
 					vue.addFriend.loading=0
 				})
 
-				vue.$axios.get(`/recording/user/user-list-sum?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
+				vue.$axios.get(`/banban/user/user-list-sum?kw=${vue.addFriend.kw||''}&pn=${vue.addFriend.pn}`).then(res => {
 					
 					if (res.data.code == 0) {
 							vue.addFriend.userCount=res.data.data.itemCount
@@ -281,7 +281,7 @@
 				vue.itemCount =null;
 				
 
-				vue.$axios.get('/recording/my-follow/follow-list?'+vue.$qs.stringify({kw:vue.kw,sort:sorts.join(),order:orders.join(),pn:vue.pn,ps:vue.ps})).then(res => {
+				vue.$axios.get('/banban/my-follow/follow-list?'+vue.$qs.stringify({kw:vue.kw,sort:sorts.join(),order:orders.join(),pn:vue.pn,ps:vue.ps})).then(res => {
 					
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -291,7 +291,7 @@
 					}
 					vue.loading=0
 				})
-				vue.$axios.get('/recording/my-follow/follow-list-sum?'+vue.$qs.stringify({kw:vue.kw,pn:vue.pn,ps:vue.ps})).then(res => {
+				vue.$axios.get('/banban/my-follow/follow-list-sum?'+vue.$qs.stringify({kw:vue.kw,pn:vue.pn,ps:vue.ps})).then(res => {
 					
 					if (res.data.code == 0) {
 						vue.itemCount=res.data.data.itemCount

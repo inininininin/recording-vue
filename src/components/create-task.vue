@@ -456,7 +456,7 @@
 				let vue = this;
 				vue.$refs.nameRef.focus()
 
-				vue.$axios.get('/recording/my-task/kinds?'
+				vue.$axios.get('/banban/my-task/kinds?'
 				+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
 				.then(res => {
 					if (res.data.code == 0) {
@@ -489,7 +489,7 @@
 						kindId:vue.kindId,
 						kindName:vue.kindName
 					}
-					vue.$axios.post('/recording/my-task/create-task',vue.$qs.stringify(task)).then(res=>{
+					vue.$axios.post('/banban/my-task/create-task',vue.$qs.stringify(task)).then(res=>{
 						
 						vue.errParam=res.data.errParam
 						if(res.data.codeMsg)
@@ -517,7 +517,7 @@
 					pn:vue.chooseFaQiRen.pn,
 					ps:vue.chooseFaQiRen.ps
 				}
-				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/banban/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
@@ -543,7 +543,7 @@
 					pn:vue.chooseFuZeRen.pn,
 					ps:vue.chooseFuZeRen.ps
 				}
-				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/banban/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){

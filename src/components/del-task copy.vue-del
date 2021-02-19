@@ -64,7 +64,7 @@
 			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
 			 let r=window.confirm('确认撤销吗');
 			 if(r){
-			 $axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/banban/my-task/cancel-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -79,7 +79,7 @@
 			 <button v-if="task.taskId && !task.cancelIs && !task.completeIs" @click="
 			 let r=window.confirm('确认完成吗');
 			 if(r){
-			 $axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/banban/my-task/complete-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -95,7 +95,7 @@
 			 <button  v-if="task.taskId && (task.cancelIs || task.completeIs)" @click="
 			 let r=window.confirm('确认重启吗');
 			 if(r){
-			 $axios.post('/recording/my-task/restart-task',$qs.stringify({taskId:taskId}))
+			 $axios.post('/banban/my-task/restart-task',$qs.stringify({taskId:taskId}))
 				 .then(res=>{ 
 					 if(res.data.codeMsg) 
 						 window.alert(res.data.codeMsg)
@@ -121,7 +121,7 @@
 			 <button v-if="task.taskId && (task.cancelIs  || task.completeIs)" @click="
 			let r=window.confirm('确认删除吗');
 			if(r){
-			$axios.post('/recording/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
+			$axios.post('/banban/my-task/delete-task-list',$qs.stringify({taskId:taskId,expectCount:1}))
 				.then(res=>{ 
 					if(res.data.codeMsg) 
 						window.alert(res.data.codeMsg)
@@ -323,7 +323,7 @@
 				Object.assign(vue.$data, vue.$options.data());
 				vue.taskId=vue.$route.query.taskId;
 
-				vue.$axios.get('/recording/my-task/task-list?taskId='+vue.taskId).then(res=>{
+				vue.$axios.get('/banban/my-task/task-list?taskId='+vue.taskId).then(res=>{
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
 					if (res.data.code == 0) {
@@ -412,7 +412,7 @@
 					vue.taskUpdate.finalTime=param.finalTime
 				}
 
-				vue.$axios.post('/recording/my-task/update-task',vue.$qs.stringify(param)).then(res=>{
+				vue.$axios.post('/banban/my-task/update-task',vue.$qs.stringify(param)).then(res=>{
 					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -438,7 +438,7 @@
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					vue.$axios.post('/banban/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						
 						vue.taskUpdate.imageList.push(res.data.data.url)
 					})
@@ -447,7 +447,7 @@
 			createTrack(){
 				
 				let vue = this
-				vue.$axios.post('/recording/my-task/create-task-track',vue.$qs.stringify({taskId:vue.taskId,content:vue.trackContent})).then(res=>{
+				vue.$axios.post('/banban/my-task/create-task-track',vue.$qs.stringify({taskId:vue.taskId,content:vue.trackContent})).then(res=>{
 					
 					if(res.data.codeMsg)
 						alert(res.data.codeMsg)
@@ -474,7 +474,7 @@
 				vue.taskTrack_loading=1
 
 				vue.taskTrack_count =null;
-				vue.$axios.get('/recording/my-task/task-track-list?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
+				vue.$axios.get('/banban/my-task/task-track-list?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
 					
 					if (res.data.code == 0) {
 						if(res.data.data.itemList.length>0)
@@ -484,7 +484,7 @@
 					}
 					vue.taskTrack_loading=0
 				})
-				vue.$axios.get('/recording/my-task/task-track-list-sum?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
+				vue.$axios.get('/banban/my-task/task-track-list-sum?'+vue.$qs.stringify({taskId:vue.taskId,kw:vue.taskTrack_kw,pn:vue.taskTrack_pn,ps:vue.taskTrack_ps})).then(res => {
 					
 					if (res.data.code == 0) {
 						vue.taskTrack_count=res.data.data.itemCount

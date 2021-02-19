@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-// Mock.mock('/recording/login', 'post', (data) => {
+// Mock.mock('/banban/login', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -9,7 +9,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/login-by-sms', 'post', (data) => {
+// Mock.mock('/banban/login-by-sms', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -18,7 +18,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/login-refresh', 'post', (data) => {
+// Mock.mock('/banban/login-refresh', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -30,7 +30,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/register', 'post', (data) => {
+// Mock.mock('/banban/register', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -41,7 +41,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/login-by-login-code', 'post', (data) => {
+// Mock.mock('/banban/login-by-login-code', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -50,7 +50,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/register-by-sms', 'post', (data) => {
+// Mock.mock('/banban/register-by-sms', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -59,7 +59,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/logout', 'post', (data) => {
+// Mock.mock('/banban/logout', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -68,7 +68,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-memory/books' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/books' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -90,7 +90,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/books-sum' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -100,7 +100,7 @@ import Mock from 'mockjs';
 //         }
 //     };
 // });
-// Mock.mock(RegExp('/recording/my-memory/book' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/book' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -112,7 +112,7 @@ import Mock from 'mockjs';
 //         }
 //     };
 // });
-// Mock.mock(RegExp('/recording/my-memory/create-book'), 'post', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/create-book'), 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -122,7 +122,7 @@ import Mock from 'mockjs';
 //         }
 //     };
 // });
-// Mock.mock(RegExp('/recording/my-memory/update-book'), 'post', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/update-book'), 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -132,7 +132,7 @@ import Mock from 'mockjs';
 //         }
 //     };
 // });
-// Mock.mock(RegExp('/recording/my-memory/delete-book'), 'post', (data) => {
+// Mock.mock(RegExp('/banban/my-memory/delete-book'), 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -142,7 +142,7 @@ import Mock from 'mockjs';
 //         }
 //     };
 // });
-// Mock.mock(RegExp('/recording/task' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/task' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -169,7 +169,7 @@ import Mock from 'mockjs';
 
 
 
-// Mock.mock(RegExp('/recording/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-tasks-fa-qi-rens' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -211,7 +211,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-tasks-fu-ze-rens' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -233,7 +233,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-friends/friends' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-friends/friends' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -260,7 +260,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/my-friends/friends-sum' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-friends/friends-sum' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -271,7 +271,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock(RegExp('/recording/users' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/users' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -340,7 +340,7 @@ import Mock from 'mockjs';
 // });
 
 
-// Mock.mock(RegExp('/recording/my-task/tracks' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-task/tracks' + '\\?.*'), 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -447,9 +447,9 @@ import Mock from 'mockjs';
     
 // }
 
-// Mock.mock(RegExp('/recording/daily/dailies' + '\\?.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/daily/dailies' + '\\?.*'), 'get', (data) => {
 //     
-//     console.log('/recording/daily/dailies')
+//     console.log('/banban/daily/dailies')
 //     return {
 //         code: 0,
 //         codeMsg: '',
@@ -459,7 +459,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/daily/done' + '\\?.*', 'get', (data) => {
+// Mock.mock('/banban/daily/done' + '\\?.*', 'get', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -468,7 +468,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/daily/undone', 'post', (data) => {
+// Mock.mock('/banban/daily/undone', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -477,7 +477,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/daily/create-daily', 'post', (data) => {
+// Mock.mock('/banban/daily/create-daily', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -486,7 +486,7 @@ import Mock from 'mockjs';
 //     };
 // });
 
-// Mock.mock('/recording/daily/delete-daily', 'post', (data) => {
+// Mock.mock('/banban/daily/delete-daily', 'post', (data) => {
 //     
 //     return {
 //         code: 0,
@@ -496,7 +496,7 @@ import Mock from 'mockjs';
 // });
 
 
-// Mock.mock(RegExp('/recording/my-task/kinds' + '\\??.*'), 'get', (data) => {
+// Mock.mock(RegExp('/banban/my-task/kinds' + '\\??.*'), 'get', (data) => {
 //     debugger
 //     return {
 //         code: 0,

@@ -11,7 +11,7 @@
 						queryHistory.kws=[];
 						queryHistory.start=1;
 						if($store.state.login){
-							$axios.get(`/recording/cache/get?name=${'memory-queryHistory-kws-'+$store.state.login.userId}`)
+							$axios.get(`/banban/cache/get?name=${'memory-queryHistory-kws-'+$store.state.login.userId}`)
 								.then(res=>{
 									if(res.data.code == 0)
 										if(res.data.data.value)
@@ -42,21 +42,20 @@
 			style="overflow: auto;width:100%;position: absolute;top: 34px;bottom: 91px;-webkit-overflow-scrolling: touch;">
 			<div :key="item.bookId" v-for="item in books" class="active visited hover"
 				@click="
-					
 					//$($event.currentTarget).css('background-color','#e6e4e4');
 					$store.state.chosenMemoryBook=item;
 					$router.push({path:'/memory-book',query:{bookId:item.bookId}})
 				" 
 				style="padding: 5px 20px 5px 5px;cursor:pointer;position: relative;" 
 				:style="{'background-color':(item.status==2?'#ffe063':item.status==3?'#d5d5d5':'#FFFFFF')}">
-				<div style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;" 
-					v-html="item.name?$highlight(item.name,kw).split('\n')[0]:null">
-				</div>    
-				<span v-if="item.orderNo" 
-					style="font-size:12px;color:#ff0000;position:absolute;right:5px;bottom: 3px;width:14px;text-align: right;
-						overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-					{{item.orderNo}}
+				<span
+					style="font-size:16px;width:17px;text-align: right;display:inline-block;vertical-align: middle;overflow:hidden;">
+					{{item.times?item.times%100:''}}
 				</span>
+				<span style="font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;display:inline-block;vertical-align: middle;margin:0 0 0 5px;" 
+					v-html="item.name?$highlight(item.name,kw).split('\n')[0]:null">
+				</span> 
+				
 			</div>
 			<div v-if="loading"  style="font-size:14px;text-align: center;color:#6b6b6b;margin-bottom:10px;margin-top: 10px;">
 				加载中
@@ -77,7 +76,7 @@
 				@click="
 					var r = window.prompt('请输入名称')
 					if(r){
-						$axios.post('/recording/my-memory/create-book',$qs.stringify({name:r})).then(res=>{
+						$axios.post('/banban/my-memory/create-book',$qs.stringify({name:r})).then(res=>{
 							if(res.data.code == 0){
 								if(!res.data.codeMsg)
 									$notify({type:'success',message:'创建成功'})
@@ -107,7 +106,7 @@
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;">
 				</span>
-				<span @click="$router.replace({path:'/tasks'})"
+				<span @click="$router.replace({path:'/index'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;
 						vertical-align: middle;margin-left:-1px;">
 					任 务
@@ -167,7 +166,7 @@
 						@click="
 							queryHistory.kws.splice(queryHistory.kws.indexOf(item),1)
 							if($store.state.login){
-								$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistory.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
+								$axios.post('/banban/cache/set',$qs.stringify({name:'queryHistory.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
 							}
 						"
 						style="
@@ -182,7 +181,7 @@
 					@click="
 						queryHistory.kws=[];
 						if($store.state.login){
-							$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistory.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
+							$axios.post('/banban/cache/set',$qs.stringify({name:'queryHistory.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
 						}
 					"
 					style="
@@ -276,16 +275,18 @@
 				if(vue.kw && vue.queryHistory.kws.indexOf(vue.kw)==-1){
 					vue.queryHistory.kws.splice(0,0,vue.kw)
 					if(vue.$store.state.login){
-						vue.$axios.post('/recording/cache/set',vue.$qs.stringify({name:'memory-queryHistory-kws-'+vue.$store.state.login.userId,value:vue.queryHistory.kws.join()}))
+						vue.$axios.post('/banban/cache/set',vue.$qs.stringify({name:'memory-queryHistory-kws-'+vue.$store.state.login.userId,value:vue.queryHistory.kws.join()}))
 					}
 				}
 
 				var param = {
 					kw:vue.kw,
 					pn:vue.pn,
-					ps:vue.ps
+					ps:vue.ps,
+					sort:'orderNo,name',
+					order:'asc,asc'
 				}
-				vue.$axios.get('/recording/my-memory/books?' + vue.$qs.stringify(param)).then(res => {
+				vue.$axios.get('/banban/my-memory/books?' + vue.$qs.stringify(param)).then(res => {
 					
 					if (res.data.code == 0) {
 						if(res.data.data.items.length>0){
@@ -301,7 +302,7 @@
 					}
 					vue.loading=0
 				})
-				vue.$axios.get('/recording/my-memory/books-sum?' + vue.$qs.stringify(param)).then(res => {
+				vue.$axios.get('/banban/my-memory/books-sum?' + vue.$qs.stringify(param)).then(res => {
 					
 					if (res.data.code == 0) {
 						vue.booksSum=res.data.data

@@ -45,7 +45,7 @@
 					message: '确认退出吗?'
 				}).then(()=> {
 					
-					vue.$axios.post('/recording/logout').then(res => {
+					vue.$axios.post('/banban/logout').then(res => {
 						
 						if(res.data.codeMsg)
 							vue.$notify({message:res.data.codeMsg})

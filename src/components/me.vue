@@ -61,7 +61,7 @@
 					日 常
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;"></span>
-				<span @click="$router.replace({path:'/tasks'})"
+				<span @click="$router.replace({path:'/index'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
@@ -120,7 +120,7 @@
 						@click="
 							var r= window.prompt('修改昵称',$store.state.login.nickname)
 							if(r){
-								$axios.post('/recording/update-my-info',$qs.stringify({
+								$axios.post('/banban/update-my-info',$qs.stringify({
 									nickname:r
 								})).then(res=>{
 									if(res.data.codeMsg)
@@ -210,7 +210,7 @@
 					message: '确认退出吗?'
 				}).then(()=> {
 					
-					vue.$axios.post('/recording/logout').then(res => {
+					vue.$axios.post('/banban/logout').then(res => {
 						
 						if(res.data.codeMsg)
 							vue.$notify({message:res.data.codeMsg})

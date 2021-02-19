@@ -11,7 +11,7 @@
 						queryHistory.kws=[];
 						queryHistory.start=1;
 						if($store.state.login){
-							$axios.get(`/recording/cache/get?name=${'queryHistory.friends.kws-'+$store.state.login.userId}`)
+							$axios.get(`/banban/cache/get?name=${'queryHistory.friends.kws-'+$store.state.login.userId}`)
 								.then(res=>{
 									if(res.data.code == 0)
 										if(res.data.data.value)
@@ -104,7 +104,7 @@
 							$dialog.confirm({
 								message: '确认删除吗?'
 							}).then(() => {
-								$axios.post('/recording/my-friend/delete-friend',$qs.stringify({friendId:chosenFriend.friendId})).then(res=>{
+								$axios.post('/banban/my-friend/delete-friend',$qs.stringify({friendId:chosenFriend.friendId})).then(res=>{
 									if(res.data.codeMsg)
 										$notify({type:'primary',message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -138,7 +138,7 @@
 								if(chosenFriend.alias==friendInfo.editAlias.value)
 									return;
 								$dialog.confirm({message:'确认修改吗?'}).then(res=>{
-									$axios.post('/recording/my-friend/update-friend',$qs.stringify({
+									$axios.post('/banban/my-friend/update-friend',$qs.stringify({
 										friendId:chosenFriend.friendId,
 										alias:friendInfo.editAlias.value
 									})).then(res=>{
@@ -178,7 +178,7 @@
 				</span>
 				<span style="border-left:1px solid #808080;display:inline-block;line-height:15px;font-size: 16px;height:15px;vertical-align: middle;margin-left:-1px;">
 				</span>
-				<span  @click="$router.replace({path:'/tasks'})"
+				<span  @click="$router.replace({path:'/index'})"
 					style="line-height:50px;font-size:16px;width:16.7%;display:inline-block;text-align: center;cursor:pointer;vertical-align: middle;margin-left:-1px;">
 					任 务
 				</span>
@@ -331,7 +331,7 @@
 						@click="
 							queryHistory.kws.splice(queryHistory.kws.indexOf(item),1)
 							if($store.state.login){
-								$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistory.friends.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
+								$axios.post('/banban/cache/set',$qs.stringify({name:'queryHistory.friends.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
 							}
 						"
 						style="
@@ -346,7 +346,7 @@
 					@click="
 						queryHistory.kws=[];
 						if($store.state.login){
-							$axios.post('/recording/cache/set',$qs.stringify({name:'queryHistory.friends.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
+							$axios.post('/banban/cache/set',$qs.stringify({name:'queryHistory.friends.kws-'+$store.state.login.userId,value:queryHistory.kws.join()}))
 						}
 					"
 					style="
@@ -446,7 +446,7 @@
 				if(vue.kw && vue.queryHistory.kws.indexOf(vue.kw)==-1){
 					vue.queryHistory.kws.splice(0,0,vue.kw)
 					if(vue.$store.state.login){
-						vue.$axios.post('/recording/cache/set',vue.$qs.stringify({name:'queryHistory.friends.kws-'+vue.$store.state.login.userId,value:vue.queryHistory.kws.join()}))
+						vue.$axios.post('/banban/cache/set',vue.$qs.stringify({name:'queryHistory.friends.kws-'+vue.$store.state.login.userId,value:vue.queryHistory.kws.join()}))
 					}
 				}
 
@@ -457,7 +457,7 @@
 					pn:vue.pn,
 					ps:vue.ps
 				}
-				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(res => {
+				vue.$axios.get('/banban/my-friend/friends?' + vue.$qs.stringify(obj)).then(res => {
 					
 					if (res.data.code == 0) {
 						if(res.data.data.items.length>0){
@@ -472,7 +472,7 @@
 					}
 					vue.loading=0
 				})
-				vue.$axios.get('/recording/my-friend/friends-sum?' + vue.$qs.stringify(obj)).then(res => {
+				vue.$axios.get('/banban/my-friend/friends-sum?' + vue.$qs.stringify(obj)).then(res => {
 					
 					if (res.data.code == 0) {
 						vue.friendsSum=res.data.data
@@ -494,7 +494,7 @@
 						pn:vue.addFriend.pn,
 						ps:vue.addFriend.ps
 					}
-					vue.$axios.get('/recording/user/users?' + vue.$qs.stringify(obj)).then(res => {
+					vue.$axios.get('/banban/user/users?' + vue.$qs.stringify(obj)).then(res => {
 						
 						if (res.data.code == 0) {
 							if(res.data.data.items.length>0){
@@ -526,7 +526,7 @@
 			},
 			addFriend_addFriend(){
 				let vue = this
-				vue.$axios.post('/recording/my-friend/create-friend?',vue.$qs.stringify({
+				vue.$axios.post('/banban/my-friend/create-friend?',vue.$qs.stringify({
 					toUserId:vue.addFriend.chosenUser.userId,
 					alias:vue.addFriend.chosenUser.alias
 				})).then(res=>{

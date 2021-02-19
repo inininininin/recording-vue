@@ -40,7 +40,7 @@
 				<span v-if="code"  @click="code=null" style="font-size: 14px;position:absolute;right:56px;cursor: pointer;color: #6b6b6b;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 14px;line-height: 26px;margin-left:5px;"
 					@click="
-						$axios.post('/recording/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
+						$axios.post('/banban/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
 							if(data.data.codeMsg)
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
@@ -107,12 +107,12 @@
 			 login(){
 				
 				let vue = this;
-				vue.$axios.post('/recording/login',vue.$qs.stringify({account:vue.account,password:vue.password})).then(res => {
+				vue.$axios.post('/banban/login',vue.$qs.stringify({account:vue.account,password:vue.password})).then(res => {
 					
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg});
 					if(res.data.code == 0){
-						vue.$axios.post('/recording/login-refresh').then(res => {
+						vue.$axios.post('/banban/login-refresh').then(res => {
 							
 							if(res.data.codeMsg) {
 								
@@ -131,12 +131,12 @@
 			 loginBySms(){
 				
 				let vue = this;
-				vue.$axios.post('/recording/login-by-sms',vue.$qs.stringify({phone:vue.phone,code:vue.code})).then(res => {
+				vue.$axios.post('/banban/login-by-sms',vue.$qs.stringify({phone:vue.phone,code:vue.code})).then(res => {
 					
 					if(res.data.codeMsg)
 						vue.$dialog.alert({message:res.data.codeMsg});
 					if(res.data.code == 0){
-						vue.$axios.post('/recording/login-refresh').then(data => {
+						vue.$axios.post('/banban/login-refresh').then(data => {
 							
 							if(res.data.codeMsg)
 								vue.$dialog.alert({message:res.data.codeMsg});

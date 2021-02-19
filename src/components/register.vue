@@ -61,7 +61,7 @@
 				<span v-if="code"  @click="code=null" style="line-height: 30px;font-size: 16px;position: absolute;right: 55px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 16px;line-height: 26px;margin-left:5px;	"
 					@click="
-						$axios.post('/recording/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
+						$axios.post('/banban/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
 							if(data.data.codeMsg)
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
@@ -140,17 +140,17 @@
 				if(vue.password != vue.confirmPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
-					vue.$axios.post('/recording/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
+					vue.$axios.post('/banban/register',vue.$qs.stringify({nickname:vue.nickname,account:vue.account, password:vue.password}) ).then(res => {
 						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
-							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
+							vue.$axios.post('/banban/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
 								
 								if (res.data.codeMsg)
 									vue.$dialog.alert({message:res.data.codeMsg});
 								if (res.data.code == 0) {
-									vue.$axios.post('/recording/login-refresh').then(data => {
+									vue.$axios.post('/banban/login-refresh').then(data => {
 										
 										if(data.data.codeMsg)
 											vue.$dialog.alert({message:data.data.codeMsg});
@@ -173,17 +173,17 @@
 				if(vue.password != vue.confirmPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
-					vue.$axios.post('/recording/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, code:vue.code}) ).then(res => {
+					vue.$axios.post('/banban/register-by-sms',vue.$qs.stringify({nickname:vue.nickname,phone:vue.phone, code:vue.code}) ).then(res => {
 						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
 						if (res.data.code == 0) {
-							vue.$axios.post('/recording/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
+							vue.$axios.post('/banban/login-by-ticket', vue.$qs.stringify({ticket: res.data.data.ticket})).then(res => {
 								
 								if (res.data.codeMsg)
 									vue.$dialog.alert({message:res.data.codeMsg});
 								if (res.data.code == 0) {
-									vue.$axios.post('/recording/login-refresh').then(data => {
+									vue.$axios.post('/banban/login-refresh').then(data => {
 										
 										if(data.data.codeMsg)
 											vue.$dialog.alert({message:data.data.codeMsg});

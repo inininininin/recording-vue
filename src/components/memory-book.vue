@@ -10,9 +10,6 @@
 			<span style="font-weight: 900;font-size: 16px;position: absolute;left:40px;">
 				记忆单
 			</span>
-			<span style="margin: 0 0 0 5px;font-size:14px;position: absolute;left: 90px;">
-				{{itemsSum.count}}
-			</span>
 			<span v-if="book" style="font-weight: 900;font-size: 16px;display: inline-block;width:45%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
 				{{book.name}}
 			</span>
@@ -21,21 +18,24 @@
 			</span>
 		</div>
 		<div ref="scroll" @scroll="scroll($event)" style="position: absolute;top:41px;bottom:35px;left:0;right:0;overflow: auto;">
-			<div class="active hover" v-for="item in items" :key=item.itemId style="padding:5px 5px;cursor: pointer;position: relative;" 
+			<div class="active hover" v-for="item in items" :key=item.itemId 
+				style="padding:5px 5px;cursor: pointer;position: relative;"
+				:style="{visibility : (!currShowItems || currShowItems.length == 0 || currShowItems.indexOf(item) > -1?'visible':'hidden')}"
 				@click="
 					if(item.rightShow){
-						$axios.post('/recording/my-memory/done-item',$qs.stringify({itemId:item.itemId}))
+						$axios.post('/banban/my-memory/done-item',$qs.stringify({itemId:item.itemId}))
 						item.done=1
 						item.rightShow=0
 						currShowItems.splice(currShowItems.indexOf(item),1)
 					}else{
-						$axios.post('/recording/my-memory/undone-item',$qs.stringify({itemId:item.itemId}))
+						$axios.post('/banban/my-memory/undone-item',$qs.stringify({itemId:item.itemId}))
 						item.done=0
 						item.rightShow=1
 						currShowItems.push(item)
 					}
 				">
-				<div style="font-size: 16px;font-weight: 900;" :style="{color:item.done || (currShowItems.length>0 && currShowItems.indexOf(item)==-1)?'#c7c7c7':'#000000'}">
+				<div style="font-size: 16px;font-weight: 900;"
+					:style="{color:item.done?'#c7c7c7':'#000000'}">
 					{{ reverse?item.right:item.left }}
 				</div>
 				<div v-show="item.rightShow" style="font-size: 16px;margin-top: 5px;white-space: pre-wrap;">{{ reverse?item.left:item.right }}</div>
@@ -108,7 +108,7 @@
 				<span class="active" 
 					@click="
 						$dialog.confirm({message:'确认删除吗?'}).then(res=>{
-							$axios.post('/recording/my-memory/delete-item',$qs.stringify({itemId:chosenItem.itemId})).then(res=>{
+							$axios.post('/banban/my-memory/delete-item',$qs.stringify({itemId:chosenItem.itemId})).then(res=>{
 								if(res.data.code==0){
 									if(res.data.codeMsg)
 										$notify({type:'success',message:'删除成功'})
@@ -149,7 +149,7 @@
 						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="
 								if(chosenItem.left != itemDetail.editLeft.value){
-									$axios.post('/recording/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,left:itemDetail.editLeft.value}))
+									$axios.post('/banban/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,left:itemDetail.editLeft.value}))
 									.then(res=>{
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
@@ -186,7 +186,7 @@
 						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="
 								if(chosenItem.right != itemDetail.editRight.value){
-									$axios.post('/recording/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,right:itemDetail.editRight.value}))
+									$axios.post('/banban/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,right:itemDetail.editRight.value}))
 									.then(res=>{
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
@@ -226,7 +226,7 @@
 						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="
 								if(chosenItem.orderNo != itemDetail.editOrderNo.value){
-									$axios.post('/recording/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,orderNo:itemDetail.editOrderNo.value}))
+									$axios.post('/banban/my-memory/update-item',$qs.stringify({itemId:chosenItem.itemId,orderNo:itemDetail.editOrderNo.value}))
 									.then(res=>{
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
@@ -278,16 +278,28 @@
 			</span>
 			<span class="active hover" style="font-size: 16px;display:inline-block;height:35px;line-height:35px;width:80px;text-align: center;cursor: pointer;"
 				@click="
-					$axios.post('/recording/my-memory/undone-all-items',$qs.stringify({bookId:query.bookId})).then(res => {
-						if(res.data.code==0){
-							for(var i in items){
-								items[i].done=null
-								items[i].rightShow=null
+					$dialog.confirm({message:'确认完成吗?'}).then(res=>{
+						$axios.post('/banban/my-memory/done-book',$qs.stringify({bookId:query.bookId})).then(res => {
+							if(res.data.code==0){
+								for(var i in items){
+									items[i].done=null
+									items[i].rightShow=null
+								}
+								if(!book.times)
+									book.times=0
+								book.times++
+								if(!$store.state.chosenMemoryBook)
+									$store.state.chosenMemoryBook.times=0
+								$store.state.chosenMemoryBook.times++
+								$refs.scroll.scrollTop=0
+							}else{
+								if(res.data.codeMsg)
+									$notify({type:'primary',message:res.data.codeMsg});
 							}
-						}
+						})
 					})
 				">
-				重 学
+				完 成
 			</span>
 		</div>
 
@@ -336,7 +348,7 @@
 					style="font-size: 16px;display: inline-block;width:100px;padding: 5px 0;
 						text-align: center;border:1px solid #808080;cursor: pointer;margin-left:15px;"
 					@click="
-						$axios.post('/recording/my-memory/create-item',$qs.stringify({bookId:query.bookId,...addItem.item})).then(res=>{
+						$axios.post('/banban/my-memory/create-item',$qs.stringify({bookId:query.bookId,...addItem.item})).then(res=>{
 							if(res.data.code==0){
 								if(!res.data.codeMsg)
 									$notify({type:'success',message:'创建成功'})
@@ -397,7 +409,7 @@
 				<span class="active" 
 					@click="
 						$dialog.confirm({message:'确认删除吗?'}).then(res=>{
-							$axios.post('/recording/my-memory/delete-book',$qs.stringify({bookId:query.bookId})).then(res=>{
+							$axios.post('/banban/my-memory/delete-book',$qs.stringify({bookId:query.bookId})).then(res=>{
 								if(res.data.code==0){
 									if(res.data.codeMsg)
 										$notify({type:'success',message:'删除成功'})
@@ -435,7 +447,7 @@
 						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="
 								if(book.name != editName.value){
-									$axios.post('/recording/my-memory/update-book',$qs.stringify({bookId:query.bookId,name:editName.value})).then(res=>{
+									$axios.post('/banban/my-memory/update-book',$qs.stringify({bookId:query.bookId,name:editName.value})).then(res=>{
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
 										if(res.data.code == 0){
@@ -474,7 +486,7 @@
 						<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 							@click="
 								if(book.orderNo != editOrderNo.value){
-									$axios.post('/recording/my-memory/update-book',$qs.stringify({bookId:query.bookId,orderNo:editOrderNo.value})).then(res=>{
+									$axios.post('/banban/my-memory/update-book',$qs.stringify({bookId:query.bookId,orderNo:editOrderNo.value})).then(res=>{
 										if(res.data.codeMsg)
 											$dialog.alert({message:res.data.codeMsg})
 										if(res.data.code == 0){
@@ -567,8 +579,7 @@
 				vue.pn=vue.pn?vue.pn:1;
 				vue.ps=vue.ps?vue.ps:50;
 
-				vue.$axios.get('/recording/my-memory/book?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
-					
+				vue.$axios.get('/banban/my-memory/book?' + vue.$qs.stringify({bookId:vue.query.bookId})).then(res => {
 					if (res.data.code == 0) {
 							vue.book = res.data.data;
 					} else {
@@ -586,7 +597,7 @@
 					pn:vue.pn,
 					ps:vue.ps
 				}
-				vue.$axios.get('/recording/my-memory/items?' + vue.$qs.stringify(o)).then(res => {
+				vue.$axios.get('/banban/my-memory/items?' + vue.$qs.stringify(o)).then(res => {
 					
 					if (res.data.code == 0) {
 							vue.items=vue.items?vue.items:[];
@@ -604,7 +615,7 @@
 					vue.loading=0
 				})
 
-				vue.$axios.get('/recording/my-memory/items-sum?' + vue.$qs.stringify(o)).then(res => {
+				vue.$axios.get('/banban/my-memory/items-sum?' + vue.$qs.stringify(o)).then(res => {
 					
 					if (res.data.code == 0) {
 							vue.itemsSum = res.data.data;
@@ -633,7 +644,7 @@
 				if(!vue.trackContent){
 					vue.$notify({message:'内容不可空'})
 				}else{
-					vue.$axios.post('/recording/my-task/create-track',vue.$qs.stringify({
+					vue.$axios.post('/banban/my-task/create-track',vue.$qs.stringify({
 						bookId:vue.query.bookId,
 						content:vue.trackContent
 					})).then(res=>{

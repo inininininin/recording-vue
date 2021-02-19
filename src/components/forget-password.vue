@@ -59,7 +59,7 @@
 				<span v-if="smsCode"  @click="smsCode=null" style="line-height: 34px;font-size: 16px;position: absolute;right: 55px;cursor: pointer;color: rgb(143, 143, 143);width: 20px;text-align: center;">x</span>
 				<button type="button" style="padding:0px 6px;vertical-align: top;cursor:pointer;font-size: 16px;line-height: 26px;margin-left:5px;	"
 					@click="
-						$axios.post('/recording/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
+						$axios.post('/banban/send-sms-code?'+$qs.stringify({phone:phone})).then(data => {
 							if(data.data.codeMsg)
 								$dialog.alert({message:data.data.codeMsg});
 							if(data.data.code == 0){
@@ -149,7 +149,7 @@
 				if(vue.newPassword != vue.confirmNewPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
-					vue.$axios.post('/recording/update-password-by-email',vue.$qs.stringify({email:vue.email, code: vue.emailCode, newPassword:vue.newPassword}) ).then(res => {
+					vue.$axios.post('/banban/update-password-by-email',vue.$qs.stringify({email:vue.email, code: vue.emailCode, newPassword:vue.newPassword}) ).then(res => {
 						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});
@@ -167,7 +167,7 @@
 				if(vue.newPassword != vue.confirmNewPassword)
 					vue.$dialog.alert({message:'两次密码不一致'});
 				else {
-					vue.$axios.post('/recording/update-password-by-sms',vue.$qs.stringify({phone:vue.phone, code: vue.smsCode, newPassword:vue.newPassword}) ).then(res => {
+					vue.$axios.post('/banban/update-password-by-sms',vue.$qs.stringify({phone:vue.phone, code: vue.smsCode, newPassword:vue.newPassword}) ).then(res => {
 						
 						if (res.data.codeMsg)
 							vue.$dialog.alert({message:res.data.codeMsg});

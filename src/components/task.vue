@@ -290,7 +290,7 @@
 				style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
-					$axios.post('/recording/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+					$axios.post('/banban/my-task/complete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
 							$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
@@ -310,7 +310,7 @@
 				style="font-size:16px;width:60px;line-height:28px;height: 28px;display:inline-block;margin-right:10px;
 					text-align: center;background-color:#bebebe;cursor: pointer;"
 				@click="
-					$axios.post('/recording/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+					$axios.post('/banban/my-task/cancel-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 						if(res.data.codeMsg)
 							$notify({message:res.data.codeMsg})
 						if(res.data.code == 0){
@@ -333,7 +333,7 @@
 					$dialog.confirm({
 						message:'确认开启吗?'
 					}).then(res=>{
-						$axios.post('/recording/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						$axios.post('/banban/my-task/start-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 							if(res.data.codeMsg)
 								$notify({message:res.data.codeMsg})
 							if(res.data.code == 0){
@@ -359,7 +359,7 @@
 					$dialog.confirm({
 						message:'确认删除吗?'
 					}).then(res=>{
-						$axios.post('/recording/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
+						$axios.post('/banban/my-task/delete-task',$qs.stringify({taskId:query.taskId})).then(res=>{
 							if(res.data.codeMsg)
 								$notify({message:res.data.codeMsg})
 							if(res.data.code == 0){
@@ -400,7 +400,7 @@
 						:style="{'background-color':editFaQiRen.chosen == item?'#cccccc':'#ffffff'}"
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
-							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:item.toUserId})).then(res=>{
+							$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:item.toUserId})).then(res=>{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
@@ -457,7 +457,7 @@
 					<button @click="editFaQiRen.start=0;editFaQiRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
-							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:null})).then(res=>{
+							$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,faQiRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
@@ -506,7 +506,7 @@
 						:style="{'background-color':editFuZeRen.chosen == item?'#cccccc':'#ffffff'}"
 						style="padding:5px;border:1px solid #8F8F8F;margin:5px 0;cursor:pointer;background-color: #FFFFFF;position: relative;height: 20px;line-height: 20px;"
 						@click="
-							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:item.toUserId})).then(res=>{
+							$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:item.toUserId})).then(res=>{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
@@ -563,7 +563,7 @@
 					<button @click="editFuZeRen.start=0;editFuZeRen.chosen = null;" style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:15px;margin-bottom:5px;">取 消</button>
 					<button style="font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
-							$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:null})).then(res=>{
+							$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,fuZeRenUserId:null})).then(res=>{
 								if(res.data.codeMsg)
 									$dialog.alert({message:res.data.codeMsg})
 								if(res.data.code == 0){
@@ -605,7 +605,7 @@
 					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.type != editType.value){
-								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
+								$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,type:editType.value})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -642,7 +642,7 @@
 					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.name != editName.value){
-								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,name:editName.value})).then(res=>{
+								$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,name:editName.value})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -676,7 +676,7 @@
 					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.content != editContent.value){
-								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,content:editContent.value})).then(res=>{
+								$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,content:editContent.value})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -715,7 +715,7 @@
 						@click="
 							editFinalTime.value=editFinalTime.date?$moment(editFinalTime.date+' 23:59:59.999').format('YYYY-MM-DD HH:mm:ss.SSS Z'):null;
 							if(task.finalTime != editFinalTime.value){
-								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,finalTime:editFinalTime.value})).then(res=>{
+								$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,finalTime:editFinalTime.value})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -753,7 +753,7 @@
 					<button style="color:#ff0000;font-size:16px;cursor: pointer;width:100px;height:30px;margin-right:5px;margin-bottom:5px;"
 						@click="
 							if(task.orderNo != editOrderNo.value){
-								$axios.post('/recording/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
+								$axios.post('/banban/my-task/update-task',$qs.stringify({taskId:query.taskId,orderNo:editOrderNo.value})).then(res=>{
 									if(res.data.codeMsg)
 										$dialog.alert({message:res.data.codeMsg})
 									if(res.data.code == 0){
@@ -790,7 +790,7 @@
 						@click="
 							$dialog.confirm({message:'确认修改吗?'}).then(res=>{
 								if(item.kindId!=task.kindId){
-									$axios.post('/recording/my-task/update-task',$qs.stringify({
+									$axios.post('/banban/my-task/update-task',$qs.stringify({
 										taskId:query.taskId,
 										kindId:item.kindId,
 										kindName:item.name
@@ -831,7 +831,7 @@
 							border-width: 1px;cursor: pointer;width:80px;text-align: center;margin:0 0 0 10px;"
 						@click="
 							$dialog.confirm({message:'确认清除吗?'}).then(res=>{
-								$axios.post('/recording/my-task/update-task',
+								$axios.post('/banban/my-task/update-task',
 								$qs.stringify({
 									taskId:query.taskId,
 									kindId:'',
@@ -877,7 +877,7 @@
 								var kind=unitEditKind.unitKind.kind
 								var r = window.prompt('修改分类名',kind.name)
 								if(r && r!=kind.name){
-									$axios.post('/recording/my-task/update-kind',
+									$axios.post('/banban/my-task/update-kind',
 									$qs.stringify({
 										kindId:kind.kindId,
 										name:r
@@ -905,7 +905,7 @@
 								var kind=unitEditKind.unitKind.kind
 								var r = window.prompt('修改排序',kind.orderNo)
 								if(r && r!=kind.orderNo){
-									$axios.post('/recording/my-task/update-kind',
+									$axios.post('/banban/my-task/update-kind',
 									$qs.stringify({
 										kindId:kind.kindId,
 										orderNo:r
@@ -932,7 +932,7 @@
 							@click="
 								var kind=unitEditKind.unitKind.kind
 								$dialog.confirm({message:'确认删除吗?'}).then(res=>{
-									$axios.post('/recording/my-task/delete-kind',
+									$axios.post('/banban/my-task/delete-kind',
 									$qs.stringify({
 										kindId:kind.kindId
 									})).then(res => {
@@ -986,7 +986,7 @@
 							@click="
 								var kind = unitEditKind.unitCreateKind.kind;
 								if(kind){
-									$axios.post('/recording/my-task/create-kind',$qs.stringify({
+									$axios.post('/banban/my-task/create-kind',$qs.stringify({
 										name:kind.name,
 										orderNo:kind.orderNo
 									})).then(res => {
@@ -1099,7 +1099,7 @@
 				
 				let vue = this
 
-				vue.$axios.get('/recording/my-task/kinds?'
+				vue.$axios.get('/banban/my-task/kinds?'
 				+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
 				.then(res => {
 					if (res.data.code == 0) {
@@ -1109,7 +1109,7 @@
 					}
 				})
 
-				vue.$axios.get('/recording/task?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
+				vue.$axios.get('/banban/task?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
 					if (res.data.code == 0) {
 							vue.task = res.data.data;
 					} else {
@@ -1121,7 +1121,7 @@
 			},
 			loadTracks(){
 				let vue = this
-				vue.$axios.get('/recording/my-task/tracks?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
+				vue.$axios.get('/banban/my-task/tracks?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
 					
 					if (res.data.code == 0) {
 							vue.tracks.items = res.data.data.items;
@@ -1131,7 +1131,7 @@
 					}
 				})
 
-				vue.$axios.get('/recording/my-task/tracks-sum?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
+				vue.$axios.get('/banban/my-task/tracks-sum?' + vue.$qs.stringify({taskId:vue.query.taskId})).then(res => {
 					
 					if (res.data.code == 0) {
 							vue.tracks.sum = res.data.data;
@@ -1150,7 +1150,7 @@
 					pn:vue.editFaQiRen.pn,
 					ps:vue.editFaQiRen.ps
 				}
-				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/banban/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
@@ -1176,7 +1176,7 @@
 					pn:vue.editFuZeRen.pn,
 					ps:vue.editFuZeRen.ps
 				}
-				vue.$axios.get('/recording/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
+				vue.$axios.get('/banban/my-friend/friends?' + vue.$qs.stringify(obj)).then(data => {
 					
 					if (data.data.code == 0) {
 						if(data.data.data.items.length>0){
@@ -1199,7 +1199,7 @@
 				if(!vue.trackContent){
 					vue.$notify({message:'内容不可空'})
 				}else{
-					vue.$axios.post('/recording/my-task/create-track',vue.$qs.stringify({
+					vue.$axios.post('/banban/my-task/create-track',vue.$qs.stringify({
 						taskId:vue.query.taskId,
 						content:vue.trackContent
 					})).then(res=>{
@@ -1225,7 +1225,7 @@
 				let vue = this
 				vue.unitEditKind.open=1
 				if(!vue.unitEditKind.kinds){
-					vue.$axios.get('/recording/my-task/kinds?'+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
+					vue.$axios.get('/banban/my-task/kinds?'+vue.$qs.stringify({sort:'orderNo',order:'asc'}))
 					.then(res => {
 						if(res.data.code==0){
 							vue.unitEditKind.kinds=res.data.data.kinds.list

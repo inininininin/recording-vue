@@ -180,7 +180,7 @@
 					finalTime = vue.$moment(vue.finalTimeDate+" "+(vue.finalTimeTime?(vue.finalTimeTime+":59"):'23:59:59')).toDate().getTime();
 				}
 				
-				vue.$axios.post('/recording/my-task/create-task',vue.$qs.stringify({autoRedoTomorrowIs:vue.autoRedoTomorrowIs,finalTime:finalTime,faQiRenUserId:vue.faQiRenUserId,fuZeRenUserId:vue.fuZeRenUserId,name:vue.name,type:vue.type,content:vue.content,
+				vue.$axios.post('/banban/my-task/create-task',vue.$qs.stringify({autoRedoTomorrowIs:vue.autoRedoTomorrowIs,finalTime:finalTime,faQiRenUserId:vue.faQiRenUserId,fuZeRenUserId:vue.fuZeRenUserId,name:vue.name,type:vue.type,content:vue.content,
 				orderNo:vue.orderNo,
 				image:vue.imageList[0]?vue.imageList[0]:null,
 				image1:vue.imageList[1]?vue.imageList[1]:null,
@@ -213,7 +213,7 @@
 					let file= this.files[0];
 					let fd = new FormData()
                     fd.append('file', file);
-					vue.$axios.post('/recording/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
+					vue.$axios.post('/banban/upload-file',fd,{headers: { "Content-Type": "multipart/form-data" },}).then(res=>{
 						
 						vue.imageList.push(res.data.data.url)
 					})
